@@ -1,6 +1,15 @@
 # Claude Code Skills for iOS/Swift Development
 
-A collection of professional, well-structured Claude Code skills for iOS and Swift development. These skills help you maintain code quality, ensure HIG compliance, and create new skills with best practices.
+A collection of professional, well-structured Claude Code skills for iOS and Swift development. These skills help you **plan new apps**, **analyze existing apps**, maintain code quality, ensure HIG compliance, and create new skills with best practices.
+
+## ✨ Key Highlights
+
+- **📱 app-planner**: Complete app planning & analysis with **automatic documentation generation**
+  - New apps: Creates 8 planning docs (features, architecture, tech stack, roadmap, etc.)
+  - Existing apps: Creates 10 analysis docs (current state + improvement recommendations)
+- **🔍 Code Review**: Swift/iOS best practices and architecture patterns
+- **🎨 UI/UX Review**: HIG compliance and accessibility auditing
+- **🛠️ Skill Creation**: Meta-skill for creating new Claude Code skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -72,6 +81,37 @@ Meta-skill that guides you through creating well-structured, modularized Claude 
 - `skill-template.md` - Simple skill template
 - `complex-skill-template.md` - Modularized skill template
 
+### 📱 app-planner
+
+Comprehensive iOS/Swift app planning and analysis tool. Works with both **new apps** (concept to architecture) and **existing apps** (audit, evaluate, improve).
+
+**Features for New Apps:**
+- **Product Planning**: Features, user personas, user journeys, MVP prioritization
+- **Technical Planning**: Architecture selection (MVVM/TCA/etc.), data modeling, tech stack decisions
+- **UI/UX Planning**: Design system, navigation patterns, accessibility, screen planning
+- **Non-Functional Requirements**: Performance, security, testing strategy, analytics
+- **Distribution Planning**: App Store preparation, monetization, timeline, localization
+- **Documentation Generation**: Creates markdown files (overview.md, features.md, architecture.md, tech-stack.md, ui-ux.md, data-model.md, personas.md, roadmap.md) for version control and team sharing
+
+**Features for Existing Apps:**
+- **Architecture Analysis**: Evaluate current pattern, consistency, separation of concerns
+- **Tech Stack Assessment**: Review UI framework, dependencies, identify improvements
+- **Code Quality Review**: File sizes, organization, naming, testing coverage
+- **Performance Audit**: Memory management, best practices, optimization opportunities
+- **Improvement Roadmap**: Prioritized recommendations with effort estimates
+- **Current State Documentation**: Creates markdown files documenting what exists (overview.md, features.md, architecture.md, tech-stack.md, ui-ux.md, data-model.md)
+- **Analysis Documentation**: Creates markdown files for improvements (analysis-report.md, recommendations.md, issues.md, roadmap.md)
+
+**When to use:**
+- **New apps**: Starting a new iOS app project, planning features, choosing architecture
+- **Existing apps**: Analyzing current app, evaluating tech stack, planning refactoring or improvements
+
+**Modular Structure:**
+- `SKILL.md` - Main planning process and workflow
+- `planning-checklist.md` - Comprehensive phase-by-phase planning checklist
+- `architecture-guide.md` - Detailed architecture patterns and decision framework
+- `tech-stack-options.md` - Technology choices for iOS development
+
 ## 🚀 Installation
 
 ### Option 1: Manual Installation
@@ -103,6 +143,7 @@ cd .claude/skills
 ln -s /path/to/claude-code-ios-skills/skills/coding-best-practices coding-best-practices
 ln -s /path/to/claude-code-ios-skills/skills/ui-review ui-review
 ln -s /path/to/claude-code-ios-skills/skills/skill-creator skill-creator
+ln -s /path/to/claude-code-ios-skills/skills/app-planner app-planner
 ```
 
 ## 📖 Usage
@@ -160,6 +201,98 @@ Claude: [Activates skill-creator skill]
 - "how do I make a skill"
 - "skill best practices"
 
+### Using app-planner
+
+**For New Apps:**
+```
+You: "I want to plan a new expense tracking app"
+
+Claude: [Activates app-planner skill]
+- Gathers project context
+- Guides through product planning
+- Helps choose architecture and tech stack
+- Plans UI/UX and accessibility
+- Creates documentation files:
+  • docs/planning/overview.md
+  • docs/planning/features.md
+  • docs/planning/architecture.md
+  • docs/planning/tech-stack.md
+  • docs/planning/ui-ux.md
+  • docs/planning/roadmap.md
+  • (+ personas.md, data-model.md if applicable)
+```
+
+**For Existing Apps:**
+```
+You: "Run through my existing iOS app and analyze it"
+
+Claude: [Activates app-planner skill]
+- Discovers codebase structure
+- Analyzes architecture and tech stack
+- Evaluates code quality and patterns
+- Identifies issues and gaps
+- Creates current state documentation:
+  • docs/current/overview.md (what the app is)
+  • docs/current/features.md (current features)
+  • docs/current/architecture.md (current patterns)
+  • docs/current/tech-stack.md (current tech)
+  • docs/current/ui-ux.md (current UI state)
+  • docs/current/data-model.md (current data)
+- Creates analysis documentation:
+  • docs/analysis/analysis-report.md (full assessment)
+  • docs/analysis/recommendations.md (improvements)
+  • docs/analysis/issues.md (issue tracker)
+  • docs/analysis/roadmap.md (improvement plan)
+```
+
+**Trigger phrases:**
+- **New apps**: "plan a new app", "what should I consider for a new app", "architecture planning"
+- **Existing apps**: "analyze my app", "run through my existing app", "evaluate my iOS app", "tech stack review"
+
+## 📄 Documentation Files Created
+
+### For New Apps (8 files)
+
+```
+your-project/
+└── docs/
+    └── planning/
+        ├── overview.md          # Executive summary & key decisions
+        ├── features.md          # Feature list, priorities, estimates
+        ├── architecture.md      # Architecture pattern & structure
+        ├── tech-stack.md        # Technology choices & justification
+        ├── ui-ux.md            # Design system, navigation, screens
+        ├── data-model.md       # Entities, relationships, sync
+        ├── personas.md         # User personas (if created)
+        └── roadmap.md          # Timeline, milestones, risks
+```
+
+### For Existing Apps (10 files)
+
+```
+your-project/
+└── docs/
+    ├── current/              # What EXISTS now
+    │   ├── overview.md       # Current app state & health
+    │   ├── features.md       # All current features
+    │   ├── architecture.md   # Current patterns & structure
+    │   ├── tech-stack.md     # Current technologies
+    │   ├── ui-ux.md         # Current design & UX
+    │   └── data-model.md    # Current data structure
+    └── analysis/             # What NEEDS IMPROVEMENT
+        ├── analysis-report.md    # Full assessment
+        ├── recommendations.md    # Prioritized improvements
+        ├── issues.md            # Issue tracker
+        └── roadmap.md           # 4-phase improvement plan
+```
+
+**Benefits:**
+- ✅ Version controlled (lives in your git repo)
+- ✅ Team collaboration (easy to share and edit)
+- ✅ Living documentation (update as project evolves)
+- ✅ Professional standards (complete project documentation)
+- ✅ Onboarding (new team members can understand quickly)
+
 ## 🏗️ Skill Architecture
 
 ### Modularization Strategy
@@ -208,7 +341,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🎯 Roadmap
 
-Future skills and improvements:
+### Recently Added
+
+- [x] **app-planner** - Comprehensive iOS app planning from concept to architecture ✨ **NEW**
+
+### Future Skills
 
 - [ ] **unit-testing** - Unit test generation and review
 - [ ] **swiftui-preview** - SwiftUI preview generator
@@ -216,6 +353,8 @@ Future skills and improvements:
 - [ ] **migration-helper** - Data model migration assistant
 - [ ] **performance-analyzer** - Performance optimization suggestions
 - [ ] **localization-checker** - Localization completeness checker
+- [ ] **feature-designer** - Individual feature design and specification
+- [ ] **data-modeler** - Core Data model design assistant
 
 ## 📚 Resources
 
