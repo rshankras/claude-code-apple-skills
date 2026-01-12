@@ -1,0 +1,209 @@
+{
+  "app_category": "Task Management",
+  "analysis_date": "2026-01",
+  "competitors": [
+    {
+      "name": "Todoist",
+      "category": "market_leader",
+      "app_store_rating": "4.6/5",
+      "estimated_users": "25M+",
+      "pricing": {
+        "model": "freemium_subscription",
+        "free_tier": "Basic task management",
+        "paid_tiers": [
+          {"name": "Pro", "price": "$4/month", "annual": "$48/year"},
+          {"name": "Business", "price": "$6/user/month", "annual": "$72/user/year"}
+        ]
+      },
+      "key_features": [
+        "Natural language task input",
+        "Recurring tasks",
+        "Projects and sections",
+        "Collaboration",
+        "Integrations (email, calendar)",
+        "Priority levels",
+        "Comments and file attachments"
+      ],
+      "unique_features": [
+        "Karma system (gamification)",
+        "Strong natural language parsing"
+      ],
+      "strengths": [
+        "Excellent cross-platform support",
+        "Strong brand recognition",
+        "Large user base and ecosystem",
+        "Reliable syncing",
+        "Good collaboration features"
+      ],
+      "weaknesses": [
+        "No AI prioritization",
+        "Limited offline functionality on free tier",
+        "Collaboration features only in expensive tier",
+        "UI feels dated compared to newer apps"
+      ],
+      "target_audience": "Professionals and teams",
+      "positioning": "The reliable, cross-platform task manager"
+    },
+    {
+      "name": "Things",
+      "category": "premium",
+      "app_store_rating": "4.8/5",
+      "estimated_users": "2M+",
+      "pricing": {
+        "model": "one_time",
+        "mac": "$49.99",
+        "iphone": "$9.99",
+        "ipad": "$19.99"
+      },
+      "key_features": [
+        "Beautiful, minimalist UI",
+        "Projects and areas",
+        "Today view",
+        "Upcoming view",
+        "Tags",
+        "Checklists",
+        "Apple ecosystem integration"
+      ],
+      "unique_features": [
+        "Evening routine feature",
+        "Elegant design",
+        "Deep Apple ecosystem integration"
+      ],
+      "strengths": [
+        "Best-in-class design",
+        "Native Apple experience",
+        "One-time purchase (no subscription)",
+        "Fast and responsive",
+        "Excellent widget support"
+      ],
+      "weaknesses": [
+        "Apple-only (no Windows/Android)",
+        "No collaboration features",
+        "No AI features",
+        "Separate purchase for each device type",
+        "No web version"
+      ],
+      "target_audience": "Apple users who value design",
+      "positioning": "The beautiful task manager for Apple users"
+    },
+    {
+      "name": "OmniFocus",
+      "category": "power_users",
+      "app_store_rating": "4.3/5",
+      "estimated_users": "500K+",
+      "pricing": {
+        "model": "subscription_or_one_time",
+        "subscription": "$9.99/month or $99.99/year",
+        "one_time": "$99.99 (standard), $149.99 (pro)"
+      },
+      "key_features": [
+        "GTD methodology",
+        "Advanced perspectives",
+        "Custom workflows",
+        "Forecast view",
+        "Review mode",
+        "Automation",
+        "Tags and projects"
+      ],
+      "unique_features": [
+        "Most powerful filtering system",
+        "Custom perspectives",
+        "GTD-optimized workflow"
+      ],
+      "strengths": [
+        "Most powerful features for GTD users",
+        "Highly customizable",
+        "Excellent automation",
+        "Strong community",
+        "Lifetime purchase option"
+      ],
+      "weaknesses": [
+        "Steep learning curve",
+        "Overwhelming for casual users",
+        "Expensive",
+        "UI feels complex",
+        "Overkill for simple task management"
+      ],
+      "target_audience": "GTD practitioners and power users",
+      "positioning": "The professional-grade task management system"
+    }
+  ],
+  "feature_matrix": {
+    "Subtasks": {"Todoist": true, "Things": true, "OmniFocus": true},
+    "Natural Language Input": {"Todoist": true, "Things": false, "OmniFocus": false},
+    "AI Prioritization": {"Todoist": false, "Things": false, "OmniFocus": false},
+    "Collaboration": {"Todoist": true, "Things": false, "OmniFocus": false},
+    "Calendar Integration": {"Todoist": true, "Things": false, "OmniFocus": true},
+    "Cross-platform": {"Todoist": true, "Things": false, "OmniFocus": false},
+    "Beautiful UI": {"Todoist": false, "Things": true, "OmniFocus": false},
+    "GTD Workflows": {"Todoist": false, "Things": false, "OmniFocus": true},
+    "Gamification": {"Todoist": true, "Things": false, "OmniFocus": false}
+  },
+  "feature_gaps": [
+    "AI-powered prioritization (nobody does this well)",
+    "Context-aware task suggestions (missing entirely)",
+    "Smart deadline predictions based on task type",
+    "Learning from completion patterns",
+    "Automatic task categorization"
+  ],
+  "pricing_insights": {
+    "average_subscription": "$6/month",
+    "range": "$4-10/month subscription, or $10-150 one-time",
+    "common_model": "Freemium subscription (market leader) or Premium one-time (niche)",
+    "pricing_gaps": [
+      "No middle ground between $4/mo freemium and $10/mo premium",
+      "Lifetime options are expensive ($100+)",
+      "No good family plans"
+    ]
+  },
+  "differentiation_opportunities": [
+    {
+      "opportunity": "AI-First Task Management",
+      "reasoning": "None of the major players have strong AI features. Todoist has basic NLP but no intelligent prioritization or suggestions.",
+      "features": [
+        "Automatic priority assignment based on deadline, importance, and user patterns",
+        "Context-aware task suggestions",
+        "Smart deadline recommendations",
+        "Learning from completion behavior"
+      ],
+      "potential_impact": "high",
+      "risk": "medium - AI features need to work well or they're gimmicky"
+    },
+    {
+      "opportunity": "Beautiful + Powerful (Things + OmniFocus hybrid)",
+      "reasoning": "Things has the best design but lacks power features. OmniFocus has power but poor UX. Gap in middle.",
+      "features": [
+        "Beautiful minimal UI like Things",
+        "Advanced features like custom filters and automation",
+        "Progressive disclosure of complexity"
+      ],
+      "potential_impact": "medium",
+      "risk": "high - hard to balance simplicity and power"
+    },
+    {
+      "opportunity": "Truly Native Apple Experience with Modern Features",
+      "reasoning": "Things is Apple-only but lacks modern features like AI and collaboration. Todoist has features but isn't truly native.",
+      "features": [
+        "Deep Apple ecosystem integration (Shortcuts, Widgets, Watch)",
+        "AI features",
+        "Optional collaboration",
+        "Privacy-first approach"
+      ],
+      "potential_impact": "high",
+      "risk": "low - clear positioning"
+    }
+  ],
+  "market_positioning_map": {
+    "axes": ["Price (low to high)", "Complexity (simple to advanced)"],
+    "competitors": [
+      {"name": "Todoist", "position": [4, 5], "quadrant": "mid-price, mid-complexity"},
+      {"name": "Things", "position": [6, 3], "quadrant": "higher-price, simpler"},
+      {"name": "OmniFocus", "position": [9, 9], "quadrant": "expensive, very complex"}
+    ],
+    "opportunity_quadrants": [
+      {"quadrant": "Mid-price (4-6), Simple-to-Mid complexity (3-5)", "reasoning": "Gap between Things and Todoist"},
+      {"quadrant": "Mid-price (5-7), Mid complexity with AI (6)", "reasoning": "Modern features at reasonable price"}
+    ]
+  },
+  "strategic_recommendation": "Position as 'The AI-powered task manager for Apple users' - combining Things' beautiful native experience with modern AI features like intelligent prioritization and context-aware suggestions. Price at $5-6/month or $50-60 one-time to sit between Todoist and Things. Target Apple users who want more than Todoist's cross-platform compromise but find OmniFocus too complex. Differentiate on AI smarts while maintaining Apple-quality design."
+}

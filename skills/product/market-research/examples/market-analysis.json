@@ -1,0 +1,156 @@
+{
+  "market_category": "Task Management Apps (iOS/macOS)",
+  "analysis_date": "2026-01",
+  "market_sizing": {
+    "tam": {
+      "value": "$4.5B",
+      "description": "Global productivity software market",
+      "calculation": "Productivity software market ($50B) × Task management segment (9%)"
+    },
+    "sam": {
+      "value": "$900M",
+      "description": "iOS/macOS task management apps",
+      "calculation": "TAM ($4.5B) × Apple platform users (30%) × App Store addressable (67%)"
+    },
+    "som": {
+      "value": "$45M",
+      "description": "Realistic 3-year market capture",
+      "calculation": "SAM ($900M) × New entrant realistic share (5%)"
+    }
+  },
+  "market_growth": {
+    "historical_cagr_2021_2025": "12%",
+    "projected_cagr_2026_2030": "10%",
+    "growth_drivers": [
+      "Remote and hybrid work adoption",
+      "Digital task management replacing paper",
+      "Mobile-first workflows",
+      "Integration with other productivity tools"
+    ],
+    "headwinds": [
+      "Market saturation with established players",
+      "Free/bundled alternatives (Apple Reminders)",
+      "Consolidation toward ecosystem apps (Notion, Microsoft)"
+    ]
+  },
+  "market_maturity": {
+    "stage": "Mature",
+    "lifecycle_position": "Late growth / Early maturity",
+    "characteristics": [
+      "Established market leaders with 5-10+ years presence",
+      "Clear product categories and user expectations",
+      "Feature parity across top apps",
+      "Competition on UX and specific features",
+      "Price compression (race to free tier)"
+    ],
+    "implications_for_new_entrants": "Differentiation is critical. Cannot compete on 'basic task management'. Must have unique value proposition (AI, specific workflow, design excellence)."
+  },
+  "entry_barriers": {
+    "technical": {
+      "level": "Low",
+      "details": "Task management is well-understood problem. Open source libraries available. Cloud sync via CloudKit/iCloud."
+    },
+    "brand": {
+      "level": "High",
+      "details": "Strong brand equity with Todoist, Things, OmniFocus. Users trust established apps with their data."
+    },
+    "network_effects": {
+      "level": "Medium",
+      "details": "Team/collaboration features create lock-in. Individual use has weak network effects."
+    },
+    "switching_costs": {
+      "level": "Medium-High",
+      "details": "Users have existing tasks, projects, and workflows. Migration friction. Habit formation around current app."
+    },
+    "capital_requirements": {
+      "level": "Low",
+      "details": "Indie developer can build MVP. Main costs: development time, marketing."
+    },
+    "customer_acquisition": {
+      "level": "High",
+      "details": "CAC $20-50 per user. Organic discovery difficult. ASO and word-of-mouth critical."
+    },
+    "overall_assessment": "Medium-High barriers. Biggest challenges: brand recognition and customer acquisition in crowded market."
+  },
+  "distribution_channels": {
+    "app_store": {
+      "percentage": "75%",
+      "characteristics": "Primary channel. Discoverability challenging. ASO critical. Top charts dominated by established apps.",
+      "success_factors": ["Strong ASO", "User reviews/ratings", "Regular updates", "Feature screenshots"]
+    },
+    "direct_website": {
+      "percentage": "15%",
+      "characteristics": "Power users. Higher pricing possible. Better for subscription retention.",
+      "success_factors": ["SEO", "Content marketing", "Free trial", "Demo"]
+    },
+    "word_of_mouth": {
+      "percentage": "10%",
+      "characteristics": "Productivity communities, Reddit, Twitter, YouTube. High-intent users with lower CAC.",
+      "success_factors": ["Exceptional UX", "Unique features", "Community engagement"]
+    }
+  },
+  "revenue_potential": {
+    "arpu": {
+      "freemium_model": "$12-15/year (5-7% convert to $20-25/year premium)",
+      "paid_only_model": "$30-40/year",
+      "premium_positioning": "$60-100/year"
+    },
+    "conversion_rates": {
+      "free_to_paid": "3-7% (industry average for productivity apps)",
+      "trial_to_paid": "15-25% (with 7-14 day trial)",
+      "annual_vs_monthly": "40% choose annual (better LTV)"
+    },
+    "churn": {
+      "monthly": "5-8%",
+      "annual": "30-40% yearly",
+      "notes": "Task management has moderate churn. Habit formation improves retention."
+    },
+    "ltv": {
+      "range": "$150-300",
+      "calculation": "2-5 year user lifecycle at $40-60 annual revenue",
+      "notes": "Higher LTV for annual subscribers and power users"
+    },
+    "realistic_projections": {
+      "year_1": {
+        "users": "1K-5K",
+        "revenue": "$40K-200K",
+        "arpu": "$40"
+      },
+      "year_3": {
+        "users": "10K-50K",
+        "revenue": "$400K-2M",
+        "arpu": "$40"
+      },
+      "path_to_scale": "Requires: (1) Strong differentiation, (2) Word-of-mouth growth engine, (3) Retention >85%, (4) Effective ASO"
+    }
+  },
+  "market_segments": {
+    "individual_users": {
+      "size": "70% of market",
+      "characteristics": "Personal task management. Price sensitive. Less willing to pay for premium features.",
+      "competitors": "Todoist, Things, Apple Reminders"
+    },
+    "teams": {
+      "size": "25% of market",
+      "characteristics": "Collaboration features required. Higher willingness to pay. Longer sales cycles.",
+      "competitors": "Asana, Monday.com, Todoist Business"
+    },
+    "power_users": {
+      "size": "5% of market",
+      "characteristics": "GTD practitioners. Want advanced features. Willing to pay premium.",
+      "competitors": "OmniFocus, Things (via ecosystem)"
+    }
+  },
+  "opportunity_score": "6/10",
+  "opportunity_assessment": "Moderate",
+  "detailed_reasoning": "Large market ($900M SAM) with continued growth (10% CAGR) indicates opportunity. However, mature market with strong incumbents creates high barriers. Success requires: (1) Clear differentiation (AI, unique workflow, or design excellence), (2) Excellent execution on core features, (3) Effective customer acquisition strategy. Not a 'gold rush' market but sustainable business possible with right positioning. Best opportunities in underserved niches (e.g., specific professions, AI-first, Apple-native premium).",
+  "recommendations": [
+    "Target specific niche rather than broad 'task management'",
+    "Focus on differentiation (AI features, unique UX, specific workflow)",
+    "Plan for 18-24 month runway to build user base",
+    "Prioritize retention over acquisition initially",
+    "Consider freemium with strong free tier to build base",
+    "Build for word-of-mouth (exceptional UX, unique value)",
+    "Realistic year-3 goal: $500K-1M revenue (sustainable indie business)"
+  ]
+}

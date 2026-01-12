@@ -1,400 +1,310 @@
-# Claude Code Skills for iOS/Swift Development
+# Claude Code Skills for Apple Platform Development
 
-A collection of professional, well-structured Claude Code skills for iOS and Swift development. These skills help you **plan new apps**, **analyze existing apps**, maintain code quality, ensure HIG compliance, and create new skills with best practices.
-
-## ✨ Key Highlights
-
-- **📱 app-planner**: Complete app planning & analysis with **automatic documentation generation**
-  - New apps: Creates 8 planning docs (features, architecture, tech stack, roadmap, etc.)
-  - Existing apps: Creates 10 analysis docs (current state + improvement recommendations)
-- **🔍 Code Review**: Swift/iOS best practices and architecture patterns
-- **🎨 UI/UX Review**: HIG compliance and accessibility auditing
-- **🛠️ Skill Creation**: Meta-skill for creating new Claude Code skills
+A comprehensive collection of Claude Code skills for iOS, macOS, and product development. These skills help you **plan and build apps**, **maintain code quality**, **ensure HIG compliance**, and guide you from **idea to App Store**.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 📦 Skills Included
+## What's Included
 
-### 🔍 coding-best-practices
+| Category | Skills | Purpose |
+|----------|--------|---------|
+| **iOS** | 3 skills | iOS app planning, code review, UI/UX review |
+| **macOS** | 8 skills | macOS development, Tahoe APIs, SwiftData, AppKit bridge |
+| **Product** | 10 skills | Idea validation to App Store (complete workflow) |
+| **Shared** | 1 skill | Skill creation templates |
 
-Reviews Swift/iOS code for adherence to modern Swift idioms, Apple platform best practices, architecture patterns, and code quality standards.
+**Total: 22 skills** covering the entire Apple development lifecycle.
 
-**Features:**
-- **Swift Language Patterns**: Optionals handling, type safety, collections, error handling, naming conventions
-- **SwiftUI Best Practices**: State management, view composition, performance optimization
-- **MVVM Architecture**: Separation of concerns, code organization, memory management
-- **Core Data Patterns**: Context management, saving/fetching, relationships, CloudKit integration
+## Directory Structure
 
-**When to use:**
-- Code reviews
-- Refactoring sessions
-- Architecture reviews
-- Quality audits
+```
+skills/
+├── ios/                        # iOS-specific skills
+│   ├── app-planner/            # iOS app architecture planning
+│   ├── coding-best-practices/  # Swift/iOS code review
+│   └── ui-review/              # HIG compliance, accessibility
+│
+├── macos/                      # macOS-specific skills
+│   ├── app-planner/            # macOS app planning
+│   ├── appkit-swiftui-bridge/  # NSViewRepresentable, hosting controllers
+│   ├── architecture-patterns/  # SOLID, design patterns, modular design
+│   ├── coding-best-practices/  # macOS Swift 6+ code review
+│   ├── macos-capabilities/     # Sandboxing, extensions, menubar, background
+│   ├── macos-tahoe-apis/       # macOS 26 APIs, Apple Intelligence, MLX
+│   ├── swiftdata-architecture/ # SwiftData patterns, queries, performance
+│   └── ui-review-tahoe/        # macOS Tahoe HIG, Liquid Glass design
+│
+├── product/                    # Product development workflow
+│   ├── product-agent/          # Idea validation, problem discovery
+│   ├── competitive-analysis/   # Competitor research, feature gaps
+│   ├── market-research/        # TAM/SAM/SOM, market sizing
+│   ├── prd-generator/          # Product Requirements Document
+│   ├── architecture-spec/      # Technical architecture spec
+│   ├── ux-spec/                # UI/UX specifications
+│   ├── implementation-guide/   # Development roadmap, pseudo-code
+│   ├── implementation-spec/    # Orchestrator for all specs
+│   ├── test-spec/              # Testing strategy
+│   ├── release-spec/           # App Store launch guide
+│   └── WORKFLOW.md             # Complete idea-to-App Store workflow
+│
+└── shared/                     # Platform-agnostic skills
+    └── skill-creator/          # Templates for creating new skills
+```
 
-**Modular Structure:**
-- `SKILL.md` - Main review process
-- `swift-patterns.md` - Swift language best practices
-- `swiftui-patterns.md` - SwiftUI-specific patterns
-- `architecture-patterns.md` - MVVM and organization
+## Installation
+
+### Option 1: Copy to Project
+
+```bash
+# Clone the repository
+git clone https://github.com/rshankras/claude-code-ios-skills.git
+
+# Copy skills to your project
+mkdir -p your-project/.claude/skills
+cp -r claude-code-ios-skills/skills/* your-project/.claude/skills/
+```
+
+### Option 2: Global Installation
+
+```bash
+# Clone to a permanent location
+git clone https://github.com/rshankras/claude-code-ios-skills.git ~/claude-code-apple-skills
+
+# Copy to global Claude config
+mkdir -p ~/.claude/skills
+cp -r ~/claude-code-apple-skills/skills/* ~/.claude/skills/
+```
+
+### Option 3: Symlink (for active development)
+
+```bash
+# Symlink specific skill categories
+ln -s /path/to/claude-code-ios-skills/skills/ios ~/.claude/skills/ios
+ln -s /path/to/claude-code-ios-skills/skills/macos ~/.claude/skills/macos
+ln -s /path/to/claude-code-ios-skills/skills/product ~/.claude/skills/product
+```
+
+## Skills Reference
+
+### iOS Skills
+
+#### `ios/coding-best-practices`
+Reviews Swift/iOS code for modern Swift idioms, Apple platform best practices, architecture patterns, and code quality.
+
+**Modules:**
+- `swift-patterns.md` - Optionals, type safety, collections, error handling
+- `swiftui-patterns.md` - State management, view composition, performance
+- `architecture-patterns.md` - MVVM, code organization, memory management
 - `coredata-patterns.md` - Core Data best practices
 
-### 🎨 ui-review
+**Trigger phrases:** "review my code", "check best practices", "code quality audit"
 
-Comprehensive UI/UX review of SwiftUI code against Apple's Human Interface Guidelines, font best practices, and accessibility standards for iOS and watchOS.
+#### `ios/ui-review`
+Comprehensive UI/UX review against Apple's Human Interface Guidelines, accessibility standards.
 
-**Features:**
-- **HIG Compliance**: Layout, spacing, navigation, colors, tap targets
-- **Font Usage**: Dynamic Type support, text styles, typography hierarchy
-- **Accessibility**: VoiceOver, labels, hints, traits, testing guidelines
-- **Platform-Specific**: iOS and watchOS requirements
+**Modules:**
+- `hig-checklist.md` - Layout, spacing, navigation, colors
+- `font-guidelines.md` - Dynamic Type, typography
+- `accessibility-quick-ref.md` - VoiceOver, labels, traits
 
-**When to use:**
-- UI/UX reviews
-- Accessibility audits
-- HIG compliance checks
-- Design system validation
+**Trigger phrases:** "review the UI", "HIG compliance", "accessibility audit"
 
-**Modular Structure:**
-- `SKILL.md` - Main review process
-- `hig-checklist.md` - Comprehensive HIG checklist
-- `font-guidelines.md` - Typography and Dynamic Type
-- `accessibility-quick-ref.md` - Accessibility quick reference
+#### `ios/app-planner`
+Complete iOS app planning from concept to architecture with automatic documentation generation.
 
-### 🛠️ skill-creator
+**Creates:** 8 planning documents (overview, features, architecture, tech-stack, ui-ux, data-model, personas, roadmap)
 
-Meta-skill that guides you through creating well-structured, modularized Claude Code skills with best practices.
+**Trigger phrases:** "plan a new iOS app", "architecture planning"
 
-**Features:**
-- **Step-by-Step Guide**: Complete skill creation workflow
-- **Templates**: Ready-to-use templates for simple and complex skills
-- **Best Practices**: Naming, structure, modularization strategies
-- **Examples**: Real-world skill examples
+---
 
-**When to use:**
-- Creating new skills
-- Refactoring existing skills
-- Learning skill best practices
-- Planning skill architecture
+### macOS Skills
 
-**Modular Structure:**
-- `SKILL.md` - Main creation guide
+#### `macos/coding-best-practices`
+macOS Swift 6+ code review with focus on modern concurrency, architecture principles.
+
+**Modules:**
+- `swift-language.md` - Modern Swift 6+ features
+- `architecture-principles.md` - SOLID with examples
+- `data-persistence.md` - SwiftData best practices
+- `code-organization.md` - Modular architecture
+- `modern-concurrency.md` - Async/await, actors
+
+#### `macos/ui-review-tahoe`
+macOS Tahoe (26) UI review including Liquid Glass design system.
+
+**Modules:**
+- `macos-tahoe-hig.md` - Tahoe-specific guidelines
+- `liquid-glass-design.md` - Glass material implementation
+- `swiftui-macos.md` - macOS SwiftUI patterns
+- `appkit-modern.md` - Modern AppKit practices
+- `accessibility.md` - macOS accessibility
+
+#### `macos/macos-tahoe-apis`
+macOS 26 specific APIs and features.
+
+**Modules:**
+- `tahoe-features.md` - New macOS 26 features
+- `apple-intelligence.md` - On-device AI integration
+- `mlx-framework.md` - MLX machine learning
+- `continuity.md` - Cross-device features
+- `xcode16.md` - Xcode 16 features
+
+#### `macos/swiftdata-architecture`
+SwiftData patterns for data modeling and persistence.
+
+**Modules:**
+- `schema-design.md` - Model design patterns
+- `query-patterns.md` - Efficient querying
+- `repository-pattern.md` - Data layer abstraction
+- `performance.md` - Optimization techniques
+
+#### `macos/architecture-patterns`
+Software architecture principles and patterns.
+
+**Modules:**
+- `solid-detailed.md` - SOLID principles with Swift examples
+- `design-patterns.md` - Common design patterns
+- `modular-design.md` - Module architecture
+
+#### `macos/appkit-swiftui-bridge`
+Bridging AppKit and SwiftUI in hybrid apps.
+
+**Modules:**
+- `nsviewrepresentable.md` - Wrapping AppKit views
+- `hosting-controllers.md` - SwiftUI in AppKit
+- `state-management.md` - Cross-framework state
+
+#### `macos/macos-capabilities`
+macOS-specific capabilities and features.
+
+**Modules:**
+- `sandboxing.md` - App sandbox configuration
+- `extensions.md` - App extensions
+- `menubar.md` - Menu bar apps
+- `background.md` - Background execution
+
+#### `macos/app-planner`
+macOS app planning for new and existing apps.
+
+**Modules:**
+- `new-app-planning.md` - New app workflow
+- `existing-app-analysis.md` - Audit existing apps
+
+---
+
+### Product Skills
+
+The product skills provide a complete **Idea to App Store** workflow. See `skills/product/WORKFLOW.md` for the full pipeline.
+
+#### Workflow Overview
+
+```
+Idea → Discovery → Market Research → PRD → Architecture → UX → Implementation → Test → Release
+```
+
+#### `product/product-agent`
+Validates product ideas with honest assessment of build/don't build.
+
+**Output:** Problem statement, severity score, opportunity assessment, recommendation
+
+#### `product/competitive-analysis`
+Deep competitor research with feature gaps and positioning opportunities.
+
+#### `product/market-research`
+TAM/SAM/SOM calculations, growth trends, revenue potential.
+
+#### `product/prd-generator`
+Generates comprehensive Product Requirements Document.
+
+#### `product/architecture-spec`
+Technical architecture specification from PRD.
+
+#### `product/ux-spec`
+UI/UX specifications with wireframes and design system.
+
+#### `product/implementation-guide`
+Development roadmap with pseudo-code and patterns.
+
+#### `product/implementation-spec`
+Orchestrates generation of all specification documents.
+
+#### `product/test-spec`
+Testing strategy with unit, integration, and UI test plans.
+
+#### `product/release-spec`
+App Store launch guide with ASO and submission checklist.
+
+---
+
+### Shared Skills
+
+#### `shared/skill-creator`
+Meta-skill for creating new Claude Code skills with best practices.
+
+**Templates:**
 - `skill-template.md` - Simple skill template
 - `complex-skill-template.md` - Modularized skill template
 
-### 📱 app-planner
+## Usage Examples
 
-Comprehensive iOS/Swift app planning and analysis tool. Works with both **new apps** (concept to architecture) and **existing apps** (audit, evaluate, improve).
-
-**Features for New Apps:**
-- **Product Planning**: Features, user personas, user journeys, MVP prioritization
-- **Technical Planning**: Architecture selection (MVVM/TCA/etc.), data modeling, tech stack decisions
-- **UI/UX Planning**: Design system, navigation patterns, accessibility, screen planning
-- **Non-Functional Requirements**: Performance, security, testing strategy, analytics
-- **Distribution Planning**: App Store preparation, monetization, timeline, localization
-- **Documentation Generation**: Creates markdown files (overview.md, features.md, architecture.md, tech-stack.md, ui-ux.md, data-model.md, personas.md, roadmap.md) for version control and team sharing
-
-**Features for Existing Apps:**
-- **Architecture Analysis**: Evaluate current pattern, consistency, separation of concerns
-- **Tech Stack Assessment**: Review UI framework, dependencies, identify improvements
-- **Code Quality Review**: File sizes, organization, naming, testing coverage
-- **Performance Audit**: Memory management, best practices, optimization opportunities
-- **Improvement Roadmap**: Prioritized recommendations with effort estimates
-- **Current State Documentation**: Creates markdown files documenting what exists (overview.md, features.md, architecture.md, tech-stack.md, ui-ux.md, data-model.md)
-- **Analysis Documentation**: Creates markdown files for improvements (analysis-report.md, recommendations.md, issues.md, roadmap.md)
-
-**When to use:**
-- **New apps**: Starting a new iOS app project, planning features, choosing architecture
-- **Existing apps**: Analyzing current app, evaluating tech stack, planning refactoring or improvements
-
-**Modular Structure:**
-- `SKILL.md` - Main planning process and workflow
-- `planning-checklist.md` - Comprehensive phase-by-phase planning checklist
-- `architecture-guide.md` - Detailed architecture patterns and decision framework
-- `tech-stack-options.md` - Technology choices for iOS development
-
-## 🚀 Installation
-
-### Option 1: Manual Installation
-
-1. Clone this repository:
-```bash
-git clone https://github.com/rshankras/claude-code-ios-skills.git
+### iOS Code Review
+```
+You: "Review my ExpenseViewModel for best practices"
+Claude: [Activates ios/coding-best-practices]
+→ Reviews Swift idioms, MVVM architecture, Core Data usage
+→ Provides scored feedback with specific improvements
 ```
 
-2. Copy the skills to your project's `.claude/skills/` directory:
-```bash
-# From your project root
-mkdir -p .claude/skills
-cp -r /path/to/claude-code-ios-skills/skills/* .claude/skills/
+### macOS UI Review
+```
+You: "Check my macOS app for Tahoe HIG compliance"
+Claude: [Activates macos/ui-review-tahoe]
+→ Reviews Liquid Glass implementation
+→ Checks accessibility and platform conventions
 ```
 
-3. The skills will be automatically available in Claude Code
-
-### Option 2: Symlink (Advanced)
-
-For active development or if you want automatic updates:
-
-```bash
-# From your project root
-mkdir -p .claude/skills
-cd .claude/skills
-
-# Create symlinks
-ln -s /path/to/claude-code-ios-skills/skills/coding-best-practices coding-best-practices
-ln -s /path/to/claude-code-ios-skills/skills/ui-review ui-review
-ln -s /path/to/claude-code-ios-skills/skills/skill-creator skill-creator
-ln -s /path/to/claude-code-ios-skills/skills/app-planner app-planner
+### Product Validation
+```
+You: "Should I build a password manager for Apple ecosystem?"
+Claude: [Activates product/product-agent]
+→ Analyzes market saturation (iCloud Keychain, 1Password)
+→ Returns honest recommendation with reasoning
 ```
 
-## 📖 Usage
-
-### Using coding-best-practices
-
+### Full Product Workflow
 ```
-You: "Can you review my ExpenseViewModel for best practices?"
-
-Claude: [Activates coding-best-practices skill]
-- Reviews Swift idioms
-- Checks MVVM architecture
-- Validates Core Data usage
-- Provides scored feedback
+You: "Generate implementation specifications for my app idea"
+Claude: [Activates product/implementation-spec]
+→ Orchestrates PRD → Architecture → UX → Implementation → Test → Release
+→ Creates 7 specification documents in docs/
 ```
 
-**Trigger phrases:**
-- "review my code"
-- "check for best practices"
-- "audit code quality"
-- "refactor this code"
+## Contributing
 
-### Using ui-review
-
-```
-You: "Review AddExpenseView for HIG compliance and accessibility"
-
-Claude: [Activates ui-review skill]
-- Checks HIG compliance
-- Validates font usage
-- Audits accessibility
-- Tests Dynamic Type support
-```
-
-**Trigger phrases:**
-- "review the UI"
-- "check HIG compliance"
-- "accessibility audit"
-- "review fonts"
-
-### Using skill-creator
-
-```
-You: "Help me create a new skill for API testing"
-
-Claude: [Activates skill-creator skill]
-- Guides through requirements
-- Suggests structure
-- Provides templates
-- Helps with modularization
-```
-
-**Trigger phrases:**
-- "create a new skill"
-- "how do I make a skill"
-- "skill best practices"
-
-### Using app-planner
-
-**For New Apps:**
-```
-You: "I want to plan a new expense tracking app"
-
-Claude: [Activates app-planner skill]
-- Gathers project context
-- Guides through product planning
-- Helps choose architecture and tech stack
-- Plans UI/UX and accessibility
-- Creates documentation files:
-  • docs/planning/overview.md
-  • docs/planning/features.md
-  • docs/planning/architecture.md
-  • docs/planning/tech-stack.md
-  • docs/planning/ui-ux.md
-  • docs/planning/roadmap.md
-  • (+ personas.md, data-model.md if applicable)
-```
-
-**For Existing Apps:**
-```
-You: "Run through my existing iOS app and analyze it"
-
-Claude: [Activates app-planner skill]
-- Discovers codebase structure
-- Analyzes architecture and tech stack
-- Evaluates code quality and patterns
-- Identifies issues and gaps
-- Creates current state documentation:
-  • docs/current/overview.md (what the app is)
-  • docs/current/features.md (current features)
-  • docs/current/architecture.md (current patterns)
-  • docs/current/tech-stack.md (current tech)
-  • docs/current/ui-ux.md (current UI state)
-  • docs/current/data-model.md (current data)
-- Creates analysis documentation:
-  • docs/analysis/analysis-report.md (full assessment)
-  • docs/analysis/recommendations.md (improvements)
-  • docs/analysis/issues.md (issue tracker)
-  • docs/analysis/roadmap.md (improvement plan)
-```
-
-**Trigger phrases:**
-- **New apps**: "plan a new app", "what should I consider for a new app", "architecture planning"
-- **Existing apps**: "analyze my app", "run through my existing app", "evaluate my iOS app", "tech stack review"
-
-## 📄 Documentation Files Created
-
-### For New Apps (8 files)
-
-```
-your-project/
-└── docs/
-    └── planning/
-        ├── overview.md          # Executive summary & key decisions
-        ├── features.md          # Feature list, priorities, estimates
-        ├── architecture.md      # Architecture pattern & structure
-        ├── tech-stack.md        # Technology choices & justification
-        ├── ui-ux.md            # Design system, navigation, screens
-        ├── data-model.md       # Entities, relationships, sync
-        ├── personas.md         # User personas (if created)
-        └── roadmap.md          # Timeline, milestones, risks
-```
-
-### For Existing Apps (10 files)
-
-```
-your-project/
-└── docs/
-    ├── current/              # What EXISTS now
-    │   ├── overview.md       # Current app state & health
-    │   ├── features.md       # All current features
-    │   ├── architecture.md   # Current patterns & structure
-    │   ├── tech-stack.md     # Current technologies
-    │   ├── ui-ux.md         # Current design & UX
-    │   └── data-model.md    # Current data structure
-    └── analysis/             # What NEEDS IMPROVEMENT
-        ├── analysis-report.md    # Full assessment
-        ├── recommendations.md    # Prioritized improvements
-        ├── issues.md            # Issue tracker
-        └── roadmap.md           # 4-phase improvement plan
-```
-
-**Benefits:**
-- ✅ Version controlled (lives in your git repo)
-- ✅ Team collaboration (easy to share and edit)
-- ✅ Living documentation (update as project evolves)
-- ✅ Professional standards (complete project documentation)
-- ✅ Onboarding (new team members can understand quickly)
-
-## 🏗️ Skill Architecture
-
-### Modularization Strategy
-
-These skills demonstrate best practices for skill organization:
-
-**Simple Skills** (< 400 lines):
-```
-skill-name/
-└── SKILL.md
-```
-
-**Complex Skills** (> 400 lines):
-```
-skill-name/
-├── SKILL.md                # Main entry point (200-300 lines)
-├── patterns.md            # Code patterns and anti-patterns
-├── checklist.md           # Comprehensive checklists
-├── examples.md            # Code examples
-└── quick-ref.md           # Quick reference
-```
-
-### Benefits of Modularization
-
-- **Maintainability**: Easy to update specific sections
-- **Scalability**: Can add references without bloating main file
-- **Usability**: Quick access to focused information
-- **Clarity**: Main file stays concise and readable
-
-## 🤝 Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Ways to Contribute
-
 - Report bugs or issues
 - Suggest new skills
 - Improve existing skills
 - Add more examples
-- Improve documentation
 - Share your use cases
 
-## 📝 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) file.
 
-## 🎯 Roadmap
+## Author
 
-### Recently Added
+**Ravishankar** - [@rshankras](https://github.com/rshankras)
 
-- [x] **app-planner** - Comprehensive iOS app planning from concept to architecture ✨ **NEW**
-
-### Future Skills
-
-- [ ] **unit-testing** - Unit test generation and review
-- [ ] **swiftui-preview** - SwiftUI preview generator
-- [ ] **api-client** - REST API client generator
-- [ ] **migration-helper** - Data model migration assistant
-- [ ] **performance-analyzer** - Performance optimization suggestions
-- [ ] **localization-checker** - Localization completeness checker
-- [ ] **feature-designer** - Individual feature design and specification
-- [ ] **data-modeler** - Core Data model design assistant
-
-## 📚 Resources
-
-### Apple Documentation
-- [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
-- [iOS Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/designing-for-ios)
-- [SwiftUI Documentation](https://developer.apple.com/documentation/swiftui)
-- [Core Data Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreData/)
-
-### Claude Code
-- [Claude Code Documentation](https://docs.claude.com/claude-code)
-- [Claude Code Skills Guide](https://docs.claude.com/claude-code/skills)
-
-## ⭐ Show Your Support
-
-If you find these skills useful, please consider:
-- Starring this repository
-- Sharing with other iOS developers
-- Contributing improvements
-- Creating issues for bugs or suggestions
-
-## 👤 Author
-
-**Ravishankar**
-
-- GitHub: [@rshankras]
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Apple for comprehensive development guidelines
 - Claude Code team for the skills framework
-- iOS development community for best practices
-- Contributors and users of these skills
-
-## 📧 Contact
-
-For questions, suggestions, or feedback:
-- Open an issue on GitHub
-- Start a discussion in the Discussions tab
+- iOS/macOS development community for best practices
 
 ---
 
-**Note**: These skills are designed for iOS/Swift development but can be adapted for other Apple platforms (macOS, watchOS, tvOS).
+**Note**: After renaming this repo to `claude-code-apple-skills`, old links will automatically redirect.
