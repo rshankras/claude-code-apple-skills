@@ -1,3 +1,9 @@
+---
+name: implementation-guide
+description: Generates detailed implementation guide with pseudo-code and step-by-step development instructions. Creates IMPLEMENTATION_GUIDE.md from PRD, Architecture, and UX specs. Use when creating development roadmap.
+allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
+---
+
 # Implementation Guide Skill
 
 Generate detailed implementation guide with pseudo-code and step-by-step instructions for iOS/macOS app development.

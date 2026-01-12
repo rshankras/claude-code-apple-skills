@@ -1,3 +1,9 @@
+---
+name: implementation-spec
+description: Master orchestrator that generates all implementation specs (PRD, Architecture, UX, Implementation, Test, Release) from product plan. Use when generating complete specification package.
+allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
+---
+
 # Implementation Specification Orchestrator Skill
 
 Master orchestrator that generates complete implementation specifications by coordinating all role-based agents.
