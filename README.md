@@ -57,18 +57,18 @@ skills/
 
 ```bash
 # Clone the repository
-git clone https://github.com/rshankras/claude-code-ios-skills.git
+git clone https://github.com/rshankras/claude-code-apple-skills.git
 
 # Copy skills to your project
 mkdir -p your-project/.claude/skills
-cp -r claude-code-ios-skills/skills/* your-project/.claude/skills/
+cp -r claude-code-apple-skills/skills/* your-project/.claude/skills/
 ```
 
 ### Option 2: Global Installation
 
 ```bash
 # Clone to a permanent location
-git clone https://github.com/rshankras/claude-code-ios-skills.git ~/claude-code-apple-skills
+git clone https://github.com/rshankras/claude-code-apple-skills.git ~/claude-code-apple-skills
 
 # Copy to global Claude config
 mkdir -p ~/.claude/skills
@@ -78,11 +78,34 @@ cp -r ~/claude-code-apple-skills/skills/* ~/.claude/skills/
 ### Option 3: Symlink (for active development)
 
 ```bash
-# Symlink specific skill categories
-ln -s /path/to/claude-code-ios-skills/skills/ios ~/.claude/skills/ios
-ln -s /path/to/claude-code-ios-skills/skills/macos ~/.claude/skills/macos
-ln -s /path/to/claude-code-ios-skills/skills/product ~/.claude/skills/product
+# Create skills directory if needed
+mkdir -p ~/.claude/skills
+
+# Symlink skill categories
+ln -s /path/to/claude-code-apple-skills/skills/ios ~/.claude/skills/ios
+ln -s /path/to/claude-code-apple-skills/skills/macos ~/.claude/skills/macos
+ln -s /path/to/claude-code-apple-skills/skills/product ~/.claude/skills/product
+ln -s /path/to/claude-code-apple-skills/skills/shared ~/.claude/skills/shared
 ```
+
+## How Skills Are Organized
+
+Each category directory contains a **SKILL.md** entry point that acts as a router to sub-skills:
+
+```
+~/.claude/skills/
+├── ios/SKILL.md          → Routes to app-planner/, coding-best-practices/, ui-review/
+├── macos/SKILL.md        → Routes to 8 sub-skills (SwiftData, Tahoe APIs, etc.)
+├── product/SKILL.md      → Routes to 10 product workflow skills
+└── shared/SKILL.md       → Skill creation templates
+```
+
+When you invoke a skill (e.g., `/macos`), Claude:
+1. Reads the category's `SKILL.md` entry point
+2. Based on your question, reads relevant module files from subdirectories
+3. Applies the guidance to your specific context
+
+This modular approach keeps individual files focused while allowing each skill to cover a broad domain.
 
 ## Skills Reference
 
@@ -305,6 +328,3 @@ MIT License - see [LICENSE](LICENSE) file.
 - Claude Code team for the skills framework
 - iOS/macOS development community for best practices
 
----
-
-**Note**: After renaming this repo to `claude-code-apple-skills`, old links will automatically redirect.
