@@ -11,9 +11,10 @@ A comprehensive collection of Claude Code skills for iOS, macOS, and product dev
 | **iOS** | 3 skills | iOS app planning, code review, UI/UX review |
 | **macOS** | 8 skills | macOS development, Tahoe APIs, SwiftData, AppKit bridge |
 | **Product** | 10 skills | Idea validation to App Store (complete workflow) |
+| **Release Review** | 1 skill | Pre-release audit (security, privacy, UX, distribution) |
 | **Shared** | 1 skill | Skill creation templates |
 
-**Total: 22 skills** covering the entire Apple development lifecycle.
+**Total: 23 skills** covering the entire Apple development lifecycle.
 
 ## Directory Structure
 
@@ -46,6 +47,14 @@ skills/
 │   ├── test-spec/              # Testing strategy
 │   ├── release-spec/           # App Store launch guide
 │   └── WORKFLOW.md             # Complete idea-to-App Store workflow
+│
+├── release-review/             # Pre-release audit
+│   ├── SKILL.md                # Entry point and workflow
+│   ├── security-checklist.md   # Credentials, HTTPS, entitlements
+│   ├── privacy-checklist.md    # Data transparency, consent, GDPR
+│   ├── ux-polish-checklist.md  # Onboarding, empty states, accessibility
+│   ├── distribution-checklist.md # Code signing, notarization, App Store
+│   └── api-design-checklist.md # User-Agent, error handling, tokens
 │
 └── shared/                     # Platform-agnostic skills
     └── skill-creator/          # Templates for creating new skills
@@ -85,6 +94,7 @@ mkdir -p ~/.claude/skills
 ln -s /path/to/claude-code-apple-skills/skills/ios ~/.claude/skills/ios
 ln -s /path/to/claude-code-apple-skills/skills/macos ~/.claude/skills/macos
 ln -s /path/to/claude-code-apple-skills/skills/product ~/.claude/skills/product
+ln -s /path/to/claude-code-apple-skills/skills/release-review ~/.claude/skills/release-review
 ln -s /path/to/claude-code-apple-skills/skills/shared ~/.claude/skills/shared
 ```
 
@@ -97,6 +107,7 @@ Each category directory contains a **SKILL.md** entry point that acts as a route
 ├── ios/SKILL.md          → Routes to app-planner/, coding-best-practices/, ui-review/
 ├── macos/SKILL.md        → Routes to 8 sub-skills (SwiftData, Tahoe APIs, etc.)
 ├── product/SKILL.md      → Routes to 10 product workflow skills
+├── release-review/SKILL.md → 6-phase pre-release audit (security, privacy, UX, distribution, API)
 └── shared/SKILL.md       → Skill creation templates
 ```
 
@@ -260,6 +271,29 @@ App Store launch guide with ASO and submission checklist.
 
 ---
 
+### Release Review Skills
+
+#### `release-review`
+Senior developer-level pre-release audit for macOS and iOS apps. Identifies security vulnerabilities, privacy concerns, UX issues, and distribution problems with actionable fixes.
+
+**Modules:**
+- `security-checklist.md` - Keychain usage, credential storage, HTTPS, entitlements, hardened runtime
+- `privacy-checklist.md` - Data transparency, privacy manifests, user consent, third-party SDKs, GDPR
+- `ux-polish-checklist.md` - Onboarding, empty states, error handling, loading states, accessibility
+- `distribution-checklist.md` - Bundle ID, code signing, notarization, Info.plist, App Store requirements
+- `api-design-checklist.md` - User-Agent headers, error handling, token expiration, rate limiting
+
+**Output Format:**
+- 🔴 **Critical** - Must fix (security vulnerabilities, rejection risks)
+- 🟠 **High** - Should fix (poor UX, missing consent)
+- 🟡 **Medium** - Fix soon (incomplete features)
+- 🟢 **Low** - Nice to have (polish)
+- ✅ **Strengths** - What the app does well
+
+**Trigger phrases:** "review for release", "pre-release audit", "senior developer review", "App Store review"
+
+---
+
 ### Shared Skills
 
 #### `shared/skill-creator`
@@ -301,6 +335,15 @@ You: "Generate implementation specifications for my app idea"
 Claude: [Activates product/implementation-spec]
 → Orchestrates PRD → Architecture → UX → Implementation → Test → Release
 → Creates 7 specification documents in docs/
+```
+
+### Pre-Release Audit
+```
+You: "Review for release" or "Senior developer review"
+Claude: [Activates release-review]
+→ Runs 6-phase audit: Security → Privacy → UX → Distribution → API
+→ Returns prioritized issues with code fixes
+→ Identifies strengths and recommended action plan
 ```
 
 ## Contributing
