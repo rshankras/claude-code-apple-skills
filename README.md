@@ -11,11 +11,14 @@ A comprehensive collection of Claude Code skills for iOS, macOS, and product dev
 | **iOS** | 3 skills | iOS app planning, code review, UI/UX review |
 | **macOS** | 8 skills | macOS development, Tahoe APIs, SwiftData, AppKit bridge |
 | **Product** | 10 skills | Idea validation to App Store (complete workflow) |
-| **Generators** | 10 skills | Code generators for logging, analytics, onboarding, reviews, networking, auth, paywall, settings, persistence, error monitoring |
+| **Generators** | 18 skills | Code generators for common app features |
+| **Apple Intelligence** | 2 skills | Foundation Models (on-device LLM), Visual Intelligence |
+| **Design** | 1 skill | Liquid Glass design system |
+| **App Store** | 4 skills | ASO, descriptions, screenshots, keywords, review responses |
 | **Release Review** | 1 skill | Pre-release audit (security, privacy, UX, distribution) |
 | **Shared** | 1 skill | Skill creation templates |
 
-**Total: 33 skills** covering the entire Apple development lifecycle.
+**Total: 48 skills** covering the entire Apple development lifecycle.
 
 ## Directory Structure
 
@@ -49,7 +52,7 @@ skills/
 │   ├── release-spec/           # App Store launch guide
 │   └── WORKFLOW.md             # Complete idea-to-App Store workflow
 │
-├── generators/                 # Code generators (NEW)
+├── generators/                 # Code generators (18 skills)
 │   ├── logging-setup/          # Replace print() with Logger
 │   ├── analytics-setup/        # Protocol-based analytics (swappable)
 │   ├── onboarding-generator/   # Multi-step onboarding flow
@@ -59,7 +62,28 @@ skills/
 │   ├── paywall-generator/      # StoreKit 2 subscription paywalls
 │   ├── settings-screen/        # Complete settings UI
 │   ├── persistence-setup/      # SwiftData with optional iCloud sync
-│   └── error-monitoring/       # Crash reporting (Sentry/Crashlytics)
+│   ├── error-monitoring/       # Crash reporting (Sentry/Crashlytics)
+│   ├── ci-cd-setup/            # GitHub Actions, Xcode Cloud, fastlane
+│   ├── localization-setup/     # String catalogs, i18n infrastructure
+│   ├── push-notifications/     # APNs setup, rich notifications
+│   ├── deep-linking/           # URL schemes, universal links, App Intents
+│   ├── test-generator/         # Unit/UI test templates
+│   ├── accessibility-generator/# VoiceOver, Dynamic Type helpers
+│   ├── widget-generator/       # WidgetKit boilerplate
+│   └── feature-flags/          # Local and remote feature flags
+│
+├── apple-intelligence/         # Apple Intelligence features
+│   ├── foundation-models/      # On-device LLM, prompting, @Generable
+│   └── visual-intelligence/    # Camera-based search, IntentValueQuery
+│
+├── design/                     # Design system skills
+│   └── liquid-glass/           # .glassEffect() API, morphing, containers
+│
+├── app-store/                  # App Store optimization (ASO)
+│   ├── app-description-writer/ # Promotional text, descriptions, What's New
+│   ├── screenshot-planner/     # Screenshot sequences, captions
+│   ├── keyword-optimizer/      # Keywords, title, subtitle optimization
+│   └── review-response-writer/ # Professional review responses
 │
 ├── release-review/             # Pre-release audit
 │   ├── SKILL.md                # Entry point and workflow
@@ -108,6 +132,9 @@ ln -s /path/to/claude-code-apple-skills/skills/ios ~/.claude/skills/ios
 ln -s /path/to/claude-code-apple-skills/skills/macos ~/.claude/skills/macos
 ln -s /path/to/claude-code-apple-skills/skills/product ~/.claude/skills/product
 ln -s /path/to/claude-code-apple-skills/skills/generators ~/.claude/skills/generators
+ln -s /path/to/claude-code-apple-skills/skills/apple-intelligence ~/.claude/skills/apple-intelligence
+ln -s /path/to/claude-code-apple-skills/skills/design ~/.claude/skills/design
+ln -s /path/to/claude-code-apple-skills/skills/app-store ~/.claude/skills/app-store
 ln -s /path/to/claude-code-apple-skills/skills/release-review ~/.claude/skills/release-review
 ln -s /path/to/claude-code-apple-skills/skills/shared ~/.claude/skills/shared
 ```
@@ -118,12 +145,15 @@ Each category directory contains a **SKILL.md** entry point that acts as a route
 
 ```
 ~/.claude/skills/
-├── ios/SKILL.md          → Routes to app-planner/, coding-best-practices/, ui-review/
-├── macos/SKILL.md        → Routes to 8 sub-skills (SwiftData, Tahoe APIs, etc.)
-├── product/SKILL.md      → Routes to 10 product workflow skills
-├── generators/SKILL.md   → Code generators (10 skills: logging, analytics, onboarding, reviews, networking, auth, paywall, settings, persistence, error monitoring)
-├── release-review/SKILL.md → 6-phase pre-release audit (security, privacy, UX, distribution, API)
-└── shared/SKILL.md       → Skill creation templates
+├── ios/SKILL.md              → Routes to app-planner/, coding-best-practices/, ui-review/
+├── macos/SKILL.md            → Routes to 8 sub-skills (SwiftData, Tahoe APIs, etc.)
+├── product/SKILL.md          → Routes to 10 product workflow skills
+├── generators/SKILL.md       → Code generators (18 skills)
+├── apple-intelligence/SKILL.md → Foundation Models, Visual Intelligence
+├── design/SKILL.md           → Liquid Glass design system
+├── app-store/SKILL.md        → ASO skills (descriptions, screenshots, keywords, reviews)
+├── release-review/SKILL.md   → 6-phase pre-release audit
+└── shared/SKILL.md           → Skill creation templates
 ```
 
 When you invoke a skill (e.g., `/macos`), Claude:
@@ -454,6 +484,97 @@ Protocol-based crash/error reporting with swappable providers.
 
 ---
 
+### Apple Intelligence Skills
+
+#### `apple-intelligence/foundation-models`
+On-device LLM integration using Apple's Foundation Models framework.
+
+**Features:**
+- Model availability checking
+- Session management (single/multi-turn)
+- Prompt engineering best practices
+- `@Generable` structured output with `@Guide` constraints
+- Tool calling patterns
+- Snapshot streaming for SwiftUI
+- Context window management (4,096 tokens)
+
+**Trigger phrases:** "add AI features", "on-device LLM", "Foundation Models", "prompt engineering"
+
+#### `apple-intelligence/visual-intelligence`
+Integrate with iOS Visual Intelligence for camera-based search.
+
+**Features:**
+- `IntentValueQuery` implementation
+- `SemanticContentDescriptor` handling
+- `AppEntity` for searchable content
+- Display representations
+- Deep linking from results
+
+**Trigger phrases:** "visual search", "camera search", "Visual Intelligence"
+
+---
+
+### Design Skills
+
+#### `design/liquid-glass`
+Modern Liquid Glass design using the `.glassEffect()` API (iOS/macOS 26+).
+
+**Features:**
+- `.glassEffect()` modifier with shapes
+- `.tint()` and `.interactive()` options
+- `GlassEffectContainer` for multiple effects
+- Morphing transitions with `@Namespace`
+- `.buttonStyle(.glass)` and `.glassProminent`
+- AppKit `NSGlassEffectView` patterns
+
+**Trigger phrases:** "Liquid Glass", "glass effect", "modern Apple design"
+
+---
+
+### App Store Skills
+
+Skills for optimizing your App Store presence and managing customer relationships.
+
+#### `app-store/app-description-writer`
+Generate compelling App Store descriptions.
+
+**Output:** Promotional text (170 chars), full description (4000 chars), What's New text
+
+**Trigger phrases:** "write app description", "App Store copy", "promotional text"
+
+#### `app-store/screenshot-planner`
+Plan App Store screenshot sequences with captions.
+
+**Features:**
+- 5-10 screenshot storyboard framework
+- Caption writing formulas
+- Device frame recommendations
+- Localization considerations
+
+**Trigger phrases:** "plan screenshots", "screenshot captions", "App Store visuals"
+
+#### `app-store/keyword-optimizer`
+Optimize app title, subtitle, and keywords for search.
+
+**Features:**
+- 100-character keyword optimization
+- Priority matrix (volume vs difficulty)
+- Localization keyword strategy
+
+**Trigger phrases:** "ASO", "App Store keywords", "improve discoverability"
+
+#### `app-store/review-response-writer`
+Professional responses to App Store reviews.
+
+**Features:**
+- A.C.T. formula (Acknowledge, Clarify, Thank)
+- Templates for 8+ scenarios
+- When to respond vs. report
+
+**Trigger phrases:** "respond to review", "handle negative review", "review management"
+
+---
+
 ### Shared Skills
 
 #### `shared/skill-creator`
@@ -522,6 +643,33 @@ Claude: [Activates generators/analytics-setup]
 → Generates protocol-based analytics infrastructure
 → Creates TelemetryDeck implementation + NoOp for testing
 → Easy to swap to Firebase later (change one line)
+```
+
+### Add On-Device AI
+```
+You: "Add AI text generation using Apple's on-device LLM"
+Claude: [Activates apple-intelligence/foundation-models]
+→ Shows availability checking patterns
+→ Provides @Generable structured output examples
+→ Includes prompt engineering best practices
+```
+
+### Optimize App Store Listing
+```
+You: "Help me write App Store description for my task manager"
+Claude: [Activates app-store/app-description-writer]
+→ Asks about key features and target audience
+→ Generates promotional text, full description, What's New
+→ Follows App Store character limits and best practices
+```
+
+### Add Liquid Glass Design
+```
+You: "Add Liquid Glass effects to my toolbar"
+Claude: [Activates design/liquid-glass]
+→ Shows .glassEffect() API usage
+→ Demonstrates GlassEffectContainer for multiple items
+→ Includes morphing transition patterns
 ```
 
 ## Contributing
