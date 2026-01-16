@@ -39,6 +39,9 @@ Optimize app title, subtitle, and keywords for search.
 - Character limit optimization (100 chars)
 - Competitor analysis
 - Localization keyword strategy
+- **NEW:** Advanced tactics (cross-localization, screenshot indexing)
+- **NEW:** Keyword criteria (Pop/Diff sweet spots, opportunity scoring)
+- **NEW:** Existing app strategy (safe optimization)
 
 ### review-response-writer/
 Professional responses to App Store reviews.

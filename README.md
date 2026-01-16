@@ -63,6 +63,10 @@ skills/
 ├── apple-intelligence/     # Foundation Models, Visual Intelligence
 ├── design/                 # Liquid Glass (.glassEffect API)
 ├── app-store/              # ASO, descriptions, screenshots, reviews
+│   ├── keyword-optimizer/  # + advanced-tactics, existing-app-strategy
+│   ├── app-description-writer/
+│   ├── screenshot-planner/
+│   └── review-response-writer/
 ├── release-review/         # Security, privacy, UX, distribution audits
 └── shared/                 # Skill creation templates
 ```
@@ -100,6 +104,26 @@ Generate production-ready Swift code that adapts to your project:
 | `accessibility-generator` | VoiceOver, Dynamic Type |
 | `widget-generator` | WidgetKit boilerplate |
 | `feature-flags` | Local/remote feature flags |
+
+## App Store Optimization (ASO) Skills
+
+Comprehensive ASO toolkit based on real indie developer strategies:
+
+| Skill | What It Does |
+|-------|--------------|
+| `keyword-optimizer` | Find high-traffic, low-competition keywords |
+| `app-description-writer` | Compelling descriptions that convert |
+| `screenshot-planner` | Screenshot sequences with keyword-rich captions |
+| `review-response-writer` | Professional review responses |
+
+### Keyword Optimizer Features
+
+- **Keyword Criteria** - Pop >20, Diff <60 sweet spot scoring
+- **Advanced Tactics** - Cross-localization (2x keywords), screenshot text indexing (June 2025), velocity boost
+- **Existing App Strategy** - Safe optimization without losing traffic
+- **Opportunity Scoring** - Grade keywords A+ to F
+
+**Example:** *"Help me optimize ASO for my expense splitting app"*
 
 ## Contributing
 

@@ -8,6 +8,18 @@ Optimize app title, subtitle, and keywords for maximum App Store discoverability
 - User wants to improve search rankings
 - User asks about ASO (App Store Optimization)
 - User is entering new markets/languages
+- User wants to analyze keyword opportunities
+- User needs safe optimization for existing apps
+
+## Reference Files
+
+Before optimizing, load these reference materials:
+
+| File | Purpose |
+|------|---------|
+| **keyword-criteria.md** | Popularity/Difficulty sweet spots, opportunity scoring |
+| **advanced-tactics.md** | Cross-localization, screenshot indexing, velocity boost |
+| **existing-app-strategy.md** | Safe optimization for apps with existing traffic |
 
 ## Information Gathering
 
@@ -282,3 +294,38 @@ Subtitle:      30 characters
 Keywords:     100 characters
 Description: 4000 characters (low SEO value)
 ```
+
+## Indie Developer Strategy
+
+For building apps that generate $200-2,000/month:
+
+### The Sweet Spot Formula
+```
+Target keywords where:
+- Popularity > 20 (enough traffic)
+- Difficulty < 60 (beatable competition)
+
+Ideal: Popularity 25-50, Difficulty < 45
+```
+
+### Process
+1. Find underserved keywords using ASO tools (Astro, AppTweak)
+2. Build simple, single-feature apps around those keywords
+3. Double down on winners, abandon losers
+4. Portfolio effect compounds (30 apps × $500 = $15k/month)
+
+See **keyword-criteria.md** for detailed scoring and evaluation.
+
+## Advanced Tactics Summary
+
+### Cross-Localization (Double Keywords)
+Add Spanish (Mexico) locale with English keywords for US market.
+See **advanced-tactics.md** for all locales.
+
+### Screenshot Text Indexing (June 2025)
+Apple OCR reads screenshot captions for keyword ranking.
+Put keywords in top/bottom of screenshots.
+
+### Existing App Optimization
+Never change what's working. Use phased rollout.
+See **existing-app-strategy.md** for safe optimization.
