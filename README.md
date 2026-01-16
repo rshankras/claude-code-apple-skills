@@ -11,10 +11,11 @@ A comprehensive collection of Claude Code skills for iOS, macOS, and product dev
 | **iOS** | 3 skills | iOS app planning, code review, UI/UX review |
 | **macOS** | 8 skills | macOS development, Tahoe APIs, SwiftData, AppKit bridge |
 | **Product** | 10 skills | Idea validation to App Store (complete workflow) |
+| **Generators** | 4 skills | Code generators for logging, analytics, onboarding, reviews |
 | **Release Review** | 1 skill | Pre-release audit (security, privacy, UX, distribution) |
 | **Shared** | 1 skill | Skill creation templates |
 
-**Total: 23 skills** covering the entire Apple development lifecycle.
+**Total: 27 skills** covering the entire Apple development lifecycle.
 
 ## Directory Structure
 
@@ -47,6 +48,12 @@ skills/
 │   ├── test-spec/              # Testing strategy
 │   ├── release-spec/           # App Store launch guide
 │   └── WORKFLOW.md             # Complete idea-to-App Store workflow
+│
+├── generators/                 # Code generators (NEW)
+│   ├── logging-setup/          # Replace print() with Logger
+│   ├── analytics-setup/        # Protocol-based analytics (swappable)
+│   ├── onboarding-generator/   # Multi-step onboarding flow
+│   └── review-prompt/          # Smart App Store review prompts
 │
 ├── release-review/             # Pre-release audit
 │   ├── SKILL.md                # Entry point and workflow
@@ -94,6 +101,7 @@ mkdir -p ~/.claude/skills
 ln -s /path/to/claude-code-apple-skills/skills/ios ~/.claude/skills/ios
 ln -s /path/to/claude-code-apple-skills/skills/macos ~/.claude/skills/macos
 ln -s /path/to/claude-code-apple-skills/skills/product ~/.claude/skills/product
+ln -s /path/to/claude-code-apple-skills/skills/generators ~/.claude/skills/generators
 ln -s /path/to/claude-code-apple-skills/skills/release-review ~/.claude/skills/release-review
 ln -s /path/to/claude-code-apple-skills/skills/shared ~/.claude/skills/shared
 ```
@@ -107,6 +115,7 @@ Each category directory contains a **SKILL.md** entry point that acts as a route
 ├── ios/SKILL.md          → Routes to app-planner/, coding-best-practices/, ui-review/
 ├── macos/SKILL.md        → Routes to 8 sub-skills (SwiftData, Tahoe APIs, etc.)
 ├── product/SKILL.md      → Routes to 10 product workflow skills
+├── generators/SKILL.md   → Code generators (logging, analytics, onboarding, reviews)
 ├── release-review/SKILL.md → 6-phase pre-release audit (security, privacy, UX, distribution, API)
 └── shared/SKILL.md       → Skill creation templates
 ```
@@ -294,6 +303,66 @@ Senior developer-level pre-release audit for macOS and iOS apps. Identifies secu
 
 ---
 
+### Generator Skills
+
+Unlike advisory skills (review, audit), generator skills **produce production-ready code** tailored to your project.
+
+#### Key Features
+- **Context-aware**: Reads your project structure and patterns
+- **Protocol-based**: Generated code uses protocols for easy provider swapping
+- **Platform detection**: Adapts to iOS/macOS and App Store/direct distribution
+
+#### `generators/logging-setup`
+Replace print() statements with Apple's structured logging (os.log/Logger).
+
+**Modes:**
+- Audit: Find all print() statements
+- Generate: Create AppLogger infrastructure
+- Migrate: Convert print → Logger
+
+**Features:** Privacy annotations, subsystem/category organization, Console.app integration
+
+**Trigger phrases:** "add logging", "replace print statements", "set up Logger"
+
+#### `generators/analytics-setup`
+Protocol-based analytics with swappable providers.
+
+**Providers:** TelemetryDeck, Firebase, Mixpanel, NoOp (testing)
+
+**Key feature:** Swap providers by changing ONE line:
+```swift
+let analytics: AnalyticsService = TelemetryDeckAnalytics(...)
+// Change to:
+let analytics: AnalyticsService = FirebaseAnalytics()
+```
+
+**Trigger phrases:** "add analytics", "set up TelemetryDeck", "track events"
+
+#### `generators/onboarding-generator`
+Multi-step onboarding flow with persistence.
+
+**Options:** Paged (swipe) or stepped (buttons), skip option, animations
+
+**Integration:**
+```swift
+ContentView()
+    .onboarding()  // Shows on first launch
+```
+
+**Trigger phrases:** "add onboarding", "create welcome screens", "first launch flow"
+
+#### `generators/review-prompt`
+Smart App Store review prompts with platform detection.
+
+**Features:**
+- Configurable conditions (sessions, days, positive actions)
+- Cool-down period between prompts
+- Platform detection (skips for non-App Store macOS)
+
+**Trigger phrases:** "add review prompt", "request ratings", "App Store reviews"
+
+---
+
 ### Shared Skills
 
 #### `shared/skill-creator`
@@ -344,6 +413,24 @@ Claude: [Activates release-review]
 → Runs 6-phase audit: Security → Privacy → UX → Distribution → API
 → Returns prioritized issues with code fixes
 → Identifies strengths and recommended action plan
+```
+
+### Add Logging Infrastructure
+```
+You: "Replace print statements with proper logging"
+Claude: [Activates generators/logging-setup]
+→ Audits existing print() statements
+→ Generates AppLogger.swift with categories
+→ Provides migration guide for each print statement
+```
+
+### Add Analytics (Swappable)
+```
+You: "Add analytics with TelemetryDeck"
+Claude: [Activates generators/analytics-setup]
+→ Generates protocol-based analytics infrastructure
+→ Creates TelemetryDeck implementation + NoOp for testing
+→ Easy to swap to Firebase later (change one line)
 ```
 
 ## Contributing
