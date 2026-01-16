@@ -11,11 +11,11 @@ A comprehensive collection of Claude Code skills for iOS, macOS, and product dev
 | **iOS** | 3 skills | iOS app planning, code review, UI/UX review |
 | **macOS** | 8 skills | macOS development, Tahoe APIs, SwiftData, AppKit bridge |
 | **Product** | 10 skills | Idea validation to App Store (complete workflow) |
-| **Generators** | 8 skills | Code generators for logging, analytics, onboarding, reviews, networking, auth, paywall, settings |
+| **Generators** | 10 skills | Code generators for logging, analytics, onboarding, reviews, networking, auth, paywall, settings, persistence, error monitoring |
 | **Release Review** | 1 skill | Pre-release audit (security, privacy, UX, distribution) |
 | **Shared** | 1 skill | Skill creation templates |
 
-**Total: 31 skills** covering the entire Apple development lifecycle.
+**Total: 33 skills** covering the entire Apple development lifecycle.
 
 ## Directory Structure
 
@@ -57,7 +57,9 @@ skills/
 │   ├── networking-layer/       # Protocol-based API client
 │   ├── auth-flow/              # Sign in with Apple, biometrics
 │   ├── paywall-generator/      # StoreKit 2 subscription paywalls
-│   └── settings-screen/        # Complete settings UI
+│   ├── settings-screen/        # Complete settings UI
+│   ├── persistence-setup/      # SwiftData with optional iCloud sync
+│   └── error-monitoring/       # Crash reporting (Sentry/Crashlytics)
 │
 ├── release-review/             # Pre-release audit
 │   ├── SKILL.md                # Entry point and workflow
@@ -119,7 +121,7 @@ Each category directory contains a **SKILL.md** entry point that acts as a route
 ├── ios/SKILL.md          → Routes to app-planner/, coding-best-practices/, ui-review/
 ├── macos/SKILL.md        → Routes to 8 sub-skills (SwiftData, Tahoe APIs, etc.)
 ├── product/SKILL.md      → Routes to 10 product workflow skills
-├── generators/SKILL.md   → Code generators (logging, analytics, onboarding, reviews, networking, auth, paywall, settings)
+├── generators/SKILL.md   → Code generators (10 skills: logging, analytics, onboarding, reviews, networking, auth, paywall, settings, persistence, error monitoring)
 ├── release-review/SKILL.md → 6-phase pre-release audit (security, privacy, UX, distribution, API)
 └── shared/SKILL.md       → Skill creation templates
 ```
@@ -421,6 +423,34 @@ Complete settings screen with modular sections.
 **Templates:** SettingsView.swift, AppSettings.swift, SettingsRow.swift, AppearanceSettingsView.swift, AccountSettingsView.swift, NotificationsSettingsView.swift, AboutSettingsView.swift, LegalSettingsView.swift
 
 **Trigger phrases:** "add settings screen", "create preferences", "settings UI"
+
+#### `generators/persistence-setup`
+SwiftData persistence layer with optional iCloud sync.
+
+**Features:**
+- SwiftData setup (iOS 17+)
+- Repository pattern for testability
+- Optional CloudKit sync
+- Sync status monitoring
+- Migration support
+
+**Templates:** PersistenceController.swift, Repository.swift, SwiftDataRepository.swift, ExampleModel.swift, CloudKitConfiguration.swift, SyncStatus.swift
+
+**Trigger phrases:** "add persistence", "SwiftData setup", "iCloud sync", "local storage"
+
+#### `generators/error-monitoring`
+Protocol-based crash/error reporting with swappable providers.
+
+**Features:**
+- Protocol-based (easy provider swapping)
+- Sentry and Firebase Crashlytics support
+- NoOp for testing/privacy
+- Breadcrumbs for debugging context
+- User context (anonymized)
+
+**Templates:** ErrorMonitoringService.swift, ErrorContext.swift, NoOpErrorMonitoring.swift, SentryErrorMonitoring.swift, CrashlyticsErrorMonitoring.swift
+
+**Trigger phrases:** "add crash reporting", "error monitoring", "Sentry setup", "Crashlytics"
 
 ---
 

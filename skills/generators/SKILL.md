@@ -1,6 +1,6 @@
 ---
 name: generators
-description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, or other common features.
+description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, or other common features.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 ---
 
@@ -95,6 +95,22 @@ Complete settings screen with modular sections.
 - Appearance, Notifications, Account, About, Legal sections
 - Cross-platform (iOS/macOS)
 - Reusable row components
+
+### persistence-setup/
+SwiftData persistence with optional iCloud sync.
+- SwiftData container configuration
+- Repository pattern for testability
+- Optional CloudKit/iCloud sync
+- Sync status monitoring
+- Migration support
+
+### error-monitoring/
+Protocol-based crash/error reporting.
+- Sentry and Firebase Crashlytics support
+- NoOp implementation for testing/privacy
+- Breadcrumbs for debugging context
+- User context (anonymized)
+- Easy provider swapping
 
 ## How to Use
 
