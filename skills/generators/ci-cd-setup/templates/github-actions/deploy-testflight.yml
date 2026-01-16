@@ -1,0 +1,186 @@
+# TestFlight Deployment Workflow
+# Builds and uploads to TestFlight on push to main or manual trigger
+
+name: Deploy to TestFlight
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+      - '.github/workflows/build-test.yml'
+  workflow_dispatch:
+    inputs:
+      bump_build:
+        description: 'Increment build number'
+        required: false
+        default: true
+        type: boolean
+
+# Only one deployment at a time
+concurrency:
+  group: testflight-deployment
+  cancel-in-progress: false
+
+env:
+  SCHEME: "YOUR_SCHEME_NAME"  # TODO: Replace with your scheme name
+  PRODUCT_NAME: "YourApp"     # TODO: Replace with your product name
+  DEVELOPER_DIR: /Applications/Xcode_16.2.app/Contents/Developer
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for build number
+
+      - name: Select Xcode
+        run: sudo xcode-select -s $DEVELOPER_DIR
+
+      - name: Cache Swift Packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            .build
+            ~/Library/Caches/org.swift.swiftpm
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
+      # Install signing certificate
+      - name: Install Certificate
+        env:
+          CERTIFICATE_P12: ${{ secrets.CERTIFICATE_P12 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+        run: |
+          # Create temporary keychain
+          KEYCHAIN_PATH=$RUNNER_TEMP/signing.keychain-db
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # Import certificate
+          echo "$CERTIFICATE_P12" | base64 --decode > $RUNNER_TEMP/certificate.p12
+          security import $RUNNER_TEMP/certificate.p12 \
+            -P "$CERTIFICATE_PASSWORD" \
+            -A -t cert -f pkcs12 \
+            -k $KEYCHAIN_PATH
+
+          security set-key-partition-list -S apple-tool:,apple: \
+            -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # Save keychain path for cleanup
+          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> $GITHUB_ENV
+
+      # Install provisioning profile
+      - name: Install Provisioning Profile
+        env:
+          PROVISIONING_PROFILE: ${{ secrets.PROVISIONING_PROFILE }}
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "$PROVISIONING_PROFILE" | base64 --decode \
+            > ~/Library/MobileDevice/Provisioning\ Profiles/distribution.mobileprovision
+
+      # Setup App Store Connect API
+      - name: Setup App Store Connect API
+        env:
+          API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: |
+          mkdir -p ~/.private_keys
+          echo "$API_KEY_CONTENT" > ~/.private_keys/AuthKey_$API_KEY_ID.p8
+
+      # Increment build number (optional)
+      - name: Increment Build Number
+        if: ${{ inputs.bump_build != false }}
+        run: |
+          # Get current build number and increment
+          BUILD_NUMBER=$(date +%Y%m%d%H%M)
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
+
+          # Update Info.plist or use agvtool
+          # agvtool new-version -all $BUILD_NUMBER
+
+      # Build archive
+      - name: Build Archive
+        run: |
+          xcodebuild archive \
+            -scheme "$SCHEME" \
+            -archivePath build/$PRODUCT_NAME.xcarchive \
+            -destination 'generic/platform=iOS' \
+            -clonedSourcePackagesDirPath SourcePackages \
+            CODE_SIGN_STYLE=Manual \
+            | xcbeautify --renderer github-actions
+
+      # Create ExportOptions.plist
+      - name: Create Export Options
+        run: |
+          cat > build/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>destination</key>
+            <string>upload</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>YOUR_BUNDLE_ID</key>
+              <string>YOUR_PROFILE_NAME</string>
+            </dict>
+          </dict>
+          </plist>
+          EOF
+
+      # Export IPA
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath build/$PRODUCT_NAME.xcarchive \
+            -exportPath build/Export \
+            -exportOptionsPlist build/ExportOptions.plist \
+            | xcbeautify --renderer github-actions
+
+      # Upload to TestFlight
+      - name: Upload to TestFlight
+        env:
+          API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        run: |
+          xcrun altool --upload-app \
+            --type ios \
+            --file "build/Export/$PRODUCT_NAME.ipa" \
+            --apiKey "$API_KEY_ID" \
+            --apiIssuer "$API_ISSUER_ID"
+
+      # Cleanup
+      - name: Cleanup Keychain
+        if: always()
+        run: |
+          security delete-keychain $KEYCHAIN_PATH || true
+
+      # Upload artifacts
+      - name: Upload Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive
+          path: build/${{ env.PRODUCT_NAME }}.xcarchive
+          retention-days: 30
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipa
+          path: build/Export/${{ env.PRODUCT_NAME }}.ipa
+          retention-days: 30

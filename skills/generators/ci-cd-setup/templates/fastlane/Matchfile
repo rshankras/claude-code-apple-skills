@@ -1,0 +1,95 @@
+# Matchfile
+# Configuration for fastlane match (code signing)
+#
+# match creates and maintains certificates and provisioning profiles
+# stored in a private git repository or cloud storage.
+#
+# Setup:
+#   fastlane match init
+#   fastlane match development
+#   fastlane match appstore
+#
+# Documentation: https://docs.fastlane.tools/actions/match/
+
+# ============================================
+# Storage Configuration
+# ============================================
+
+# Git repository for certificates (most common)
+storage_mode("git")
+git_url("git@github.com:yourorg/certificates.git")  # TODO: Private repo for certs
+
+# Alternative: Google Cloud Storage
+# storage_mode("google_cloud")
+# google_cloud_bucket_name("your-bucket-name")
+
+# Alternative: Amazon S3
+# storage_mode("s3")
+# s3_bucket("your-bucket-name")
+# s3_region("us-east-1")
+
+# ============================================
+# Certificate Types
+# ============================================
+
+# Default type (can be overridden per-run)
+type("appstore")  # development, adhoc, appstore, enterprise
+
+# ============================================
+# App Identifiers
+# ============================================
+
+# App identifiers to create profiles for
+app_identifier([
+  "com.yourcompany.yourapp",           # TODO: Main app
+  # "com.yourcompany.yourapp.widget",  # Widget extension
+  # "com.yourcompany.yourapp.watchapp" # Watch app
+])
+
+# ============================================
+# Team Configuration
+# ============================================
+
+# Your Apple Developer Team ID
+team_id("YOUR_TEAM_ID")  # TODO: Replace with your Team ID
+
+# Apple ID for creating certificates
+username("your@email.com")  # TODO: Replace with your Apple ID
+
+# ============================================
+# Options
+# ============================================
+
+# Don't generate new certificates/profiles, just download existing
+# readonly(true)  # Enable on CI to prevent accidental regeneration
+
+# Platform
+# platform("ios")  # ios, macos, catalyst
+
+# Skip confirmation prompts
+# force(true)
+
+# ============================================
+# Git Options (for git storage mode)
+# ============================================
+
+# Branch to use for certificates
+git_branch("main")
+
+# Clone depth (set to 1 for faster clones)
+# shallow_clone(true)
+
+# ============================================
+# Keychain (for CI)
+# ============================================
+
+# Custom keychain name (useful for CI)
+# keychain_name("fastlane_keychain")
+# keychain_password(ENV["MATCH_KEYCHAIN_PASSWORD"])
+
+# ============================================
+# Additional Certificates
+# ============================================
+
+# Include additional certificate types
+# additional_cert_types(["mac_installer_distribution"])

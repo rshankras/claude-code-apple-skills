@@ -1,6 +1,6 @@
 ---
 name: generators
-description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, or other common features.
+description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, or feature flags.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 ---
 
@@ -111,6 +111,66 @@ Protocol-based crash/error reporting.
 - Breadcrumbs for debugging context
 - User context (anonymized)
 - Easy provider swapping
+
+### ci-cd-setup/
+CI/CD configuration for automated builds and deployment.
+- GitHub Actions workflows (build, test, TestFlight, App Store)
+- Xcode Cloud scripts and setup guide
+- fastlane lanes for advanced automation
+- Code signing and secrets management
+- macOS notarization support
+
+### localization-setup/
+Internationalization (i18n) infrastructure for multi-language apps.
+- String Catalogs (iOS 16+, recommended)
+- Type-safe L10n enum for compile-time safety
+- Pluralization and interpolation patterns
+- RTL layout support
+- SwiftUI preview helpers for testing locales
+
+### push-notifications/
+Push notification infrastructure with APNs setup.
+- Registration and authorization flow
+- UNUserNotificationCenterDelegate implementation
+- Notification categories with action buttons
+- Type-safe payload parsing
+- Rich notifications and silent notifications
+
+### deep-linking/
+Deep linking with URL schemes, Universal Links, and App Intents.
+- Custom URL scheme handling
+- Universal Links with AASA file
+- App Intents for Siri and Shortcuts
+- Type-safe route definitions and navigation
+- Spotlight indexing support
+
+### test-generator/
+Test templates for unit, integration, and UI tests.
+- Swift Testing (modern, iOS 16+) and XCTest patterns
+- Mock object generation
+- ViewModel and service testing patterns
+- UI testing with page object pattern
+
+### accessibility-generator/
+Accessibility infrastructure for inclusive apps.
+- VoiceOver labels, hints, and traits
+- Dynamic Type support with scaling
+- Reduce Motion handling
+- Accessibility audit checklist
+
+### widget-generator/
+WidgetKit widgets for home screen and lock screen.
+- Static and interactive widgets (iOS 17+)
+- Timeline providers
+- Lock screen complications
+- Widget intents for configuration
+
+### feature-flags/
+Feature flag infrastructure with local and remote support.
+- Protocol-based service
+- Firebase Remote Config integration
+- Local defaults with remote override
+- Debug menu for testing
 
 ## How to Use
 

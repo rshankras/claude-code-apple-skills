@@ -1,0 +1,68 @@
+# Appfile
+# App-specific configuration for fastlane
+#
+# Documentation: https://docs.fastlane.tools/advanced/Appfile/
+
+# ============================================
+# App Identifiers
+# ============================================
+
+# The bundle identifier of your app
+app_identifier("com.yourcompany.yourapp")  # TODO: Replace with your bundle ID
+
+# Your Apple Developer Portal username
+apple_id("your@email.com")  # TODO: Replace with your Apple ID
+
+# ============================================
+# App Store Connect
+# ============================================
+
+# For App Store Connect API authentication (recommended)
+# Generate key at: https://appstoreconnect.apple.com/access/api
+#
+# Set these as environment variables:
+# - APP_STORE_CONNECT_API_KEY_ID
+# - APP_STORE_CONNECT_API_ISSUER_ID
+# - APP_STORE_CONNECT_API_KEY_PATH (or APP_STORE_CONNECT_API_KEY_CONTENT)
+
+# Uncomment to use API key authentication:
+# app_store_connect_api_key(
+#   key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"],
+#   issuer_id: ENV["APP_STORE_CONNECT_API_ISSUER_ID"],
+#   key_filepath: ENV["APP_STORE_CONNECT_API_KEY_PATH"],
+#   # Or use key content directly:
+#   # key_content: ENV["APP_STORE_CONNECT_API_KEY_CONTENT"],
+#   duration: 1200,  # optional
+#   in_house: false  # true for Enterprise accounts
+# )
+
+# ============================================
+# Team Configuration
+# ============================================
+
+# Developer Portal Team ID
+team_id("YOUR_TEAM_ID")  # TODO: Replace with your Team ID
+
+# App Store Connect Team ID (if different)
+# itc_team_id("YOUR_ITC_TEAM_ID")
+
+# ============================================
+# Lane-specific Configuration
+# ============================================
+
+# Different configurations for different lanes
+# for_lane :beta do
+#   app_identifier("com.yourcompany.yourapp.beta")
+# end
+
+# for_lane :release do
+#   app_identifier("com.yourcompany.yourapp")
+# end
+
+# ============================================
+# Platform-specific Configuration
+# ============================================
+
+# for_platform :mac do
+#   app_identifier("com.yourcompany.yourapp.mac")
+# end

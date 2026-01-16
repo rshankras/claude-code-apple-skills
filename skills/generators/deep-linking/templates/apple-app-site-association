@@ -1,0 +1,62 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "TEAMID.com.yourcompany.yourapp"
+        ],
+        "components": [
+          {
+            "/": "/items/*",
+            "comment": "Item detail pages"
+          },
+          {
+            "/": "/users/*",
+            "comment": "User profile pages"
+          },
+          {
+            "/": "/categories/*",
+            "comment": "Category pages"
+          },
+          {
+            "/": "/share/*",
+            "comment": "Share links"
+          },
+          {
+            "/": "/search",
+            "?": {
+              "q": "*"
+            },
+            "comment": "Search with query"
+          },
+          {
+            "/": "/settings",
+            "comment": "Settings page"
+          },
+          {
+            "/": "/settings/*",
+            "comment": "Settings sections"
+          },
+          {
+            "/": "/invite",
+            "?": {
+              "code": "*"
+            },
+            "comment": "Invite links with referral code"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "TEAMID.com.yourcompany.yourapp"
+    ]
+  },
+  "appclips": {
+    "apps": [
+      "TEAMID.com.yourcompany.yourapp.Clip"
+    ]
+  }
+}

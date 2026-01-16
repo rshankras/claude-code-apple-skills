@@ -1,0 +1,133 @@
+# Build and Test Workflow
+# Runs on pull requests and pushes to main branch
+# Tests on iOS Simulator and optionally macOS
+
+name: Build and Test
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+# Cancel in-progress runs for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SCHEME: "YOUR_SCHEME_NAME"  # TODO: Replace with your scheme name
+  DEVELOPER_DIR: /Applications/Xcode_16.2.app/Contents/Developer
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s $DEVELOPER_DIR
+
+      - name: Show Xcode Version
+        run: xcodebuild -version
+
+      - name: Cache Swift Packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            .build
+            ~/Library/Caches/org.swift.swiftpm
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
+      - name: Resolve Package Dependencies
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -scheme "$SCHEME" \
+            -clonedSourcePackagesDirPath SourcePackages
+
+      - name: Build for Testing (iOS)
+        run: |
+          xcodebuild build-for-testing \
+            -scheme "$SCHEME" \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -derivedDataPath build/DerivedData \
+            -clonedSourcePackagesDirPath SourcePackages \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
+
+      - name: Run Tests (iOS)
+        run: |
+          xcodebuild test-without-building \
+            -scheme "$SCHEME" \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -derivedDataPath build/DerivedData \
+            -resultBundlePath build/TestResults.xcresult \
+            | xcbeautify --renderer github-actions
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: build/TestResults.xcresult
+          retention-days: 7
+
+  # Optional: macOS build
+  build-macos:
+    name: Build (macOS)
+    runs-on: macos-15
+    timeout-minutes: 20
+    # Uncomment to enable macOS builds
+    # if: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s $DEVELOPER_DIR
+
+      - name: Cache Swift Packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            .build
+            ~/Library/Caches/org.swift.swiftpm
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
+      - name: Build (macOS)
+        run: |
+          xcodebuild build \
+            -scheme "$SCHEME" \
+            -destination 'platform=macOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
+
+  # SwiftLint (optional)
+  lint:
+    name: SwiftLint
+    runs-on: macos-15
+    timeout-minutes: 5
+    # Uncomment to enable linting
+    # if: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run SwiftLint
+        run: |
+          if command -v swiftlint &> /dev/null; then
+            swiftlint lint --reporter github-actions-logging
+          else
+            echo "SwiftLint not installed, skipping"
+          fi

@@ -1,0 +1,220 @@
+# App Store Deployment Workflow
+# Builds and submits to App Store on version tag push
+
+name: Deploy to App Store
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      submit_for_review:
+        description: 'Submit for App Review'
+        required: false
+        default: true
+        type: boolean
+
+# Only one production deployment at a time
+concurrency:
+  group: appstore-deployment
+  cancel-in-progress: false
+
+env:
+  SCHEME: "YOUR_SCHEME_NAME"  # TODO: Replace with your scheme name
+  PRODUCT_NAME: "YourApp"     # TODO: Replace with your product name
+  DEVELOPER_DIR: /Applications/Xcode_16.2.app/Contents/Developer
+
+jobs:
+  deploy:
+    name: Build and Submit
+    runs-on: macos-15
+    timeout-minutes: 60
+    environment: production  # Requires approval if configured
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Version from Tag
+        id: version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          else
+            VERSION=$(date +%Y.%m.%d)
+            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          fi
+          echo "Building version: $VERSION"
+
+      - name: Select Xcode
+        run: sudo xcode-select -s $DEVELOPER_DIR
+
+      - name: Cache Swift Packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            .build
+            ~/Library/Caches/org.swift.swiftpm
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
+      # Install signing certificate
+      - name: Install Certificate
+        env:
+          CERTIFICATE_P12: ${{ secrets.CERTIFICATE_P12 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+        run: |
+          KEYCHAIN_PATH=$RUNNER_TEMP/signing.keychain-db
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          echo "$CERTIFICATE_P12" | base64 --decode > $RUNNER_TEMP/certificate.p12
+          security import $RUNNER_TEMP/certificate.p12 \
+            -P "$CERTIFICATE_PASSWORD" \
+            -A -t cert -f pkcs12 \
+            -k $KEYCHAIN_PATH
+
+          security set-key-partition-list -S apple-tool:,apple: \
+            -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> $GITHUB_ENV
+
+      - name: Install Provisioning Profile
+        env:
+          PROVISIONING_PROFILE: ${{ secrets.PROVISIONING_PROFILE }}
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "$PROVISIONING_PROFILE" | base64 --decode \
+            > ~/Library/MobileDevice/Provisioning\ Profiles/distribution.mobileprovision
+
+      - name: Setup App Store Connect API
+        env:
+          API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: |
+          mkdir -p ~/.private_keys
+          echo "$API_KEY_CONTENT" > ~/.private_keys/AuthKey_$API_KEY_ID.p8
+
+      # Run tests before release
+      - name: Run Tests
+        run: |
+          xcodebuild test \
+            -scheme "$SCHEME" \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
+
+      # Build archive
+      - name: Build Archive
+        run: |
+          xcodebuild archive \
+            -scheme "$SCHEME" \
+            -archivePath build/$PRODUCT_NAME.xcarchive \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGN_STYLE=Manual \
+            MARKETING_VERSION=${{ steps.version.outputs.VERSION }} \
+            | xcbeautify --renderer github-actions
+
+      # Create ExportOptions.plist
+      - name: Create Export Options
+        run: |
+          cat > build/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>destination</key>
+            <string>upload</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>YOUR_BUNDLE_ID</key>
+              <string>YOUR_PROFILE_NAME</string>
+            </dict>
+          </dict>
+          </plist>
+          EOF
+
+      # Export IPA
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath build/$PRODUCT_NAME.xcarchive \
+            -exportPath build/Export \
+            -exportOptionsPlist build/ExportOptions.plist \
+            | xcbeautify --renderer github-actions
+
+      # Upload to App Store Connect
+      - name: Upload to App Store Connect
+        env:
+          API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        run: |
+          xcrun altool --upload-app \
+            --type ios \
+            --file "build/Export/$PRODUCT_NAME.ipa" \
+            --apiKey "$API_KEY_ID" \
+            --apiIssuer "$API_ISSUER_ID"
+
+      # Create GitHub Release
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/Export/${{ env.PRODUCT_NAME }}.ipa
+          generate_release_notes: true
+          draft: false
+
+      # Cleanup
+      - name: Cleanup Keychain
+        if: always()
+        run: |
+          security delete-keychain $KEYCHAIN_PATH || true
+
+      # Upload artifacts
+      - name: Upload Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-archive
+          path: build/${{ env.PRODUCT_NAME }}.xcarchive
+          retention-days: 90
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-ipa
+          path: build/Export/${{ env.PRODUCT_NAME }}.ipa
+          retention-days: 90
+
+  # Notify on completion
+  notify:
+    name: Notify
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: always()
+
+    steps:
+      - name: Notify Success
+        if: needs.deploy.result == 'success'
+        run: |
+          echo "App Store submission successful!"
+          # Add Slack/Discord notification here
+
+      - name: Notify Failure
+        if: needs.deploy.result == 'failure'
+        run: |
+          echo "App Store submission failed!"
+          # Add Slack/Discord notification here
