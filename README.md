@@ -1,6 +1,6 @@
 # Claude Code Skills for Apple Platform Development
 
-A comprehensive collection of Claude Code skills for iOS, macOS, and product development. These skills help you **plan and build apps**, **maintain code quality**, **ensure HIG compliance**, and guide you from **idea to App Store**.
+A comprehensive collection of Claude Code skills for iOS, macOS, and Apple platform development. These skills help you **plan and build apps**, **maintain code quality**, **ensure HIG compliance**, and guide you from **idea to App Store**.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -8,692 +8,107 @@ A comprehensive collection of Claude Code skills for iOS, macOS, and product dev
 
 | Category | Skills | Purpose |
 |----------|--------|---------|
-| **iOS** | 3 skills | iOS app planning, code review, UI/UX review |
-| **macOS** | 8 skills | macOS development, Tahoe APIs, SwiftData, AppKit bridge |
-| **Product** | 10 skills | Idea validation to App Store (complete workflow) |
-| **Generators** | 18 skills | Code generators for common app features |
-| **Apple Intelligence** | 2 skills | Foundation Models (on-device LLM), Visual Intelligence |
-| **Design** | 1 skill | Liquid Glass design system |
-| **App Store** | 4 skills | ASO, descriptions, screenshots, keywords, review responses |
-| **Release Review** | 1 skill | Pre-release audit (security, privacy, UX, distribution) |
-| **Shared** | 1 skill | Skill creation templates |
+| **iOS** | 3 | Code review, UI review, app planning |
+| **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
+| **Product** | 10 | Idea validation → App Store workflow |
+| **Generators** | 18 | Production-ready code for common features |
+| **Apple Intelligence** | 2 | Foundation Models, Visual Intelligence |
+| **Design** | 1 | Liquid Glass design system |
+| **App Store** | 4 | ASO, descriptions, keywords, reviews |
+| **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 48 skills** covering the entire Apple development lifecycle.
+**Total: 48 skills**
+
+## Quick Start
+
+### How to Use
+
+**New app?** Say: *"I have an idea for a macOS app that does X. Should I build it?"*
+
+**Existing app?** Say: *"Review my code"* or *"Add [feature]"*
+
+See **[docs/USAGE.md](docs/USAGE.md)** for complete guide.
+
+### Installation
+
+```bash
+# Clone
+git clone https://github.com/rshankras/claude-code-apple-skills.git
+
+# Copy to your project
+cp -r claude-code-apple-skills/skills your-project/.claude/skills/
+
+# Or install globally
+cp -r claude-code-apple-skills/skills ~/.claude/skills/
+```
 
 ## Directory Structure
 
 ```
 skills/
-├── ios/                        # iOS-specific skills
-│   ├── app-planner/            # iOS app architecture planning
-│   ├── coding-best-practices/  # Swift/iOS code review
-│   └── ui-review/              # HIG compliance, accessibility
-│
-├── macos/                      # macOS-specific skills
-│   ├── app-planner/            # macOS app planning
-│   ├── appkit-swiftui-bridge/  # NSViewRepresentable, hosting controllers
-│   ├── architecture-patterns/  # SOLID, design patterns, modular design
-│   ├── coding-best-practices/  # macOS Swift 6+ code review
-│   ├── macos-capabilities/     # Sandboxing, extensions, menubar, background
-│   ├── macos-tahoe-apis/       # macOS 26 APIs, Apple Intelligence, MLX
-│   ├── swiftdata-architecture/ # SwiftData patterns, queries, performance
-│   └── ui-review-tahoe/        # macOS Tahoe HIG, Liquid Glass design
-│
-├── product/                    # Product development workflow
-│   ├── product-agent/          # Idea validation, problem discovery
-│   ├── competitive-analysis/   # Competitor research, feature gaps
-│   ├── market-research/        # TAM/SAM/SOM, market sizing
-│   ├── prd-generator/          # Product Requirements Document
-│   ├── architecture-spec/      # Technical architecture spec
-│   ├── ux-spec/                # UI/UX specifications
-│   ├── implementation-guide/   # Development roadmap, pseudo-code
-│   ├── implementation-spec/    # Orchestrator for all specs
-│   ├── test-spec/              # Testing strategy
-│   ├── release-spec/           # App Store launch guide
-│   └── WORKFLOW.md             # Complete idea-to-App Store workflow
-│
-├── generators/                 # Code generators (18 skills)
-│   ├── logging-setup/          # Replace print() with Logger
-│   ├── analytics-setup/        # Protocol-based analytics (swappable)
-│   ├── onboarding-generator/   # Multi-step onboarding flow
-│   ├── review-prompt/          # Smart App Store review prompts
-│   ├── networking-layer/       # Protocol-based API client
-│   ├── auth-flow/              # Sign in with Apple, biometrics
-│   ├── paywall-generator/      # StoreKit 2 subscription paywalls
-│   ├── settings-screen/        # Complete settings UI
-│   ├── persistence-setup/      # SwiftData with optional iCloud sync
-│   ├── error-monitoring/       # Crash reporting (Sentry/Crashlytics)
-│   ├── ci-cd-setup/            # GitHub Actions, Xcode Cloud, fastlane
-│   ├── localization-setup/     # String catalogs, i18n infrastructure
-│   ├── push-notifications/     # APNs setup, rich notifications
-│   ├── deep-linking/           # URL schemes, universal links, App Intents
-│   ├── test-generator/         # Unit/UI test templates
-│   ├── accessibility-generator/# VoiceOver, Dynamic Type helpers
-│   ├── widget-generator/       # WidgetKit boilerplate
-│   └── feature-flags/          # Local and remote feature flags
-│
-├── apple-intelligence/         # Apple Intelligence features
-│   ├── foundation-models/      # On-device LLM, prompting, @Generable
-│   └── visual-intelligence/    # Camera-based search, IntentValueQuery
-│
-├── design/                     # Design system skills
-│   └── liquid-glass/           # .glassEffect() API, morphing, containers
-│
-├── app-store/                  # App Store optimization (ASO)
-│   ├── app-description-writer/ # Promotional text, descriptions, What's New
-│   ├── screenshot-planner/     # Screenshot sequences, captions
-│   ├── keyword-optimizer/      # Keywords, title, subtitle optimization
-│   └── review-response-writer/ # Professional review responses
-│
-├── release-review/             # Pre-release audit
-│   ├── SKILL.md                # Entry point and workflow
-│   ├── security-checklist.md   # Credentials, HTTPS, entitlements
-│   ├── privacy-checklist.md    # Data transparency, consent, GDPR
-│   ├── ux-polish-checklist.md  # Onboarding, empty states, accessibility
-│   ├── distribution-checklist.md # Code signing, notarization, App Store
-│   └── api-design-checklist.md # User-Agent, error handling, tokens
-│
-└── shared/                     # Platform-agnostic skills
-    └── skill-creator/          # Templates for creating new skills
+├── ios/                    # iOS code review, UI review, planning
+├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
+├── product/                # Idea → App Store workflow (10 phases)
+├── generators/             # Code generators (18 skills)
+│   ├── logging-setup/
+│   ├── analytics-setup/
+│   ├── networking-layer/
+│   ├── auth-flow/
+│   ├── paywall-generator/
+│   ├── settings-screen/
+│   ├── persistence-setup/
+│   ├── push-notifications/
+│   ├── deep-linking/
+│   └── ...
+├── apple-intelligence/     # Foundation Models, Visual Intelligence
+├── design/                 # Liquid Glass (.glassEffect API)
+├── app-store/              # ASO, descriptions, screenshots, reviews
+├── release-review/         # Security, privacy, UX, distribution audits
+└── shared/                 # Skill creation templates
 ```
 
-## Installation
-
-### Option 1: Copy to Project
-
-```bash
-# Clone the repository
-git clone https://github.com/rshankras/claude-code-apple-skills.git
-
-# Copy skills to your project
-mkdir -p your-project/.claude/skills
-cp -r claude-code-apple-skills/skills/* your-project/.claude/skills/
-```
-
-### Option 2: Global Installation
-
-```bash
-# Clone to a permanent location
-git clone https://github.com/rshankras/claude-code-apple-skills.git ~/claude-code-apple-skills
-
-# Copy to global Claude config
-mkdir -p ~/.claude/skills
-cp -r ~/claude-code-apple-skills/skills/* ~/.claude/skills/
-```
-
-### Option 3: Symlink (for active development)
-
-```bash
-# Create skills directory if needed
-mkdir -p ~/.claude/skills
-
-# Symlink skill categories
-ln -s /path/to/claude-code-apple-skills/skills/ios ~/.claude/skills/ios
-ln -s /path/to/claude-code-apple-skills/skills/macos ~/.claude/skills/macos
-ln -s /path/to/claude-code-apple-skills/skills/product ~/.claude/skills/product
-ln -s /path/to/claude-code-apple-skills/skills/generators ~/.claude/skills/generators
-ln -s /path/to/claude-code-apple-skills/skills/apple-intelligence ~/.claude/skills/apple-intelligence
-ln -s /path/to/claude-code-apple-skills/skills/design ~/.claude/skills/design
-ln -s /path/to/claude-code-apple-skills/skills/app-store ~/.claude/skills/app-store
-ln -s /path/to/claude-code-apple-skills/skills/release-review ~/.claude/skills/release-review
-ln -s /path/to/claude-code-apple-skills/skills/shared ~/.claude/skills/shared
-```
-
-## How Skills Are Organized
-
-Each category directory contains a **SKILL.md** entry point that acts as a router to sub-skills:
-
-```
-~/.claude/skills/
-├── ios/SKILL.md              → Routes to app-planner/, coding-best-practices/, ui-review/
-├── macos/SKILL.md            → Routes to 8 sub-skills (SwiftData, Tahoe APIs, etc.)
-├── product/SKILL.md          → Routes to 10 product workflow skills
-├── generators/SKILL.md       → Code generators (18 skills)
-├── apple-intelligence/SKILL.md → Foundation Models, Visual Intelligence
-├── design/SKILL.md           → Liquid Glass design system
-├── app-store/SKILL.md        → ASO skills (descriptions, screenshots, keywords, reviews)
-├── release-review/SKILL.md   → 6-phase pre-release audit
-└── shared/SKILL.md           → Skill creation templates
-```
-
-When you invoke a skill (e.g., `/macos`), Claude:
-1. Reads the category's `SKILL.md` entry point
-2. Based on your question, reads relevant module files from subdirectories
-3. Applies the guidance to your specific context
-
-This modular approach keeps individual files focused while allowing each skill to cover a broad domain.
-
-## Skills Reference
-
-### iOS Skills
-
-#### `ios/coding-best-practices`
-Reviews Swift/iOS code for modern Swift idioms, Apple platform best practices, architecture patterns, and code quality.
-
-**Modules:**
-- `swift-patterns.md` - Optionals, type safety, collections, error handling
-- `swiftui-patterns.md` - State management, view composition, performance
-- `architecture-patterns.md` - MVVM, code organization, memory management
-- `coredata-patterns.md` - Core Data best practices
-
-**Trigger phrases:** "review my code", "check best practices", "code quality audit"
-
-#### `ios/ui-review`
-Comprehensive UI/UX review against Apple's Human Interface Guidelines, accessibility standards.
-
-**Modules:**
-- `hig-checklist.md` - Layout, spacing, navigation, colors
-- `font-guidelines.md` - Dynamic Type, typography
-- `accessibility-quick-ref.md` - VoiceOver, labels, traits
-
-**Trigger phrases:** "review the UI", "HIG compliance", "accessibility audit"
-
-#### `ios/app-planner`
-Complete iOS app planning from concept to architecture with automatic documentation generation.
-
-**Creates:** 8 planning documents (overview, features, architecture, tech-stack, ui-ux, data-model, personas, roadmap)
-
-**Trigger phrases:** "plan a new iOS app", "architecture planning"
-
----
-
-### macOS Skills
-
-#### `macos/coding-best-practices`
-macOS Swift 6+ code review with focus on modern concurrency, architecture principles.
-
-**Modules:**
-- `swift-language.md` - Modern Swift 6+ features
-- `architecture-principles.md` - SOLID with examples
-- `data-persistence.md` - SwiftData best practices
-- `code-organization.md` - Modular architecture
-- `modern-concurrency.md` - Async/await, actors
-
-#### `macos/ui-review-tahoe`
-macOS Tahoe (26) UI review including Liquid Glass design system.
-
-**Modules:**
-- `macos-tahoe-hig.md` - Tahoe-specific guidelines
-- `liquid-glass-design.md` - Glass material implementation
-- `swiftui-macos.md` - macOS SwiftUI patterns
-- `appkit-modern.md` - Modern AppKit practices
-- `accessibility.md` - macOS accessibility
-
-#### `macos/macos-tahoe-apis`
-macOS 26 specific APIs and features.
-
-**Modules:**
-- `tahoe-features.md` - New macOS 26 features
-- `apple-intelligence.md` - On-device AI integration
-- `mlx-framework.md` - MLX machine learning
-- `continuity.md` - Cross-device features
-- `xcode16.md` - Xcode 16 features
-
-#### `macos/swiftdata-architecture`
-SwiftData patterns for data modeling and persistence.
-
-**Modules:**
-- `schema-design.md` - Model design patterns
-- `query-patterns.md` - Efficient querying
-- `repository-pattern.md` - Data layer abstraction
-- `performance.md` - Optimization techniques
-
-#### `macos/architecture-patterns`
-Software architecture principles and patterns.
-
-**Modules:**
-- `solid-detailed.md` - SOLID principles with Swift examples
-- `design-patterns.md` - Common design patterns
-- `modular-design.md` - Module architecture
-
-#### `macos/appkit-swiftui-bridge`
-Bridging AppKit and SwiftUI in hybrid apps.
-
-**Modules:**
-- `nsviewrepresentable.md` - Wrapping AppKit views
-- `hosting-controllers.md` - SwiftUI in AppKit
-- `state-management.md` - Cross-framework state
-
-#### `macos/macos-capabilities`
-macOS-specific capabilities and features.
-
-**Modules:**
-- `sandboxing.md` - App sandbox configuration
-- `extensions.md` - App extensions
-- `menubar.md` - Menu bar apps
-- `background.md` - Background execution
-
-#### `macos/app-planner`
-macOS app planning for new and existing apps.
-
-**Modules:**
-- `new-app-planning.md` - New app workflow
-- `existing-app-analysis.md` - Audit existing apps
-
----
-
-### Product Skills
-
-The product skills provide a complete **Idea to App Store** workflow. See `skills/product/WORKFLOW.md` for the full pipeline.
-
-#### Workflow Overview
-
-```
-Idea → Discovery → Market Research → PRD → Architecture → UX → Implementation → Test → Release
-```
-
-#### `product/product-agent`
-Validates product ideas with honest assessment of build/don't build.
-
-**Output:** Problem statement, severity score, opportunity assessment, recommendation
-
-#### `product/competitive-analysis`
-Deep competitor research with feature gaps and positioning opportunities.
-
-#### `product/market-research`
-TAM/SAM/SOM calculations, growth trends, revenue potential.
-
-#### `product/prd-generator`
-Generates comprehensive Product Requirements Document.
-
-#### `product/architecture-spec`
-Technical architecture specification from PRD.
-
-#### `product/ux-spec`
-UI/UX specifications with wireframes and design system.
-
-#### `product/implementation-guide`
-Development roadmap with pseudo-code and patterns.
-
-#### `product/implementation-spec`
-Orchestrates generation of all specification documents.
-
-#### `product/test-spec`
-Testing strategy with unit, integration, and UI test plans.
-
-#### `product/release-spec`
-App Store launch guide with ASO and submission checklist.
-
----
-
-### Release Review Skills
-
-#### `release-review`
-Senior developer-level pre-release audit for macOS and iOS apps. Identifies security vulnerabilities, privacy concerns, UX issues, and distribution problems with actionable fixes.
-
-**Modules:**
-- `security-checklist.md` - Keychain usage, credential storage, HTTPS, entitlements, hardened runtime
-- `privacy-checklist.md` - Data transparency, privacy manifests, user consent, third-party SDKs, GDPR
-- `ux-polish-checklist.md` - Onboarding, empty states, error handling, loading states, accessibility
-- `distribution-checklist.md` - Bundle ID, code signing, notarization, Info.plist, App Store requirements
-- `api-design-checklist.md` - User-Agent headers, error handling, token expiration, rate limiting
-
-**Output Format:**
-- 🔴 **Critical** - Must fix (security vulnerabilities, rejection risks)
-- 🟠 **High** - Should fix (poor UX, missing consent)
-- 🟡 **Medium** - Fix soon (incomplete features)
-- 🟢 **Low** - Nice to have (polish)
-- ✅ **Strengths** - What the app does well
-
-**Trigger phrases:** "review for release", "pre-release audit", "senior developer review", "App Store review"
-
----
-
-### Generator Skills
-
-Unlike advisory skills (review, audit), generator skills **produce production-ready code** tailored to your project.
-
-#### Key Features
-- **Context-aware**: Reads your project structure and patterns
-- **Protocol-based**: Generated code uses protocols for easy provider swapping
-- **Platform detection**: Adapts to iOS/macOS and App Store/direct distribution
-
-#### `generators/logging-setup`
-Replace print() statements with Apple's structured logging (os.log/Logger).
-
-**Modes:**
-- Audit: Find all print() statements
-- Generate: Create AppLogger infrastructure
-- Migrate: Convert print → Logger
-
-**Features:** Privacy annotations, subsystem/category organization, Console.app integration
-
-**Trigger phrases:** "add logging", "replace print statements", "set up Logger"
-
-#### `generators/analytics-setup`
-Protocol-based analytics with swappable providers.
-
-**Providers:** TelemetryDeck, Firebase, Mixpanel, NoOp (testing)
-
-**Key feature:** Swap providers by changing ONE line:
-```swift
-let analytics: AnalyticsService = TelemetryDeckAnalytics(...)
-// Change to:
-let analytics: AnalyticsService = FirebaseAnalytics()
-```
-
-**Trigger phrases:** "add analytics", "set up TelemetryDeck", "track events"
-
-#### `generators/onboarding-generator`
-Multi-step onboarding flow with persistence.
-
-**Options:** Paged (swipe) or stepped (buttons), skip option, animations
-
-**Integration:**
-```swift
-ContentView()
-    .onboarding()  // Shows on first launch
-```
-
-**Trigger phrases:** "add onboarding", "create welcome screens", "first launch flow"
-
-#### `generators/review-prompt`
-Smart App Store review prompts with platform detection.
-
-**Features:**
-- Configurable conditions (sessions, days, positive actions)
-- Cool-down period between prompts
-- Platform detection (skips for non-App Store macOS)
-
-**Trigger phrases:** "add review prompt", "request ratings", "App Store reviews"
-
-#### `generators/networking-layer`
-Protocol-based API client with async/await.
-
-**Features:**
-- Clean `APIClient` protocol for easy mocking/swapping
-- Type-safe endpoint definitions with `APIEndpoint`
-- Comprehensive error handling with `NetworkError`
-- Environment-based configuration (dev/staging/prod)
-- Built-in logging and request validation
-
-**Templates:** APIClient.swift, APIEndpoint.swift, NetworkError.swift, APIConfiguration.swift, MockAPIClient.swift
-
-**Trigger phrases:** "add networking layer", "create API client", "set up network requests"
-
-#### `generators/auth-flow`
-Complete authentication flow with Sign in with Apple and biometrics.
-
-**Features:**
-- Sign in with Apple integration (ASAuthorizationController)
-- Biometric authentication (Face ID/Touch ID)
-- Secure credential storage (Keychain)
-- Automatic credential state monitoring
-- SwiftUI button components
-
-**Templates:** AuthenticationManager.swift, KeychainManager.swift, SignInWithAppleManager.swift, BiometricAuthManager.swift, SignInWithAppleButton.swift
-
-**Trigger phrases:** "add authentication", "Sign in with Apple", "add Face ID login"
-
-#### `generators/paywall-generator`
-StoreKit 2 subscription paywall with modern APIs.
-
-**Features:**
-- Full StoreKit 2 implementation
-- Product loading, purchasing, restoring
-- Subscription status tracking with Environment
-- Beautiful paywall UI with plan selection
-- iOS 18.4+ features documented (SubscriptionOfferView)
-
-**Templates:** StoreKitManager.swift, Products.swift, SubscriptionStatus.swift, PaywallView.swift, SubscriptionButton.swift
-
-**Trigger phrases:** "add paywall", "subscription screen", "in-app purchases"
-
-#### `generators/settings-screen`
-Complete settings screen with modular sections.
-
-**Features:**
-- Centralized AppSettings with @AppStorage
-- Appearance (theme, haptics, sounds)
-- Notifications (with permission handling)
-- Account management
-- About and Legal sections
-- Cross-platform (iOS NavigationStack, macOS Settings scene)
-
-**Templates:** SettingsView.swift, AppSettings.swift, SettingsRow.swift, AppearanceSettingsView.swift, AccountSettingsView.swift, NotificationsSettingsView.swift, AboutSettingsView.swift, LegalSettingsView.swift
-
-**Trigger phrases:** "add settings screen", "create preferences", "settings UI"
-
-#### `generators/persistence-setup`
-SwiftData persistence layer with optional iCloud sync.
-
-**Features:**
-- SwiftData setup (iOS 17+)
-- Repository pattern for testability
-- Optional CloudKit sync
-- Sync status monitoring
-- Migration support
-
-**Templates:** PersistenceController.swift, Repository.swift, SwiftDataRepository.swift, ExampleModel.swift, CloudKitConfiguration.swift, SyncStatus.swift
-
-**Trigger phrases:** "add persistence", "SwiftData setup", "iCloud sync", "local storage"
-
-#### `generators/error-monitoring`
-Protocol-based crash/error reporting with swappable providers.
-
-**Features:**
-- Protocol-based (easy provider swapping)
-- Sentry and Firebase Crashlytics support
-- NoOp for testing/privacy
-- Breadcrumbs for debugging context
-- User context (anonymized)
-
-**Templates:** ErrorMonitoringService.swift, ErrorContext.swift, NoOpErrorMonitoring.swift, SentryErrorMonitoring.swift, CrashlyticsErrorMonitoring.swift
-
-**Trigger phrases:** "add crash reporting", "error monitoring", "Sentry setup", "Crashlytics"
-
----
-
-### Apple Intelligence Skills
-
-#### `apple-intelligence/foundation-models`
-On-device LLM integration using Apple's Foundation Models framework.
-
-**Features:**
-- Model availability checking
-- Session management (single/multi-turn)
-- Prompt engineering best practices
-- `@Generable` structured output with `@Guide` constraints
-- Tool calling patterns
-- Snapshot streaming for SwiftUI
-- Context window management (4,096 tokens)
-
-**Trigger phrases:** "add AI features", "on-device LLM", "Foundation Models", "prompt engineering"
-
-#### `apple-intelligence/visual-intelligence`
-Integrate with iOS Visual Intelligence for camera-based search.
-
-**Features:**
-- `IntentValueQuery` implementation
-- `SemanticContentDescriptor` handling
-- `AppEntity` for searchable content
-- Display representations
-- Deep linking from results
-
-**Trigger phrases:** "visual search", "camera search", "Visual Intelligence"
-
----
-
-### Design Skills
-
-#### `design/liquid-glass`
-Modern Liquid Glass design using the `.glassEffect()` API (iOS/macOS 26+).
-
-**Features:**
-- `.glassEffect()` modifier with shapes
-- `.tint()` and `.interactive()` options
-- `GlassEffectContainer` for multiple effects
-- Morphing transitions with `@Namespace`
-- `.buttonStyle(.glass)` and `.glassProminent`
-- AppKit `NSGlassEffectView` patterns
-
-**Trigger phrases:** "Liquid Glass", "glass effect", "modern Apple design"
-
----
-
-### App Store Skills
-
-Skills for optimizing your App Store presence and managing customer relationships.
-
-#### `app-store/app-description-writer`
-Generate compelling App Store descriptions.
-
-**Output:** Promotional text (170 chars), full description (4000 chars), What's New text
-
-**Trigger phrases:** "write app description", "App Store copy", "promotional text"
-
-#### `app-store/screenshot-planner`
-Plan App Store screenshot sequences with captions.
-
-**Features:**
-- 5-10 screenshot storyboard framework
-- Caption writing formulas
-- Device frame recommendations
-- Localization considerations
-
-**Trigger phrases:** "plan screenshots", "screenshot captions", "App Store visuals"
-
-#### `app-store/keyword-optimizer`
-Optimize app title, subtitle, and keywords for search.
-
-**Features:**
-- 100-character keyword optimization
-- Priority matrix (volume vs difficulty)
-- Localization keyword strategy
-
-**Trigger phrases:** "ASO", "App Store keywords", "improve discoverability"
-
-#### `app-store/review-response-writer`
-Professional responses to App Store reviews.
-
-**Features:**
-- A.C.T. formula (Acknowledge, Clarify, Thank)
-- Templates for 8+ scenarios
-- When to respond vs. report
-
-**Trigger phrases:** "respond to review", "handle negative review", "review management"
-
----
-
-### Shared Skills
-
-#### `shared/skill-creator`
-Meta-skill for creating new Claude Code skills with best practices.
-
-**Templates:**
-- `skill-template.md` - Simple skill template
-- `complex-skill-template.md` - Modularized skill template
-
-## Usage Examples
-
-### iOS Code Review
-```
-You: "Review my ExpenseViewModel for best practices"
-Claude: [Activates ios/coding-best-practices]
-→ Reviews Swift idioms, MVVM architecture, Core Data usage
-→ Provides scored feedback with specific improvements
-```
-
-### macOS UI Review
-```
-You: "Check my macOS app for Tahoe HIG compliance"
-Claude: [Activates macos/ui-review-tahoe]
-→ Reviews Liquid Glass implementation
-→ Checks accessibility and platform conventions
-```
-
-### Product Validation
-```
-You: "Should I build a password manager for Apple ecosystem?"
-Claude: [Activates product/product-agent]
-→ Analyzes market saturation (iCloud Keychain, 1Password)
-→ Returns honest recommendation with reasoning
-```
-
-### Full Product Workflow
-```
-You: "Generate implementation specifications for my app idea"
-Claude: [Activates product/implementation-spec]
-→ Orchestrates PRD → Architecture → UX → Implementation → Test → Release
-→ Creates 7 specification documents in docs/
-```
-
-### Pre-Release Audit
-```
-You: "Review for release" or "Senior developer review"
-Claude: [Activates release-review]
-→ Runs 6-phase audit: Security → Privacy → UX → Distribution → API
-→ Returns prioritized issues with code fixes
-→ Identifies strengths and recommended action plan
-```
-
-### Add Logging Infrastructure
-```
-You: "Replace print statements with proper logging"
-Claude: [Activates generators/logging-setup]
-→ Audits existing print() statements
-→ Generates AppLogger.swift with categories
-→ Provides migration guide for each print statement
-```
-
-### Add Analytics (Swappable)
-```
-You: "Add analytics with TelemetryDeck"
-Claude: [Activates generators/analytics-setup]
-→ Generates protocol-based analytics infrastructure
-→ Creates TelemetryDeck implementation + NoOp for testing
-→ Easy to swap to Firebase later (change one line)
-```
-
-### Add On-Device AI
-```
-You: "Add AI text generation using Apple's on-device LLM"
-Claude: [Activates apple-intelligence/foundation-models]
-→ Shows availability checking patterns
-→ Provides @Generable structured output examples
-→ Includes prompt engineering best practices
-```
-
-### Optimize App Store Listing
-```
-You: "Help me write App Store description for my task manager"
-Claude: [Activates app-store/app-description-writer]
-→ Asks about key features and target audience
-→ Generates promotional text, full description, What's New
-→ Follows App Store character limits and best practices
-```
-
-### Add Liquid Glass Design
-```
-You: "Add Liquid Glass effects to my toolbar"
-Claude: [Activates design/liquid-glass]
-→ Shows .glassEffect() API usage
-→ Demonstrates GlassEffectContainer for multiple items
-→ Includes morphing transition patterns
-```
+## Documentation
+
+| Doc | Description |
+|-----|-------------|
+| [docs/USAGE.md](docs/USAGE.md) | How to use for new vs existing apps |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | Planned future skills |
+| [skills/product/WORKFLOW.md](skills/product/WORKFLOW.md) | Full idea → App Store workflow |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
+
+## Generator Skills
+
+Generate production-ready Swift code that adapts to your project:
+
+| Generator | What It Creates |
+|-----------|-----------------|
+| `logging-setup` | Apple Logger infrastructure |
+| `analytics-setup` | Protocol-based analytics (TelemetryDeck, Firebase) |
+| `networking-layer` | Async/await API client |
+| `auth-flow` | Sign in with Apple + biometrics |
+| `paywall-generator` | StoreKit 2 subscriptions |
+| `settings-screen` | Complete preferences UI |
+| `persistence-setup` | SwiftData + optional iCloud |
+| `onboarding-generator` | Multi-step welcome flow |
+| `review-prompt` | Smart App Store review requests |
+| `error-monitoring` | Crash reporting (Sentry/Crashlytics) |
+| `ci-cd-setup` | GitHub Actions / Xcode Cloud |
+| `localization-setup` | String catalogs, i18n |
+| `push-notifications` | APNs setup |
+| `deep-linking` | URL schemes, universal links |
+| `test-generator` | Unit/UI test templates |
+| `accessibility-generator` | VoiceOver, Dynamic Type |
+| `widget-generator` | WidgetKit boilerplate |
+| `feature-flags` | Local/remote feature flags |
 
 ## Contributing
 
-Contributions welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md).
-
-### Ways to Contribute
-- Report bugs or issues
-- Suggest new skills
-- Improve existing skills
-- Add more examples
-- Share your use cases
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file.
+MIT License - see [LICENSE](LICENSE).
 
 ## Author
 
 **Ravishankar** - [@rshankras](https://github.com/rshankras)
-
-## Acknowledgments
-
-- Apple for comprehensive development guidelines
-- Claude Code team for the skills framework
-- iOS/macOS development community for best practices
-
