@@ -14,10 +14,11 @@ A comprehensive collection of Claude Code skills for iOS, macOS, and Apple platf
 | **Generators** | 18 | Production-ready code for common features |
 | **Apple Intelligence** | 2 | Foundation Models, Visual Intelligence |
 | **Design** | 1 | Liquid Glass design system |
+| **Security** | 1 | Secure storage, biometrics, network security |
 | **App Store** | 4 | ASO, descriptions, keywords, reviews |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 48 skills**
+**Total: 49 skills**
 
 ## Quick Start
 
@@ -62,6 +63,7 @@ skills/
 │   └── ...
 ├── apple-intelligence/     # Foundation Models, Visual Intelligence
 ├── design/                 # Liquid Glass (.glassEffect API)
+├── security/               # Keychain, biometrics, network security
 ├── app-store/              # ASO, descriptions, screenshots, reviews
 │   ├── keyword-optimizer/  # + advanced-tactics, existing-app-strategy
 │   ├── app-description-writer/
@@ -124,6 +126,19 @@ Comprehensive ASO toolkit based on real indie developer strategies:
 - **Opportunity Scoring** - Grade keywords A+ to F
 
 **Example:** *"Help me optimize ASO for my expense splitting app"*
+
+## Security Skill
+
+Comprehensive security guidance for iOS, macOS, and watchOS:
+
+| Topic | What's Covered |
+|-------|----------------|
+| **Secure Storage** | Keychain patterns, Data Protection classes, Secure Enclave |
+| **Biometric Auth** | Face ID, Touch ID, LAContext, SwiftUI integration |
+| **Network Security** | App Transport Security, certificate pinning, TLS |
+| **Platform Specifics** | iOS jailbreak detection, macOS sandbox/hardened runtime, watchOS HealthKit |
+
+**Example:** *"Review security in my app"* or *"How do I store API tokens securely?"*
 
 ## Contributing
 

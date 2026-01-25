@@ -16,6 +16,14 @@ Future skills to be created based on Apple documentation.
 | SwiftUI-Implementing-Liquid-Glass-Design.md | `design/liquid-glass` | ✅ Complete |
 | AppKit-Implementing-Liquid-Glass-Design.md | `design/liquid-glass` | ✅ Complete |
 
+### Security
+| Topic | Skill | Status |
+|-------|-------|--------|
+| Secure Storage (Keychain, Data Protection, Secure Enclave) | `security` | ✅ Complete |
+| Biometric Auth (Face ID, Touch ID, LAContext) | `security` | ✅ Complete |
+| Network Security (ATS, Certificate Pinning, TLS) | `security` | ✅ Complete |
+| Platform-Specific Security (iOS, macOS, watchOS) | `security` | ✅ Complete |
+
 ---
 
 ## Planned Skills
@@ -117,3 +125,6 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 - screenshot-planner
 - keyword-optimizer
 - review-response-writer
+
+### Existing Security Skills (1 total)
+- security (covers secure storage, biometric auth, network security, platform specifics)
