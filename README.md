@@ -144,6 +144,10 @@ Comprehensive security guidance for iOS, macOS, and watchOS:
 
 Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Disclaimer
+
+Skills in this repository were generated with the assistance of [Claude Code](https://claude.ai/code). Content may contain inaccuracies — contributions and corrections are welcome.
+
 ## License
 
 MIT License - see [LICENSE](LICENSE).
