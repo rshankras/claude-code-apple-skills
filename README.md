@@ -151,7 +151,3 @@ Skills in this repository were generated with the assistance of [Claude Code](ht
 ## License
 
 MIT License - see [LICENSE](LICENSE).
-
-## Author
-
-**Ravishankar** - [@rshankras](https://github.com/rshankras)
