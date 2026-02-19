@@ -11,14 +11,14 @@ A collection of Claude Code skills for iOS, macOS, and Apple platform developmen
 | **iOS** | 3 | Code review, UI review, app planning |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
 | **Product** | 10 | Idea validation → App Store workflow |
-| **Generators** | 18 | Production-ready code for common features |
+| **Generators** | 19 | Production-ready code for common features |
 | **Apple Intelligence** | 2 | Foundation Models, Visual Intelligence |
 | **Design** | 1 | Liquid Glass design system |
 | **Security** | 1 | Secure storage, biometrics, network security |
 | **App Store** | 4 | ASO, descriptions, keywords, reviews |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 49 skills**
+**Total: 51 skills**
 
 ## Quick Start
 
@@ -50,7 +50,7 @@ skills/
 ├── ios/                    # iOS code review, UI review, planning
 ├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
 ├── product/                # Idea → App Store workflow (10 phases)
-├── generators/             # Code generators (18 skills)
+├── generators/             # Code generators (19 skills)
 │   ├── logging-setup/
 │   ├── analytics-setup/
 │   ├── networking-layer/
@@ -106,6 +106,7 @@ Generate production-ready Swift code that adapts to your project:
 | `accessibility-generator` | VoiceOver, Dynamic Type |
 | `widget-generator` | WidgetKit boilerplate |
 | `feature-flags` | Local/remote feature flags |
+| `app-icon-generator` | Programmatic app icons via CoreGraphics |
 
 ## App Store Optimization (ASO) Skills
 
