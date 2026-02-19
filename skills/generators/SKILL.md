@@ -1,6 +1,6 @@
 ---
 name: generators
-description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, or feature flags.
+description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, or app icons.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 ---
 
@@ -164,6 +164,15 @@ WidgetKit widgets for home screen and lock screen.
 - Timeline providers
 - Lock screen complications
 - Widget intents for configuration
+
+### app-icon-generator/
+Programmatic app icon generation using CoreGraphics.
+- Apple HIG compliant icon design
+- Category-aware design recipes (productivity, media, dev tools, etc.)
+- 3 variant generation for user selection
+- Automatic resizing to all required sizes (macOS + iOS)
+- Asset catalog installation with correct Contents.json
+- No external dependencies — pure CoreGraphics
 
 ### feature-flags/
 Feature flag infrastructure with local and remote support.
