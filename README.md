@@ -1,6 +1,6 @@
 # Claude Code Skills for Apple Platform Development
 
-A comprehensive collection of Claude Code skills for iOS, macOS, and Apple platform development. These skills help you **plan and build apps**, **maintain code quality**, **ensure HIG compliance**, and guide you from **idea to App Store**.
+A collection of Claude Code skills for iOS, macOS, and Apple platform development. These skills help you plan and build apps, maintain code quality, ensure HIG compliance, and guide you from idea to App Store.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
