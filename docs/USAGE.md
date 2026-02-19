@@ -39,8 +39,16 @@ Follow the Implementation Guide, or ask Claude to generate specific features.
 | Add deep links | "Add deep linking" |
 | Add crash reporting | "Add error monitoring" |
 | Set up CI/CD | "Set up GitHub Actions" |
+| Add localization | "Add localization to my app" |
+| Add persistence | "Add SwiftData persistence" |
+| Add tests | "Generate tests for my app" |
+| Add accessibility | "Add VoiceOver support" |
+| Add widgets | "Add a home screen widget" |
+| Add feature flags | "Add feature flags" |
+| Generate app icon | "Generate an app icon" |
 | Modernize UI | "Update to Liquid Glass design" |
 | Add AI features | "Add on-device LLM features" |
+| Review security | "Review security in my app" |
 | Prepare for release | "Review for release" |
 | Improve App Store listing | "Optimize my App Store keywords" |
 | Respond to review | "Help respond to this review: [text]" |
@@ -69,8 +77,11 @@ Differences:
 | `generators/` | Generate code | Add features to any app |
 | `apple-intelligence/` | AI features | Foundation Models, Visual Intelligence |
 | `design/` | Modern UI | Liquid Glass effects |
+| `security/` | Security | Keychain, biometrics, network security |
 | `app-store/` | ASO | Descriptions, keywords, screenshots |
+| `watchos/` | watchOS | Watch apps, complications, connectivity |
 | `release-review/` | Pre-release | Security, privacy, UX audit |
+| `shared/` | Skill creation | Templates for creating new skills |
 
 ---
 
@@ -92,7 +103,7 @@ Generator output is a starting point. Modify it to fit your needs, or ask Claude
 Just the platform-specific review skills. Everything else (generators, product workflow, App Store skills) works the same.
 
 ### Can I use this for watchOS/visionOS?
-watchOS: Yes, mention "watchOS" and relevant patterns apply.
+watchOS: Yes, there's a dedicated `watchos/` skill covering Watch apps, complications, and connectivity.
 visionOS: Limited - check `docs/ROADMAP.md` for planned visionOS skills.
 
 ### Where are the detailed skill docs?
