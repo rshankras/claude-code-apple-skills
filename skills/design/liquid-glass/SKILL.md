@@ -1,12 +1,12 @@
 ---
 name: liquid-glass
-description: Implement Liquid Glass design using .glassEffect() API for iOS/macOS 26+. Use when creating modern glass-based UI effects.
+description: Implement Liquid Glass design using .glassEffect() API for iOS/macOS 26+. Covers SwiftUI, AppKit, UIKit, and WidgetKit. Use when creating modern glass-based UI effects.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
 ---
 
 # Liquid Glass Design
 
-Implement Apple's Liquid Glass design language using the modern `.glassEffect()` API.
+Implement Apple's Liquid Glass design language across all Apple UI frameworks. Covers SwiftUI (`.glassEffect()`), AppKit (`NSGlassEffectView`), UIKit (`UIGlassEffect` + `UIVisualEffectView`), and WidgetKit (rendering modes, accented content, glass elements in widgets).
 
 ## When to Use
 
@@ -14,6 +14,12 @@ Implement Apple's Liquid Glass design language using the modern `.glassEffect()`
 - User asks about Liquid Glass or modern Apple design
 - User needs transparent, interactive UI elements
 - User wants morphing transitions between views
+- User is implementing glass effects in UIKit with `UIVisualEffectView`
+- User needs `UIGlassEffect` or `UIGlassContainerEffect`
+- User asks about scroll view edge effects in UIKit
+- User wants Liquid Glass in widgets (WidgetKit)
+- User needs to support accented rendering mode in widgets
+- User asks about widget textures or mounting styles on visionOS
 
 ## Quick Start (SwiftUI)
 
@@ -453,6 +459,270 @@ VStack {
 | No morphing | `glassEffectID` + `@Namespace` |
 | No container grouping | `GlassEffectContainer` |
 
+## UIKit Implementation
+
+### UIGlassEffect
+
+Use `UIVisualEffectView` with a `UIGlassEffect` to create glass surfaces in UIKit:
+
+```swift
+import UIKit
+
+let glassEffect = UIGlassEffect()
+let visualEffectView = UIVisualEffectView(effect: glassEffect)
+visualEffectView.frame = CGRect(x: 50, y: 100, width: 300, height: 200)
+visualEffectView.layer.cornerRadius = 20
+visualEffectView.clipsToBounds = true
+
+let label = UILabel()
+label.text = "Liquid Glass"
+label.textAlignment = .center
+label.frame = visualEffectView.bounds
+visualEffectView.contentView.addSubview(label)
+view.addSubview(visualEffectView)
+```
+
+#### Customizing the Glass Effect
+
+```swift
+glassEffect.tintColor = UIColor.systemBlue.withAlphaComponent(0.3)
+glassEffect.isInteractive = true
+```
+
+### Interactive Glass in UIKit
+
+Set `isInteractive = true` on a `UIGlassEffect` to make it respond to touch:
+
+```swift
+let interactiveGlassEffect = UIGlassEffect()
+interactiveGlassEffect.isInteractive = true
+
+let glassButton = UIButton(frame: CGRect(x: 50, y: 300, width: 200, height: 50))
+glassButton.setTitle("Glass Button", for: .normal)
+glassButton.setTitleColor(.white, for: .normal)
+
+let buttonEffectView = UIVisualEffectView(effect: interactiveGlassEffect)
+buttonEffectView.frame = glassButton.bounds
+buttonEffectView.layer.cornerRadius = 15
+buttonEffectView.clipsToBounds = true
+
+glassButton.insertSubview(buttonEffectView, at: 0)
+view.addSubview(glassButton)
+```
+
+### UIGlassContainerEffect
+
+Use `UIGlassContainerEffect` when combining multiple glass elements. This is the UIKit equivalent of SwiftUI's `GlassEffectContainer` -- it enables proper blending and morphing between glass views:
+
+```swift
+let containerEffect = UIGlassContainerEffect()
+containerEffect.spacing = 40.0
+
+let containerView = UIVisualEffectView(effect: containerEffect)
+containerView.frame = CGRect(x: 50, y: 400, width: 300, height: 200)
+
+let firstGlassEffect = UIGlassEffect()
+let firstGlassView = UIVisualEffectView(effect: firstGlassEffect)
+firstGlassView.frame = CGRect(x: 20, y: 20, width: 100, height: 100)
+firstGlassView.layer.cornerRadius = 20
+firstGlassView.clipsToBounds = true
+
+let secondGlassEffect = UIGlassEffect()
+secondGlassEffect.tintColor = UIColor.systemPink.withAlphaComponent(0.3)
+let secondGlassView = UIVisualEffectView(effect: secondGlassEffect)
+secondGlassView.frame = CGRect(x: 80, y: 60, width: 100, height: 100)
+secondGlassView.layer.cornerRadius = 20
+secondGlassView.clipsToBounds = true
+
+containerView.contentView.addSubview(firstGlassView)
+containerView.contentView.addSubview(secondGlassView)
+view.addSubview(containerView)
+```
+
+### Scroll View Edge Effects
+
+UIKit scroll views now support configurable edge effects for Liquid Glass integration:
+
+```swift
+let scrollView = UIScrollView(frame: view.bounds)
+scrollView.topEdgeEffect.style = .automatic
+scrollView.bottomEdgeEffect.style = .hard
+scrollView.leftEdgeEffect.isHidden = true
+scrollView.rightEdgeEffect.isHidden = true
+```
+
+**Available Edge Effect Styles:**
+
+| Style | Description |
+|-------|-------------|
+| `.automatic` | System determines style based on context |
+| `.hard` | Hard cutoff with a dividing line |
+
+### UIScrollEdgeElementContainerInteraction
+
+Use `UIScrollEdgeElementContainerInteraction` to coordinate glass elements (such as bottom toolbars) with scroll edge behavior:
+
+```swift
+let interaction = UIScrollEdgeElementContainerInteraction()
+interaction.scrollView = scrollView
+interaction.edge = .bottom
+buttonContainer.addInteraction(interaction)
+```
+
+### Toolbar Integration
+
+UIKit navigation bar items integrate with Liquid Glass automatically. Use `hidesSharedBackground` to opt individual items out of the shared glass bar:
+
+```swift
+let shareButton = UIBarButtonItem(
+    barButtonSystemItem: .action,
+    target: self,
+    action: #selector(shareAction)
+)
+let favoriteButton = UIBarButtonItem(
+    image: UIImage(systemName: "heart"),
+    style: .plain,
+    target: self,
+    action: #selector(favoriteAction)
+)
+favoriteButton.hidesSharedBackground = true
+navigationItem.rightBarButtonItems = [shareButton, favoriteButton]
+```
+
+### UIKit vs SwiftUI Comparison
+
+| SwiftUI | UIKit |
+|---------|-------|
+| `.glassEffect()` | `UIVisualEffectView(effect: UIGlassEffect())` |
+| `.glassEffect(.regular.interactive())` | `UIGlassEffect()` with `isInteractive = true` |
+| `.glassEffect(.regular.tint(.blue))` | `UIGlassEffect()` with `tintColor = ...` |
+| `GlassEffectContainer(spacing:)` | `UIGlassContainerEffect()` with `spacing` |
+| `.buttonStyle(.glass)` | Insert `UIVisualEffectView` as button subview |
+
+## WidgetKit Implementation
+
+### Rendering Modes
+
+Widgets support two rendering modes that affect how Liquid Glass is displayed:
+
+| Mode | Description |
+|------|-------------|
+| **Full Color** | Default mode. Displays all colors, images, and transparency as designed. |
+| **Accented** | Used when tinted or clear appearance is chosen. Primary and accented content tinted white (iOS and macOS). Background replaced with themed glass or tinted color effect. |
+
+### Accented Mode
+
+Detect the rendering mode and adapt layout accordingly. Use `.widgetAccentable()` to mark views that should be tinted in accented mode:
+
+```swift
+struct MyWidgetView: View {
+    @Environment(\.widgetRenderingMode) var renderingMode
+
+    var body: some View {
+        if renderingMode == .accented {
+            // Layout optimized for accented mode
+            AccentedWidgetLayout()
+        } else {
+            // Standard full-color layout
+            FullColorWidgetLayout()
+        }
+    }
+}
+```
+
+#### Grouping Accent Content
+
+```swift
+HStack(alignment: .center, spacing: 0) {
+    VStack(alignment: .leading) {
+        Text("Widget Title")
+            .font(.headline)
+            .widgetAccentable()
+        Text("Widget Subtitle")
+    }
+    Image(systemName: "star.fill")
+        .widgetAccentable()
+}
+```
+
+#### Image Rendering in Accented Mode
+
+```swift
+Image("myImage")
+    .widgetAccentedRenderingMode(.monochrome)
+```
+
+### Container Backgrounds
+
+Define a container background for your widget content:
+
+```swift
+var body: some View {
+    VStack {
+        // Widget content
+    }
+    .containerBackground(for: .widget) {
+        Color.blue.opacity(0.2)
+    }
+}
+```
+
+### Background Removal
+
+Prevent the system from removing the widget background. Note that marking a background as non-removable excludes the widget from contexts that require removable backgrounds (iPad Lock Screen, StandBy):
+
+```swift
+var body: some WidgetConfiguration {
+    StaticConfiguration(kind: "MyWidget", provider: Provider()) { entry in
+        MyWidgetView(entry: entry)
+    }
+    .containerBackgroundRemovable(false)
+}
+```
+
+### visionOS Textures and Mounting Styles
+
+#### Widget Textures
+
+```swift
+// Default glass texture
+.widgetTexture(.glass)
+
+// Paper-like texture
+.widgetTexture(.paper)
+```
+
+#### Mounting Styles
+
+```swift
+.supportedMountingStyles([.recessed, .elevated])
+```
+
+| Style | Description |
+|-------|-------------|
+| `.recessed` | Widget appears embedded into a vertical surface |
+| `.elevated` | Widget appears on top of a surface |
+
+### Custom Glass Elements in Widgets
+
+Apply `.glassEffect()` and `.buttonStyle(.glass)` directly within widget views:
+
+```swift
+// Glass text element
+Text("Custom Element")
+    .padding()
+    .glassEffect()
+
+// Glass image element
+Image(systemName: "star.fill")
+    .frame(width: 60, height: 60)
+    .glassEffect(.regular, in: .rect(cornerRadius: 12))
+
+// Glass button in widget
+Button("Action") { }
+    .buttonStyle(.glass)
+```
+
 ## Best Practices
 
 1. **Use GlassEffectContainer** for multiple glass views
@@ -479,6 +749,7 @@ VStack {
 
 ## Checklist
 
+### SwiftUI
 - [ ] Use `.glassEffect()` instead of `.background(.material)`
 - [ ] Wrap multiple glass views in `GlassEffectContainer`
 - [ ] Add `@Namespace` for morphing transitions
@@ -486,12 +757,45 @@ VStack {
 - [ ] Add `.interactive()` for touchable elements
 - [ ] Use `.buttonStyle(.glass)` for glass buttons
 - [ ] Test animations for smooth morphing
+
+### UIKit
+- [ ] Use `UIVisualEffectView` with `UIGlassEffect` for glass surfaces
+- [ ] Set `isInteractive = true` on glass effects for touchable elements
+- [ ] Wrap multiple glass views in `UIGlassContainerEffect`
+- [ ] Configure scroll view edge effects (`.automatic` or `.hard`)
+- [ ] Use `UIScrollEdgeElementContainerInteraction` for scroll-coordinated toolbars
+- [ ] Use `hidesSharedBackground` for toolbar items that need independent glass
+
+### WidgetKit
+- [ ] Detect `widgetRenderingMode` and adapt layout for accented mode
+- [ ] Mark accent content with `.widgetAccentable()`
+- [ ] Set `.widgetAccentedRenderingMode()` on images
+- [ ] Define `.containerBackground(for: .widget)` for backgrounds
+- [ ] Use `.containerBackgroundRemovable(false)` only when necessary
+- [ ] Apply `.glassEffect()` and `.buttonStyle(.glass)` in widget views
+- [ ] Configure `.widgetTexture()` and `.supportedMountingStyles()` for visionOS
+
+### General
 - [ ] Consider performance with many glass effects
 - [ ] Support both light and dark appearances
 
 ## References
 
+### SwiftUI
 - [Applying Liquid Glass to custom views](https://developer.apple.com/documentation/SwiftUI/Applying-Liquid-Glass-to-custom-views)
 - [Landmarks: Building an app with Liquid Glass](https://developer.apple.com/documentation/SwiftUI/Landmarks-Building-an-app-with-Liquid-Glass)
 - [SwiftUI GlassEffectContainer](https://developer.apple.com/documentation/SwiftUI/GlassEffectContainer)
+
+### AppKit
 - [AppKit NSGlassEffectView](https://developer.apple.com/documentation/AppKit/NSGlassEffectView)
+
+### UIKit
+- [UIKit UIGlassEffect](https://developer.apple.com/documentation/UIKit/UIGlassEffect)
+- [UIKit UIGlassContainerEffect](https://developer.apple.com/documentation/UIKit/UIGlassContainerEffect)
+- [UIKit UIVisualEffectView](https://developer.apple.com/documentation/UIKit/UIVisualEffectView)
+- [UIScrollEdgeElementContainerInteraction](https://developer.apple.com/documentation/UIKit/UIScrollEdgeElementContainerInteraction)
+
+### WidgetKit
+- [WidgetKit Rendering Modes](https://developer.apple.com/documentation/WidgetKit/WidgetRenderingMode)
+- [widgetAccentable()](https://developer.apple.com/documentation/SwiftUI/View/widgetAccentable(_:))
+- [containerBackground(for:)](https://developer.apple.com/documentation/SwiftUI/View/containerBackground(for:alignment:content:))

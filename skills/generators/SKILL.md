@@ -176,10 +176,32 @@ Programmatic app icon generation using CoreGraphics.
 
 ### feature-flags/
 Feature flag infrastructure with local and remote support.
-- Protocol-based service
-- Firebase Remote Config integration
-- Local defaults with remote override
-- Debug menu for testing
+- Protocol-based service with swappable providers
+- Local defaults with remote override (composite provider)
+- @Observable manager for SwiftUI integration
+- Debug menu for toggling flags
+
+### live-activity-generator/
+ActivityKit Live Activity with Dynamic Island and Lock Screen.
+- ActivityAttributes and ContentState definitions
+- Dynamic Island layouts (compact and expanded)
+- Lock Screen presentation
+- Push-to-update support via APNs
+- Activity lifecycle management (start, update, end)
+
+### tipkit-generator/
+TipKit inline and popover tips with rules and testing.
+- Inline and popover tip definitions
+- Rule-based display logic (parameter and event rules)
+- Display frequency and invalidation
+- Testing and preview support
+
+### cloudkit-sync/
+CKSyncEngine-based CloudKit sync (iOS 17+).
+- CKSyncEngine setup and delegate
+- Record zone management
+- Conflict resolution strategies
+- Sharing and collaboration support
 
 ## How to Use
 

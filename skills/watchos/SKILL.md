@@ -15,6 +15,13 @@ Use this skill when the user:
 - Asks about Watch Connectivity (iPhone ↔ Watch sync)
 - Needs help with complications or ClockKit
 - Wants to implement watch-specific UI patterns
+- Asks about **WidgetKit complications** or migrating from ClockKit to WidgetKit
+- Wants to build **watch face complications** (accessoryCircular, accessoryRectangular, accessoryCorner, accessoryInline)
+- Asks about **HealthKit on watchOS**, workout sessions, heart rate, or fitness tracking
+- Needs **Extended Runtime sessions** for background workout tracking
+- Wants to build **watchOS widgets** or Smart Stack widgets
+- Asks about **widget relevance**, Smart Stack ordering, or widget suggestions
+- Needs to share widgets **cross-platform** between iOS and watchOS
 
 ## Key Principles
 
@@ -292,9 +299,57 @@ class WorkoutManager {
 - Verify haptics feel appropriate
 - Test in different lighting conditions
 
-## References
+## Decision Tree
+
+Choose the right reference file based on what the user needs:
+
+```
+What are you building?
+|
++- iPhone <-> Watch data sync
+|  -> watch-connectivity.md
+|     +- Session management, application context, real-time messaging
+|     +- File transfers, offline caching, complication push updates
+|
++- Watch face complications
+|  -> complications.md
+|     +- ClockKit (legacy) vs WidgetKit (modern) complications
+|     +- Migration from ClockKit to WidgetKit
+|     +- Complication families (circular, rectangular, corner, inline)
+|     +- Timeline providers, reload strategies, gauges
+|
++- Health / fitness / workout tracking
+|  -> health-fitness.md
+|     +- HealthKit authorization and data types
+|     +- HKWorkoutSession and HKLiveWorkoutBuilder
+|     +- Real-time heart rate, calories, distance
+|     +- Extended Runtime sessions, route tracking
+|
++- watchOS widgets / Smart Stack
+|  -> widgets-for-watch.md
+|     +- Smart Stack configuration and relevance
+|     +- Cross-platform widget sharing (iOS + watchOS)
+|     +- watchOS-specific design (dark background, small screen)
+|
++- General watchOS app development
+   -> This file (SKILL.md)
+      +- App structure, navigation, lists
+      +- Digital Crown, haptics, Now Playing
+```
+
+## Reference Files
+
+| File | Content |
+|------|---------|
+| [watch-connectivity.md](watch-connectivity.md) | iPhone <-> Watch sync, session management, data transfer, offline caching |
+| [complications.md](complications.md) | ClockKit to WidgetKit migration, complication families, timeline providers, gauges |
+| [health-fitness.md](health-fitness.md) | HealthKit, workout sessions, heart rate, Extended Runtime, route tracking, privacy |
+| [widgets-for-watch.md](widgets-for-watch.md) | Smart Stack widgets, relevance, cross-platform sharing, watchOS design |
+
+## External References
 
 - [watchOS Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/designing-for-watchos)
 - [Watch Connectivity](https://developer.apple.com/documentation/watchconnectivity)
 - [ClockKit](https://developer.apple.com/documentation/clockkit)
+- [WidgetKit](https://developer.apple.com/documentation/widgetkit)
 - [HealthKit Workouts](https://developer.apple.com/documentation/healthkit/workouts_and_activity_rings)

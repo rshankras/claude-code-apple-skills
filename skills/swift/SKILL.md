@@ -14,6 +14,8 @@ Use this skill when the user:
 - Asks about Swift concurrency (async/await, actors, Sendable, TaskGroup)
 - Needs help with Swift 6 strict concurrency migration
 - Has data race or actor isolation errors
+- Asks about **InlineArray**, **Span**, or low-level memory performance
+- Wants to eliminate heap allocations or replace unsafe pointers
 - Asks about modern Swift patterns independent of any specific platform
 
 ## Available Modules
@@ -25,6 +27,13 @@ Swift concurrency architecture and patterns.
 - Actors, isolation, reentrancy, @MainActor
 - Continuations for bridging legacy APIs
 - Swift 6 strict concurrency migration guide
+
+### memory/
+Swift 6.2 InlineArray and Span for low-level memory performance.
+- InlineArray: fixed-size, stack-allocated collections with zero heap overhead
+- Span family: safe, non-escapable access to contiguous memory
+- Lifetime dependencies and non-escapable type constraints
+- Performance guidance: when to use InlineArray/Span vs Array/UnsafePointer
 
 ## How to Use
 

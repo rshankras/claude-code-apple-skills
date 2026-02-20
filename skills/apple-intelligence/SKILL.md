@@ -1,12 +1,12 @@
 ---
 name: apple-intelligence
-description: Apple Intelligence skills for on-device AI features including Foundation Models, Visual Intelligence, and intelligent assistants. Use when implementing AI-powered features.
+description: Apple Intelligence skills for on-device AI features including Foundation Models, Visual Intelligence, App Intents, and intelligent assistants. Use when implementing AI-powered features.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 ---
 
 # Apple Intelligence Skills
 
-Skills for implementing Apple Intelligence features including on-device LLMs, visual recognition, and intelligent assistants.
+Skills for implementing Apple Intelligence features including on-device LLMs, visual recognition, App Intents integration, and intelligent assistants.
 
 ## When This Skill Activates
 
@@ -17,6 +17,8 @@ Use this skill when the user:
 - Wants to implement structured AI output
 - Needs prompt engineering guidance
 - Wants camera-based visual intelligence features
+- Needs Siri, Shortcuts, or Spotlight integration via App Intents
+- Wants to expose app actions or content to the system
 
 ## Available Skills
 
@@ -36,6 +38,19 @@ Integrate with iOS Visual Intelligence for camera-based search.
 - AppEntity for searchable content
 - Display representations
 - Deep linking from results
+
+### app-intents/
+App Intents for Siri, Shortcuts, Spotlight, and Apple Intelligence.
+- AppIntent protocol, parameters, perform()
+- AppEntity and entity queries
+- App Shortcuts with voice phrases
+- IndexedEntity and Spotlight indexing
+- Intent modes (background, foreground)
+- Interactive snippets with SnippetIntent
+- Visual intelligence integration
+- Onscreen entities for Siri/ChatGPT
+- Multiple choice API
+- Swift package support
 
 ## Key Principles
 
@@ -58,3 +73,4 @@ Integrate with iOS Visual Intelligence for camera-based search.
 
 - `/Users/ravishankar/Downloads/docs/FoundationModels-Using-on-device-LLM-in-your-app.md`
 - `/Users/ravishankar/Downloads/docs/Implementing-Visual-Intelligence-in-iOS.md`
+- `/Users/ravishankar/Downloads/docs/AppIntents-Updates.md`

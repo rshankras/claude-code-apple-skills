@@ -1,36 +1,76 @@
+---
+name: test-generator
+description: Generate test templates for unit tests, integration tests, and UI tests using Swift Testing and XCTest. Use when adding tests to iOS/macOS apps.
+allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+---
+
 # Test Generator
 
 Generate test templates for unit tests, integration tests, and UI tests in iOS/macOS apps.
 
-## When to Use
+## When This Skill Activates
 
-- User wants to add tests to their app
-- User asks about unit testing, UI testing, or XCTest
-- User wants to test ViewModels, services, or repositories
-- User mentions TDD or test-driven development
+Use this skill when the user:
+- Asks to "add tests" or "write tests" for their app
+- Asks about unit testing, UI testing, or XCTest
+- Wants to test ViewModels, services, or repositories
+- Mentions TDD or test-driven development
+- Asks about Swift Testing framework (`@Test`, `#expect`, `@Suite`)
+- Wants mock objects or test helpers
+- Asks about snapshot testing or preview tests
+
+## Decision Tree
+
+```
+What tests do you need?
+|
++-- Unit tests for business logic
+|   +-- Swift Testing (@Test, #expect) -- recommended for iOS 16+
+|   +-- XCTest -- for iOS 13-15 support or existing XCTest projects
+|
++-- Integration tests (component interactions)
+|   +-- Protocol-based mocks with dependency injection
+|
++-- UI tests
+|   +-- XCUITest with Screen Object pattern
+|
++-- Snapshot/preview tests
+    +-- PreviewSnapshots or swift-snapshot-testing
+```
 
 ## Pre-Generation Checks
 
-Before generating, verify:
+### 1. Project Context Detection
+- [ ] Identify existing test targets and test runner
+- [ ] Detect testing framework already in use (Swift Testing vs XCTest)
+- [ ] Verify deployment target (Swift Testing requires iOS 16+ / macOS 13+)
+- [ ] Identify project architecture pattern (MVVM, TCA, Repository, etc.)
+- [ ] Locate source file directories
 
-1. **Existing Test Targets**
-   ```bash
-   # Check for test targets
-   find . -name "*Tests" -type d | head -5
-   grep -r "testTarget" Package.swift 2>/dev/null
-   ```
+### 2. Conflict Detection
+Search for existing test infrastructure:
+```
+Glob: **/*Tests.swift, **/*Tests/**/*.swift, **/*Spec.swift
+Grep: "import XCTest" or "import Testing" or "@Suite" or "@Test"
+Grep: "MockItemRepository" or "protocol.*Repository" or "class Mock"
+```
 
-2. **Testing Frameworks**
-   ```bash
-   # Check for Swift Testing or XCTest usage
-   grep -r "import XCTest\|import Testing" --include="*.swift" | head -5
-   ```
+If existing tests are found:
+- Ask user whether to follow the existing framework (XCTest vs Swift Testing) or migrate
+- Check for existing mock objects to reuse or extend
+- Identify existing test helpers and factories
 
-3. **Project Architecture**
-   ```bash
-   # Identify patterns (MVVM, TCA, etc.)
-   grep -r "ViewModel\|Reducer\|UseCase" --include="*.swift" | head -5
-   ```
+If a test target already exists:
+- Add new tests to the existing target -- do NOT create a new target
+- Follow the existing directory structure and naming conventions
+
+### 3. Architecture Detection
+```
+Grep: "ViewModel" or "Reducer" or "UseCase" or "Repository" or "Service"
+Glob: **/*ViewModel.swift, **/*Reducer.swift, **/*Repository.swift
+```
+
+This determines which test templates to generate (ViewModel tests, Reducer tests, etc.).
 
 ## Configuration Questions
 
@@ -310,8 +350,34 @@ xcodebuild test -scheme YourApp -enableCodeCoverage YES
 5. **Test edge cases** - Empty, nil, error states
 6. **Keep tests fast** - No real network/disk
 
+## Top 5 Mistakes
+
+| # | Mistake | Why It's Wrong | Fix |
+|---|---------|---------------|-----|
+| 1 | Testing implementation details instead of behavior | Tests break on every refactor, providing no safety net | Test public API and observable outcomes, not internal state |
+| 2 | Sharing mutable state between tests | Tests pass individually but fail when run together (order-dependent) | Create fresh instances in each test; use `init()` in `@Suite` structs or `setUp()` in XCTest |
+| 3 | Using `XCTAssertTrue(result != nil)` instead of `XCTUnwrap` | Failure message is useless ("XCTAssertTrue failed") with no context | Use `let value = try XCTUnwrap(result)` or `#expect(result != nil)` with Swift Testing |
+| 4 | Not testing error paths | Only happy-path coverage; errors crash in production | Always test with `shouldFail = true` mocks and verify error state |
+| 5 | Real network calls in unit tests | Tests are slow, flaky, and fail offline | Use protocol-based mocks; reserve real network calls for integration test schemes |
+
+## Review Checklist
+
+Before finishing test generation, verify:
+
+- [ ] **Naming**: Test names describe the behavior, not the method (`loadsItemsSuccessfully` not `testLoadItems`)
+- [ ] **Isolation**: Each test creates its own dependencies -- no shared mutable state
+- [ ] **No real I/O**: Unit tests use mocks for network, disk, and database
+- [ ] **Async handling**: Async tests use `async throws` (Swift Testing) or `async throws` with expectations (XCTest)
+- [ ] **Error paths tested**: At least one test per function verifies error/failure behavior
+- [ ] **Edge cases**: Empty collections, nil optionals, boundary values are tested
+- [ ] **Assertions are specific**: Using `#expect(items.count == 3)` not `#expect(!items.isEmpty)`
+- [ ] **Mock call verification**: Mocks track call counts and received arguments where needed
+- [ ] **No force unwraps in tests**: Use `try #require()` (Swift Testing) or `XCTUnwrap` (XCTest)
+- [ ] **Tests compile and run**: Verify with `xcodebuild test` or Xcode test navigator
+
 ## References
 
+- **templates.md** -- Production-ready code templates for test suites, mocks, and helpers
 - [Swift Testing](https://developer.apple.com/documentation/testing)
 - [XCTest Framework](https://developer.apple.com/documentation/xctest)
 - [Testing Your Apps in Xcode](https://developer.apple.com/documentation/xcode/testing-your-apps-in-xcode)
