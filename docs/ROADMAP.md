@@ -37,7 +37,7 @@ Future skills to be created based on Apple documentation and gap analysis.
 |----------------|-------------|-------------------|
 | `ios/navigation-patterns` | NavigationStack, NavigationSplitView, programmatic navigation, TabView, deep linking with navigation | ✅ Complete |
 | `swift/concurrency-patterns` | Actor isolation, @Sendable, TaskGroup, AsyncSequence, MainActor, cancellation patterns | ✅ Complete |
-| `performance/profiling` | Instruments workflows, Time Profiler, Allocations, hang detection, launch time optimization | Every app eventually hits performance issues; zero coverage |
+| `performance/profiling` | Instruments workflows, Time Profiler, Allocations, hang detection, launch time optimization | ✅ Complete |
 | `performance/swiftui-debugging` | View identity, body re-evaluation, `Self._printChanges()`, lazy vs eager loading, view diffing | SwiftUI performance problems are hard to diagnose without these |
 
 #### SwiftUI Features (Doc-Based)
@@ -160,5 +160,6 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | security/ | 1 | security |
 | watchos/ | 1 | watchos |
 | shared/ | 1 | skill-creator |
+| performance/ | 1 | profiling |
 | swift/ | 1 | concurrency-patterns |
-| **Total** | **53** |
+| **Total** | **54** |
