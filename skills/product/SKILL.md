@@ -22,6 +22,15 @@ Use this skill when the user:
 
 Read relevant module files based on the user's needs:
 
+### Phase 0: Idea Discovery
+
+**idea-generator/**
+Brainstorm and rank app ideas via 5 lenses.
+- Developer profile elicitation (skills, interests, constraints)
+- Five brainstorming lenses (skills, problem-first, technology-first, market gap, trend-based)
+- Feasibility filtering and scoring
+- Ranked shortlist of 3-5 ideas with `next_step` commands
+
 ### Discovery & Validation
 
 **product-agent/**
@@ -104,6 +113,12 @@ Product development workflow guide.
 4. Save outputs to appropriate files
 
 ## Example Workflows
+
+**User doesn't have an idea yet:**
+1. Use `idea-generator/` to brainstorm and rank ideas
+2. Pick top idea from shortlist
+3. Run `product-agent/` to validate the idea
+4. Continue with market research and specs
 
 **User has new app idea:**
 1. Use `product-agent/` for initial validation

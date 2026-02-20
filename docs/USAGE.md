@@ -27,6 +27,7 @@ Follow the Implementation Guide, or ask Claude to generate specific features.
 
 | I want to... | Say this... |
 |--------------|-------------|
+| Generate app ideas | "I don't know what to build" or "Give me app ideas" |
 | Fix code issues | "Review my code for best practices" |
 | Check UI compliance | "Review my UI for HIG" |
 | Add logging | "Add logging to my app" |

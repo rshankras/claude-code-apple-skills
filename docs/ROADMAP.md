@@ -1,6 +1,6 @@
 # Skills Roadmap
 
-Future skills to be created based on Apple documentation.
+Future skills to be created based on Apple documentation and gap analysis.
 
 ## Current Coverage
 
@@ -15,6 +15,7 @@ Future skills to be created based on Apple documentation.
 |-----|-------|--------|
 | SwiftUI-Implementing-Liquid-Glass-Design.md | `design/liquid-glass` | ✅ Complete |
 | AppKit-Implementing-Liquid-Glass-Design.md | `design/liquid-glass` | ✅ Complete |
+| Animation patterns (springs, transitions, keyframes) | `design/animation-patterns` | ✅ Complete |
 
 ### Security
 | Topic | Skill | Status |
@@ -30,7 +31,16 @@ Future skills to be created based on Apple documentation.
 
 ### High Priority
 
-#### SwiftUI Features
+#### Navigation & Architecture (Gap — No Existing Skill)
+
+| Proposed Skill | Description | Why High Priority |
+|----------------|-------------|-------------------|
+| `ios/navigation-patterns` | NavigationStack, NavigationSplitView, programmatic navigation, TabView, deep linking with navigation | #1 source of SwiftUI architecture mistakes; no coverage today |
+| `swift/concurrency-patterns` | Actor isolation, @Sendable, TaskGroup, AsyncSequence, MainActor, cancellation patterns | #1 source of Swift 6 strict concurrency crashes |
+| `performance/profiling` | Instruments workflows, Time Profiler, Allocations, hang detection, launch time optimization | Every app eventually hits performance issues; zero coverage |
+| `performance/swiftui-debugging` | View identity, body re-evaluation, `Self._printChanges()`, lazy vs eager loading, view diffing | SwiftUI performance problems are hard to diagnose without these |
+
+#### SwiftUI Features (Doc-Based)
 
 | Doc | Proposed Skill | Description |
 |-----|----------------|-------------|
@@ -39,7 +49,7 @@ Future skills to be created based on Apple documentation.
 | SwiftUI-Styled-Text-Editing.md | `swiftui/text-editing` | Rich text editing with new APIs |
 | SwiftUI-New-Toolbar-Features.md | `swiftui/toolbars` | Modern toolbar patterns |
 
-#### Data Visualization
+#### Data Visualization (Doc-Based)
 
 | Doc | Proposed Skill | Description |
 |-----|----------------|-------------|
@@ -49,19 +59,33 @@ Future skills to be created based on Apple documentation.
 
 ### Medium Priority
 
-#### Data & Persistence
+#### New Generator Skills (Gap — No Existing Skill)
+
+| Proposed Skill | Description | Why Valuable |
+|----------------|-------------|--------------|
+| `generators/live-activity-generator` | ActivityKit setup, Dynamic Island layouts, push-to-update | Tricky API surface; common feature request |
+| `generators/tipkit-generator` | Inline/popover tips, rules, display frequency, invalidation, testing | Deceptively simple API with several gotchas |
+| `generators/cloudkit-sync` | CKSyncEngine (iOS 17+), CloudKit sharing, conflict resolution | persistence-setup mentions "optional iCloud" but has no real CloudKit coverage |
+
+#### Migration Guides (Gap — No Existing Skill)
+
+| Proposed Skill | Description | Why Valuable |
+|----------------|-------------|--------------|
+| `ios/migration-patterns` | CoreData → SwiftData, UIKit → SwiftUI, ObservableObject → @Observable, XCTest → Swift Testing | Developers constantly migrate between framework generations; no coverage |
+
+#### Data & Persistence (Doc-Based)
 
 | Doc | Proposed Skill | Description |
 |-----|----------------|-------------|
 | SwiftData-Class-Inheritance.md | `swiftdata/inheritance` | Model class inheritance patterns |
 
-#### Swift Language
+#### Swift Language (Doc-Based)
 
 | Doc | Proposed Skill | Description |
 |-----|----------------|-------------|
-| Swift-Concurrency-Updates.md | `swift/concurrency` | Latest async/await features |
+| Swift-Concurrency-Updates.md | `swift/concurrency` | Latest async/await features (complements `swift/concurrency-patterns`) |
 
-#### Frameworks
+#### Frameworks (Doc-Based)
 
 | Doc | Proposed Skill | Description |
 |-----|----------------|-------------|
@@ -73,7 +97,28 @@ Future skills to be created based on Apple documentation.
 
 ### Lower Priority
 
-#### Platform Specific
+#### Platform Specific (Gap — No Existing Skill)
+
+| Proposed Skill | Description | Why Valuable |
+|----------------|-------------|--------------|
+| `ios/ipad-patterns` | Stage Manager, multi-window, drag & drop, keyboard shortcuts, pointer interactions | CLAUDE.md mentions iPadOS but zero coverage |
+
+#### Security & Privacy (Gap — Thin Coverage)
+
+| Proposed Skill | Description | Why Valuable |
+|----------------|-------------|--------------|
+| `security/privacy-manifests` | Privacy manifest format, required reason APIs, third-party SDK declarations, App Tracking Transparency | Required since 2024; release-review touches on privacy but not the manifest mechanics |
+
+#### Existing Skill Improvements (Gap — Incomplete Skills)
+
+| Skill | What's Missing |
+|-------|---------------|
+| `generators/test-generator` | Update for Swift Testing framework (`@Test`, `#expect`, `@Suite`) alongside XCTest |
+| `generators/feature-flags` | No reference files or templates — only a SKILL.md; other generators have full template sets |
+| `generators/widget-generator` | No reference files or templates — only a SKILL.md |
+| `watchos/` | Only 1 SKILL.md + 1 file; missing sub-skills for complications, WidgetKit for Watch, health/fitness sensors |
+
+#### Platform Specific (Doc-Based)
 
 | Doc | Proposed Skill | Description |
 |-----|----------------|-------------|
@@ -81,13 +126,13 @@ Future skills to be created based on Apple documentation.
 | UIKit-Implementing-Liquid-Glass-Design.md | `design/liquid-glass` | Add UIKit section |
 | WidgetKit-Implementing-Liquid-Glass-Design.md | `design/liquid-glass` | Add WidgetKit section |
 
-#### Accessibility
+#### Accessibility (Doc-Based)
 
 | Doc | Proposed Skill | Description |
 |-----|----------------|-------------|
 | Implementing-Assistive-Access-in-iOS.md | `ios/assistive-access` | Accessibility features |
 
-#### Foundation
+#### Foundation (Doc-Based)
 
 | Doc | Proposed Skill | Description |
 |-----|----------------|-------------|
@@ -100,31 +145,19 @@ Future skills to be created based on Apple documentation.
 
 Apple docs location: `/Users/ravishankar/Downloads/docs/`
 
-### Existing Generator Skills (18 total)
-- logging-setup
-- analytics-setup
-- onboarding-generator
-- review-prompt
-- networking-layer
-- auth-flow
-- paywall-generator
-- settings-screen
-- persistence-setup
-- error-monitoring
-- ci-cd-setup
-- localization-setup
-- push-notifications
-- deep-linking
-- test-generator
-- accessibility-generator
-- widget-generator
-- feature-flags
+### Existing Skills by Category
 
-### Existing App Store Skills (4 total)
-- app-description-writer
-- screenshot-planner
-- keyword-optimizer
-- review-response-writer
-
-### Existing Security Skills (1 total)
-- security (covers secure storage, biometric auth, network security, platform specifics)
+| Category | Count | Skills |
+|----------|-------|--------|
+| generators/ | 18 | logging-setup, analytics-setup, networking-layer, auth-flow, paywall-generator, settings-screen, persistence-setup, onboarding-generator, review-prompt, error-monitoring, ci-cd-setup, localization-setup, push-notifications, deep-linking, test-generator, accessibility-generator, widget-generator, feature-flags |
+| product/ | 11 | idea-generator, product-agent, competitive-analysis, market-research, prd-generator, architecture-spec, ux-spec, implementation-guide, implementation-spec, test-spec, release-spec |
+| macos/ | 8 | app-planner, coding-best-practices, architecture-patterns, swiftdata-architecture, ui-review-tahoe, macos-tahoe-apis, macos-capabilities, appkit-swiftui-bridge |
+| app-store/ | 4 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer |
+| ios/ | 3 | coding-best-practices, ui-review, app-planner |
+| design/ | 2 | liquid-glass, animation-patterns |
+| apple-intelligence/ | 2 | foundation-models, visual-intelligence |
+| release-review/ | 1 | release-review |
+| security/ | 1 | security |
+| watchos/ | 1 | watchos |
+| shared/ | 1 | skill-creator |
+| **Total** | **51** |

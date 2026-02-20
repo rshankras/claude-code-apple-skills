@@ -10,7 +10,7 @@ A collection of Claude Code skills for iOS, macOS, and Apple platform developmen
 |----------|--------|---------|
 | **iOS** | 3 | Code review, UI review, app planning |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
-| **Product** | 10 | Idea validation → App Store workflow |
+| **Product** | 11 | Idea discovery → App Store workflow |
 | **Generators** | 19 | Production-ready code for common features |
 | **Apple Intelligence** | 2 | Foundation Models, Visual Intelligence |
 | **Design** | 2 | Liquid Glass, animation patterns |
@@ -18,11 +18,13 @@ A collection of Claude Code skills for iOS, macOS, and Apple platform developmen
 | **App Store** | 4 | ASO, descriptions, keywords, reviews |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 52 skills**
+**Total: 51 skills**
 
 ## Quick Start
 
 ### How to Use
+
+**No idea yet?** Say: *"I don't know what to build"*
 
 **New app?** Say: *"I have an idea for a macOS app that does X. Should I build it?"*
 
@@ -49,7 +51,7 @@ cp -r claude-code-apple-skills/skills ~/.claude/skills/
 skills/
 ├── ios/                    # iOS code review, UI review, planning
 ├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
-├── product/                # Idea → App Store workflow (10 phases)
+├── product/                # Idea → App Store workflow (11 skills)
 ├── generators/             # Code generators (19 skills)
 │   ├── logging-setup/
 │   ├── analytics-setup/

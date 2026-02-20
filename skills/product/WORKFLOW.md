@@ -8,6 +8,24 @@ ProductAgent provides a complete "Idea to App Store" workflow through a combinat
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
+│  PHASE 0: IDEA DISCOVERY (Optional)                                     │
+│  ────────────────────────────────                                       │
+│  Activation: "I don't know what to build" or "Give me app ideas"       │
+│  Skill: idea-generator                                                  │
+│                                                                         │
+│  Process:                                                               │
+│  1. Developer profile elicitation (skills, interests, constraints)      │
+│  2. Apply 5 brainstorming lenses                                        │
+│  3. Feasibility filtering and scoring                                   │
+│  4. Ranked shortlist of 3-5 ideas                                       │
+│                                                                         │
+│  Output: idea-shortlist.json                                            │
+│                                                                         │
+│  User Decision: PICK AN IDEA / BRAINSTORM MORE                          │
+└───────────────────────────────┬─────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────────┐
 │                           IDEA INPUT                                     │
 │                    "Luxury rental car payment app"                       │
 └───────────────────────────────┬─────────────────────────────────────────┘
@@ -183,6 +201,7 @@ ProductAgent provides a complete "Idea to App Store" workflow through a combinat
 
 | Phase | How to Activate | Output |
 |-------|-----------------|--------|
+| Idea Discovery | Say "I don't know what to build" or "give me app ideas" | idea-shortlist.json |
 | Product Planning | `product-agent run --idea "..." --interactive` | product-plan-*.md |
 | Competitive Analysis | Say "analyze competitors" or "competitive analysis" | competitive-analysis.md |
 | Market Research | Say "market research" or "market sizing" | market-research.md |
