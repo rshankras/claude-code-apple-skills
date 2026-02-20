@@ -16,9 +16,10 @@ A collection of Claude Code skills for iOS, macOS, and Apple platform developmen
 | **Design** | 2 | Liquid Glass, animation patterns |
 | **Security** | 1 | Secure storage, biometrics, network security |
 | **App Store** | 4 | ASO, descriptions, keywords, reviews |
+| **Swift** | 1 | Concurrency patterns, Swift 6 migration |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 52 skills**
+**Total: 53 skills**
 
 ## Quick Start
 

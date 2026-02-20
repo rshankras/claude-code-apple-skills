@@ -82,6 +82,7 @@ Differences:
 | `security/` | Security | Keychain, biometrics, network security |
 | `app-store/` | ASO | Descriptions, keywords, screenshots |
 | `watchos/` | watchOS | Watch apps, complications, connectivity |
+| `swift/` | Swift language | Concurrency patterns, Swift 6 migration |
 | `release-review/` | Pre-release | Security, privacy, UX audit |
 | `shared/` | Skill creation | Templates for creating new skills |
 
