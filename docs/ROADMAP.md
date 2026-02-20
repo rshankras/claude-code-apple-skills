@@ -35,7 +35,7 @@ Future skills to be created based on Apple documentation and gap analysis.
 
 | Proposed Skill | Description | Why High Priority |
 |----------------|-------------|-------------------|
-| `ios/navigation-patterns` | NavigationStack, NavigationSplitView, programmatic navigation, TabView, deep linking with navigation | #1 source of SwiftUI architecture mistakes; no coverage today |
+| `ios/navigation-patterns` | NavigationStack, NavigationSplitView, programmatic navigation, TabView, deep linking with navigation | ✅ Complete |
 | `swift/concurrency-patterns` | Actor isolation, @Sendable, TaskGroup, AsyncSequence, MainActor, cancellation patterns | #1 source of Swift 6 strict concurrency crashes |
 | `performance/profiling` | Instruments workflows, Time Profiler, Allocations, hang detection, launch time optimization | Every app eventually hits performance issues; zero coverage |
 | `performance/swiftui-debugging` | View identity, body re-evaluation, `Self._printChanges()`, lazy vs eager loading, view diffing | SwiftUI performance problems are hard to diagnose without these |
@@ -153,11 +153,11 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | product/ | 11 | idea-generator, product-agent, competitive-analysis, market-research, prd-generator, architecture-spec, ux-spec, implementation-guide, implementation-spec, test-spec, release-spec |
 | macos/ | 8 | app-planner, coding-best-practices, architecture-patterns, swiftdata-architecture, ui-review-tahoe, macos-tahoe-apis, macos-capabilities, appkit-swiftui-bridge |
 | app-store/ | 4 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer |
-| ios/ | 3 | coding-best-practices, ui-review, app-planner |
+| ios/ | 4 | coding-best-practices, ui-review, app-planner, navigation-patterns |
 | design/ | 2 | liquid-glass, animation-patterns |
 | apple-intelligence/ | 2 | foundation-models, visual-intelligence |
 | release-review/ | 1 | release-review |
 | security/ | 1 | security |
 | watchos/ | 1 | watchos |
 | shared/ | 1 | skill-creator |
-| **Total** | **51** |
+| **Total** | **52** |

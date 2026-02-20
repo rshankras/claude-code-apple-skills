@@ -17,6 +17,7 @@ Use this skill when the user:
 - Wants accessibility audit for iOS apps
 - Is planning a new iOS app
 - Needs help with SwiftUI patterns for iOS
+- Asks about navigation architecture (NavigationStack, NavigationSplitView, TabView)
 
 ## Available Modules
 
@@ -35,6 +36,14 @@ UI/UX review against Apple HIG.
 - Font usage and Dynamic Type support
 - Accessibility review (VoiceOver, color contrast)
 - SwiftUI best practices for iOS/watchOS
+
+### navigation-patterns/
+SwiftUI navigation architecture patterns.
+- NavigationStack, NavigationLink, navigationDestination
+- NavigationSplitView (two/three column, iPad/macOS)
+- TabView (iOS 18 customizable tabs, sidebar mode)
+- Programmatic navigation (NavigationPath, pop-to-root, state restoration)
+- Navigation transitions (zoom, custom animations)
 
 ### app-planner/
 iOS app planning and analysis.

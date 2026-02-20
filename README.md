@@ -8,7 +8,7 @@ A collection of Claude Code skills for iOS, macOS, and Apple platform developmen
 
 | Category | Skills | Purpose |
 |----------|--------|---------|
-| **iOS** | 3 | Code review, UI review, app planning |
+| **iOS** | 4 | Code review, UI review, app planning, navigation patterns |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
 | **Product** | 11 | Idea discovery → App Store workflow |
 | **Generators** | 19 | Production-ready code for common features |
@@ -18,7 +18,7 @@ A collection of Claude Code skills for iOS, macOS, and Apple platform developmen
 | **App Store** | 4 | ASO, descriptions, keywords, reviews |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 51 skills**
+**Total: 52 skills**
 
 ## Quick Start
 

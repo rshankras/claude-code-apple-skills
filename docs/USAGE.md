@@ -73,7 +73,7 @@ Differences:
 
 | Category | Purpose | When to Use |
 |----------|---------|-------------|
-| `ios/` | iOS development | Code review, UI review, app planning |
+| `ios/` | iOS development | Code review, UI review, app planning, navigation patterns |
 | `macos/` | macOS development | Code review, UI review, Tahoe APIs |
 | `product/` | Idea → specs | New app planning, full workflow |
 | `generators/` | Generate code | Add features to any app |
