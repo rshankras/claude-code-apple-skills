@@ -13,12 +13,12 @@ A collection of Claude Code skills for iOS, macOS, and Apple platform developmen
 | **Product** | 10 | Idea validation → App Store workflow |
 | **Generators** | 19 | Production-ready code for common features |
 | **Apple Intelligence** | 2 | Foundation Models, Visual Intelligence |
-| **Design** | 1 | Liquid Glass design system |
+| **Design** | 2 | Liquid Glass, animation patterns |
 | **Security** | 1 | Secure storage, biometrics, network security |
 | **App Store** | 4 | ASO, descriptions, keywords, reviews |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 51 skills**
+**Total: 52 skills**
 
 ## Quick Start
 
@@ -62,7 +62,7 @@ skills/
 │   ├── deep-linking/
 │   └── ...
 ├── apple-intelligence/     # Foundation Models, Visual Intelligence
-├── design/                 # Liquid Glass (.glassEffect API)
+├── design/                 # Liquid Glass, animation patterns
 ├── security/               # Keychain, biometrics, network security
 ├── app-store/              # ASO, descriptions, screenshots, reviews
 │   ├── keyword-optimizer/  # + advanced-tactics, existing-app-strategy

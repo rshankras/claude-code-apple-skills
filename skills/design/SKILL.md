@@ -16,6 +16,11 @@ Use this skill when the user:
 - Needs guidance on visual design patterns
 - Asks about materials, transparency, or blur effects
 - Wants to create fluid animations
+- Asks about **spring**, **bounce**, or **snappy** animations
+- Wants **PhaseAnimator** or **KeyframeAnimator** help
+- Needs **view transitions**, **matched geometry**, or **hero transitions**
+- Wants **SF Symbol effects** (bounce, pulse, wiggle, breathe)
+- Asks about **animation completions** or **withAnimation**
 
 ## Available Skills
 
@@ -27,6 +32,14 @@ Comprehensive Liquid Glass implementation for iOS 26+, macOS 26+.
 - Morphing transitions
 - Interactive effects
 - Button styles
+
+### animation-patterns/
+SwiftUI animation patterns for iOS 13–18+.
+- Spring configurations (3 API generations)
+- PhaseAnimator and KeyframeAnimator (iOS 17+)
+- View transitions, matched geometry, navigation transitions
+- SF Symbol effects
+- Animation completions, transactions, timing curves
 
 ## Key Principles
 

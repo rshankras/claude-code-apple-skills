@@ -46,6 +46,7 @@ Follow the Implementation Guide, or ask Claude to generate specific features.
 | Add widgets | "Add a home screen widget" |
 | Add feature flags | "Add feature flags" |
 | Generate app icon | "Generate an app icon" |
+| Fix animation code | "Review my animation code" or "Add a spring animation" |
 | Modernize UI | "Update to Liquid Glass design" |
 | Add AI features | "Add on-device LLM features" |
 | Review security | "Review security in my app" |
@@ -76,7 +77,7 @@ Differences:
 | `product/` | Idea → specs | New app planning, full workflow |
 | `generators/` | Generate code | Add features to any app |
 | `apple-intelligence/` | AI features | Foundation Models, Visual Intelligence |
-| `design/` | Modern UI | Liquid Glass effects |
+| `design/` | Modern UI | Liquid Glass effects, animation patterns |
 | `security/` | Security | Keychain, biometrics, network security |
 | `app-store/` | ASO | Descriptions, keywords, screenshots |
 | `watchos/` | watchOS | Watch apps, complications, connectivity |
