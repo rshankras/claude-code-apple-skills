@@ -44,6 +44,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
 | `apple-intelligence/` | Foundation Models, Visual Intelligence |
 | `design/` | Liquid Glass, modern design patterns |
 | `app-store/` | ASO, descriptions, screenshots, reviews |
+| `monetization/` | Monetization strategy, pricing, tiers |
 | `release-review/` | Pre-release audit checklists |
 | `shared/` | Templates for creating new skills |
 
