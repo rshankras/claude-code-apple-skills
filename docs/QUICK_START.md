@@ -30,7 +30,7 @@ cp -r /path/to/claude-code-apple-skills/skills/* .claude/skills/
 Copy only the categories you need:
 
 ```bash
-# Just generators (21 skills)
+# Just generators (24 skills)
 cp -r /path/to/claude-code-apple-skills/skills/generators .claude/skills/
 
 # Just testing/TDD (8 skills)
@@ -130,11 +130,11 @@ Good: "Add a subscription paywall with monthly and yearly tiers"
 Vague: "Add payments"
 ```
 
-## Skill Categories (83 total)
+## Skill Categories (86 total)
 
 | Category | Count | Purpose |
 |----------|-------|---------|
-| `generators/` | 21 | Production-ready code for common features |
+| `generators/` | 24 | Production-ready code for common features |
 | `product/` | 11 | Idea to App Store workflow |
 | `testing/` | 8 | TDD workflows, test infrastructure |
 | `macos/` | 8 | macOS development patterns |

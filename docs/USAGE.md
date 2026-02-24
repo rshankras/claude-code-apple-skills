@@ -69,6 +69,9 @@ Follow the Implementation Guide, or ask Claude to generate specific features.
 | Test factories | "Generate test data factories" |
 | Integration tests | "Add integration test infrastructure" |
 | Contract tests | "Test this protocol contract" |
+| Cache API responses | "Add HTTP caching" or "Add offline support" |
+| Add pagination | "Add pagination" or "Add infinite scroll" |
+| Add image caching | "Add image caching" or "Replace AsyncImage with caching" |
 | Add alarms/timers | "Add AlarmKit alarms" |
 | Add web content | "Embed a web view in SwiftUI" |
 | Add rich text editor | "Add a rich text editor with formatting" |
@@ -103,7 +106,7 @@ Differences:
 
 | Category | Count | Purpose | When to Use |
 |----------|-------|---------|-------------|
-| `generators/` | 21 | Generate code | Add features to any app |
+| `generators/` | 24 | Generate code | Add features to any app |
 | `product/` | 11 | Idea to specs | New app planning, full workflow |
 | `macos/` | 8 | macOS development | Code review, UI review, Tahoe APIs |
 | `ios/` | 7 | iOS development | Code review, navigation, iPad, migration |
@@ -124,7 +127,7 @@ Differences:
 | `release-review/` | 1 | Pre-release | Security, privacy, UX audit |
 | `shared/` | 1 | Skill creation | Templates for creating new skills |
 
-**Total: 83 skills**
+**Total: 86 skills**
 
 ---
 

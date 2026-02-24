@@ -8,7 +8,7 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 
 | Category | Skills | Purpose |
 |----------|--------|---------|
-| **Generators** | 21 | Production-ready code for common features |
+| **Generators** | 24 | Production-ready code for common features |
 | **Product** | 11 | Idea discovery to App Store workflow |
 | **Testing** | 8 | TDD workflows, test infrastructure, snapshot tests |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
@@ -28,7 +28,7 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 | **visionOS** | 1 | Widget development |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 83 skills**
+**Total: 86 skills**
 
 ## Quick Start
 
@@ -62,7 +62,7 @@ skills/
 ├── ios/                    # iOS code review, UI review, planning, navigation, iPad, migration, accessibility
 ├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
 ├── product/                # Idea to App Store workflow (11 skills)
-├── generators/             # Code generators (21 skills)
+├── generators/             # Code generators (24 skills)
 │   ├── logging-setup/
 │   ├── analytics-setup/
 │   ├── networking-layer/
@@ -127,6 +127,9 @@ Generate production-ready Swift code that adapts to your project:
 | `live-activity-generator` | ActivityKit Live Activities + Dynamic Island |
 | `tipkit-generator` | TipKit inline/popover tips |
 | `cloudkit-sync` | CKSyncEngine CloudKit sync |
+| `http-cache` | HTTP response caching with ETag/offline |
+| `pagination` | Offset/cursor pagination + infinite scroll |
+| `image-loading` | Image pipeline with cache + CachedAsyncImage |
 
 ## Testing & TDD Skills
 

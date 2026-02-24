@@ -1,6 +1,6 @@
 ---
 name: generators
-description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, or app icons.
+description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, app icons, image caching, pagination, or HTTP caching.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 ---
 
@@ -202,6 +202,31 @@ CKSyncEngine-based CloudKit sync (iOS 17+).
 - Record zone management
 - Conflict resolution strategies
 - Sharing and collaboration support
+
+### http-cache/
+HTTP caching layer with Cache-Control, ETag, and offline fallback.
+- Cache-Control header parsing
+- ETag/Last-Modified conditional requests (304)
+- Stale-while-revalidate pattern
+- Decorator pattern wrapping existing APIClient
+- Network reachability for offline fallback
+
+### pagination/
+Pagination infrastructure with offset and cursor patterns.
+- Offset-based and cursor-based response models
+- State machine (idle, loading, loaded, error, exhausted)
+- @Observable PaginationManager with prefetch threshold
+- Searchable pagination with debounced query
+- Infinite scroll, load-more button, and state views
+
+### image-loading/
+Image loading pipeline with caching and CachedAsyncImage view.
+- NSCache memory cache with auto-eviction
+- LRU disk cache with expiration
+- Actor-based downloader with request deduplication
+- ImageIO thumbnail generation
+- Drop-in CachedAsyncImage SwiftUI replacement
+- Collection prefetching
 
 ## How to Use
 
