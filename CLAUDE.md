@@ -45,13 +45,15 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
 | `design/` | Liquid Glass, modern design patterns |
 | `app-store/` | ASO, descriptions, screenshots, reviews |
 | `monetization/` | Monetization strategy, pricing, tiers |
+| `testing/` | TDD workflows, test infrastructure, snapshot tests |
 | `release-review/` | Pre-release audit checklists |
 | `shared/` | Templates for creating new skills |
 
-### Generator vs Advisory Skills
+### Generator vs Advisory vs Workflow Skills
 
 - **Advisory skills** (ios/, macos/, release-review/): Review code and provide recommendations
 - **Generator skills** (generators/): Produce production-ready Swift code with templates
+- **Workflow skills** (testing/, monetization/): Guide multi-step processes with methodology and code generation
 
 ## Creating New Skills
 
