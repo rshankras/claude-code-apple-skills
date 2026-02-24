@@ -1,43 +1,51 @@
 # Quick Start Guide
 
-Get up and running with Claude Code iOS Skills in under 5 minutes!
+Get up and running with Claude Code Apple Skills in under 5 minutes!
 
 ## Prerequisites
 
 - Claude Code installed
-- iOS/Swift project with `.claude/` directory
+- iOS/macOS/Swift project with `.claude/` directory
 
 ## Installation (1 minute)
 
-### Option 1: Quick Copy
+### Option 1: Full Install
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/claude-code-ios-skills.git
+git clone https://github.com/rshankras/claude-code-apple-skills.git
 
 # Navigate to your project
-cd /path/to/your/ios-project
+cd /path/to/your/project
 
 # Create skills directory if it doesn't exist
 mkdir -p .claude/skills
 
 # Copy all skills
-cp -r /path/to/claude-code-ios-skills/skills/* .claude/skills/
+cp -r /path/to/claude-code-apple-skills/skills/* .claude/skills/
 ```
 
-### Option 2: Individual Skills
+### Option 2: Individual Categories
 
-Copy only the skills you need:
+Copy only the categories you need:
 
 ```bash
-# Just coding-best-practices
-cp -r /path/to/claude-code-ios-skills/skills/coding-best-practices .claude/skills/
+# Just generators (21 skills)
+cp -r /path/to/claude-code-apple-skills/skills/generators .claude/skills/
 
-# Just ui-review
-cp -r /path/to/claude-code-ios-skills/skills/ui-review .claude/skills/
+# Just testing/TDD (8 skills)
+cp -r /path/to/claude-code-apple-skills/skills/testing .claude/skills/
 
-# Just skill-creator
-cp -r /path/to/claude-code-ios-skills/skills/skill-creator .claude/skills/
+# Just iOS review skills
+cp -r /path/to/claude-code-apple-skills/skills/ios .claude/skills/
+```
+
+### Option 3: Global Install
+
+Install once, available in all projects:
+
+```bash
+cp -r /path/to/claude-code-apple-skills/skills/* ~/.claude/skills/
 ```
 
 ## Verification (30 seconds)
@@ -46,242 +54,119 @@ Check that skills are installed:
 
 ```bash
 ls .claude/skills/
-# Should show: coding-best-practices  ui-review  skill-creator
+# Should show: generators  ios  macos  testing  monetization  product  ...
 ```
 
 ## First Use (2 minutes)
 
-### Test coding-best-practices
+### Just Describe What You Want
 
-1. Open Claude Code in your project
-2. Type: **"Review my [ViewModelName] for best practices"**
-3. Claude will activate the skill and provide a detailed review
+Skills activate automatically — no manual invocation needed:
 
-### Test ui-review
+| Say this... | Skill that activates |
+|-------------|---------------------|
+| "Review my code for best practices" | `ios/coding-best-practices` or `macos/coding-best-practices` |
+| "Review my UI for HIG" | `ios/ui-review` or `macos/ui-review-tahoe` |
+| "Add logging to my app" | `generators/logging-setup` |
+| "Add subscription paywall" | `generators/paywall-generator` |
+| "TDD this new feature" | `testing/tdd-feature` |
+| "Fix this bug and add a test" | `testing/tdd-bug-fix` |
+| "I need to refactor this safely" | `testing/tdd-refactor-guard` |
+| "Should I monetize my app?" | `monetization` |
+| "Review for release" | `release-review` |
+| "I have an app idea..." | `product/product-agent` |
 
-1. Open Claude Code in your project
-2. Type: **"Review [ViewName] for HIG compliance and accessibility"**
-3. Claude will audit your UI against Apple guidelines
+## Common Workflows
 
-### Test skill-creator
-
-1. Open Claude Code
-2. Type: **"Help me create a new skill for API testing"**
-3. Claude will guide you through the creation process
-
-## Common Use Cases
-
-### Code Review Before PR
-
-```
-You: "Review all my ViewModels for best practices"
-```
-
-Claude will:
-- Check Swift idioms
-- Validate MVVM architecture
-- Review Core Data usage
-- Provide scored feedback
-
-### Accessibility Audit
+### New App
 
 ```
-You: "Audit my views for accessibility issues"
+You: "I have an idea for a macOS app that does X"
+→ product/product-agent validates the idea
+→ product/market-research sizes the market
+→ product/prd-generator creates the PRD
+→ generators/ add features as you build
+→ release-review/ audits before shipping
 ```
 
-Claude will:
-- Check VoiceOver support
-- Verify Dynamic Type
-- Test color contrast
-- Provide recommendations
-
-### Creating Custom Skills
+### Existing App — Add Features
 
 ```
-You: "I want to create a skill for reviewing API clients"
+You: "Add CloudKit sync to my app"
+→ generators/cloudkit-sync generates the code
+→ testing/tdd-feature helps you test it
 ```
 
-Claude will:
-- Ask about requirements
-- Suggest structure
-- Provide templates
-- Guide implementation
+### Existing App — Safe Refactoring
+
+```
+You: "I need to refactor my data layer"
+→ testing/tdd-refactor-guard checks test coverage
+→ testing/characterization-test-generator captures current behavior
+→ You refactor with confidence
+```
+
+### Bug Fix
+
+```
+You: "Users report X is broken"
+→ testing/tdd-bug-fix writes failing test first
+→ Fix + verify + never regress
+```
 
 ## Tips for Best Results
 
 ### Be Specific
 
 ```
-✅ Good: "Review ExpenseViewModel.swift for best practices"
-❌ Vague: "Check my code"
+Good: "Review ExpenseViewModel.swift for best practices"
+Vague: "Check my code"
 ```
 
 ### Provide Context
 
 ```
-✅ Good: "Review AddExpenseView for iOS HIG compliance, especially accessibility"
-❌ Vague: "Look at this view"
+Good: "Add a subscription paywall with monthly and yearly tiers"
+Vague: "Add payments"
 ```
 
-### Request Prioritization
+## Skill Categories (83 total)
 
-```
-✅ Good: "Review for critical issues only"
-✅ Good: "Focus on accessibility and Dynamic Type"
-```
-
-## Expected Output
-
-### coding-best-practices Output
-
-```
-Reviewing: ExpenseViewModel.swift
-
-✅ Strengths Found
-- Excellent use of @Published properties
-- Clean MVVM separation
-- Good error handling
-
-⚠️ Issues Found
-
-**Category: Optionals Handling**
-**High Priority: ExpenseViewModel.swift:45** - Force unwrapping
-// Current: let payer = expense.payer!
-// Suggested: guard let payer = expense.payer else { return }
-// Reason: Force unwrapping crashes if nil
-
-📊 Code Quality Score: 7/10
-
-📋 Recommendations
-1. High Priority: Remove force unwrapping
-2. Medium Priority: Improve error handling
-3. Low Priority: Use first(where:) instead of filter().first
-```
-
-### ui-review Output
-
-```
-Reviewing: AddExpenseView.swift
-
-✅ HIG Compliance
-- Good use of semantic colors
-- Proper NavigationStack implementation
-- Safe area handling correct
-
-⚠️ Font Issues Found
-1. AddExpenseView.swift:178 - Hardcoded font size
-   Current: .font(.system(size: 14))
-   Suggested: .font(.subheadline)
-
-⚠️ Accessibility Issues Found
-1. AddExpenseView.swift:92 - Icon button missing label
-   Suggested: Add .accessibilityLabel("Select date")
-
-📋 Testing Recommendations
-1. Test with VoiceOver enabled
-2. Test at largest Dynamic Type size
-3. Verify in Dark Mode
-```
+| Category | Count | Purpose |
+|----------|-------|---------|
+| `generators/` | 21 | Production-ready code for common features |
+| `product/` | 11 | Idea to App Store workflow |
+| `testing/` | 8 | TDD workflows, test infrastructure |
+| `macos/` | 8 | macOS development patterns |
+| `ios/` | 7 | iOS code review, UI review, planning |
+| `swiftui/` | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
+| `app-store/` | 4 | ASO, descriptions, keywords, reviews |
+| `swift/` | 3 | Concurrency, Swift 6.2, memory |
+| `apple-intelligence/` | 3 | Foundation Models, Visual Intelligence, App Intents |
+| `design/` | 2 | Liquid Glass, animations |
+| `performance/` | 2 | Instruments, SwiftUI debugging |
+| `security/` | 2 | Keychain, biometrics, privacy manifests |
+| `monetization/` | 1 | Pricing strategy, tiers, free trials |
+| `watchos/` | 1 | Watch apps, complications |
+| + 5 more | 5 | SwiftData, MapKit, Foundation, visionOS, Release Review |
 
 ## Troubleshooting
 
 ### Skill Not Activating
 
-**Problem**: Claude doesn't use the skill when expected
-
-**Solutions**:
 1. Check skill is in `.claude/skills/` directory
-2. Verify YAML front matter is valid
-3. Use explicit trigger phrases from README
+2. Verify YAML front matter is valid: `head -5 .claude/skills/testing/SKILL.md`
+3. Use explicit trigger phrases from the skill's "When This Skill Activates" section
 4. Try: "Use the [skill-name] skill to review this"
-
-### Missing Reference Files
-
-**Problem**: Skill references files that don't exist
-
-**Solution**:
-```bash
-# Ensure all files copied
-ls .claude/skills/coding-best-practices/
-# Should show: SKILL.md, swift-patterns.md, swiftui-patterns.md, etc.
-```
 
 ### Wrong Skill Activates
 
-**Problem**: Different skill than expected activates
-
-**Solution**:
 - Be more specific in your request
-- Use explicit skill names
-- Check skill descriptions in README
+- Skills auto-select based on keyword matching in their descriptions
 
 ## Next Steps
 
-### Customize Skills
-
-Edit skill files to match your project's standards:
-
-```bash
-# Edit coding standards
-vim .claude/skills/coding-best-practices/swift-patterns.md
-
-# Edit UI guidelines
-vim .claude/skills/ui-review/hig-checklist.md
-```
-
-### Create Your Own Skill
-
-Use the skill-creator to build custom skills:
-
-```
-You: "Help me create a skill for reviewing API error handling"
-```
-
-### Share Improvements
-
-Found a bug or improvement?
-1. Fork the repository
-2. Make your changes
-3. Submit a pull request
-
-See [CONTRIBUTING.md](../CONTRIBUTING.md) for details.
-
-## Resources
-
-- [Full README](../README.md)
-- [Contributing Guidelines](../CONTRIBUTING.md)
-- [Skill Templates](../skills/skill-creator/)
-- [Example Output](examples/)
-
-## Getting Help
-
-- Open an issue on GitHub
-- Check existing issues for solutions
-- Ask in Discussions tab
-- Review skill documentation in SKILL.md files
-
-## What's Next?
-
-After getting comfortable with the basics:
-
-1. **Explore All Features**
-   - Read through reference files
-   - Try different review scenarios
-   - Experiment with skill customization
-
-2. **Integrate into Workflow**
-   - Add to pre-commit hooks
-   - Use in PR reviews
-   - Regular accessibility audits
-
-3. **Contribute Back**
-   - Report bugs
-   - Suggest improvements
-   - Create new skills
-   - Help others in Discussions
-
----
-
-**Questions?** Open an issue or start a discussion!
-
-**Found this helpful?** Star the repository and share with other iOS developers!
+- Browse `skills/` to see all available skills
+- Read [USAGE.md](USAGE.md) for the complete usage guide
+- Read [ROADMAP.md](ROADMAP.md) for skill coverage tracking
+- See [CONTRIBUTING.md](../CONTRIBUTING.md) to contribute

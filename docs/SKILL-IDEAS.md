@@ -23,14 +23,15 @@ Skill ideas for Apple platform and general development workflows.
 
 ## App Store & Release
 
-| Skill | Purpose |
-|-------|---------|
-| **app-description-writer** | Write compelling App Store descriptions |
-| **screenshot-planner** | Plan App Store screenshot sequence and captions |
-| **keyword-optimizer** | Optimize app title, subtitle, keywords for search |
-| **review-response-writer** | Write professional responses to app reviews |
-| **release-notes-writer** | Write user-friendly release notes |
-| **privacy-policy-generator** | Generate privacy policy for apps |
+| Skill | Purpose | Status |
+|-------|---------|--------|
+| **app-description-writer** | Write compelling App Store descriptions | ✅ `app-store/app-description-writer` |
+| **screenshot-planner** | Plan App Store screenshot sequence and captions | ✅ `app-store/screenshot-planner` |
+| **keyword-optimizer** | Optimize app title, subtitle, keywords for search | ✅ `app-store/keyword-optimizer` |
+| **review-response-writer** | Write professional responses to app reviews | ✅ `app-store/review-response-writer` |
+| **monetization** | Pricing strategy, tiers, free trials | ✅ `monetization` |
+| **release-notes-writer** | Write user-friendly release notes | Planned |
+| **privacy-policy-generator** | Generate privacy policy for apps | Planned |
 
 ---
 
@@ -47,11 +48,19 @@ Skill ideas for Apple platform and general development workflows.
 
 ## Testing & Quality
 
-| Skill | Purpose |
-|-------|---------|
-| **test-case-generator** | Generate test cases from requirements |
-| **bug-report-analyzer** | Extract actionable items from bug reports |
-| **crash-log-analyzer** | Analyze crash logs, suggest fixes |
+| Skill | Purpose | Status |
+|-------|---------|--------|
+| **test-case-generator** | Generate test cases from requirements | ✅ `generators/test-generator` |
+| **characterization-test-generator** | Capture behavior before refactoring | ✅ `testing/characterization-test-generator` |
+| **tdd-bug-fix** | Reproduce-first bug fix workflow | ✅ `testing/tdd-bug-fix` |
+| **tdd-feature** | Red-green-refactor for new features | ✅ `testing/tdd-feature` |
+| **test-contract** | Protocol/interface test suites | ✅ `testing/test-contract` |
+| **tdd-refactor-guard** | Pre-refactor safety gate | ✅ `testing/tdd-refactor-guard` |
+| **snapshot-test-setup** | SwiftUI visual regression tests | ✅ `testing/snapshot-test-setup` |
+| **test-data-factory** | Fixture factories for test data | ✅ `testing/test-data-factory` |
+| **integration-test-scaffold** | Cross-module test harness | ✅ `testing/integration-test-scaffold` |
+| **bug-report-analyzer** | Extract actionable items from bug reports | Planned |
+| **crash-log-analyzer** | Analyze crash logs, suggest fixes | Planned |
 
 ---
 

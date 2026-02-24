@@ -61,6 +61,14 @@ Follow the Implementation Guide, or ask Claude to generate specific features.
 | Respond to review | "Help respond to this review: [text]" |
 | Debug SwiftUI perf | "My SwiftUI views are slow" or "Why does my view keep re-rendering?" |
 | Profile performance | "Profile my app for hangs" |
+| Plan monetization | "Should I monetize my app?" or "Help me choose a pricing model" |
+| TDD a new feature | "TDD this feature" or "Build test-first" |
+| Fix bug with TDD | "Fix this bug and add a regression test" |
+| Safe refactoring | "I need to refactor this safely" or "Add tests before refactoring" |
+| Snapshot tests | "Add visual regression tests" or "Set up snapshot testing" |
+| Test factories | "Generate test data factories" |
+| Integration tests | "Add integration test infrastructure" |
+| Contract tests | "Test this protocol contract" |
 | Add alarms/timers | "Add AlarmKit alarms" |
 | Add web content | "Embed a web view in SwiftUI" |
 | Add rich text editor | "Add a rich text editor with formatting" |
@@ -111,10 +119,12 @@ Differences:
 | `foundation/` | 1 | Foundation | AttributedString updates |
 | `visionos/` | 1 | visionOS | Widget development |
 | `watchos/` | 1 | watchOS | Watch apps, complications, health/fitness, widgets |
+| `testing/` | 8 | TDD & testing | TDD workflows, snapshots, test infrastructure |
+| `monetization/` | 1 | Revenue strategy | Pricing models, tiers, free trials |
 | `release-review/` | 1 | Pre-release | Security, privacy, UX audit |
 | `shared/` | 1 | Skill creation | Templates for creating new skills |
 
-**Total: 74 skills**
+**Total: 83 skills**
 
 ---
 

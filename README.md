@@ -10,6 +10,7 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 |----------|--------|---------|
 | **Generators** | 21 | Production-ready code for common features |
 | **Product** | 11 | Idea discovery to App Store workflow |
+| **Testing** | 8 | TDD workflows, test infrastructure, snapshot tests |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
 | **iOS** | 7 | Code review, UI review, navigation, iPad, migration, accessibility |
 | **SwiftUI** | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
@@ -19,6 +20,7 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 | **Design** | 2 | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animation patterns |
 | **Performance** | 2 | Instruments profiling, SwiftUI debugging |
 | **Security** | 2 | Secure storage, biometrics, privacy manifests |
+| **Monetization** | 1 | Pricing strategy, tiers, free trials |
 | **watchOS** | 1 | Watch apps, complications, health/fitness, widgets |
 | **SwiftData** | 1 | Class inheritance patterns |
 | **MapKit** | 1 | GeoToolbox, place descriptors |
@@ -26,7 +28,7 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 | **visionOS** | 1 | Widget development |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 74 skills**
+**Total: 83 skills**
 
 ## Quick Start
 
@@ -80,6 +82,8 @@ skills/
 ├── mapkit/                 # GeoToolbox, place descriptors
 ├── foundation/             # AttributedString updates
 ├── visionos/               # visionOS widgets
+├── testing/                # TDD workflows, test infrastructure, snapshot tests (8 skills)
+├── monetization/           # Pricing strategy, tiers, free trials
 ├── app-store/              # ASO, descriptions, screenshots, reviews
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
 ├── release-review/         # Security, privacy, UX, distribution audits
@@ -123,6 +127,25 @@ Generate production-ready Swift code that adapts to your project:
 | `live-activity-generator` | ActivityKit Live Activities + Dynamic Island |
 | `tipkit-generator` | TipKit inline/popover tips |
 | `cloudkit-sync` | CKSyncEngine CloudKit sync |
+
+## Testing & TDD Skills
+
+| Skill | What It Does |
+|-------|--------------|
+| `characterization-test-generator` | Capture existing behavior before AI refactoring |
+| `tdd-bug-fix` | Reproduce bug as failing test, then fix |
+| `tdd-feature` | Red-green-refactor for new features |
+| `test-contract` | Protocol test suites any implementation must pass |
+| `tdd-refactor-guard` | Pre-refactor safety gate (verify coverage first) |
+| `snapshot-test-setup` | SwiftUI visual regression with swift-snapshot-testing |
+| `test-data-factory` | Factory/fixture helpers for test data |
+| `integration-test-scaffold` | Cross-module test harness with mock server |
+
+## Monetization
+
+| Skill | What It Does |
+|-------|--------------|
+| `monetization` | Readiness assessment, pricing model selection, tier structure, free trial strategy |
 
 ## SwiftUI Skills
 

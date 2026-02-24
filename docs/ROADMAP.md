@@ -80,6 +80,23 @@ Skills tracking based on Apple documentation and gap analysis.
 | `generators/tipkit-generator` | ✅ Complete |
 | `generators/cloudkit-sync` | ✅ Complete |
 
+### Monetization
+| Topic | Skill | Status |
+|-------|-------|--------|
+| Pricing strategy, readiness assessment, tier design | `monetization` | ✅ Complete |
+
+### Testing & TDD
+| Topic | Skill | Status |
+|-------|-------|--------|
+| Characterization tests for safe refactoring | `testing/characterization-test-generator` | ✅ Complete |
+| Red-green-refactor bug fix workflow | `testing/tdd-bug-fix` | ✅ Complete |
+| TDD for new features | `testing/tdd-feature` | ✅ Complete |
+| Protocol/interface contract tests | `testing/test-contract` | ✅ Complete |
+| Pre-refactor safety gate | `testing/tdd-refactor-guard` | ✅ Complete |
+| SwiftUI snapshot/visual regression | `testing/snapshot-test-setup` | ✅ Complete |
+| Test data factories (builder + static) | `testing/test-data-factory` | ✅ Complete |
+| Integration test harness with mocks | `testing/integration-test-scaffold` | ✅ Complete |
+
 ### Skill Improvements
 | Skill | Improvement | Status |
 |-------|------------|--------|
@@ -114,6 +131,8 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | foundation/ | 1 | attributed-string |
 | visionos/ | 1 | widgets |
 | watchos/ | 1 | watchos (with 4 reference files) |
+| testing/ | 8 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold |
+| monetization/ | 1 | monetization (with pricing-models.md, app-type-guides.md) |
 | release-review/ | 1 | release-review |
 | shared/ | 1 | skill-creator |
-| **Total** | **74** |
+| **Total** | **83** |
