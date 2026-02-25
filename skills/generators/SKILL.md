@@ -1,6 +1,6 @@
 ---
 name: generators
-description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, app icons, image caching, pagination, or HTTP caching.
+description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, app icons, image caching, pagination, HTTP caching, share cards, social export, subscription lifecycle, referral systems, watermarks, streak tracking, milestone celebrations, what's new screens, lapsed user re-engagement, usage insights, variable rewards, consent flows, account deletion, permission priming, force updates, state restoration, debug menus, offline queues, feedback forms, announcement banners, quick win sessions, Spotlight indexing, App Clips, or screenshot automation.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 ---
 
@@ -227,6 +227,178 @@ Image loading pipeline with caching and CachedAsyncImage view.
 - ImageIO thumbnail generation
 - Drop-in CachedAsyncImage SwiftUI replacement
 - Collection prefetching
+
+### share-card/
+Shareable image cards for social media sharing.
+- ShareCardContent protocol with achievement, statistics, and quote types
+- ImageRenderer-based card generation
+- Configurable styles (minimal, branded, statistics)
+- ShareLink integration and QR code overlay
+
+### social-export/
+Export content to social platforms with correct formats.
+- Platform-specific formatting (Instagram, TikTok, X)
+- Aspect ratio and resolution handling per platform
+- Branding overlay and caption support
+- URL scheme-based and share sheet export
+
+### subscription-lifecycle/
+StoreKit 2 subscription lifecycle management.
+- Grace period and billing retry handling
+- Win-back and promotional offer management
+- Subscription status monitoring with Transaction.updates
+- Upgrade/downgrade path handling
+- Dashboard UI for subscription management
+
+### referral-system/
+Referral and invite system with viral growth mechanics.
+- Unique code generation with fraud prevention
+- Deep link-based sharing and redemption
+- Reward tracking for referrer and invitee
+- Dashboard with referral statistics
+
+### watermark-engine/
+Watermark overlays for images with paywall integration.
+- Text, image, and tiled watermark styles
+- CoreGraphics-based rendering with Retina support
+- Subscription-gated watermark removal
+- SwiftUI overlay and ViewModifier
+
+### streak-tracker/
+Daily/weekly streak tracking with engagement mechanics.
+- SwiftData-based activity recording
+- Timezone-aware day boundary calculations
+- Streak freeze/protection passes
+- Calendar heat map and badge views
+- Streak-at-risk notifications
+
+### milestone-celebration/
+Achievement celebrations with confetti and badges.
+- CAEmitterLayer confetti with Reduce Motion support
+- Milestone tracking with threshold detection
+- Badge collection grid with progress rings
+- Haptic feedback integration
+
+### whats-new/
+What's New screen shown after app updates.
+- Version tracking with UserDefaults persistence
+- Paged TabView feature highlights
+- Local and remote content providers
+- Auto-present as sheet on version change
+
+### lapsed-user/
+Lapsed user detection and re-engagement.
+- Configurable inactivity thresholds (7/14/30 days)
+- Personalized return experience by lapse category
+- Win-back offer screen for lapsed subscribers
+- ViewModifier for auto-detection on app launch
+
+### usage-insights/
+User-facing usage statistics and activity summaries.
+- SwiftData event recording with batch writes
+- Insight calculation (streaks, top categories, trends)
+- Dashboard with Swift Charts integration
+- Shareable recap cards (Spotify Wrapped-style)
+
+### variable-rewards/
+Variable reward system with gamification mechanics.
+- Weighted probability reward pools with rarity tiers
+- Daily spin wheel and mystery box animations
+- Daily/weekly caps for ethical engagement
+- Reward history and notification views
+
+### consent-flow/
+GDPR/CCPA/DPDP privacy consent management.
+- Granular per-category consent (analytics, marketing, etc.)
+- ATT (App Tracking Transparency) integration
+- Consent audit logging for compliance
+- Banner and preferences UI with equal prominence
+
+### account-deletion/
+Apple-compliant account deletion flow.
+- Multi-step confirmation with re-authentication
+- Data export before deletion
+- Grace period with cancellation option
+- Keychain cleanup and Sign in with Apple revocation
+
+### permission-priming/
+Pre-permission priming screens for higher grant rates.
+- Unified permission manager (notifications, camera, location, etc.)
+- Benefit-focused priming UI before system prompt
+- Permission status tracking with Settings redirect
+- Gated content ViewModifier
+
+### force-update/
+Minimum version enforcement with update prompts.
+- Remote JSON and App Store lookup version checking
+- Hard block (required) and soft prompt (recommended)
+- Configurable check frequency
+- Skip tracking for soft updates
+
+### state-restoration/
+State preservation and restoration across app launches.
+- NavigationPath, tab selection, scroll position persistence
+- Codable AppState with debounced auto-save
+- Form draft manager with auto-save
+- @SceneStorage and file-based storage options
+
+### debug-menu/
+Developer debug menu (DEBUG builds only).
+- Feature flag toggles and environment switcher
+- Network request logger with circular buffer
+- Cache clearing and diagnostic info export
+- Shake gesture and hidden tap triggers
+
+### offline-queue/
+Offline operation queue with automatic retry.
+- Actor-based queue manager with FIFO + priority
+- File-based persistence for queued operations
+- Exponential backoff with jitter retry policy
+- NWPathMonitor connectivity detection
+- Offline status banner ViewModifier
+
+### feedback-form/
+In-app feedback collection with smart routing.
+- Category-based feedback (bug, feature, praise)
+- Screenshot capture and annotation
+- Sentiment routing (happy → App Store, unhappy → support)
+- Email and webhook submission
+
+### announcement-banner/
+In-app announcement banners with remote configuration.
+- Priority-based banner display (info, warning, promotion)
+- Local and remote announcement providers
+- Deep link and URL action handling
+- Scheduled display with date ranges
+
+### quick-win-session/
+Guided first-action flows for fast time-to-value.
+- Step-by-step task guidance
+- Spotlight hint overlays with cutout circles
+- Completion celebration with timing stats
+- ViewModifier for new user detection
+
+### spotlight-indexing/
+Core Spotlight indexing for system search integration.
+- SpotlightIndexable protocol for any model
+- Actor-based batch index manager
+- Fluent attribute builder API
+- Search continuation and Siri suggestions
+
+### app-clip/
+App Clip target with invocation and upgrade flow.
+- Invocation URL parsing and routing
+- Experience protocol with concrete implementations
+- Location confirmation for physical invocations
+- SKOverlay full app upgrade prompt
+- App Group data sharing
+
+### screenshot-automation/
+Automated App Store screenshot generation.
+- XCUITest-based screen capture with navigation
+- Localized caption overlays with CoreText
+- Device frame compositing
+- Multi-locale, multi-device batch export
 
 ## How to Use
 

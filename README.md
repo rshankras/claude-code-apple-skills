@@ -8,7 +8,7 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 
 | Category | Skills | Purpose |
 |----------|--------|---------|
-| **Generators** | 24 | Production-ready code for common features |
+| **Generators** | 49 | Production-ready code for common features |
 | **Product** | 11 | Idea discovery to App Store workflow |
 | **Testing** | 8 | TDD workflows, test infrastructure, snapshot tests |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
@@ -28,7 +28,7 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 | **visionOS** | 1 | Widget development |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 86 skills**
+**Total: 110 skills**
 
 ## Quick Start
 
@@ -62,7 +62,7 @@ skills/
 ├── ios/                    # iOS code review, UI review, planning, navigation, iPad, migration, accessibility
 ├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
 ├── product/                # Idea to App Store workflow (11 skills)
-├── generators/             # Code generators (24 skills)
+├── generators/             # Code generators (49 skills)
 │   ├── logging-setup/
 │   ├── analytics-setup/
 │   ├── networking-layer/
@@ -130,6 +130,30 @@ Generate production-ready Swift code that adapts to your project:
 | `http-cache` | HTTP response caching with ETag/offline |
 | `pagination` | Offset/cursor pagination + infinite scroll |
 | `image-loading` | Image pipeline with cache + CachedAsyncImage |
+| `share-card` | Shareable image cards for social media |
+| `social-export` | Export to Instagram, TikTok, X with correct formats |
+| `subscription-lifecycle` | StoreKit 2 grace periods, billing retry, win-back |
+| `referral-system` | Referral codes, deep link sharing, reward tracking |
+| `watermark-engine` | Image watermarks with paywall removal |
+| `streak-tracker` | Daily streaks with freezes and notifications |
+| `milestone-celebration` | Confetti, badges, and achievement celebrations |
+| `whats-new` | What's New screen after app updates |
+| `lapsed-user` | Lapsed user detection and re-engagement |
+| `usage-insights` | User-facing stats, recaps, activity dashboards |
+| `variable-rewards` | Daily spins, mystery boxes, gamification rewards |
+| `consent-flow` | GDPR/CCPA consent with ATT integration |
+| `account-deletion` | Apple-compliant account deletion flow |
+| `permission-priming` | Pre-permission screens for higher grant rates |
+| `force-update` | Minimum version enforcement with update prompts |
+| `state-restoration` | Navigation, tab, scroll position persistence |
+| `debug-menu` | Developer debug menu (DEBUG builds only) |
+| `offline-queue` | Offline operation queue with automatic retry |
+| `feedback-form` | In-app feedback with screenshots and routing |
+| `announcement-banner` | In-app banners with remote configuration |
+| `quick-win-session` | Guided first-action flows for retention |
+| `spotlight-indexing` | Core Spotlight indexing for system search |
+| `app-clip` | App Clip target with invocation handling |
+| `screenshot-automation` | Automated App Store screenshot generation |
 
 ## Testing & TDD Skills
 

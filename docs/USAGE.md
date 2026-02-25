@@ -72,6 +72,30 @@ Follow the Implementation Guide, or ask Claude to generate specific features.
 | Cache API responses | "Add HTTP caching" or "Add offline support" |
 | Add pagination | "Add pagination" or "Add infinite scroll" |
 | Add image caching | "Add image caching" or "Replace AsyncImage with caching" |
+| Add share cards | "Add shareable image cards" or "Generate social share cards" |
+| Export to social | "Export to Instagram Stories" or "Add social media export" |
+| Manage subscriptions | "Add subscription lifecycle management" or "Handle grace periods" |
+| Add referrals | "Add referral system" or "Add invite friends" |
+| Add watermarks | "Add watermark to images" or "Add free tier watermark" |
+| Add streaks | "Add daily streak tracking" or "Add engagement streaks" |
+| Add celebrations | "Add confetti animation" or "Add achievement celebrations" |
+| Add What's New | "Add What's New screen" or "Show changelog after update" |
+| Re-engage users | "Add lapsed user detection" or "Add returning user screen" |
+| Show usage stats | "Add usage insights dashboard" or "Add weekly recap" |
+| Add rewards | "Add daily rewards" or "Add mystery box rewards" |
+| Add consent flow | "Add GDPR consent" or "Add privacy consent flow" |
+| Add account deletion | "Add account deletion" or "Apple account deletion requirement" |
+| Add permission priming | "Add permission priming screen" or "Explain permissions before asking" |
+| Add force update | "Add minimum version check" or "Add force update prompt" |
+| Add state restoration | "Save and restore app state" or "Remember navigation position" |
+| Add debug menu | "Add debug menu" or "Add developer tools menu" |
+| Add offline queue | "Add offline support" or "Queue requests when offline" |
+| Add feedback form | "Add in-app feedback" or "Add bug report form" |
+| Add announcements | "Add announcement banner" or "Add in-app notifications" |
+| Add quick win flow | "Add guided first action" or "Add quick win onboarding" |
+| Add Spotlight search | "Add Spotlight indexing" or "Make content searchable" |
+| Add App Clip | "Add an App Clip" or "Create a lightweight app experience" |
+| Automate screenshots | "Automate App Store screenshots" or "Generate screenshots" |
 | Add alarms/timers | "Add AlarmKit alarms" |
 | Add web content | "Embed a web view in SwiftUI" |
 | Add rich text editor | "Add a rich text editor with formatting" |
@@ -106,7 +130,7 @@ Differences:
 
 | Category | Count | Purpose | When to Use |
 |----------|-------|---------|-------------|
-| `generators/` | 24 | Generate code | Add features to any app |
+| `generators/` | 49 | Generate code | Add features to any app |
 | `product/` | 11 | Idea to specs | New app planning, full workflow |
 | `macos/` | 8 | macOS development | Code review, UI review, Tahoe APIs |
 | `ios/` | 7 | iOS development | Code review, navigation, iPad, migration |
@@ -127,7 +151,7 @@ Differences:
 | `release-review/` | 1 | Pre-release | Security, privacy, UX audit |
 | `shared/` | 1 | Skill creation | Templates for creating new skills |
 
-**Total: 86 skills**
+**Total: 110 skills**
 
 ---
 

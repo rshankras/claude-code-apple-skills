@@ -82,6 +82,30 @@ Skills tracking based on Apple documentation and gap analysis.
 | `generators/http-cache` | ✅ Complete |
 | `generators/pagination` | ✅ Complete |
 | `generators/image-loading` | ✅ Complete |
+| `generators/share-card` | ✅ Complete |
+| `generators/social-export` | ✅ Complete |
+| `generators/subscription-lifecycle` | ✅ Complete |
+| `generators/referral-system` | ✅ Complete |
+| `generators/watermark-engine` | ✅ Complete |
+| `generators/streak-tracker` | ✅ Complete |
+| `generators/milestone-celebration` | ✅ Complete |
+| `generators/whats-new` | ✅ Complete |
+| `generators/lapsed-user` | ✅ Complete |
+| `generators/usage-insights` | ✅ Complete |
+| `generators/variable-rewards` | ✅ Complete |
+| `generators/consent-flow` | ✅ Complete |
+| `generators/account-deletion` | ✅ Complete |
+| `generators/permission-priming` | ✅ Complete |
+| `generators/force-update` | ✅ Complete |
+| `generators/state-restoration` | ✅ Complete |
+| `generators/debug-menu` | ✅ Complete |
+| `generators/offline-queue` | ✅ Complete |
+| `generators/feedback-form` | ✅ Complete |
+| `generators/announcement-banner` | ✅ Complete |
+| `generators/quick-win-session` | ✅ Complete |
+| `generators/spotlight-indexing` | ✅ Complete |
+| `generators/app-clip` | ✅ Complete |
+| `generators/screenshot-automation` | ✅ Complete |
 
 ### Monetization
 | Topic | Skill | Status |
@@ -118,7 +142,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 
 | Category | Count | Skills |
 |----------|-------|--------|
-| generators/ | 24 | logging-setup, analytics-setup, networking-layer, auth-flow, paywall-generator, settings-screen, persistence-setup, onboarding-generator, review-prompt, error-monitoring, ci-cd-setup, localization-setup, push-notifications, deep-linking, test-generator, accessibility-generator, widget-generator, feature-flags, live-activity-generator, tipkit-generator, cloudkit-sync, http-cache, pagination, image-loading |
+| generators/ | 49 | logging-setup, analytics-setup, networking-layer, auth-flow, paywall-generator, settings-screen, persistence-setup, onboarding-generator, review-prompt, error-monitoring, ci-cd-setup, localization-setup, push-notifications, deep-linking, test-generator, accessibility-generator, widget-generator, app-icon-generator, feature-flags, live-activity-generator, tipkit-generator, cloudkit-sync, http-cache, pagination, image-loading, share-card, social-export, subscription-lifecycle, referral-system, watermark-engine, streak-tracker, milestone-celebration, whats-new, lapsed-user, usage-insights, variable-rewards, consent-flow, account-deletion, permission-priming, force-update, state-restoration, debug-menu, offline-queue, feedback-form, announcement-banner, quick-win-session, spotlight-indexing, app-clip, screenshot-automation |
 | product/ | 11 | idea-generator, product-agent, competitive-analysis, market-research, prd-generator, architecture-spec, ux-spec, implementation-guide, implementation-spec, test-spec, release-spec |
 | macos/ | 8 | app-planner, coding-best-practices, architecture-patterns, swiftdata-architecture, ui-review-tahoe, macos-tahoe-apis, macos-capabilities, appkit-swiftui-bridge |
 | ios/ | 7 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access |
@@ -138,4 +162,4 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | monetization/ | 1 | monetization (with pricing-models.md, app-type-guides.md) |
 | release-review/ | 1 | release-review |
 | shared/ | 1 | skill-creator |
-| **Total** | **86** |
+| **Total** | **110** |
