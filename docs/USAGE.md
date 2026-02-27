@@ -104,6 +104,8 @@ Follow the Implementation Guide, or ask Claude to generate specific features.
 | Migrate to SwiftData | "Migrate from CoreData to SwiftData" |
 | Migrate to SwiftUI | "Migrate from UIKit to SwiftUI" |
 | Migrate to @Observable | "Migrate from ObservableObject to @Observable" |
+| Migrate ObjC to Swift | "Migrate from Objective-C to Swift" |
+| Migrate StoreKit | "Migrate from StoreKit 1 to StoreKit 2" |
 | Fix concurrency issues | "Fix Swift 6 concurrency warnings" |
 | Add iPad support | "Add iPad multitasking and drag & drop" |
 | Add watch features | "Add a watchOS companion app" |
@@ -111,6 +113,19 @@ Follow the Implementation Guide, or ask Claude to generate specific features.
 | Add health tracking | "Add HealthKit workout tracking" |
 | Add visionOS widgets | "Add widgets for visionOS" |
 | Add map features | "Add MapKit with place descriptors" |
+| Add background tasks | "Add background processing" or "Add BGTaskScheduler" |
+| Add share extension | "Add a share extension" or "Add app extension" |
+| Add data export | "Add data export" or "Add CSV/PDF export" |
+| Add Core ML | "Add image classification" or "Add Core ML model" |
+| Run Apple Search Ads | "Set up Apple Search Ads" or "Run paid acquisition" |
+| Handle rejection | "My app was rejected" or "Help with App Review" |
+| Plan beta testing | "Plan my TestFlight beta" or "Set up beta testing" |
+| Localize my app | "Plan localization strategy" or "Which languages first?" |
+| Understand metrics | "Interpret my app analytics" or "Are my metrics good?" |
+| Get press coverage | "Get press for my app" or "Create a press kit" |
+| Build community | "Build community around my app" or "Social media strategy" |
+| Indie business setup | "Do I need an LLC?" or "Tax basics for app revenue" |
+| Generate privacy policy | "Generate privacy policy" or "Need terms of service" |
 
 ---
 
@@ -130,28 +145,31 @@ Differences:
 
 | Category | Count | Purpose | When to Use |
 |----------|-------|---------|-------------|
-| `generators/` | 49 | Generate code | Add features to any app |
-| `product/` | 11 | Idea to specs | New app planning, full workflow |
+| `generators/` | 52 | Generate code | Add features to any app |
+| `product/` | 13 | Idea to specs | New app planning, beta testing, localization |
 | `macos/` | 8 | macOS development | Code review, UI review, Tahoe APIs |
+| `testing/` | 8 | TDD & testing | TDD workflows, snapshots, test infrastructure |
+| `app-store/` | 7 | ASO & marketing | Descriptions, keywords, search ads, rejections |
 | `ios/` | 7 | iOS development | Code review, navigation, iPad, migration |
 | `swiftui/` | 5 | SwiftUI features | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
-| `app-store/` | 4 | ASO | Descriptions, keywords, screenshots |
+| `growth/` | 5 | User acquisition | Analytics, press, community, indie business |
 | `swift/` | 3 | Swift language | Concurrency, Swift 6.2, memory (InlineArray/Span) |
 | `apple-intelligence/` | 3 | AI features | Foundation Models, Visual Intelligence, App Intents |
 | `design/` | 2 | Modern UI | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animations |
+| `legal/` | 2 | Legal documents | Privacy policies, terms of service, EULAs |
 | `performance/` | 2 | Performance | Instruments profiling, SwiftUI debugging |
 | `security/` | 2 | Security | Keychain, biometrics, privacy manifests |
+| `core-ml/` | 1 | On-device ML | Vision, NaturalLanguage, Core ML models |
+| `monetization/` | 1 | Revenue strategy | Pricing models, tiers, free trials |
 | `swiftdata/` | 1 | Data persistence | Class inheritance patterns |
 | `mapkit/` | 1 | Maps & location | GeoToolbox, place descriptors |
 | `foundation/` | 1 | Foundation | AttributedString updates |
 | `visionos/` | 1 | visionOS | Widget development |
 | `watchos/` | 1 | watchOS | Watch apps, complications, health/fitness, widgets |
-| `testing/` | 8 | TDD & testing | TDD workflows, snapshots, test infrastructure |
-| `monetization/` | 1 | Revenue strategy | Pricing models, tiers, free trials |
 | `release-review/` | 1 | Pre-release | Security, privacy, UX audit |
 | `shared/` | 1 | Skill creation | Templates for creating new skills |
 
-**Total: 110 skills**
+**Total: 148 skills across 23 categories**
 
 ---
 

@@ -8,18 +8,21 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 
 | Category | Skills | Purpose |
 |----------|--------|---------|
-| **Generators** | 49 | Production-ready code for common features |
-| **Product** | 11 | Idea discovery to App Store workflow |
-| **Testing** | 8 | TDD workflows, test infrastructure, snapshot tests |
+| **Generators** | 52 | Production-ready code for common features |
+| **Product** | 13 | Idea discovery to App Store workflow |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
+| **Testing** | 8 | TDD workflows, test infrastructure, snapshot tests |
+| **App Store** | 7 | ASO, descriptions, keywords, reviews, search ads, rejections |
 | **iOS** | 7 | Code review, UI review, navigation, iPad, migration, accessibility |
 | **SwiftUI** | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
-| **App Store** | 4 | ASO, descriptions, keywords, reviews |
+| **Growth** | 5 | Analytics, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
 | **Design** | 2 | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animation patterns |
+| **Legal** | 2 | Privacy policies, terms of service, EULAs |
 | **Performance** | 2 | Instruments profiling, SwiftUI debugging |
 | **Security** | 2 | Secure storage, biometrics, privacy manifests |
+| **Core ML** | 1 | Vision, NaturalLanguage, model integration |
 | **Monetization** | 1 | Pricing strategy, tiers, free trials |
 | **watchOS** | 1 | Watch apps, complications, health/fitness, widgets |
 | **SwiftData** | 1 | Class inheritance patterns |
@@ -28,7 +31,7 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 | **visionOS** | 1 | Widget development |
 | **Release Review** | 1 | Pre-release audit checklists |
 
-**Total: 110 skills**
+**Total: 148 skills across 23 categories**
 
 ## Quick Start
 
@@ -61,17 +64,20 @@ cp -r claude-code-apple-skills/skills ~/.claude/skills/
 skills/
 ├── ios/                    # iOS code review, UI review, planning, navigation, iPad, migration, accessibility
 ├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
-├── product/                # Idea to App Store workflow (11 skills)
-├── generators/             # Code generators (49 skills)
+├── product/                # Idea to App Store workflow (13 skills)
+├── generators/             # Code generators (52 skills)
 │   ├── logging-setup/
 │   ├── analytics-setup/
 │   ├── networking-layer/
 │   ├── auth-flow/
 │   ├── paywall-generator/
-│   ├── live-activity-generator/
-│   ├── tipkit-generator/
-│   ├── cloudkit-sync/
-│   └── ...
+│   ├── background-processing/
+│   ├── app-extensions/
+│   ├── data-export/
+│   └── ... (52 total)
+├── growth/                 # Analytics, press/media, community, indie business (5 skills)
+├── legal/                  # Privacy policies, terms of service, EULAs (2 skills)
+├── core-ml/                # Vision, NaturalLanguage, model integration
 ├── swiftui/                # AlarmKit, WebKit, text editing, toolbars, Charts 3D
 ├── apple-intelligence/     # Foundation Models, Visual Intelligence, App Intents
 ├── design/                 # Liquid Glass, animation patterns
@@ -84,7 +90,7 @@ skills/
 ├── visionos/               # visionOS widgets
 ├── testing/                # TDD workflows, test infrastructure, snapshot tests (8 skills)
 ├── monetization/           # Pricing strategy, tiers, free trials
-├── app-store/              # ASO, descriptions, screenshots, reviews
+├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections (7 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
 ├── release-review/         # Security, privacy, UX, distribution audits
 └── shared/                 # Skill creation templates
@@ -154,6 +160,30 @@ Generate production-ready Swift code that adapts to your project:
 | `spotlight-indexing` | Core Spotlight indexing for system search |
 | `app-clip` | App Clip target with invocation handling |
 | `screenshot-automation` | Automated App Store screenshot generation |
+| `background-processing` | BGTaskScheduler, background downloads, silent push |
+| `app-extensions` | Share, Action, Keyboard, Safari extensions |
+| `data-export` | JSON/CSV/PDF export, GDPR data portability |
+
+## Growth Skills
+
+| Skill | What It Does |
+|-------|--------------|
+| `analytics-interpretation` | Interpret app metrics, AARRR funnels, decision trees |
+| `press-media` | Press kit, journalist outreach, pitch templates |
+| `community-building` | Social media, building in public, content strategy |
+| `indie-business` | Business entity, taxes, revenue, hiring |
+
+## Legal Skills
+
+| Skill | What It Does |
+|-------|--------------|
+| `privacy-policy` | Privacy policies, Terms of Service, EULAs |
+
+## Core ML Skills
+
+| Skill | What It Does |
+|-------|--------------|
+| `core-ml` | Vision, NaturalLanguage, model integration, Core ML vs Foundation Models |
 
 ## Testing & TDD Skills
 
@@ -191,7 +221,7 @@ Generate production-ready Swift code that adapts to your project:
 | `performance/profiling` | Instruments workflows, Time Profiler, Allocations, hangs |
 | `performance/swiftui-debugging` | View identity, body re-evaluation, lazy loading, `_printChanges()` |
 
-## App Store Optimization (ASO) Skills
+## App Store Skills
 
 | Skill | What It Does |
 |-------|--------------|
@@ -199,6 +229,9 @@ Generate production-ready Swift code that adapts to your project:
 | `app-description-writer` | Compelling descriptions that convert |
 | `screenshot-planner` | Screenshot sequences with keyword-rich captions |
 | `review-response-writer` | Professional review responses |
+| `apple-search-ads` | Search Ads campaign setup, keyword bidding, ROAS |
+| `rejection-handler` | Handle rejections, response templates, appeals |
+| `marketing-strategy` | Comprehensive promotional strategy |
 
 ## Security Skills
 

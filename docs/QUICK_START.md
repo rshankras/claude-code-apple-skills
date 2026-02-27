@@ -30,7 +30,7 @@ cp -r /path/to/claude-code-apple-skills/skills/* .claude/skills/
 Copy only the categories you need:
 
 ```bash
-# Just generators (24 skills)
+# Just generators (52 skills)
 cp -r /path/to/claude-code-apple-skills/skills/generators .claude/skills/
 
 # Just testing/TDD (8 skills)
@@ -130,25 +130,25 @@ Good: "Add a subscription paywall with monthly and yearly tiers"
 Vague: "Add payments"
 ```
 
-## Skill Categories (86 total)
+## Skill Categories (148 skills across 23 categories)
 
 | Category | Count | Purpose |
 |----------|-------|---------|
-| `generators/` | 24 | Production-ready code for common features |
-| `product/` | 11 | Idea to App Store workflow |
+| `generators/` | 52 | Production-ready code for common features |
+| `product/` | 13 | Idea to App Store workflow, beta testing, localization |
 | `testing/` | 8 | TDD workflows, test infrastructure |
 | `macos/` | 8 | macOS development patterns |
-| `ios/` | 7 | iOS code review, UI review, planning |
+| `app-store/` | 7 | ASO, descriptions, keywords, search ads, rejections |
+| `ios/` | 7 | iOS code review, UI review, planning, migration |
 | `swiftui/` | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
-| `app-store/` | 4 | ASO, descriptions, keywords, reviews |
+| `growth/` | 5 | Analytics, press/media, community, indie business |
 | `swift/` | 3 | Concurrency, Swift 6.2, memory |
 | `apple-intelligence/` | 3 | Foundation Models, Visual Intelligence, App Intents |
 | `design/` | 2 | Liquid Glass, animations |
+| `legal/` | 2 | Privacy policies, terms of service, EULAs |
 | `performance/` | 2 | Instruments, SwiftUI debugging |
 | `security/` | 2 | Keychain, biometrics, privacy manifests |
-| `monetization/` | 1 | Pricing strategy, tiers, free trials |
-| `watchos/` | 1 | Watch apps, complications |
-| + 5 more | 5 | SwiftData, MapKit, Foundation, visionOS, Release Review |
+| + 9 more | 9 | Core ML, Monetization, SwiftData, MapKit, Foundation, visionOS, watchOS, Release Review, Shared |
 
 ## Troubleshooting
 

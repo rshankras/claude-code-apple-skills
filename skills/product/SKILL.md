@@ -16,6 +16,8 @@ Use this skill when the user:
 - Wants to generate product specifications
 - Needs architecture or UX design documents
 - Is preparing for App Store submission
+- Wants to plan beta testing or TestFlight strategy
+- Needs localization strategy or market expansion planning
 - Wants end-to-end product planning
 
 ## Available Modules
@@ -93,6 +95,24 @@ App Store preparation.
 - Asset requirements
 - Privacy compliance
 - Marketing strategy
+
+### Pre-Launch
+
+**beta-testing/**
+TestFlight beta program strategy and feedback collection.
+- Internal vs. external testing cohort management
+- Beta tester recruitment and incentive strategies
+- Feedback collection methodology (in-app, surveys, interviews)
+- Signal vs. noise framework for interpreting feedback
+- Go/no-go launch decision framework
+
+**localization-strategy/**
+Market prioritization and localization planning.
+- Language tier recommendations by app category
+- Minimum viable localization levels (metadata-only to full)
+- Translation workflow with Xcode String Catalogs
+- Cultural adaptation beyond translation
+- Localized ASO strategy
 
 ### Orchestration
 

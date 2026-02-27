@@ -1,6 +1,6 @@
 ---
 name: migration-patterns
-description: Migration guides for CoreData to SwiftData, UIKit to SwiftUI, ObservableObject to @Observable, and XCTest to Swift Testing. Use when migrating between Apple framework generations.
+description: Migration guides for CoreData to SwiftData, UIKit to SwiftUI, ObservableObject to @Observable, XCTest to Swift Testing, Objective-C to Swift, and StoreKit 1 to StoreKit 2. Use when migrating between Apple framework generations.
 allowed-tools: [Read, Glob, Grep]
 ---
 
@@ -16,6 +16,8 @@ Comprehensive guides for migrating between Apple framework generations. Each gui
 - User is converting XCTest tests to Swift Testing
 - User asks about coexistence strategies (running old and new frameworks side by side)
 - User wants to know whether a migration is worth doing for their situation
+- User is migrating Objective-C code to Swift (bridging headers, incremental migration)
+- User is migrating from StoreKit 1 to StoreKit 2 (in-app purchases, subscriptions)
 - User encounters errors during a framework migration
 
 ## Decision Tree
@@ -47,6 +49,22 @@ What are you migrating?
 |   +-- Combine publishers --> AsyncSequence
 |       Also covered in observable-migration.md
 |
++-- Programming language
+|   +-- Objective-C --> Swift
+|   |   See objc-to-swift.md
+|   |   Incremental: migrate leaves first, trunks last
+|   |
+|   +-- Mixed-language project?
+|       Both languages coexist via bridging headers
+|
++-- In-app purchases
+|   +-- StoreKit 1 --> StoreKit 2
+|   |   See storekit-migration.md
+|   |   Min: iOS 15
+|   |
+|   +-- Using a third-party SDK (RevenueCat, etc.)?
+|       Check if SDK already supports StoreKit 2 internally
+|
 +-- Testing framework
     +-- XCTest --> Swift Testing
         See xctest-to-swift-testing.md
@@ -60,6 +78,8 @@ What are you migrating?
 | CoreData to SwiftData | `coredata-to-swiftdata.md` | iOS 17 / macOS 14 | High (data layer) |
 | UIKit to SwiftUI | `uikit-to-swiftui.md` | iOS 13+ | Medium (incremental) |
 | ObservableObject to @Observable | `observable-migration.md` | iOS 17 / macOS 14 | Low-Medium |
+| Objective-C to Swift | `objc-to-swift.md` | Any | Medium (incremental) |
+| StoreKit 1 to StoreKit 2 | `storekit-migration.md` | iOS 15 | Medium-High (payments) |
 | XCTest to Swift Testing | `xctest-to-swift-testing.md` | Xcode 16 | Low |
 
 ## Process
@@ -78,6 +98,8 @@ Based on the migration type, read from this directory:
 - `coredata-to-swiftdata.md` -- NSManagedObject to @Model, migration stages, coexistence
 - `uikit-to-swiftui.md` -- UIHostingController, Representable, incremental adoption
 - `observable-migration.md` -- @Observable macro, @Environment injection, AsyncSequence
+- `objc-to-swift.md` -- Bridging headers, @objc, incremental file-by-file migration
+- `storekit-migration.md` -- StoreKit 2 async/await purchases, Transaction.currentEntitlements, JWS
 - `xctest-to-swift-testing.md` -- @Test, #expect, #require, parameterized tests
 
 ### 3. Review the User's Code
@@ -115,3 +137,4 @@ For each migration, decide between:
 - [Migrating to new navigation types](https://developer.apple.com/documentation/swiftui/migrating-to-new-navigation-types)
 - [Migrating from ObservableObject to Observable](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro)
 - [Migrating a test from XCTest](https://developer.apple.com/documentation/testing/migratingfromxctest)
+- [Migrating an app from StoreKit 1](https://developer.apple.com/documentation/storekit/in-app_purchase/implementing_a_store_in_your_app_using_the_storekit_api)

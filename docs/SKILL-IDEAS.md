@@ -31,7 +31,7 @@ Skill ideas for Apple platform and general development workflows.
 | **review-response-writer** | Write professional responses to app reviews | ✅ `app-store/review-response-writer` |
 | **monetization** | Pricing strategy, tiers, free trials | ✅ `monetization` |
 | **release-notes-writer** | Write user-friendly release notes | Planned |
-| **privacy-policy-generator** | Generate privacy policy for apps | Planned |
+| **privacy-policy-generator** | Generate privacy policy for apps | ✅ `legal/privacy-policy` |
 
 ---
 

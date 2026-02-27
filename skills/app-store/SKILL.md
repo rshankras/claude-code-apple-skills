@@ -18,6 +18,8 @@ Use this skill when the user:
 - Wants to improve app discoverability
 - Asks about marketing strategy, promotion, or user acquisition
 - Wants to use App Store features (events, custom pages, offers, featuring)
+- Asks about paid acquisition or Apple Search Ads
+- App was rejected or wants to avoid rejection
 
 ## Available Skills
 
@@ -60,6 +62,23 @@ Professional responses to App Store reviews.
 - Turning negative reviews into opportunities
 - When to respond vs. when not to
 
+### apple-search-ads/
+Apple Search Ads campaign strategy for indie developers.
+- Readiness assessment (minimum thresholds before spending)
+- Campaign types and keyword strategy
+- Budget planning by app stage (launch, growth, scale)
+- Bid optimization with CPT benchmarks by category
+- Campaign structure templates and measurement KPIs
+- Custom Product Pages integration for ad groups
+
+### rejection-handler/
+Handle App Store rejections and prepare submissions to avoid them.
+- Pre-submission audit checklist by guideline section
+- Rejection analysis and response strategy
+- Resolution Center response templates
+- Appeal escalation path (Resolution Center → phone → App Review Board)
+- Top 20 common rejections with fixes (common-rejections.md)
+
 ## Related Generator Skills
 
 These generator skills produce code, metadata, and configuration for App Store features:
@@ -81,11 +100,13 @@ These generator skills produce code, metadata, and configuration for App Store f
 
 1. User requests App Store help
 2. For strategy questions → Read `marketing-strategy/SKILL.md`
-3. For specific content → Read the relevant sub-skill's SKILL.md
-4. For code/implementation → Read the relevant generator skill
-5. Ask clarifying questions about the app
-6. Generate optimized content
-7. Provide alternatives and explain choices
+3. For paid acquisition → Read `apple-search-ads/SKILL.md`
+4. For rejections or submission prep → Read `rejection-handler/SKILL.md`
+5. For specific content → Read the relevant sub-skill's SKILL.md
+6. For code/implementation → Read the relevant generator skill
+7. Ask clarifying questions about the app
+8. Generate optimized content
+9. Provide alternatives and explain choices
 
 ## Key Principles
 

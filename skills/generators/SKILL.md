@@ -1,6 +1,6 @@
 ---
 name: generators
-description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, app icons, image caching, pagination, HTTP caching, share cards, social export, subscription lifecycle, referral systems, watermarks, streak tracking, milestone celebrations, what's new screens, lapsed user re-engagement, usage insights, variable rewards, consent flows, account deletion, permission priming, force updates, state restoration, debug menus, offline queues, feedback forms, announcement banners, quick win sessions, Spotlight indexing, App Clips, or screenshot automation.
+description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, app icons, image caching, pagination, HTTP caching, share cards, social export, subscription lifecycle, referral systems, watermarks, streak tracking, milestone celebrations, what's new screens, lapsed user re-engagement, usage insights, variable rewards, consent flows, account deletion, permission priming, force updates, state restoration, debug menus, offline queues, feedback forms, announcement banners, quick win sessions, Spotlight indexing, App Clips, screenshot automation, background processing, app extensions, or data export.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 ---
 
@@ -399,6 +399,29 @@ Automated App Store screenshot generation.
 - Localized caption overlays with CoreText
 - Device frame compositing
 - Multi-locale, multi-device batch export
+
+### background-processing/
+Background task infrastructure with BGTaskScheduler.
+- BGAppRefreshTask and BGProcessingTask setup
+- Background URLSession for downloads/uploads
+- Silent push notification handling
+- Energy-efficient scheduling strategies
+
+### app-extensions/
+App extension targets for Share, Action, Keyboard, and Safari.
+- Share Extension with content handling
+- Action Extension for in-place content manipulation
+- Keyboard Extension with UIInputViewController
+- Safari Web Extension with message handler
+- App Group data sharing between app and extension
+
+### data-export/
+Data export/import infrastructure with JSON, CSV, and PDF support.
+- Protocol-based multi-format export (DataExportable)
+- CSV generation with RFC 4180 compliance
+- PDF report generation with UIGraphicsPDFRenderer
+- File import with UTType-based parsing
+- GDPR Article 20 data portability compliance
 
 ## How to Use
 

@@ -39,11 +39,14 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
 |----------|---------|
 | `ios/` | iOS development patterns |
 | `macos/` | macOS development patterns |
-| `product/` | Product development workflow (idea to App Store) |
+| `product/` | Product development workflow (idea to App Store), beta testing, localization |
 | `generators/` | Code generators producing production-ready Swift |
+| `growth/` | Analytics, press/media, community building, indie business |
+| `legal/` | Privacy policies, terms of service, EULAs |
+| `core-ml/` | Core ML, Vision, NaturalLanguage, on-device ML |
 | `apple-intelligence/` | Foundation Models, Visual Intelligence |
 | `design/` | Liquid Glass, modern design patterns |
-| `app-store/` | ASO, descriptions, screenshots, reviews |
+| `app-store/` | ASO, descriptions, screenshots, reviews, search ads, rejections |
 | `monetization/` | Monetization strategy, pricing, tiers |
 | `testing/` | TDD workflows, test infrastructure, snapshot tests |
 | `release-review/` | Pre-release audit checklists |
