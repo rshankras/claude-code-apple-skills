@@ -1,12 +1,12 @@
 ---
 name: app-store
-description: App Store optimization skills for descriptions, screenshots, keywords, and review responses. Use when user needs help with App Store presence, ASO, or customer communication.
+description: App Store optimization and marketing skills for descriptions, screenshots, keywords, review responses, and comprehensive promotional strategy. Use when user needs help with App Store presence, ASO, marketing, or customer communication.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion, WebSearch]
 ---
 
-# App Store Optimization Skills
+# App Store Optimization & Marketing Skills
 
-Skills for optimizing your app's App Store presence, from compelling descriptions to keyword strategy.
+Skills for optimizing your app's App Store presence and building promotional strategies — from descriptions to comprehensive marketing campaigns.
 
 ## When This Skill Activates
 
@@ -16,8 +16,18 @@ Use this skill when the user:
 - Asks about ASO (App Store Optimization) or keywords
 - Needs help responding to App Store reviews
 - Wants to improve app discoverability
+- Asks about marketing strategy, promotion, or user acquisition
+- Wants to use App Store features (events, custom pages, offers, featuring)
 
 ## Available Skills
+
+### marketing-strategy/ ⭐ NEW
+Comprehensive marketing strategy advisor — describe your app and get a tailored promotional plan.
+- Analyzes app type, monetization model, audience, and lifecycle stage
+- Recommends the right App Store features for your situation
+- Builds promotional calendar with implementation roadmap
+- Orchestrates generator sub-skills for implementation
+- Strategy templates for subscription, paid, freemium, and game apps
 
 ### app-description-writer/
 Generate compelling App Store descriptions that convert.
@@ -50,13 +60,32 @@ Professional responses to App Store reviews.
 - Turning negative reviews into opportunities
 - When to respond vs. when not to
 
+## Related Generator Skills
+
+These generator skills produce code, metadata, and configuration for App Store features:
+
+| Skill | Purpose |
+|-------|---------|
+| `generators/subscription-offers` | StoreKit 2 code for all subscription offer types |
+| `generators/win-back-offers` | Win-back flow for churned subscribers |
+| `generators/promoted-iap` | Promoted In-App Purchase setup |
+| `generators/in-app-events` | In-App Event metadata templates |
+| `generators/custom-product-pages` | Custom Product Page strategy and metadata |
+| `generators/product-page-optimization` | A/B test plans for product page |
+| `generators/featuring-nomination` | App Store featuring pitch templates |
+| `generators/offer-codes-setup` | Offer code distribution strategies |
+| `generators/pre-orders` | Pre-order setup and launch timelines |
+| `generators/app-store-assets` | Asset specs for all App Store media |
+
 ## How to Use
 
 1. User requests App Store help
-2. Read the relevant skill's SKILL.md
-3. Ask clarifying questions about the app
-4. Generate optimized content
-5. Provide alternatives and explain choices
+2. For strategy questions → Read `marketing-strategy/SKILL.md`
+3. For specific content → Read the relevant sub-skill's SKILL.md
+4. For code/implementation → Read the relevant generator skill
+5. Ask clarifying questions about the app
+6. Generate optimized content
+7. Provide alternatives and explain choices
 
 ## Key Principles
 
