@@ -509,6 +509,40 @@ struct ScreenshotTestHelper {
         "\(locale)_\(screenName)"
     }
 }
+
+// MARK: - XCUIElement Unhittable Tap Extension
+
+extension XCUIElement {
+    /// Taps an element that XCUITest reports as not hittable.
+    ///
+    /// Some custom controls (e.g., custom tab bars, overlapping views, controls behind
+    /// transparent overlays) don't properly report hittability. This method bypasses
+    /// XCUITest's built-in hit testing by calculating the element's center coordinate
+    /// and tapping it directly.
+    ///
+    /// Usage:
+    /// ```swift
+    /// let customControl = app.otherElements["pageStrip.page.1"]
+    /// customControl.tapUnhittable()
+    /// ```
+    ///
+    /// Ref: Common XCUITest workaround for custom controls.
+    func tapUnhittable() {
+        let center = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        center.tap()
+    }
+
+    /// Force-taps an element at a specific normalized offset.
+    ///
+    /// Useful when you need to tap a specific region of a non-hittable element,
+    /// such as a custom slider track or a segmented control segment.
+    ///
+    /// - Parameter offset: Normalized offset (0.0-1.0) from the element's origin.
+    func tapUnhittable(at offset: CGVector) {
+        let point = coordinate(withNormalizedOffset: offset)
+        point.tap()
+    }
+}
 ```
 
 ## ScreenshotProcessor.swift
@@ -1394,5 +1428,881 @@ do {
 } catch {
     print("\nError: \(error.localizedDescription)")
     exit(1)
+}
+```
+
+## ScreenshotModeController.swift
+
+A controller the user adds to their **app target** (not the test target) that detects `--screenshot-mode` and configures the app for clean screenshot capture. This is the app-side counterpart to the UI test infrastructure.
+
+```swift
+import Foundation
+import SwiftUI
+
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
+/// Controls app behavior during automated screenshot capture.
+///
+/// Add this to your App's init or main entry point:
+/// ```swift
+/// @main
+/// struct MyApp: App {
+///     init() {
+///         ScreenshotModeController.shared.configureIfNeeded()
+///     }
+///
+///     var body: some Scene {
+///         WindowGroup {
+///             ContentView()
+///                 .onAppear {
+///                     ScreenshotModeController.shared.configureWindow()
+///                 }
+///         }
+///     }
+/// }
+/// ```
+@MainActor
+final class ScreenshotModeController {
+    static let shared = ScreenshotModeController()
+
+    /// Whether the app was launched in screenshot mode.
+    let isScreenshotMode: Bool
+
+    /// Whether onboarding should be skipped.
+    let shouldSkipOnboarding: Bool
+
+    private init() {
+        let args = ProcessInfo.processInfo.arguments
+        self.isScreenshotMode = args.contains("--screenshot-mode") ||
+                                args.contains("-ScreenshotMode")
+        self.shouldSkipOnboarding = isScreenshotMode ||
+                                    args.contains("--skip-onboarding") ||
+                                    args.contains("-SkipOnboarding")
+    }
+
+    /// Call early in app lifecycle (e.g., App.init or applicationDidFinishLaunching).
+    /// Suppresses onboarding, disables analytics, loads sample data.
+    func configureIfNeeded() {
+        guard isScreenshotMode else { return }
+
+        // Suppress first-launch behaviors
+        UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
+        UserDefaults.standard.set(true, forKey: "hasSeenWhatsNew")
+
+        // Disable analytics and crash reporting during screenshots
+        UserDefaults.standard.set(false, forKey: "analyticsEnabled")
+
+        // Disable in-app purchase prompts
+        UserDefaults.standard.set(true, forKey: "hideIAPPrompts")
+
+        // Load sample data for attractive screenshots
+        loadSampleData()
+
+        #if canImport(AppKit)
+        configureDesktopForScreenshots()
+        #endif
+    }
+
+    /// Configure the main window for screenshot capture.
+    /// Call in onAppear of your root view.
+    func configureWindow() {
+        guard isScreenshotMode else { return }
+
+        #if canImport(AppKit)
+        // Size the window to match App Store screenshot dimensions
+        // Mac App Store requires 2880×1800 for Retina displays
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            guard let window = NSApp.windows.first(where: { $0.isVisible }) else { return }
+
+            // Account for title bar height and asymmetric window borders
+            // macOS windows have different border thickness top vs bottom.
+            // The bottom ~3pt gets cropped, so add padding there.
+            let titleBarHeight: CGFloat = 28
+            let bottomBorderPadding: CGFloat = 4
+
+            let contentWidth: CGFloat = 1440  // Half of 2880 for Retina
+            let contentHeight: CGFloat = 900 - titleBarHeight + bottomBorderPadding
+
+            window.setContentSize(NSSize(width: contentWidth, height: contentHeight))
+            window.center()
+
+            // Bring window to front
+            window.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+        }
+        #endif
+    }
+
+    // MARK: - Sample Data
+
+    /// Override this method to load your app's sample data.
+    /// Called automatically when screenshot mode is detected.
+    ///
+    /// Example implementation:
+    /// ```swift
+    /// override func loadSampleData() {
+    ///     let store = DataStore.shared
+    ///     store.clearAll()
+    ///     store.insert(SampleData.projects)
+    ///     store.insert(SampleData.tasks)
+    /// }
+    /// ```
+    func loadSampleData() {
+        // Override in your app to load attractive sample data.
+        // This is where you populate your data store with content
+        // that makes the app look great in screenshots.
+    }
+
+    #if canImport(AppKit)
+    // MARK: - macOS Desktop Configuration
+
+    /// Configures the macOS desktop for clean screenshots.
+    /// Hides the dock and sets a clean appearance.
+    private func configureDesktopForScreenshots() {
+        // Hide the dock during screenshots
+        // The dock auto-hides when the app is in the foreground with this setting
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/defaults")
+        process.arguments = ["write", "com.apple.dock", "autohide", "-bool", "true"]
+        try? process.run()
+        process.waitUntilExit()
+
+        // Restart dock to apply
+        let killDock = Process()
+        killDock.executableURL = URL(fileURLWithPath: "/usr/bin/killall")
+        killDock.arguments = ["Dock"]
+        try? killDock.run()
+        killDock.waitUntilExit()
+    }
+    #endif
+}
+
+// MARK: - SwiftUI Integration
+
+/// Environment key for screenshot mode detection in views.
+///
+/// Usage in views:
+/// ```swift
+/// @Environment(\.isScreenshotMode) private var isScreenshotMode
+///
+/// var body: some View {
+///     if !isScreenshotMode {
+///         UpgradePromptBanner()
+///     }
+///     // ... main content
+/// }
+/// ```
+private struct ScreenshotModeKey: EnvironmentKey {
+    static let defaultValue = ScreenshotModeController.shared.isScreenshotMode
+}
+
+extension EnvironmentValues {
+    var isScreenshotMode: Bool {
+        get { self[ScreenshotModeKey.self] }
+        set { self[ScreenshotModeKey.self] = newValue }
+    }
+}
+```
+
+## sips-screenshot-process.sh
+
+A lightweight post-processing script using macOS's built-in `sips` command. Zero external dependencies — no Swift compilation, no fastlane, no ImageMagick. Best for macOS app screenshots where you just need to resize and crop to App Store dimensions.
+
+```bash
+#!/bin/bash
+# sips-screenshot-process.sh
+# Post-process screenshots using macOS built-in sips command.
+# No external dependencies required.
+#
+# Usage:
+#   ./sips-screenshot-process.sh raw_screenshots/ processed/
+#   ./sips-screenshot-process.sh raw_screenshots/ processed/ --mac-only
+#   ./sips-screenshot-process.sh raw_screenshots/ processed/ --target 2880x1800
+
+set -euo pipefail
+
+INPUT_DIR="${1:?Usage: $0 <input_dir> <output_dir> [--mac-only] [--target WxH]}"
+OUTPUT_DIR="${2:?Usage: $0 <input_dir> <output_dir> [--mac-only] [--target WxH]}"
+MAC_ONLY=false
+TARGET_WIDTH=""
+TARGET_HEIGHT=""
+
+# Parse optional arguments
+shift 2
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --mac-only) MAC_ONLY=true; shift ;;
+        --target)
+            TARGET_WIDTH="${2%x*}"
+            TARGET_HEIGHT="${2#*x}"
+            shift 2
+            ;;
+        *) echo "Unknown option: $1"; exit 1 ;;
+    esac
+done
+
+# Default App Store dimensions
+declare -A SIZES
+if [[ "$MAC_ONLY" == true ]]; then
+    SIZES=(
+        ["mac_retina"]="2880x1800"
+    )
+else
+    SIZES=(
+        ["iPhone_6.9"]="1320x2868"
+        ["iPhone_6.7"]="1290x2796"
+        ["iPhone_6.5"]="1284x2778"
+        ["iPhone_5.5"]="1242x2208"
+        ["iPad_12.9"]="2048x2732"
+        ["mac_retina"]="2880x1800"
+    )
+fi
+
+mkdir -p "$OUTPUT_DIR"
+
+process_image() {
+    local src="$1"
+    local dst="$2"
+    local target_w="$3"
+    local target_h="$4"
+    local filename
+    filename=$(basename "$src")
+
+    # Get current dimensions
+    local cur_w cur_h
+    cur_w=$(sips -g pixelWidth "$src" | tail -1 | awk '{print $2}')
+    cur_h=$(sips -g pixelHeight "$src" | tail -1 | awk '{print $2}')
+
+    cp "$src" "$dst/$filename"
+    local work="$dst/$filename"
+
+    # Step 1: Resize to target width (maintaining aspect ratio)
+    if [[ "$cur_w" -ne "$target_w" ]]; then
+        sips --resampleWidth "$target_w" "$work" --out "$work" > /dev/null 2>&1
+    fi
+
+    # Step 2: Crop to exact target height if needed
+    local new_h
+    new_h=$(sips -g pixelHeight "$work" | tail -1 | awk '{print $2}')
+    if [[ "$new_h" -gt "$target_h" ]]; then
+        # Crop from bottom (removes extra pixels at the bottom edge)
+        # This accounts for macOS asymmetric window borders
+        sips --cropToHeightWidth "$target_h" "$target_w" "$work" --out "$work" > /dev/null 2>&1
+    fi
+
+    echo "  ✓ $filename → ${target_w}×${target_h}"
+}
+
+# Process with explicit target
+if [[ -n "$TARGET_WIDTH" && -n "$TARGET_HEIGHT" ]]; then
+    echo "Processing screenshots to ${TARGET_WIDTH}×${TARGET_HEIGHT}..."
+    for img in "$INPUT_DIR"/*.png; do
+        [[ -f "$img" ]] || continue
+        process_image "$img" "$OUTPUT_DIR" "$TARGET_WIDTH" "$TARGET_HEIGHT"
+    done
+    echo "Done. Output in $OUTPUT_DIR/"
+    exit 0
+fi
+
+# Process for each App Store size
+for size_name in "${!SIZES[@]}"; do
+    dims="${SIZES[$size_name]}"
+    w="${dims%x*}"
+    h="${dims#*x}"
+
+    size_dir="$OUTPUT_DIR/$size_name"
+    mkdir -p "$size_dir"
+
+    echo "Processing for $size_name (${w}×${h})..."
+    for img in "$INPUT_DIR"/*.png; do
+        [[ -f "$img" ]] || continue
+        process_image "$img" "$size_dir" "$w" "$h"
+    done
+done
+
+echo ""
+echo "All screenshots processed."
+echo "Output: $OUTPUT_DIR/"
+ls -la "$OUTPUT_DIR"/
+```
+
+## macos-screenshot-env.sh
+
+Prepares the macOS desktop environment for clean screenshot capture. Sets clock time, hides desktop icons, configures wallpaper, and hides the dock. Uses `trap` to restore everything on exit — even if the script fails or is interrupted.
+
+```bash
+#!/bin/bash
+# macos-screenshot-env.sh
+# Prepare macOS desktop for screenshot capture with automatic cleanup.
+#
+# Usage:
+#   ./macos-screenshot-env.sh             # Setup only (restores on exit)
+#   ./macos-screenshot-env.sh --run-tests # Setup, run tests, then restore
+#   ./macos-screenshot-env.sh --restore   # Force restore saved state
+#
+# This script saves original settings, applies screenshot-friendly configuration,
+# and restores everything on exit via trap — even on Ctrl+C or failure.
+
+set -euo pipefail
+
+STATE_FILE="/tmp/.screenshot_env_state"
+
+# ── Save current state ──────────────────────────────────────────────
+
+save_state() {
+    echo "Saving current desktop state..."
+
+    local dock_autohide
+    dock_autohide=$(defaults read com.apple.dock autohide 2>/dev/null || echo "0")
+
+    local dock_size
+    dock_size=$(defaults read com.apple.dock tilesize 2>/dev/null || echo "48")
+
+    local desktop_icons
+    desktop_icons=$(defaults read com.apple.finder CreateDesktop 2>/dev/null || echo "1")
+
+    local menubar_clock
+    menubar_clock=$(defaults read com.apple.menuextra.clock DateFormat 2>/dev/null || echo "")
+
+    cat > "$STATE_FILE" <<STATEEOF
+DOCK_AUTOHIDE=$dock_autohide
+DOCK_SIZE=$dock_size
+DESKTOP_ICONS=$desktop_icons
+MENUBAR_CLOCK=$menubar_clock
+STATEEOF
+
+    echo "  State saved to $STATE_FILE"
+}
+
+# ── Restore original state ──────────────────────────────────────────
+
+restore_state() {
+    echo ""
+    echo "Restoring original desktop state..."
+
+    if [[ ! -f "$STATE_FILE" ]]; then
+        echo "  No saved state found at $STATE_FILE"
+        return
+    fi
+
+    source "$STATE_FILE"
+
+    # Restore dock
+    defaults write com.apple.dock autohide -bool "$DOCK_AUTOHIDE"
+    defaults write com.apple.dock tilesize -int "$DOCK_SIZE"
+
+    # Restore desktop icons
+    defaults write com.apple.finder CreateDesktop -bool "$DESKTOP_ICONS"
+
+    # Restore clock format
+    if [[ -n "$MENUBAR_CLOCK" ]]; then
+        defaults write com.apple.menuextra.clock DateFormat "$MENUBAR_CLOCK"
+    fi
+
+    # Restart affected services
+    killall Dock 2>/dev/null || true
+    killall Finder 2>/dev/null || true
+    killall SystemUIServer 2>/dev/null || true
+
+    rm -f "$STATE_FILE"
+    echo "  Desktop restored to original state."
+}
+
+# ── Apply screenshot environment ────────────────────────────────────
+
+apply_screenshot_env() {
+    echo "Configuring desktop for screenshots..."
+
+    # Hide the dock
+    defaults write com.apple.dock autohide -bool true
+    defaults write com.apple.dock autohide-delay -float 1000
+    defaults write com.apple.dock no-bouncing -bool true
+
+    # Hide desktop icons (Finder's "CreateDesktop" setting)
+    defaults write com.apple.finder CreateDesktop -bool false
+
+    # Set clock to canonical time (9:41 — Apple's standard)
+    # Note: This changes the display format, not the actual time.
+    # For the menu bar clock, we hide seconds and use a clean format.
+    defaults write com.apple.menuextra.clock DateFormat -string "h:mm"
+
+    # Restart affected services to apply changes
+    killall Dock 2>/dev/null || true
+    killall Finder 2>/dev/null || true
+    killall SystemUIServer 2>/dev/null || true
+
+    # Wait for services to restart
+    sleep 2
+
+    echo "  ✓ Dock hidden"
+    echo "  ✓ Desktop icons hidden"
+    echo "  ✓ Menu bar clock simplified"
+    echo ""
+    echo "Desktop is ready for screenshots."
+}
+
+# ── Trap: Always restore on exit ────────────────────────────────────
+
+trap restore_state EXIT INT TERM
+
+# ── Main ────────────────────────────────────────────────────────────
+
+case "${1:-}" in
+    --restore)
+        restore_state
+        trap - EXIT INT TERM  # Don't double-restore
+        exit 0
+        ;;
+    --run-tests)
+        save_state
+        apply_screenshot_env
+
+        echo ""
+        echo "Running screenshot tests..."
+        shift
+
+        # Run the test command passed as remaining arguments,
+        # or use default xcodebuild command
+        if [[ $# -gt 0 ]]; then
+            "$@"
+        else
+            echo "No test command provided. Desktop is configured."
+            echo "Run your tests manually, then press Enter to restore."
+            read -r
+        fi
+        # restore_state runs automatically via trap
+        ;;
+    *)
+        save_state
+        apply_screenshot_env
+
+        echo ""
+        echo "Desktop configured. Press Enter when done to restore, or Ctrl+C."
+        read -r
+        # restore_state runs automatically via trap
+        ;;
+esac
+```
+
+## SampleContentGenerator.swift
+
+Patterns for generating realistic sample content programmatically. Instead of relying on pre-seeded databases, generate attractive data at runtime during screenshot mode. Covers text, images, PDFs, and structured data.
+
+```swift
+import Foundation
+import CoreGraphics
+
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
+/// Generates realistic sample content for screenshot capture.
+///
+/// Use in your ScreenshotModeController.loadSampleData() override
+/// to populate the app with attractive content.
+///
+/// ```swift
+/// override func loadSampleData() {
+///     let generator = SampleContentGenerator()
+///     let projects = generator.generateProjects(count: 5)
+///     DataStore.shared.insert(projects)
+/// }
+/// ```
+enum SampleContentGenerator {
+
+    // MARK: - Text Content
+
+    /// Realistic sample titles by app category.
+    /// Use these instead of "Lorem Ipsum" for screenshots that look real.
+    static let sampleTitles: [String: [String]] = [
+        "productivity": [
+            "Q4 Marketing Strategy",
+            "Website Redesign Sprint",
+            "Product Launch Checklist",
+            "Team Onboarding Guide",
+            "Budget Review 2025"
+        ],
+        "fitness": [
+            "Morning Run - Central Park",
+            "Upper Body Workout",
+            "5K Training Plan",
+            "Yoga Flow Session",
+            "Weekend Hike"
+        ],
+        "finance": [
+            "Monthly Budget",
+            "Vacation Fund",
+            "Emergency Savings",
+            "Investment Portfolio",
+            "Subscription Audit"
+        ],
+        "notes": [
+            "Meeting Notes - Design Review",
+            "Book Recommendations",
+            "Recipe: Homemade Pasta",
+            "Travel Packing List",
+            "Gift Ideas for Mom"
+        ]
+    ]
+
+    /// Returns sample titles for a given category, cycling if count exceeds available titles.
+    static func titles(for category: String, count: Int) -> [String] {
+        let pool = sampleTitles[category] ?? sampleTitles["productivity"]!
+        return (0..<count).map { pool[$0 % pool.count] }
+    }
+
+    /// Generates a realistic paragraph of text.
+    static func paragraph(sentences: Int = 3) -> String {
+        let pool = [
+            "Track your progress with detailed analytics and visual charts.",
+            "Stay organized with smart folders that adapt to your workflow.",
+            "Collaborate seamlessly with your team in real-time.",
+            "Set reminders so you never miss an important deadline.",
+            "Export your data in multiple formats for easy sharing.",
+            "Customize the interface to match your personal style.",
+            "Access your content from any device with cloud sync.",
+            "Use keyboard shortcuts to work faster than ever.",
+            "Get insights with weekly summary reports.",
+            "Protect your data with end-to-end encryption."
+        ]
+        let selected = (0..<sentences).map { pool[$0 % pool.count] }
+        return selected.joined(separator: " ")
+    }
+
+    // MARK: - Sample Dates
+
+    /// Generates an array of recent dates, useful for chart data or activity feeds.
+    static func recentDates(count: Int, daySpacing: Int = 1) -> [Date] {
+        let calendar = Calendar.current
+        let now = Date()
+        return (0..<count).compactMap { index in
+            calendar.date(byAdding: .day, value: -(index * daySpacing), to: now)
+        }.reversed()
+    }
+
+    // MARK: - Sample Numbers
+
+    /// Generates realistic-looking chart data with a general upward trend.
+    static func trendingData(count: Int, baseValue: Double = 100, variance: Double = 20) -> [Double] {
+        var values: [Double] = []
+        var current = baseValue
+        for i in 0..<count {
+            let trend = Double(i) * (variance / Double(count)) // Gradual increase
+            let noise = Double.random(in: -variance/3...variance/3)
+            current = baseValue + trend + noise
+            values.append(max(0, current))
+        }
+        return values
+    }
+
+    /// Generates percentage values that sum to 100 (useful for pie charts).
+    static func percentages(count: Int) -> [Double] {
+        let raw = (0..<count).map { _ in Double.random(in: 10...50) }
+        let total = raw.reduce(0, +)
+        return raw.map { ($0 / total) * 100 }
+    }
+
+    // MARK: - Placeholder Images
+
+    /// Generates a solid color placeholder image.
+    static func placeholderImage(
+        size: CGSize,
+        color: CGColor = CGColor(red: 0.9, green: 0.9, blue: 0.95, alpha: 1)
+    ) -> PlatformImage? {
+        guard let context = CGContext(
+            data: nil,
+            width: Int(size.width),
+            height: Int(size.height),
+            bitsPerComponent: 8,
+            bytesPerRow: 0,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else { return nil }
+
+        context.setFillColor(color)
+        context.fill(CGRect(origin: .zero, size: size))
+
+        guard let cgImage = context.makeImage() else { return nil }
+
+        #if canImport(UIKit)
+        return UIImage(cgImage: cgImage)
+        #elseif canImport(AppKit)
+        return NSImage(cgImage: cgImage, size: size)
+        #endif
+    }
+
+    /// Generates a gradient placeholder image (more visually appealing for screenshots).
+    static func gradientImage(
+        size: CGSize,
+        colors: [CGColor] = [
+            CGColor(red: 0.3, green: 0.5, blue: 0.9, alpha: 1),
+            CGColor(red: 0.6, green: 0.3, blue: 0.8, alpha: 1)
+        ]
+    ) -> PlatformImage? {
+        guard let context = CGContext(
+            data: nil,
+            width: Int(size.width),
+            height: Int(size.height),
+            bitsPerComponent: 8,
+            bytesPerRow: 0,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else { return nil }
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        guard let gradient = CGGradient(
+            colorsSpace: colorSpace,
+            colors: colors as CFArray,
+            locations: nil
+        ) else { return nil }
+
+        context.drawLinearGradient(
+            gradient,
+            start: .zero,
+            end: CGPoint(x: size.width, y: size.height),
+            options: []
+        )
+
+        guard let cgImage = context.makeImage() else { return nil }
+
+        #if canImport(UIKit)
+        return UIImage(cgImage: cgImage)
+        #elseif canImport(AppKit)
+        return NSImage(cgImage: cgImage, size: size)
+        #endif
+    }
+
+    // MARK: - PDF Generation (macOS)
+
+    #if canImport(AppKit)
+    /// Generates a sample PDF document with multiple pages of varied content.
+    ///
+    /// Useful for document-based apps that need realistic content in screenshots.
+    /// Creates pages with headings, body text, and simple shapes.
+    static func generateSamplePDF(
+        pages: Int = 3,
+        pageSize: CGSize = CGSize(width: 612, height: 792), // US Letter
+        outputURL: URL
+    ) throws {
+        var mediaBox = CGRect(origin: .zero, size: pageSize)
+
+        guard let context = CGContext(outputURL as CFURL, mediaBox: &mediaBox, nil) else {
+            return
+        }
+
+        let headingFont = CTFontCreateWithName("Helvetica-Bold" as CFString, 24, nil)
+        let bodyFont = CTFontCreateWithName("Helvetica" as CFString, 12, nil)
+
+        let pageTitles = [
+            "Executive Summary",
+            "Market Analysis",
+            "Financial Projections",
+            "Implementation Timeline",
+            "Risk Assessment"
+        ]
+
+        let bodyText = """
+        This section contains detailed analysis and supporting data for the \
+        overall strategy. Key metrics indicate positive trends across all \
+        measured dimensions, with particular strength in user engagement \
+        and retention rates.
+        """
+
+        for pageIndex in 0..<pages {
+            context.beginPage(mediaBox: &mediaBox)
+
+            // Draw heading
+            let title = pageTitles[pageIndex % pageTitles.count]
+            let headingAttrs: [NSAttributedString.Key: Any] = [
+                .font: headingFont,
+                .foregroundColor: NSColor.black
+            ]
+            let headingString = NSAttributedString(string: title, attributes: headingAttrs)
+            let headingLine = CTLineCreateWithAttributedString(headingString)
+
+            context.textPosition = CGPoint(x: 72, y: pageSize.height - 72)
+            CTLineDraw(headingLine, context)
+
+            // Draw body text
+            let bodyAttrs: [NSAttributedString.Key: Any] = [
+                .font: bodyFont,
+                .foregroundColor: NSColor.darkGray
+            ]
+            let bodyString = NSAttributedString(string: bodyText, attributes: bodyAttrs)
+            let framesetter = CTFramesetterCreateWithAttributedString(bodyString)
+            let textRect = CGRect(x: 72, y: 72, width: pageSize.width - 144, height: pageSize.height - 180)
+            let path = CGPath(rect: textRect, transform: nil)
+            let frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), path, nil)
+            CTFrameDraw(frame, context)
+
+            // Draw a decorative chart placeholder on some pages
+            if pageIndex % 2 == 1 {
+                let chartRect = CGRect(
+                    x: 72,
+                    y: pageSize.height - 400,
+                    width: pageSize.width - 144,
+                    height: 200
+                )
+                context.setStrokeColor(CGColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1))
+                context.setLineWidth(1)
+                context.stroke(chartRect)
+
+                // Draw simple bar chart
+                let barCount = 6
+                let barWidth = (chartRect.width - 20) / CGFloat(barCount)
+                let colors: [CGColor] = [
+                    CGColor(red: 0.3, green: 0.5, blue: 0.9, alpha: 0.8),
+                    CGColor(red: 0.2, green: 0.7, blue: 0.5, alpha: 0.8)
+                ]
+
+                for i in 0..<barCount {
+                    let barHeight = CGFloat.random(in: 40...180)
+                    let barRect = CGRect(
+                        x: chartRect.origin.x + 10 + CGFloat(i) * barWidth + 5,
+                        y: chartRect.origin.y + 10,
+                        width: barWidth - 10,
+                        height: barHeight
+                    )
+                    context.setFillColor(colors[i % colors.count])
+                    context.fill(barRect)
+                }
+            }
+
+            context.endPage()
+        }
+
+        context.closePDF()
+    }
+    #endif
+}
+
+// MARK: - Sample User Profiles
+
+extension SampleContentGenerator {
+    /// Pre-built user profiles for social or collaborative app screenshots.
+    struct SampleUser {
+        let name: String
+        let initials: String
+        let role: String
+        let avatarColor: CGColor
+    }
+
+    static let sampleUsers: [SampleUser] = [
+        SampleUser(
+            name: "Sarah Chen",
+            initials: "SC",
+            role: "Designer",
+            avatarColor: CGColor(red: 0.9, green: 0.4, blue: 0.4, alpha: 1)
+        ),
+        SampleUser(
+            name: "Alex Rivera",
+            initials: "AR",
+            role: "Developer",
+            avatarColor: CGColor(red: 0.3, green: 0.6, blue: 0.9, alpha: 1)
+        ),
+        SampleUser(
+            name: "Jordan Park",
+            initials: "JP",
+            role: "Manager",
+            avatarColor: CGColor(red: 0.4, green: 0.8, blue: 0.5, alpha: 1)
+        ),
+        SampleUser(
+            name: "Maya Johnson",
+            initials: "MJ",
+            role: "Analyst",
+            avatarColor: CGColor(red: 0.8, green: 0.6, blue: 0.2, alpha: 1)
+        )
+    ]
+}
+```
+
+## Xcode Test Plan for Screenshots
+
+Create a dedicated test plan to isolate screenshot tests from development tests. This prevents screenshot tests from running during normal `Cmd+U` test cycles.
+
+**File: `ScreenshotTests.xctestplan`**
+
+```json
+{
+  "configurations" : [
+    {
+      "id" : "screenshot-config",
+      "name" : "Screenshot Configuration",
+      "options" : {
+        "language" : "en",
+        "region" : "US",
+        "uiTestingScreenshotsLifetime" : "keepAlways",
+        "testRepetitionMode" : "none"
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "testTimeoutsEnabled" : true,
+    "defaultTestExecutionTimeAllowance" : 300,
+    "maximumTestExecutionTimeAllowance" : 600,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:YourApp.xcodeproj",
+      "identifier" : "YourAppUITests",
+      "name" : "YourAppUITests"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:YourApp.xcodeproj",
+        "identifier" : "YourAppUITests",
+        "name" : "YourAppUITests"
+      },
+      "selectedTests" : [
+        "ScreenshotUITests"
+      ]
+    }
+  ],
+  "version" : 1
+}
+```
+
+**How to add this test plan to Xcode:**
+
+1. Save the above JSON as `ScreenshotTests.xctestplan` in your project root
+2. In Xcode, go to **Product → Scheme → Edit Scheme**
+3. Under **Test**, click the `+` at the bottom of the test plans list
+4. Select "Add existing test plan" and choose `ScreenshotTests.xctestplan`
+5. Your normal test plan runs with `Cmd+U`; run the screenshot plan via:
+   ```bash
+   xcodebuild test \
+     -scheme "YourApp" \
+     -testPlan "ScreenshotTests" \
+     -destination "platform=iOS Simulator,name=iPhone 16 Pro Max"
+   ```
+
+**Adding locale variants as test configurations:**
+
+```json
+{
+  "configurations" : [
+    {
+      "id" : "en-US",
+      "name" : "English (US)",
+      "options" : { "language" : "en", "region" : "US" }
+    },
+    {
+      "id" : "de-DE",
+      "name" : "German",
+      "options" : { "language" : "de", "region" : "DE" }
+    },
+    {
+      "id" : "ja-JP",
+      "name" : "Japanese",
+      "options" : { "language" : "ja", "region" : "JP" }
+    }
+  ]
 }
 ```

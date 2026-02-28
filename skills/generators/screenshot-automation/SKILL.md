@@ -80,28 +80,59 @@ Ask user via AskUserQuestion:
 ### Step 1: Read Templates
 Read `templates.md` for production Swift code and scripts.
 
-### Step 2: Create Configuration
+### Step 2: Create App-Side Screenshot Mode
 Generate:
-1. `ScreenshotPlan.swift` -- Defines screens to capture, devices, locales, and output paths
+1. `ScreenshotModeController.swift` -- **Add to the app target (not tests)**. Detects `--screenshot-mode` launch argument and configures the app: suppresses onboarding, disables analytics/IAP, loads sample data, sizes windows (macOS). Also provides `@Environment(\.isScreenshotMode)` for views to hide promotional UI during capture.
 
-### Step 3: Create UI Test Files
+Tell the user to:
+- Call `ScreenshotModeController.shared.configureIfNeeded()` in their App's `init()`
+- Call `ScreenshotModeController.shared.configureWindow()` in their root view's `onAppear`
+- Override `loadSampleData()` to populate their data store with attractive content
+
+### Step 3: Create Configuration
 Generate:
-2. `ScreenshotUITests.swift` -- XCUITest class that navigates and captures each screen
-3. `ScreenshotTestHelper.swift` -- Helper utilities for locale setup, data seeding, alert dismissal
+2. `ScreenshotPlan.swift` -- Defines screens to capture, devices, locales, and output paths
 
-### Step 4: Create Post-Processing Files
+### Step 4: Create UI Test Files
 Generate:
-4. `ScreenshotProcessor.swift` -- Loads captured images, routes through framing and captioning
-5. `CaptionOverlay.swift` -- Renders localized marketing text onto screenshot images
+3. `ScreenshotUITests.swift` -- XCUITest class that navigates and captures each screen
+4. `ScreenshotTestHelper.swift` -- Helper utilities for locale setup, data seeding, alert dismissal, plus `tapUnhittable()` extension for custom controls
 
-### Step 5: Create Export Script
+### Step 5: Create Post-Processing Files
 Generate:
-6. `ScreenshotExportScript.swift` -- End-to-end pipeline script: build, test, process, organize
+5. `ScreenshotProcessor.swift` -- Loads captured images, routes through framing and captioning
+6. `CaptionOverlay.swift` -- Renders localized marketing text onto screenshot images
 
-### Step 6: Determine File Locations
+For macOS-only or lightweight needs, offer `sips-screenshot-process.sh` as an alternative to the Swift processor. Uses macOS's built-in `sips` command — zero dependencies.
+
+### Step 6: Create Export Script
+Generate:
+7. `ScreenshotExportScript.swift` -- End-to-end pipeline script: build, test, process, organize
+
+For macOS apps, also generate:
+8. `macos-screenshot-env.sh` -- Desktop preparation script (hides dock, desktop icons, simplifies clock) with `trap`-based cleanup
+
+### Step 7: Create Sample Content Generator
+If the user needs realistic sample data for screenshots:
+9. `SampleContentGenerator.swift` -- Provides text content, chart data, placeholder images, and PDF generation (macOS). Category-specific sample titles for productivity, fitness, finance, and notes apps.
+
+### Step 8: Create Xcode Test Plan
+Generate:
+10. `ScreenshotTests.xctestplan` -- Dedicated test plan that isolates screenshot tests from development tests. Prevents screenshot tests from running during `Cmd+U`.
+
+Tell the user to:
+- Save to project root
+- Add to their scheme via Product → Scheme → Edit Scheme → Test → add plan
+- Run with: `xcodebuild test -testPlan "ScreenshotTests" ...`
+
+### Step 9: Determine File Locations
 Check project structure:
+- `ScreenshotModeController.swift` goes into the **app target** source directory
+- `SampleContentGenerator.swift` goes into the **app target** source directory
 - UI test files go into the existing `*UITests/` target directory
 - Processing files go into a `ScreenshotAutomation/` group or `Scripts/` directory
+- Shell scripts go into `Scripts/` directory
+- Test plan goes into the project root
 - If `Sources/` exists -> `Sources/ScreenshotAutomation/`
 - Otherwise -> `ScreenshotAutomation/`
 
@@ -111,13 +142,26 @@ After generation, provide:
 
 ### Files Created
 ```
-ScreenshotAutomation/
-├── ScreenshotPlan.swift          # Configuration: screens, devices, locales
-├── ScreenshotUITests.swift       # XCUITest capture class
-├── ScreenshotTestHelper.swift    # Helper: locale, seeding, alerts
-├── ScreenshotProcessor.swift     # Post-processing orchestrator
-├── CaptionOverlay.swift          # Localized text overlay renderer
-└── ScreenshotExportScript.swift  # Full pipeline script
+App Target (source directory):
+├── ScreenshotModeController.swift  # App-side screenshot mode detection & config
+└── SampleContentGenerator.swift    # Realistic sample data for screenshots
+
+UITests Target:
+├── ScreenshotUITests.swift         # XCUITest capture class
+└── ScreenshotTestHelper.swift      # Helper: locale, seeding, alerts, tapUnhittable()
+
+ScreenshotAutomation/:
+├── ScreenshotPlan.swift            # Configuration: screens, devices, locales
+├── ScreenshotProcessor.swift       # Post-processing orchestrator
+├── CaptionOverlay.swift            # Localized text overlay renderer
+└── ScreenshotExportScript.swift    # Full pipeline script
+
+Scripts/ (shell scripts):
+├── sips-screenshot-process.sh      # Lightweight sips-based image processing
+└── macos-screenshot-env.sh         # macOS desktop prep with trap cleanup
+
+Project Root:
+└── ScreenshotTests.xctestplan      # Dedicated test plan for screenshots
 ```
 
 ### Integration with CI
@@ -284,6 +328,7 @@ Run the full pipeline once to generate screenshots for every locale simultaneous
   - iPhone 5.5": 1242 x 2208 (portrait) or 2208 x 1242 (landscape)
   - iPad 12.9": 2048 x 2732 (portrait) or 2732 x 2048 (landscape)
   - iPad 11": 1668 x 2388 (portrait) or 2388 x 1668 (landscape)
+  - Mac Retina: 2880 x 1800 (landscape)
 - Alphabetical file ordering determines screenshot order in App Store Connect
 
 ### Landscape Screenshots
@@ -291,8 +336,47 @@ Run the full pipeline once to generate screenshots for every locale simultaneous
 - UI tests must explicitly rotate: `XCUIDevice.shared.orientation = .landscapeLeft`
 - Remember to rotate back after capture
 
+### macOS: Asymmetric Window Borders
+- macOS windows have different border thickness at the top (title bar) vs bottom
+- The bottom ~3px typically gets cropped during resize-to-fit
+- `ScreenshotModeController` accounts for this by adding `bottomBorderPadding` when sizing windows
+- If cropping manually with `sips`, crop from the bottom edge, not centered
+
+### macOS: Desktop Environment
+- Unlike iOS simulators, macOS screenshots capture the real desktop behind your app
+- Use `macos-screenshot-env.sh` to hide dock, desktop icons, and simplify the clock
+- The script uses `trap` handlers to restore settings even on Ctrl+C or failure
+- Run the desktop prep script before launching tests, not from within the test
+
+### macOS: Window Sizing for App Store
+- Mac App Store requires 2880×1800 (Retina) or minimum 1280×800
+- `ScreenshotModeController.configureWindow()` sizes the window to fill the required dimensions
+- For non-full-screen apps, account for the title bar (28pt) and menu bar in your layout
+
+### Custom Controls and tapUnhittable()
+- Custom tab bars, overlapping views, and controls behind transparent overlays often don't report as hittable in XCUITest
+- Use the `tapUnhittable()` extension from `ScreenshotTestHelper.swift` to tap by coordinate
+- Assign unique accessibility identifiers to all custom controls used in screenshot navigation (e.g., `"pageStrip.page.1"`)
+
+### Isolating Screenshot Tests
+- Screenshot tests are slow and should NOT run during normal `Cmd+U` test cycles
+- Generate `ScreenshotTests.xctestplan` and add it as a separate test plan in your scheme
+- Run screenshots explicitly: `xcodebuild test -testPlan "ScreenshotTests" ...`
+- This also prevents accidental test failures from blocking development
+
 ## References
 
-- **templates.md** -- All production Swift/XCTest templates for screenshot automation
+- **templates.md** -- All production Swift/XCTest templates for screenshot automation:
+  - `ScreenshotModeController.swift` -- App-side screenshot mode detection
+  - `ScreenshotPlan.swift` -- Screen/device/locale configuration
+  - `ScreenshotUITests.swift` -- XCUITest capture class
+  - `ScreenshotTestHelper.swift` -- Helpers + `tapUnhittable()` extension
+  - `ScreenshotProcessor.swift` -- Post-processing orchestrator
+  - `CaptionOverlay.swift` -- Localized text overlay renderer
+  - `ScreenshotExportScript.swift` -- Full pipeline script
+  - `sips-screenshot-process.sh` -- Lightweight macOS image processing
+  - `macos-screenshot-env.sh` -- Desktop preparation with trap cleanup
+  - `SampleContentGenerator.swift` -- Realistic sample data patterns
+  - `ScreenshotTests.xctestplan` -- Dedicated Xcode test plan
 - Related: `generators/localization-setup` -- Setting up localization infrastructure
 - Related: `app-store/screenshot-planner` -- Planning screenshot content and marketing messaging
