@@ -363,16 +363,91 @@ do {
 
 ## Context Window Management
 
-The model supports **4,096 tokens** per session (~12,000-16,000 characters).
+### Get Context Size Programmatically
 
-### Token Budgeting
+Don't hardcode `4096` — query the model at runtime:
 
-| Component | Typical Tokens |
-|-----------|----------------|
-| Instructions | 50-200 |
-| User prompt | 50-500 |
-| Tool descriptions | 50-100 each |
-| Response | 100-1000 |
+```swift
+let model = SystemLanguageModel.default
+let contextSize = try await model.contextSize
+print("Context size: \(contextSize)") // 4096 (current limit)
+```
+
+> `contextSize` is marked `@backDeployed(before: iOS 26.4, macOS 26.4, visionOS 26.4)`.
+
+### Measure Token Usage at Runtime
+
+Use `tokenUsage(for:)` to measure the exact token cost of each component instead of guessing:
+
+```swift
+let model = SystemLanguageModel.default
+
+// Measure instruction cost
+let instructions = Instructions("You're a helpful assistant that generates haiku.")
+let instructionTokens = try await model.tokenUsage(for: instructions)
+print(instructionTokens.tokenCount) // 16
+
+// Measure instructions + tools combined
+let tools = [MoodTool()]
+let combinedTokens = try await model.tokenUsage(for: instructions, tools: tools)
+print(combinedTokens.tokenCount) // 79 — tools add significant overhead!
+
+// Measure a prompt
+let prompt = Prompt("Generate a haiku about Swift")
+let promptTokens = try await model.tokenUsage(for: prompt)
+print(promptTokens.tokenCount) // 14
+
+// Track cumulative usage in a multi-turn session
+let session = LanguageModelSession(model: model, tools: tools, instructions: instructions)
+let response = try await session.respond(to: prompt)
+let transcriptTokens = try await model.tokenUsage(for: session.transcript)
+print(transcriptTokens.tokenCount)
+```
+
+### ⚠️ Tools Multiply Token Consumption
+
+Tool definitions are serialized as JSON schemas, which significantly inflates token usage. In the example above, adding a single tool jumped instructions from **16 → 79 tokens** (nearly 5x). Always measure before adding tools, and consider whether you truly need them for a given session.
+
+### Token Budget Monitoring
+
+Track context usage as a percentage to prevent overflows:
+
+```swift
+extension SystemLanguageModel.TokenUsage {
+    func percent(ofContextSize contextSize: Int) -> Float {
+        guard contextSize > 0 else { return 0 }
+        return Float(tokenCount) / Float(contextSize)
+    }
+
+    func formattedPercent(ofContextSize contextSize: Int) -> String {
+        percent(ofContextSize: contextSize)
+            .formatted(.percent.precision(.fractionLength(0)).rounded(rule: .down))
+    }
+}
+
+// Usage
+let contextSize = try await model.contextSize
+print(instructionTokens.formattedPercent(ofContextSize: contextSize)) // "0%"
+print(combinedTokens.formattedPercent(ofContextSize: contextSize))    // "1%"
+```
+
+### Pre-flight Token Budget Check
+
+Check if a prompt fits before sending to prevent `exceededContextWindowSize` errors:
+
+```swift
+func canFit(prompt: Prompt, in session: LanguageModelSession, model: SystemLanguageModel) async throws -> Bool {
+    let contextSize = try await model.contextSize
+    let transcriptTokens = try await model.tokenUsage(for: session.transcript)
+    let promptTokens = try await model.tokenUsage(for: prompt)
+    let totalNeeded = transcriptTokens.tokenCount + promptTokens.tokenCount
+    return totalNeeded < contextSize
+}
+```
+
+### Debug with TranscriptDebugMenu
+
+During development, drop `TranscriptDebugMenu` into your SwiftUI view hierarchy to visually inspect the full conversation transcript and token consumption in real time.
 
 ### Strategies for Large Content
 
