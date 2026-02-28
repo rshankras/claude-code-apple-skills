@@ -569,3 +569,5 @@ Before shipping:
 - [Guided generation](https://developer.apple.com/documentation/FoundationModels/generating-swift-data-structures-with-guided-generation)
 - [Tool calling](https://developer.apple.com/documentation/FoundationModels/expanding-generation-with-tool-calling)
 - [HIG: Generative AI](https://developer.apple.com/design/human-interface-guidelines/technologies/generative-ai)
+- [TN3193: Managing the on-device foundation model's context window](https://developer.apple.com/documentation/technotes/tn3193-managing-the-on-device-foundation-model-s-context-window)
+- [Tracking token usage in Foundation Models](https://artemnovichkov.com/blog/tracking-token-usage-in-foundation-models) — Artem Novichkov
