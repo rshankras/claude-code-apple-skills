@@ -1,68 +1,53 @@
 ---
 name: ios-development
-description: Comprehensive iOS development guidance including Swift best practices, SwiftUI patterns, UI/UX review against HIG, and app planning. Use for iOS code review, best practices, accessibility audits, or planning new iOS apps.
-allowed-tools: [Read, Glob, Grep, WebFetch]
+description: >
+  iOS development guidance covering Swift best practices, SwiftUI patterns,
+  Human Interface Guidelines UI/UX review, accessibility audits, navigation
+  architecture (NavigationStack, NavigationSplitView, TabView), and app planning.
+  Activate when a user asks for iOS code review, Swift pattern advice,
+  HIG compliance checks, accessibility audit, or new iOS app architecture planning.
+allowed-tools: "Read, Glob, Grep, Bash, WebFetch"
 ---
 
 # iOS Development Expert
 
-Comprehensive guidance for iOS app development. This skill aggregates specialized modules for different aspects of iOS development.
+Comprehensive guidance for iOS app development. This skill aggregates specialized modules for Swift code quality, UI/UX review, navigation architecture, and app planning.
 
-## When This Skill Activates
+## Activation
 
-Use this skill when the user:
-- Asks about iOS development best practices
-- Wants code review for iOS/Swift projects
-- Needs UI/UX review against Human Interface Guidelines
-- Wants accessibility audit for iOS apps
-- Is planning a new iOS app
-- Needs help with SwiftUI patterns for iOS
-- Asks about navigation architecture (NavigationStack, NavigationSplitView, TabView)
+Trigger this skill when the user:
 
-## Available Modules
+- Requests iOS or Swift code review
+- Asks about SwiftUI best practices or modern Swift patterns
+- Needs a UI/UX audit against Apple Human Interface Guidelines
+- Wants an accessibility review (VoiceOver, Dynamic Type, color contrast)
+- Is planning a new iOS app (architecture, tech stack, product scope)
+- Asks about navigation patterns (NavigationStack, NavigationSplitView, TabView)
 
-Read relevant module files based on the user's needs:
+## Modules
+
+Read the relevant module files based on the user's request:
 
 ### coding-best-practices/
 Swift code quality and modern idioms for iOS.
-- Modern Swift patterns and idioms
-- Architecture patterns (MVVM, Clean Architecture)
-- Code quality standards
-- Performance optimization
+- Read `coding-best-practices/SKILL.md` for Swift patterns, MVVM/Clean Architecture, code quality standards, and performance tips.
 
 ### ui-review/
 UI/UX review against Apple HIG.
-- Human Interface Guidelines compliance
-- Font usage and Dynamic Type support
-- Accessibility review (VoiceOver, color contrast)
-- SwiftUI best practices for iOS/watchOS
+- Read `ui-review/SKILL.md` for HIG compliance checks, font/Dynamic Type support, accessibility review (VoiceOver, color contrast), and SwiftUI best practices.
 
 ### navigation-patterns/
 SwiftUI navigation architecture patterns.
-- NavigationStack, NavigationLink, navigationDestination
-- NavigationSplitView (two/three column, iPad/macOS)
-- TabView (iOS 18 customizable tabs, sidebar mode)
-- Programmatic navigation (NavigationPath, pop-to-root, state restoration)
-- Navigation transitions (zoom, custom animations)
+- Read `navigation-patterns/SKILL.md` for NavigationStack, NavigationSplitView, TabView (iOS 18 customizable tabs), programmatic navigation (NavigationPath, pop-to-root, state restoration), and navigation transitions.
 
 ### app-planner/
 iOS app planning and analysis.
-- New app concept to architecture
-- Existing app audits
-- Tech stack evaluation
-- Product planning guidance
+- Read `app-planner/SKILL.md` for new app concept-to-architecture workflows, existing app audits, tech stack evaluation, and product planning.
 
-## How to Use
+## Workflow
 
-1. Identify user's need from their question
-2. Read relevant module files from subdirectories
-3. Apply the guidance to their specific context
-4. Reference Apple HIG documentation when needed
-
-## Example Workflow
-
-**User asks for UI review:**
-1. Read `ui-review/SKILL.md` for the full review process
-2. Check their SwiftUI code against HIG
-3. Verify accessibility compliance
-4. Report findings with specific recommendations
+1. Identify the user's need from their question.
+2. Read the matching module SKILL.md file(s) from the subdirectories listed above.
+3. Apply the module's guidance to the user's specific code or project context.
+4. Reference Apple HIG documentation where relevant.
+5. Provide concrete, actionable recommendations with code examples when appropriate.
