@@ -2,18 +2,28 @@
 
 Hidden strategies that most developers don't know. These can significantly boost discoverability.
 
-## 1. Cross-Localization (Double Your Keywords)
+## 1. Cross-Localization (10x Your Keywords)
 
-For the US App Store, Apple indexes keywords from **two locales**:
+Apple indexes keywords from **multiple locales per storefront**. Each additional locale gives you up to **160 extra indexable characters** (30 title + 30 subtitle + 100 keywords). For the US alone, that's up to **1,440 bonus characters**.
 
-| Locale | Indexed For US |
-|--------|----------------|
-| English (US) | Yes |
-| Spanish (Mexico) | Yes |
+### US App Store — 10 Indexed Locales
+
+| # | Locale | Code | Notes |
+|---|--------|------|-------|
+| 1 | English (US) | en-US | Primary |
+| 2 | Spanish (Mexico) | es-MX | Most commonly used secondary |
+| 3 | Arabic | ar | |
+| 4 | Chinese (Simplified) | zh-Hans | |
+| 5 | Chinese (Traditional) | zh-Hant | |
+| 6 | French | fr | |
+| 7 | Korean | ko | |
+| 8 | Portuguese (Brazil) | pt-BR | |
+| 9 | Russian | ru | |
+| 10 | Vietnamese | vi | |
 
 ### How to Use
 
-In App Store Connect, add **Spanish (Mexico)** localization with **English keywords**:
+In App Store Connect, add secondary localizations with **English keywords** (you don't need to translate — English words index for the US market regardless of which locale they're in):
 
 ```
 English (US) Keywords:
@@ -21,22 +31,77 @@ roommate,group,cost,trip,tab,owe,money,tracker,pay,debt
 
 Spanish (MX) Keywords (English!):
 apartment,utilities,travel,vacation,dinner,friends,shared,divide,fair,easy
+
+Portuguese (BR) Keywords (English!):
+budget,household,groceries,restaurant,rent,settle,balance,fair,receipt,reimburse
+
+Arabic Keywords (English!):
+colleague,lunch,cab,uber,airbnb,weekend,event,party,wedding,gift
+
+... repeat for remaining locales with NEW unique keywords each time
 ```
 
 ### Rules
-- Don't repeat words between locales (no ranking boost)
-- Words from different locales DON'T combine into phrases
-- Can use English in Spanish locale if targeting US market
+- **No duplicate words across ANY locale** — each word is counted only once even across locales, so repetition provides zero ranking boost
+- Words from different locales **DON'T combine** into phrases (only words within the same locale combine)
+- You CAN use English in any locale if targeting an English-speaking market
+- Apply the same Title → Subtitle → Keywords dedup cascade within each locale
+- Prioritize your highest-value keywords in en-US (highest weight), use secondary locales for long-tail and supplementary terms
 
-### Additional Locales for Other Markets
+### Cross-Localization for All Major Markets
 
-| Market | Primary | Secondary |
-|--------|---------|-----------|
-| US | English (US) | Spanish (Mexico) |
-| UK | English (UK) | English (Australia) |
-| Canada | English (Canada) | French (Canada) |
-| Germany | German | English (UK) |
-| Spain | Spanish (Spain) | English (UK) |
+| Market | Primary Locale | Secondary Locales Indexed |
+|--------|---------------|--------------------------|
+| **United States** | English (US) | Spanish (MX), Arabic, Chinese (Simplified), Chinese (Traditional), French, Korean, Portuguese (BR), Russian, Vietnamese |
+| **Canada** | English (Canada) | French (Canada) |
+| **United Kingdom** | English (UK) | — (single locale) |
+| **Australia** | English (Australia) | — (single locale) |
+| **Mexico** | Spanish (Mexico) | English (US) |
+| **Brazil** | Portuguese (Brazil) | English (US) |
+| **Japan** | Japanese | English (US) |
+| **South Korea** | Korean | English (US) |
+| **China (Mainland)** | Chinese (Simplified) | English (US) |
+| **Taiwan** | Chinese (Traditional) | English (US) |
+| **Germany** | German | English (UK) |
+| **France** | French | English (UK) |
+| **Spain** | Spanish (Spain) | English (UK), Catalan |
+| **Italy** | Italian | English (UK) |
+| **Netherlands** | Dutch | English (UK) |
+| **Portugal** | Portuguese (Portugal) | English (UK) |
+| **Russia** | Russian | English (UK) |
+| **India** | English (India) | Hindi |
+| **Switzerland** | German (Switzerland) | French, Italian, English (UK) |
+| **Belgium** | Dutch (Belgium) | French (Belgium) |
+| **Sweden** | Swedish | English (UK) |
+| **Norway** | Norwegian | English (UK) |
+| **Denmark** | Danish | English (UK) |
+| **Finland** | Finnish | English (UK) |
+
+**Key pattern:** English (UK) is the fallback for most European markets. English (US) is the fallback for most Asian and Latin American markets.
+
+### Implementation Priority
+
+For an English-language app targeting the US market:
+
+```
+Phase 1 (Day 1): Set up en-US with your best keywords
+Phase 2 (Day 1): Add es-MX with next-best English keywords
+Phase 3 (Week 1): Add pt-BR, fr, ko with more English keywords
+Phase 4 (Week 2): Add zh-Hans, zh-Hant, ar, ru, vi to fill remaining slots
+Phase 5 (Week 3): If targeting EU/Asia, add en-UK keywords for European reach
+```
+
+### Character Budget Calculator
+
+```
+US Market Total Indexable Characters:
+  10 locales × (30 title + 30 subtitle + 100 keywords) = 1,600 characters
+
+Minus primary en-US:                                     = 1,440 bonus characters
+Minus realistic dedup overhead (~15%):                   ≈ 1,220 usable bonus characters
+
+That's 12x your single-locale keyword capacity.
+```
 
 ## 2. Screenshot Text Indexing (June 2025)
 
@@ -205,14 +270,15 @@ Apple tracks **impressions → downloads** ratio. Higher conversion = higher ran
 ## Quick Reference Checklist
 
 ### Zero-Risk Additions
-- [ ] Add Spanish (Mexico) locale with extra keywords
-- [ ] Add English (UK) locale with extra keywords
+- [ ] Add all 9 secondary US locales (es-MX, ar, zh-Hans, zh-Hant, fr, ko, pt-BR, ru, vi) with unique English keywords
+- [ ] Add en-UK locale with extra keywords (for European market reach)
 - [ ] Update screenshot captions with keywords
 - [ ] Create In-App Events
 - [ ] Mark best reviews as "Helpful"
 
 ### Optimization Rules
-- [ ] No duplicate words across fields
+- [ ] No duplicate words across fields (Title → Subtitle → Keywords cascade)
+- [ ] No duplicate words across locales (each word counted once globally)
 - [ ] No spaces after commas in keywords
 - [ ] No stop words wasting space
 - [ ] No singular AND plural forms
@@ -227,7 +293,11 @@ Apple tracks **impressions → downloads** ratio. Higher conversion = higher ran
 
 ## Sources
 
-- [MobileAction: Cross-Localization](https://www.mobileaction.co/blog/aso-keyword-research/)
+- [ASO.dev: Cross-Localization Guide](https://aso.dev/metadata/cross-localization/)
 - [AppTweak: Cross-Localization Guide](https://www.apptweak.com/en/aso-blog/how-to-benefit-from-cross-localization-on-the-app-store)
+- [AppFollow: App Store Keywords Localizations](https://appfollow.io/app-store-keywords-localizations)
+- [Appfigures: 10x Your Keyword List](https://appfigures.com/resources/guides/extend-keyword-list)
+- [OutrankApps: Cross-Localization Guide](https://outrankapps.com/app-store-optimization-cross-localization/)
 - [Appfigures: Screenshot Algorithm Update](https://appfigures.com/resources/guides/app-store-algorithm-update-2025)
 - [Appfigures: Advanced ASO Secrets](https://appfigures.com/resources/guides/advanced-aso-secrets)
+- [MobileAction: Cross-Localization](https://www.mobileaction.co/blog/aso-keyword-research/)
