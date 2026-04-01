@@ -34,7 +34,7 @@ ProductAgent provides a complete "Idea to App Store" workflow through a combinat
 ┌─────────────────────────────────────────────────────────────────────────┐
 │  PHASE 1: PRODUCT PLANNING                                               │
 │  ───────────────────────────                                             │
-│  Command: product-agent run --idea "..." --interactive                   │
+│  Trigger: Say "validate this idea" or "should I build..."               │
 │                                                                          │
 │  Agents Executed:                                                        │
 │  1. Problem Discovery Agent    → Problem validation, severity score      │
@@ -202,7 +202,7 @@ ProductAgent provides a complete "Idea to App Store" workflow through a combinat
 | Phase | How to Activate | Output |
 |-------|-----------------|--------|
 | Idea Discovery | Say "I don't know what to build" or "give me app ideas" | idea-shortlist.json |
-| Product Planning | `product-agent run --idea "..." --interactive` | product-plan-*.md |
+| Product Planning | Say "validate this idea" or "should I build..." | product-plan-*.md |
 | Competitive Analysis | Say "analyze competitors" or "competitive analysis" | competitive-analysis.md |
 | Market Research | Say "market research" or "market sizing" | market-research.md |
 | Generate All Specs | Say "generate implementation specifications" | docs/*.md (7 files) |

@@ -33,7 +33,7 @@
       "monetization_model": "Freemium — free with 3 workouts/week, $3.99/mo unlimited + insights",
       "competition_notes": "Strong Timer+ and Intervals Pro exist but focus on pre-set timers, not adaptive HR-based rest",
       "mvp_scope": "Watch app with HR monitoring during rest, vibration alert when ready, basic iOS companion for history",
-      "next_step": "product-agent discover --idea \"Apple Watch app that tracks heart rate recovery between sets and suggests optimal rest periods based on real-time HR data\" --platform \"watchOS + iOS\" --output-format json"
+      "next_step": "Run the product-agent skill with idea: 'Apple Watch app that tracks heart rate recovery between sets and suggests optimal rest periods based on real-time HR data' for watchOS + iOS"
     },
     {
       "rank": 2,
@@ -54,7 +54,7 @@
       "monetization_model": "One-time purchase $4.99 with optional $1.99/mo for team features",
       "competition_notes": "Pedometer apps exist but none integrate with calendar or frame walking as meetings",
       "mvp_scope": "Start/stop walking meeting, auto-detect from calendar, log steps + route, share summary",
-      "next_step": "product-agent discover --idea \"iOS app that tracks steps, route, and calories during walking meetings and shares summaries with attendees\" --platform \"iOS + watchOS\" --output-format json"
+      "next_step": "Run the product-agent skill with idea: 'iOS app that tracks steps, route, and calories during walking meetings and shares summaries with attendees' for iOS + watchOS"
     },
     {
       "rank": 3,
@@ -75,7 +75,7 @@
       "monetization_model": "Freemium — free for 1 gym, $2.99/mo for multiple gyms + predictions",
       "competition_notes": "Some gyms have their own capacity apps but no cross-gym equipment-level tracking exists",
       "mvp_scope": "Single gym support, manual check-in/check-out for equipment, peak time predictions",
-      "next_step": "product-agent discover --idea \"Crowdsourced gym equipment availability app that shows which machines are free at your gym\" --platform iOS --output-format json"
+      "next_step": "Run the product-agent skill with idea: 'Crowdsourced gym equipment availability app that shows which machines are free at your gym' for iOS"
     }
   ],
   "ideas_filtered_out": [
@@ -90,5 +90,5 @@
       "reason": "Apple's own sleep tracking in watchOS 10+ covers most of this. Failed competition_density filter — competing with platform owner."
     }
   ],
-  "recommendation": "Start with Rank 1 (Workout Recovery Timer). It scores highest (8.4/10), leverages your exact skills (HealthKit + Core Motion), has a clear monetization path ($3.99/mo subscription), and can ship in 6 weeks. Run product-agent discover to validate the problem before committing."
+  "recommendation": "Start with Rank 1 (Workout Recovery Timer). It scores highest (8.4/10), leverages your exact skills (HealthKit + Core Motion), has a clear monetization path ($3.99/mo subscription), and can ship in 6 weeks. Run the product-agent skill to validate the problem before committing."
 }

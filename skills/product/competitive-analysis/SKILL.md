@@ -1,7 +1,7 @@
 ---
 name: competitive-analysis
 description: Deep competitive analysis for iOS/macOS apps including feature comparison, pricing analysis, strengths/weaknesses, market positioning, and differentiation opportunities. Use when user asks for competitive analysis, competitor research, feature comparison, market positioning, or wants to understand competition in detail.
-allowed-tools: Bash(product-agent:*), Read, WebSearch, WebFetch
+allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
 ---
 
 # Competitive Analysis Skill
@@ -19,7 +19,7 @@ Use this Skill when the user wants to:
 - Map market positioning
 - Deep-dive after initial problem discovery
 
-**This is a follow-up to product-agent discovery** - use this when you need more competitive depth.
+**This is a follow-up to the product-agent skill** — use this when you need more competitive depth.
 
 ## What This Skill Does
 
@@ -59,29 +59,11 @@ Use this Skill when the user wants to:
 
 ### Basic Usage
 
-For competitive analysis, construct a detailed prompt and use product-agent's general capabilities combined with web research:
-
-```bash
-# The approach: Use product-agent discover for baseline,
-# then enhance with web research
-product-agent discover \
-  --idea "IDEA_DESCRIPTION - focus on competitive landscape" \
-  --output-format json
-```
-
-**Then enhance with web research** using WebSearch and WebFetch tools to:
-- Visit competitor websites
-- Check App Store listings
-- Analyze pricing pages
-- Review feature documentation
+Start with the **product-agent** skill for baseline problem discovery, then enhance with deep competitor research using WebSearch and WebFetch.
 
 ### Workflow
 
-1. **Start with discovery** to identify competitors:
-   ```bash
-   product-agent discover --idea "YOUR_IDEA" --output-format json
-   ```
-   Extract the `current_solutions` field for competitor list.
+1. **Start with discovery** using the product-agent skill to identify competitors. Extract the `current_solutions` field for the competitor list.
 
 2. **Research each competitor** using WebSearch/WebFetch:
    - Search for "[competitor name] app features"
@@ -165,7 +147,7 @@ When performing competitive analysis, create this structure:
 ### 1. Start Broad, Then Focus
 
 ```
-Step 1: Use product-agent discover to identify competitors
+Step 1: Use product-agent skill to identify competitors
 Step 2: Pick top 3-5 most relevant competitors
 Step 3: Deep dive on each using web research
 Step 4: Create comparison matrix
@@ -208,11 +190,8 @@ Understand:
 **You do:**
 
 1. **Initial Discovery**
-   ```bash
-   product-agent discover \
-     --idea "Task management app with AI prioritization" \
-     --output-format json
-   ```
+
+   Run the product-agent skill with the idea "Task management app with AI prioritization."
 
    Result: Identifies Todoist, Things, OmniFocus, TickTick as main competitors
 
@@ -299,10 +278,10 @@ Good: "Competitor X has feature Y, but it's poorly implemented
 
 ## Integration with Other Skills
 
-This Skill works best **after** using the main product-agent Skill:
+This Skill works best **after** using the product-agent skill:
 
 ```
-1. product-agent discover → Quick validation
+1. product-agent → Quick validation (problem discovery)
 2. competitive-analysis → Deep competitor insights
 3. market-research → Market size and opportunity
 4. MVP scoping → What to build based on competitive gaps
@@ -338,7 +317,7 @@ This Skill works best **after** using the main product-agent Skill:
 - When pitching to investors (competitive landscape)
 
 **Too early:**
-- Before basic discovery (use product-agent discover first)
+- Before basic discovery (use the product-agent skill first)
 - If discovery said "DON'T BUILD" (no point analyzing dead market)
 
 **Too late:**

@@ -6,7 +6,7 @@ allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
 
 # Idea Generator Skill
 
-Generates a ranked shortlist of 3-5 app ideas tailored to the developer's skills, interests, and constraints. Output is formatted to feed directly into `product-agent discover` for validation.
+Generates a ranked shortlist of 3-5 app ideas tailored to the developer's skills, interests, and constraints. Output is formatted to feed directly into the product-agent skill for validation.
 
 ## When to Use This Skill
 
@@ -19,7 +19,7 @@ Use this skill when the user:
 - Wants inspiration based on their skills or domain expertise
 - Asks for a brainstorm session
 
-**Already has a specific idea?** Skip this skill. Use `product-agent discover` instead.
+**Already has a specific idea?** Skip this skill. Use the product-agent skill instead.
 
 ## What This Skill Does
 
@@ -77,7 +77,7 @@ Final output is a ranked list of 3-5 ideas, each with:
 - Feasibility scores
 - Monetization model
 - MVP scope estimate
-- `next_step` formatted as an exact `product-agent discover` command
+- `next_step` description for feeding the idea into the product-agent skill
 
 ## Output Structure
 
@@ -117,7 +117,7 @@ Final output is a ranked list of 3-5 ideas, each with:
       "monetization_model": "Freemium — free with 3 workouts/week, $3.99/mo unlimited + insights",
       "competition_notes": "Strong Timer+ and Intervals Pro exist but focus on pre-set timers, not adaptive HR-based rest",
       "mvp_scope": "Watch app with HR monitoring during rest, vibration alert when ready, basic iOS companion for history",
-      "next_step": "product-agent discover --idea \"Apple Watch app that tracks heart rate recovery between sets and suggests optimal rest periods based on real-time HR data\" --platform \"watchOS + iOS\" --output-format json"
+      "next_step": "Run the product-agent skill with idea: 'Apple Watch app that tracks heart rate recovery between sets and suggests optimal rest periods based on real-time HR data' for watchOS + iOS"
     },
     {
       "rank": 2,
@@ -138,7 +138,7 @@ Final output is a ranked list of 3-5 ideas, each with:
       "monetization_model": "One-time purchase $4.99 with optional $1.99/mo for team features",
       "competition_notes": "Pedometer apps exist but none integrate with calendar or frame walking as meetings",
       "mvp_scope": "Start/stop walking meeting, auto-detect from calendar, log steps + route, share summary",
-      "next_step": "product-agent discover --idea \"iOS app that tracks steps, route, and calories during walking meetings and shares summaries with attendees\" --platform \"iOS + watchOS\" --output-format json"
+      "next_step": "Run the product-agent skill with idea: 'iOS app that tracks steps, route, and calories during walking meetings and shares summaries with attendees' for iOS + watchOS"
     },
     {
       "rank": 3,
@@ -159,7 +159,7 @@ Final output is a ranked list of 3-5 ideas, each with:
       "monetization_model": "Freemium — free for 1 gym, $2.99/mo for multiple gyms + predictions",
       "competition_notes": "Some gyms have their own capacity apps but no cross-gym equipment-level tracking exists",
       "mvp_scope": "Single gym support, manual check-in/check-out for equipment, peak time predictions",
-      "next_step": "product-agent discover --idea \"Crowdsourced gym equipment availability app that shows which machines are free at your gym\" --platform iOS --output-format json"
+      "next_step": "Run the product-agent skill with idea: 'Crowdsourced gym equipment availability app that shows which machines are free at your gym' for iOS"
     }
   ],
   "ideas_filtered_out": [
@@ -174,7 +174,7 @@ Final output is a ranked list of 3-5 ideas, each with:
       "reason": "Apple's own sleep tracking in watchOS 10+ covers most of this. Failed competition_density filter — competing with platform owner."
     }
   ],
-  "recommendation": "Start with Rank 1 (Workout Recovery Timer). It scores highest, leverages your exact skills (HealthKit + Core Motion), has a clear monetization path, and can ship in 6 weeks. Run product-agent discover to validate the problem before committing."
+  "recommendation": "Start with Rank 1 (Workout Recovery Timer). It scores highest, leverages your exact skills (HealthKit + Core Motion), has a clear monetization path, and can ship in 6 weeks. Run the product-agent skill to validate the problem before committing."
 }
 ```
 
@@ -287,7 +287,7 @@ Identify macro trends creating new app opportunities.
 **Output phase:**
 1. Take the top 3-5 ideas
 2. Write full entries with all fields from Output Structure
-3. Format `next_step` as exact `product-agent discover` command
+3. Format `next_step` as description for the product-agent skill
 4. List 1-3 filtered-out ideas with reasons
 5. Write a recommendation highlighting Rank 1 and why
 
@@ -312,14 +312,14 @@ Identify macro trends creating new app opportunities.
 | 2 | Photo Macro Tracker | 7.4 | Problem-first (everyone hates manual logging) |
 | 3 | Smart Grocery List | 6.9 | Simple scope, clear monetization |
 
-**Recommendation:** "Start with AI Leftover Recipe Finder. It uses Foundation Models (few competitors), aligns with your cooking interest, and can ship a basic version in 5 weeks. Run `product-agent discover` to validate demand."
+**Recommendation:** "Start with AI Leftover Recipe Finder. It uses Foundation Models (few competitors), aligns with your cooking interest, and can ship a basic version in 5 weeks. Run the product-agent skill to validate demand."
 
 ## Integration with Other Skills
 
 ```
 Phase 0: idea-generator (THIS SKILL)
     ↓ pick 1 idea from shortlist
-Phase 1: product-agent discover → validate the problem
+Phase 1: product-agent → validate the problem
     ↓
 Phase 2: market-research / competitive-analysis → size the opportunity
     ↓
@@ -330,20 +330,15 @@ Phase 4: architecture-spec → technical design
 Phase 5+: ux-spec, implementation-guide, test-spec, release-spec
 ```
 
-The `next_step` field in each shortlist entry is pre-formatted as the exact `product-agent discover` command. After the user picks their favorite idea, they can run it directly to kick off Phase 1 validation.
-
-**Feeding into product-agent:**
-- The `one_liner` becomes the `--idea` argument
-- The `platform` becomes the `--platform` argument
-- `--output-format json` is always included for structured output
+The `next_step` field in each shortlist entry describes what to feed into the product-agent skill. After the user picks their favorite idea, they can run it directly to kick off Phase 1 validation.
 
 ## When NOT to Use This Skill
 
-- **Already has a specific idea** — Go directly to `product-agent discover`
+- **Already has a specific idea** — Go directly to the product-agent skill
 - **Already validated an idea** — Go to `market-research` or `competitive-analysis`
 - **Wants code generation** — Use the `generators/` skills
 - **Building to learn only** — Skip feasibility filtering; just pick what's fun
-- **Hard deadline** — Skip brainstorming; go straight to `product-agent discover` with whatever idea you have
+- **Hard deadline** — Skip brainstorming; go straight to the product-agent skill with whatever idea you have
 
 ## Deliverables
 
@@ -354,7 +349,7 @@ At the end of this skill, you should have:
 - [ ] Feasibility filtering applied (5 filters)
 - [ ] Shortlist of 3-5 ideas with full scoring
 - [ ] Ideas ranked by overall_score (highest first)
-- [ ] Each idea has `next_step` formatted as `product-agent discover` command
+- [ ] Each idea has `next_step` for the product-agent skill
 - [ ] Filtered-out ideas listed with reasons
 - [ ] Recommendation paragraph highlighting Rank 1
 
@@ -365,7 +360,7 @@ Save results to:
 
 **Format:** Use the JSON structure from the Output Structure section.
 
-**Next action:** Feed Rank 1 into `product-agent discover` by running the `next_step` command.
+**Next action:** Feed Rank 1 into the product-agent skill using the `next_step` description.
 
 ---
 

@@ -1,92 +1,10 @@
-# Product Agent - Complete Reference
+# Product Agent - Analysis Reference
 
-This document contains detailed documentation for advanced usage of Product Agent. Claude reads this when needed for deep technical questions.
-
-## Complete CLI Reference
-
-### Global Options
-
-These work with all commands:
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `--help`, `-h` | Flag | - | Show help |
-| `--version`, `-v` | Flag | - | Show version |
-
-### Command: `discover`
-
-**Purpose:** Discover and validate product problems/opportunities
-
-**Usage:**
-```bash
-product-agent discover [OPTIONS]
-```
-
-**Required Options:**
-
-| Option | Type | Description | Example |
-|--------|------|-------------|---------|
-| `--idea TEXT` | String | The app idea to analyze | `--idea "Calendar app with AI"` |
-
-**Optional Options:**
-
-| Option | Type | Default | Valid Values | Description |
-|--------|------|---------|--------------|-------------|
-| `--platform TEXT` | String | "iOS/macOS" | iOS, macOS, iOS/macOS, or any text | Target platform |
-| `--target-user TEXT` | String | nil | Any text | Target user persona |
-| `--output-format FORMAT` | String | "text" | text, json, markdown | Output format |
-| `--save` | Flag | false | - | Save output to file |
-| `--output PATH` | String | "problem-analysis.json" | Any valid path | Output file path |
-| `--verbose` | Flag | false | - | Enable verbose logging |
-| `--production` | Flag | false | - | Use production mode (Claude API) |
-
-**Examples:**
-
-```bash
-# Minimal usage
-product-agent discover --idea "Task manager app"
-
-# Full options
-product-agent discover \
-  --idea "AI-powered calendar that suggests optimal meeting times" \
-  --platform "iOS" \
-  --target-user "busy professionals" \
-  --output-format json \
-  --save \
-  --output "calendar-analysis" \
-  --verbose
-
-# Quick validation
-product-agent discover --idea "Note-taking app" --output-format json
-
-# Save markdown report
-product-agent discover \
-  --idea "Fitness tracker" \
-  --output-format markdown \
-  --save \
-  --output "fitness-report"
-```
-
-###Command: `info`
-
-**Purpose:** Show system configuration and information
-
-**Usage:**
-```bash
-product-agent info
-```
-
-**No options required.**
-
-**Output:**
-- Current mode (development/production)
-- Claude CLI path and status (or API key status)
-- Environment variables
-- Available agents
+This document contains the detailed output schema and analysis methodology for the Product Agent skill.
 
 ## JSON Output Schema
 
-### Discovery Agent Output
+### Discovery Analysis Output
 
 ```typescript
 {
@@ -101,7 +19,7 @@ product-agent info
 }
 ```
 
-**Field Descriptions:**
+### Field Descriptions
 
 #### `problem_statement`
 - **Type:** String
@@ -149,7 +67,7 @@ product-agent info
 - **Example:**
   ```json
   [
-    "Apple Notes - Fast but still requires unlock → app launch → new note. Good iCloud sync.",
+    "Apple Notes - Fast but still requires unlock, app launch, new note. Good iCloud sync.",
     "Drafts app - Already solves this problem very well with instant capture and automation",
     "iOS Lock Screen widgets - Can launch straight to new note in some apps"
   ]
@@ -172,346 +90,86 @@ product-agent info
   - Bottom line summary
 - **Example:** See examples/discovery.json
 
-## Mode Switching
+## Research Methodology
 
-Product Agent supports two modes:
+### Web Research Strategy
 
-### Development Mode (Default)
+When analyzing an idea, search for:
 
-**Uses:** Claude Code CLI
-**Cost:** Free
-**Setup:** Requires Claude Code installed
+1. **Competitor discovery:**
+   - "[category] apps iOS"
+   - "[category] apps macOS"
+   - "best [category] apps Apple"
 
-**Environment Variables:**
-- `CLAUDE_PATH` - Path to Claude CLI binary (default: /usr/local/bin/claude)
-- `CLAUDE_MODEL` - Model to use (default: claude-sonnet-4-20250514)
+2. **Competitor details (for each):**
+   - "[competitor name] features"
+   - "[competitor name] pricing 2026"
+   - "[competitor name] reviews"
 
-**How to Use:**
-```bash
-# Just run normally (default mode)
-product-agent discover --idea "Your idea"
+3. **Market context:**
+   - "[category] market size 2026"
+   - "[category] market growth"
+   - "[category] app trends"
 
-# Or explicitly set
-export PRODUCT_AGENT_MODE=development
-product-agent discover --idea "Your idea"
+4. **User sentiment:**
+   - "[category] app complaints reddit"
+   - "[category] app reviews"
+
+### Analysis Framework
+
+**Problem Validation:**
+- Is the problem real? (Do people actually complain about this?)
+- Is it frequent? (Daily > weekly > monthly)
+- Is it severe? (Workaround exists vs. no good solution)
+- Are people paying to solve it? (Willingness to pay signals real pain)
+
+**Market Assessment:**
+- How many competitors exist?
+- How strong are the incumbents?
+- Is Apple likely to build this natively?
+- What's the differentiation angle?
+
+**Honesty Principles:**
+- If Apple already does this well for free, say "don't build"
+- If the market has 10+ strong competitors, say "don't build" unless there's a clear gap
+- If severity is below 4, the problem isn't painful enough
+- Never recommend building just because the technology is interesting
+
+## Anti-Patterns
+
+### Ignoring "Don't Build" Recommendations
+If the analysis says "don't build", there's usually a strong market reason. Don't override this because "mine will be simpler" or "I'll make a better UI."
+
+### Not Reading the Full Recommendation
+A severity score of 7/10 alone doesn't tell the story. The recommendation field contains the nuanced reasoning.
+
+### Lack of Context
+"Task app" produces a weaker analysis than "Task manager with AI auto-prioritization for busy professionals on iOS." More context = better analysis.
+
+### Building Despite Weak Validation
+Severity 3/10 + WEAK opportunity = months of wasted effort. If it's a learning project, fine. But don't expect commercial success.
+
+## Integration with Other Skills
+
+### Workflow
+
+```
+1. product-agent → Quick validation (this skill)
+2. If promising:
+   - competitive-analysis → Deep competitor insights
+   - market-research → Market sizing (TAM/SAM/SOM)
+3. Go/no-go decision with full data
+4. If go:
+   - idea-generator → Refine the concept
+   - prd-generator → Product requirements
+   - architecture-spec → Technical design
 ```
 
-### Production Mode
-
-**Uses:** Claude API directly
-**Cost:** Per-token pricing from Anthropic
-**Setup:** Requires ANTHROPIC_API_KEY
-
-**Environment Variables:**
-- `ANTHROPIC_API_KEY` - Your Anthropic API key (required)
-- `CLAUDE_MODEL` - Model to use (default: claude-sonnet-4-20250514)
-
-**How to Use:**
-```bash
-# Set API key
-export ANTHROPIC_API_KEY="your-key-here"
-
-# Use --production flag
-product-agent discover --idea "Your idea" --production
-
-# Or set mode globally
-export PRODUCT_AGENT_MODE=production
-product-agent discover --idea "Your idea"
-```
-
-**When to Use Production Mode:**
-- Claude Code CLI is unavailable
-- Need guaranteed reliability
-- Building automated pipelines
-- Token usage tracking required
-
-## Configuration
-
-All configuration via environment variables:
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PRODUCT_AGENT_MODE` | development | Mode: development or production |
-| `CLAUDE_PATH` | /usr/local/bin/claude | Path to Claude CLI binary |
-| `ANTHROPIC_API_KEY` | - | API key for production mode |
-| `CLAUDE_MODEL` | claude-sonnet-4-20250514 | Model to use |
-| `PRODUCT_AGENT_VERBOSE` | false | Enable verbose logging |
-
-**Configuration Priority:**
-1. CLI flags (--verbose, --production)
-2. Environment variables
-3. Defaults
-
-**Check Current Configuration:**
-```bash
-product-agent info
-```
-
-## Error Handling
-
-### Common Errors
-
-#### "Claude CLI not found"
-
-**Cause:** Development mode but Claude Code CLI not installed or not at expected path
-
-**Solutions:**
-1. Install Claude Code
-2. Set `CLAUDE_PATH` to correct location:
-   ```bash
-   export CLAUDE_PATH=/path/to/claude
-   ```
-3. Use production mode instead:
-   ```bash
-   export ANTHROPIC_API_KEY="your-key"
-   product-agent discover --idea "..." --production
-   ```
-
-#### "Missing API Key"
-
-**Cause:** Production mode but no ANTHROPIC_API_KEY set
-
-**Solution:**
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-```
-
-#### "Invalid output format"
-
-**Cause:** Provided format not in: text, json, markdown
-
-**Solution:** Use lowercase: `--output-format json`
-
-#### "Rate limit exceeded"
-
-**Cause:** (Production mode) Hit Anthropic API rate limit
-
-**Solutions:**
-1. Wait and retry
-2. Switch to development mode (uses Claude Code CLI, no rate limits)
-
-#### JSON Parsing Errors
-
-**Cause:** LLM returned malformed JSON
-
-**Note:** Tool auto-extracts JSON from markdown code blocks. Usually works automatically.
-
-**If persists:**
-1. Try again (LLMs are non-deterministic)
-2. Check raw output with `--verbose`
-3. File an issue if repeatable
-
-## Advanced Patterns
-
-### 1. Agent Chaining
-
-Run multiple discoveries and compare:
-
-```bash
-# Discover multiple ideas
-for idea in "idea1" "idea2" "idea3"; do
-  product-agent discover \
-    --idea "$idea" \
-    --output-format json \
-    --save \
-    --output "analysis-$idea"
-done
-
-# Then compare the JSON outputs
-```
-
-### 2. Batch Processing
-
-Process a list of ideas from a file:
-
-```bash
-while IFS= read -r idea; do
-  product-agent discover \
-    --idea "$idea" \
-    --output-format json \
-    --save
-done < ideas.txt
-```
-
-### 3. Markdown Reports
-
-Generate shareable reports:
-
-```bash
-product-agent discover \
-  --idea "Your idea" \
-  --output-format markdown \
-  --save \
-  --output "stakeholder-report"
-
-# Creates: stakeholder-report.md
-# Ready to share with team
-```
-
-### 4. Pipeline Integration
-
-Use in CI/CD or automation:
-
-```bash
-#!/bin/bash
-# Validate product idea before starting work
-
-result=$(product-agent discover \
-  --idea "$APP_IDEA" \
-  --output-format json)
-
-recommendation=$(echo "$result" | jq -r '.recommendation')
-
-if [[ "$recommendation" == *"DO NOT BUILD"* ]]; then
-  echo "Idea not validated. Stopping."
-  exit 1
-fi
-
-echo "Idea validated. Proceeding..."
-```
-
-### 5. Integration with Other Tools
-
-Combine with jq for JSON processing:
-
-```bash
-# Extract just the severity score
-product-agent discover --idea "..." --output-format json | \
-  jq -r '.severity_score'
-
-# Extract pain points
-product-agent discover --idea "..." --output-format json | \
-  jq -r '.pain_points[]'
-
-# Get recommendation verdict only
-product-agent discover --idea "..." --output-format json | \
-  jq -r '.recommendation' | head -1
-```
-
-## Performance Considerations
-
-### Execution Time
-
-**Typical Duration:** 20-40 seconds per discovery
-
-**Factors Affecting Speed:**
-- LLM response time (varies by load)
-- Complexity of idea (more complex = deeper analysis)
-- Network latency (production mode)
-
-**Note:** This is normal for AI-powered analysis. The tool is doing deep market research and competitive analysis.
-
-### Token Usage
-
-**Development Mode:** No token tracking (uses Claude Code CLI)
-
-**Production Mode:**
-- Use `--verbose` to see token counts
-- Typical usage: 1,500-3,000 input tokens, 1,000-2,000 output tokens per discovery
-
-### Cost Optimization
-
-**For development/testing:** Use development mode (free)
-
-**For production:**
-- Use production mode only when needed
-- Batch similar analyses
-- Cache results (save JSON outputs)
-
-## Troubleshooting Checklist
-
-1. **Check configuration:**
-   ```bash
-   product-agent info
-   ```
-
-2. **Verify Claude CLI (development mode):**
-   ```bash
-   which claude
-   echo $CLAUDE_PATH
-   ```
-
-3. **Verify API key (production mode):**
-   ```bash
-   echo $ANTHROPIC_API_KEY
-   ```
-
-4. **Test with minimal command:**
-   ```bash
-   product-agent discover --idea "test" --output-format json
-   ```
-
-5. **Try verbose mode:**
-   ```bash
-   product-agent discover --idea "test" --verbose
-   ```
-
-6. **Check for updates:**
-   ```bash
-   product-agent --version
-   ```
-
-## Future Agents
-
-Coming soon (update this Skill when available):
-
-### MVP Scoping Agent
-```bash
-product-agent scope \
-  --problem-file problem.json \
-  --output-format json
-```
-
-### Positioning Agent
-```bash
-product-agent position \
-  --mvp-file mvp.json \
-  --output-format json
-```
-
-### ASO Optimization Agent
-```bash
-product-agent aso \
-  --app-description "..." \
-  --output-format json
-```
-
-### Launch Planning Agent
-```bash
-product-agent launch \
-  --positioning-file positioning.json \
-  --output-format json
-```
-
-## File Extension Auto-Detection
-
-When using `--save`, the tool automatically adds the correct extension:
-
-| Format | Extension | Example |
-|--------|-----------|---------|
-| text | .txt | analysis.txt |
-| json | .json | analysis.json |
-| markdown | .md | analysis.md |
-
-**Example:**
-```bash
---output "report" --output-format markdown
-# Creates: report.md (not report.markdown)
-```
-
-## Best Practices Summary
-
-1. **Always use JSON format** for analysis and chaining
-2. **Read the recommendation field first** - it's the most important
-3. **Save important analyses** - build a knowledge base
-4. **Provide platform and target user** when known
-5. **Trust "don't build" verdicts** - the agent is honest
-6. **Use verbose mode for debugging**
-7. **Compare multiple ideas** before committing
-8. **Share markdown reports** with stakeholders
-9. **Batch process** when validating many ideas
-10. **Stay in development mode** unless you need production features
-
----
-
-For questions or issues, refer to the main documentation or file an issue on GitHub.
+## Best Practices
+
+1. **Always produce JSON output** for structured analysis
+2. **Read the recommendation field first** — it's the most important
+3. **Provide platform and target user** when known for better results
+4. **Trust "don't build" verdicts** — the analysis is designed to be honest
+5. **Compare multiple ideas** before committing to one
+6. **Use web research** to validate assumptions about competitors and market

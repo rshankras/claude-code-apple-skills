@@ -530,7 +530,7 @@ Present the localization roadmap as:
 This skill connects to the broader product development pipeline:
 
 ```
-1. product-agent discover     --> Validate idea
+1. product-agent              --> Validate idea
 2. market-research            --> Identify global opportunity
 3. competitive-analysis       --> Check competition per market
 4. localization-strategy      --> THIS SKILL

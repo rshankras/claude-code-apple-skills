@@ -434,7 +434,7 @@ Present the beta testing plan as:
 This skill fits in the product development pipeline after implementation and before App Store submission:
 
 ```
-1. product-agent discover    --> Validate the idea
+1. product-agent             --> Validate the idea
 2. prd-generator             --> Define features
 3. architecture-spec         --> Technical design
 4. implementation-guide      --> Build it

@@ -1,7 +1,7 @@
 ---
 name: market-research
 description: Deep market analysis for iOS/macOS apps including market sizing (TAM/SAM/SOM), growth trends, market maturity, entry barriers, distribution channels, and revenue potential. Use when user asks for market research, market size, market opportunity, growth potential, TAM/SAM/SOM, or market trends.
-allowed-tools: Bash(product-agent:*), Read, WebSearch, WebFetch
+allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
 ---
 
 # Market Research Skill
@@ -20,7 +20,7 @@ Use this Skill when the user wants to:
 - Estimate revenue potential
 - Deep-dive after initial problem discovery
 
-**This is a follow-up to product-agent discovery** - use this when you need market depth.
+**This is a follow-up to the product-agent skill** — use this when you need market depth.
 
 ## What This Skill Does
 
@@ -328,7 +328,7 @@ Year 3: $800K-4M
 Use market-research **after** initial discovery:
 
 ```
-1. product-agent discover → Problem validation
+1. product-agent → Problem validation
 2. market-research → Market opportunity sizing
 3. competitive-analysis → Understand players
 4. → Decision: Build vs. Don't Build
