@@ -8,7 +8,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
 
 Implement Apple's Liquid Glass design language across all Apple UI frameworks. Covers SwiftUI (`.glassEffect()`), AppKit (`NSGlassEffectView`), UIKit (`UIGlassEffect` + `UIVisualEffectView`), and WidgetKit (rendering modes, accented content, glass elements in widgets).
 
-## When to Use
+## When This Skill Activates
 
 - User wants glass/blur effects on views
 - User asks about Liquid Glass or modern Apple design

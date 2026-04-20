@@ -46,7 +46,7 @@ Apply these review categories based on the code type:
 - Memory management
 
 **For SwiftUI Code:**
-- State management (@State, @StateObject, @ObservedObject)
+- State management (`@State`, `@Observable` + `@Bindable`; legacy `@StateObject` / `@ObservedObject` pre-iOS 17)
 - View composition and performance
 - MVVM separation
 

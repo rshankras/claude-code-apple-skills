@@ -14,7 +14,7 @@ Generate comprehensive App Store release and deployment documentation for iOS/ma
 - **Role**: Release Manager
 - **Author**: ProductAgent Team
 
-## Activation
+## When This Skill Activates
 
 This skill activates when the user says:
 - "generate release spec"

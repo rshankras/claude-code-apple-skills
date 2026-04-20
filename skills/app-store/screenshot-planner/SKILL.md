@@ -1,8 +1,14 @@
+---
+name: screenshot-planner
+description: Plan compelling App Store screenshot sequences that showcase your app's value. Use when preparing App Store assets, improving screenshot conversion, or drafting screenshot captions for a launch or major update.
+allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
+---
+
 # Screenshot Planner
 
 Plan compelling App Store screenshot sequences that showcase your app's value.
 
-## When to Use
+## When This Skill Activates
 
 - User is preparing App Store assets
 - User wants to improve screenshot conversion

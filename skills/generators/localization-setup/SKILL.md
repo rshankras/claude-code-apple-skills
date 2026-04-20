@@ -1,8 +1,14 @@
+---
+name: localization-setup
+description: Generate internationalization (i18n) infrastructure for multi-language support in iOS/macOS apps. Use when localizing for multiple languages, adopting String Catalogs (xcstrings), or supporting RTL languages.
+allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+---
+
 # Localization Setup Generator
 
 Generate internationalization (i18n) infrastructure for multi-language support in iOS/macOS apps.
 
-## When to Use
+## When This Skill Activates
 
 - User wants to localize their app for multiple languages
 - User mentions i18n, internationalization, or localization

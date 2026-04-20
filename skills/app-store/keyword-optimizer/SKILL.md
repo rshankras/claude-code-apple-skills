@@ -1,8 +1,14 @@
+---
+name: keyword-optimizer
+description: Optimize app title, subtitle, and keywords for maximum App Store discoverability. Use when launching a new app, improving search rankings, entering new markets/languages, or safely optimizing ASO for an app with existing traffic.
+allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion, WebSearch]
+---
+
 # Keyword Optimizer
 
 Optimize app title, subtitle, and keywords for maximum App Store discoverability.
 
-## When to Use
+## When This Skill Activates
 
 - User is launching a new app
 - User wants to improve search rankings

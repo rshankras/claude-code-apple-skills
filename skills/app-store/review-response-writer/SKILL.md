@@ -1,8 +1,14 @@
+---
+name: review-response-writer
+description: Write professional, empathetic responses to App Store reviews that build trust and turn critics into fans. Use when responding to negative reviews, drafting templates for common review types, or improving review management strategy.
+allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
+---
+
 # Review Response Writer
 
 Write professional, empathetic responses to App Store reviews that build trust and turn critics into fans.
 
-## When to Use
+## When This Skill Activates
 
 - User needs to respond to negative reviews
 - User wants templates for common review types

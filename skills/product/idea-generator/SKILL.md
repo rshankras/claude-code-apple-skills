@@ -8,7 +8,7 @@ allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
 
 Generates a ranked shortlist of 3-5 app ideas tailored to the developer's skills, interests, and constraints. Output is formatted to feed directly into the product-agent skill for validation.
 
-## When to Use This Skill
+## When This Skill Activates
 
 Use this skill when the user:
 - Doesn't have an app idea yet

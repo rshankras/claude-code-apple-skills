@@ -14,7 +14,7 @@ Generate technical architecture specification for iOS/macOS app.
 - **Role**: iOS/macOS Architect
 - **Author**: ProductAgent Team
 
-## Activation
+## When This Skill Activates
 
 This skill activates when the user says:
 - "generate architecture"

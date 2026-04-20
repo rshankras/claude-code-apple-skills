@@ -134,7 +134,7 @@ Sources/Auth/
 ```swift
 @main
 struct MyApp: App {
-    @StateObject private var authManager = AuthenticationManager()
+    @State private var authManager = AuthenticationManager()  // AuthenticationManager is @Observable
 
     var body: some Scene {
         WindowGroup {
@@ -144,7 +144,7 @@ struct MyApp: App {
                 AuthenticationView()
             }
         }
-        .environmentObject(authManager)
+        .environment(authManager)
     }
 }
 ```

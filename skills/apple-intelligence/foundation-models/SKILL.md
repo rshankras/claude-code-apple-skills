@@ -8,7 +8,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 
 Integrate Apple's on-device LLM into your apps for privacy-preserving AI features.
 
-## When to Use
+## When This Skill Activates
 
 - User wants AI text generation features
 - User needs structured data from natural language
@@ -324,9 +324,10 @@ struct StreamingView: View {
 Reuse sessions to maintain context.
 
 ```swift
-class ChatViewModel: ObservableObject {
+@Observable
+final class ChatViewModel {
     private var session: LanguageModelSession?
-    @Published var messages: [ChatMessage] = []
+    var messages: [ChatMessage] = []
 
     func startConversation() {
         session = LanguageModelSession(instructions: """

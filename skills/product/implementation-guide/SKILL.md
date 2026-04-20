@@ -14,7 +14,7 @@ Generate detailed implementation guide with pseudo-code and step-by-step instruc
 - **Role**: Senior iOS/macOS Developer
 - **Author**: ProductAgent Team
 
-## Activation
+## When This Skill Activates
 
 This skill activates when the user says:
 - "generate implementation guide"

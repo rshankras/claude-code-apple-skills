@@ -1,8 +1,14 @@
+---
+name: accessibility-generator
+description: Generate accessibility infrastructure for VoiceOver, Dynamic Type, and accessibility features. Use when improving app accessibility, adding accessibility labels and hints, or auditing compliance.
+allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+---
+
 # Accessibility Generator
 
 Generate accessibility infrastructure for VoiceOver, Dynamic Type, and accessibility features.
 
-## When to Use
+## When This Skill Activates
 
 - User wants to improve app accessibility
 - User mentions VoiceOver, Dynamic Type, or accessibility

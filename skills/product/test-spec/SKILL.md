@@ -14,7 +14,7 @@ Generate comprehensive test specification and QA plan for iOS/macOS app testing.
 - **Role**: QA Engineer
 - **Author**: ProductAgent Team
 
-## Activation
+## When This Skill Activates
 
 This skill activates when the user says:
 - "generate test spec"

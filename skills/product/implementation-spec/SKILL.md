@@ -14,7 +14,7 @@ Master orchestrator that generates complete implementation specifications by coo
 - **Role**: Master Orchestrator
 - **Author**: ProductAgent Team
 
-## Activation
+## When This Skill Activates
 
 This skill activates when the user says:
 - "generate implementation specifications"

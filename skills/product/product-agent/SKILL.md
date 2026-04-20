@@ -8,7 +8,7 @@ allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
 
 Product Agent validates iOS/macOS app ideas by analyzing problems, markets, and competition. It provides honest, structured assessments to help you decide whether to build.
 
-## When to Use This Skill
+## When This Skill Activates
 
 Use this Skill when the user wants to:
 - Discover or validate product ideas

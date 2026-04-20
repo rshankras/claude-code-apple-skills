@@ -14,7 +14,7 @@ Generate comprehensive UI/UX specifications with wireframes and design system fo
 - **Role**: UI/UX Designer
 - **Author**: ProductAgent Team
 
-## Activation
+## When This Skill Activates
 
 This skill activates when the user says:
 - "generate UI spec"

@@ -93,9 +93,10 @@ static func parseResponse<T: Decodable>(_ data: Data) async throws -> T {
 ### MainActor for UI Updates
 Keep UI-related code on MainActor:
 ```swift
+@Observable
 @MainActor
-class NetworkViewModel: ObservableObject {
-    @Published var items: [Item] = []
+final class NetworkViewModel {
+    var items: [Item] = []
 
     func fetch() async {
         items = try await apiClient.fetch(ItemsEndpoint())

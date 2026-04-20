@@ -1,8 +1,14 @@
+---
+name: app-description-writer
+description: Generate compelling App Store descriptions that convert browsers into users. Use when writing initial descriptions, improving existing copy, or drafting promotional text and What's New for a major update.
+allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
+---
+
 # App Description Writer
 
 Generate compelling App Store descriptions that convert browsers into users.
 
-## When to Use
+## When This Skill Activates
 
 - User needs to write initial App Store description
 - User wants to improve existing description

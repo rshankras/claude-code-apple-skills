@@ -8,7 +8,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 
 Integrate your app with iOS Visual Intelligence to let users find app content by pointing their camera at objects.
 
-## When to Use
+## When This Skill Activates
 
 - User wants camera-based search in their app
 - User asks about visual search integration

@@ -8,7 +8,7 @@ allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
 
 Performs deep market research for iOS/macOS app ideas. Provides market sizing, growth analysis, and opportunity assessment.
 
-## When to Use This Skill
+## When This Skill Activates
 
 Use this Skill when the user wants to:
 - Understand market size and potential

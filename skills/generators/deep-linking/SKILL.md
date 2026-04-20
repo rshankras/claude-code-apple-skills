@@ -1,8 +1,14 @@
+---
+name: deep-linking
+description: Generate deep linking infrastructure with URL schemes, Universal Links, and App Intents for Siri/Shortcuts. Use when handling custom URL schemes, Universal Links/Associated Domains, or routing to specific content from external sources.
+allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+---
+
 # Deep Linking Generator
 
 Generate deep linking infrastructure with URL schemes, Universal Links, and App Intents for Siri/Shortcuts.
 
-## When to Use
+## When This Skill Activates
 
 - User wants to handle custom URL schemes (myapp://)
 - User mentions Universal Links or Associated Domains

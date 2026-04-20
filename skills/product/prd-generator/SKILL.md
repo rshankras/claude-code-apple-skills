@@ -14,7 +14,7 @@ Generate comprehensive Product Requirements Document from product development pl
 - **Role**: Product Manager
 - **Author**: ProductAgent Team
 
-## Activation
+## When This Skill Activates
 
 This skill activates when the user says:
 - "generate PRD"

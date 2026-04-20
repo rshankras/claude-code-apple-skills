@@ -1,8 +1,14 @@
+---
+name: push-notifications
+description: Generate push notification infrastructure with APNs registration, handling, and rich notifications. Use when adding push notifications, configuring APNs, notification categories/actions, or rich notifications with images and custom UI.
+allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+---
+
 # Push Notifications Generator
 
 Generate push notification infrastructure with APNs registration, handling, and rich notifications.
 
-## When to Use
+## When This Skill Activates
 
 - User wants to add push notifications to their app
 - User mentions APNs (Apple Push Notification service)

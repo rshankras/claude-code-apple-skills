@@ -8,7 +8,7 @@ allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
 
 Performs deep competitive analysis for iOS/macOS app ideas. Goes beyond basic discovery to provide detailed competitor insights, feature matrices, and differentiation opportunities.
 
-## When to Use This Skill
+## When This Skill Activates
 
 Use this Skill when the user wants to:
 - Understand competitors in detail
