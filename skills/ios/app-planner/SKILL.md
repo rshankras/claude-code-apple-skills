@@ -486,8 +486,8 @@ View (updates UI)
 [Why this choice for this app]
 
 ### Version Support
-- **Minimum iOS**: [e.g., iOS 15]
-- **Target iOS**: [e.g., iOS 17]
+- **Minimum iOS**: [e.g., iOS 17 for broad reach]
+- **Target iOS**: [e.g., iOS 26]
 - **Rationale**: [Why these versions]
 
 ## Persistence

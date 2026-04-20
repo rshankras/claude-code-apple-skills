@@ -302,7 +302,7 @@ Then [expected result 2]
 
 ### 5.5 Platform Requirements
 
-- **iOS Version**: Minimum iOS 17.0
+- **iOS Version**: Minimum iOS 26.0 (or iOS 17+ for broader device reach)
 - **Devices**: iPhone (all sizes), iPad (if applicable)
 - **Orientation**: Portrait (required), Landscape (optional)
 - **Dark Mode**: Full support with dedicated assets

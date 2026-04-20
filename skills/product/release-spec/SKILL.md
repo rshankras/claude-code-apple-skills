@@ -653,7 +653,7 @@ Before archiving and submitting, verify:
 - [ ] All UI tests pass (critical user journeys)
 - [ ] Manual regression testing complete
 - [ ] Tested on multiple devices (iPhone SE, Pro Max, iPad if supported)
-- [ ] Tested on iOS minimum version (iOS 17.0)
+- [ ] Tested on iOS minimum version (iOS 26.0, or the minimum set in ARCHITECTURE.md)
 - [ ] Tested on latest iOS version
 - [ ] Dark mode tested
 - [ ] VoiceOver tested (accessibility)
@@ -697,7 +697,7 @@ Before archiving and submitting, verify:
 - [ ] Third-party licenses attributed (if using OSS)
 
 ### 5.6 Technical Requirements
-- [ ] Minimum deployment target set (iOS 17.0 or appropriate)
+- [ ] Minimum deployment target set (iOS 26.0 default, or appropriate per ARCHITECTURE.md)
 - [ ] No compiler warnings (or all warnings addressed)
 - [ ] App validated in Xcode (no errors)
 - [ ] No crashes on launch or critical flows

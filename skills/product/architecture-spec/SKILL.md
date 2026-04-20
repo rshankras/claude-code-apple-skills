@@ -186,8 +186,8 @@ Generate `docs/ARCHITECTURE.md` with the following structure:
 ### 2.3 Development Tools
 
 - **Xcode**: [Latest stable version]
-- **iOS Deployment Target**: iOS 17.0
-- **Swift Version**: Swift 5.9+
+- **iOS Deployment Target**: iOS 26.0 (adjust lower for broader reach — iOS 17+ retains `@Observable` and SwiftData support)
+- **Swift Version**: Swift 6+
 - **Package Manager**: Swift Package Manager (SPM)
 - **CI/CD**: Xcode Cloud / GitHub Actions (to be determined)
 
