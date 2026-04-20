@@ -205,3 +205,66 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
 | **Total** | **149 across 23 categories** |
+
+---
+
+## Pending Work
+
+Tracked here so they don't get lost. Baselined after running `skill-auditor` on 2026-04-20.
+
+### Audit cleanup (existing skills)
+
+**M-04 · Oversized single-file skills** (>400 lines, no sibling `.md` files). Modularize each into `patterns.md` / `templates.md` / `checklist.md` / `examples.md` per `skill-creator` conventions. ~20 candidates, ordered by size:
+
+| Skill | Lines | Natural split |
+|---|---|---|
+| `product/ux-spec` | 1,953 | wireframes, design system, interaction patterns |
+| `product/implementation-guide` | 1,916 | phases, code steps, project setup |
+| `product/release-spec` | 1,830 | submission, marketing, compliance |
+| `product/test-spec` | 1,510 | unit, UI, accessibility, beta |
+| `product/architecture-spec` | 1,305 | stack decisions, risks, data models |
+| `product/implementation-spec` | 1,122 | orchestration, agent coordination |
+| `design/liquid-glass` | 801 | SwiftUI / AppKit / UIKit / WidgetKit (clean split — do this first as a template) |
+| `product/prd-generator` | 692 | features, user stories, success metrics |
+| `swift/concurrency` | 631 | actors, tasks, structured concurrency |
+| `product/localization-strategy` | 593 | market prioritization, i18n tooling |
+| `apple-intelligence/foundation-models` | 573 | prompting, structured output, tool calling |
+| `product/beta-testing` | 492 | cohort design, feedback loop |
+| `app-store/apple-search-ads` | 468 | campaign setup, keyword bidding, ROAS |
+| `growth/indie-business` | 457 | entity, tax, hiring |
+| `testing/integration-test-scaffold` | 447 | harness, mocks, CI wiring |
+| `growth/analytics-interpretation` | 440 | funnels, cohort analysis |
+| `product/market-research` | 431 | TAM/SAM/SOM, growth trends |
+| `shared/skill-creator` | 406 | templates, modularization rules |
+| `app-store/keyword-optimizer` | 405 | criteria, tactics, safe optimization |
+| `app-store/rejection-handler` | 402 | common rejections, appeal templates |
+
+**L-01/L-02/L-03 · Polish** (deferred). L-01 returned ~115 candidates; most are aggregators or code-heavy generators where patterns live in templates. Needs heuristic refinement before bulk fixing.
+
+### Planned new skills
+
+**Tier 1 — high leverage:**
+| Skill | Why |
+|---|---|
+| `ios/accessibility-audit` | EU Accessibility Act mandatory since 2025; App Store reviewers flagging |
+| `media/` (AVFoundation, PhotoKit, Camera, ScreenCaptureKit) | Biggest framework gap; unlocks whole app categories |
+| `app-store/asc-api-workflows` | Orchestrate the 50+ ASC MCP tools into guided flows |
+| `ios/localization-catalogs` | Xcode 15+ String Catalogs (xcstrings), pluralization, device variants |
+| `shared/wwdc-to-skill-workflow` | Meta-skill: turn a WWDC session into a skill without being a SME |
+
+**Tier 2 — framework gaps:**
+- `frameworks/healthkit`, `frameworks/weatherkit`, `frameworks/musickit`, `frameworks/homekit`
+- `arkit-realitykit/` (Vision Pro momentum)
+- `frameworks/pencilkit-pdfkit` (productivity apps)
+- `tvos/` (completes platform matrix)
+- `ci/xcode-cloud` (Apple's own CI — currently only Fastlane generator)
+
+**Tier 3 — codebase modernization:**
+- `swift/combine-to-async-migration` — every mature codebase has Combine debt
+- `swift/package-authoring` — for anyone publishing SPM libraries
+- `shared/cross-platform-patterns` — `#if os()`, conditional compilation, shared model layers
+
+### Maintenance
+
+- Update `skill-auditor`'s hardcoded "known-current" version constants (iOS 26, macOS 26, Swift 6.x) after each WWDC cycle. Also widen the stage-1 regex range.
+- 5 files in `skills/macos/*/skill.md` are lowercase-tracked in git — rename to `SKILL.md` uppercase for cross-platform (case-sensitive FS) consistency.
