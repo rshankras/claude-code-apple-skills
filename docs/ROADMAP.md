@@ -203,5 +203,5 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | visionos/ | 1 | widgets |
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
-| shared/ | 1 | skill-creator |
-| **Total** | **148 across 23 categories** |
+| shared/ | 2 | skill-creator, skill-auditor |
+| **Total** | **149 across 23 categories** |

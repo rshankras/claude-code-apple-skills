@@ -50,7 +50,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
 | `monetization/` | Monetization strategy, pricing, tiers |
 | `testing/` | TDD workflows, test infrastructure, snapshot tests |
 | `release-review/` | Pre-release audit checklists |
-| `shared/` | Templates for creating new skills |
+| `shared/` | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
 ### Generator vs Advisory vs Workflow Skills
 

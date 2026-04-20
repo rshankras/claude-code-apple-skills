@@ -30,8 +30,9 @@ A collection of Claude Code skills for iOS, macOS, watchOS, visionOS, and Apple 
 | **Foundation** | 1 | AttributedString updates |
 | **visionOS** | 1 | Widget development |
 | **Release Review** | 1 | Pre-release audit checklists |
+| **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 148 skills across 23 categories**
+**Total: 149 skills across 23 categories**
 
 ## Quick Start
 
@@ -93,7 +94,7 @@ skills/
 ├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections (7 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
 ├── release-review/         # Security, privacy, UX, distribution audits
-└── shared/                 # Skill creation templates
+└── shared/                 # Meta-skills: skill-creator, skill-auditor
 ```
 
 ## Documentation
