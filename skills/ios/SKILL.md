@@ -18,6 +18,7 @@ Use this skill when the user:
 - Is planning a new iOS app
 - Needs help with SwiftUI patterns for iOS
 - Asks about navigation architecture (NavigationStack, NavigationSplitView, TabView)
+- Wants to run/launch the app in the Simulator or screenshot it to verify a change
 
 ## Available Modules
 
@@ -51,6 +52,14 @@ iOS app planning and analysis.
 - Existing app audits
 - Tech stack evaluation
 - Product planning guidance
+
+### run-simulator/
+Build, install, launch, and screenshot the app in the Simulator to verify a
+change visually (operational — uses Bash, not just guidance).
+- Discover scheme + an available simulator (no hardcoded device names)
+- Build for the simulator and resolve the `.app` + bundle id
+- Boot, install, launch, then screenshot and read it back
+- Drive navigation / deep links to reach the changed screen
 
 ## How to Use
 
