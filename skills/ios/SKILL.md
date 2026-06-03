@@ -61,6 +61,13 @@ change visually (operational — uses Bash, not just guidance).
 - Boot, install, launch, then screenshot and read it back
 - Drive navigation / deep links to reach the changed screen
 
+### run-device/
+Run an app on a physical iPhone/iPad from the CLI (no Xcode GUI).
+- Build + code-sign for a device with `xcodebuild -allowProvisioningUpdates`
+- Install and launch via `devicectl`
+- Screenshot on hardware via `libimobiledevice`
+- Device prerequisites (Developer Mode, pairing) and signing gotchas
+
 ## How to Use
 
 1. Identify user's need from their question

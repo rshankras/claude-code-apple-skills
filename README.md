@@ -63,7 +63,7 @@ cp -r claude-code-apple-skills/skills ~/.claude/skills/
 
 ```
 skills/
-├── ios/                    # iOS code review, UI review, planning, navigation, iPad, migration, accessibility
+├── ios/                    # iOS code review, UI review, planning, navigation, iPad, migration, accessibility, device runs (CLI)
 ├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
 ├── product/                # Idea to App Store workflow (13 skills)
 ├── generators/             # Code generators (52 skills)
