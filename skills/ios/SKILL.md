@@ -52,6 +52,13 @@ iOS app planning and analysis.
 - Tech stack evaluation
 - Product planning guidance
 
+### run-device/
+Run an app on a physical iPhone/iPad from the CLI (no Xcode GUI).
+- Build + code-sign for a device with `xcodebuild -allowProvisioningUpdates`
+- Install and launch via `devicectl`
+- Screenshot on hardware via `libimobiledevice`
+- Device prerequisites (Developer Mode, pairing) and signing gotchas
+
 ## How to Use
 
 1. Identify user's need from their question
