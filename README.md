@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 140 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 141 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 33 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -19,7 +19,7 @@ Four repos, four layers — use one or all:
 
 | Category | Skills | Purpose |
 |----------|--------|---------|
-| **Generators** | 62 | Production-ready code for common features |
+| **Generators** | 63 | Production-ready code for common features |
 | **Product** | 14 | Idea discovery to App Store workflow |
 | **iOS** | 9 | Code review, UI review, navigation, iPad, migration, accessibility, simulator/device runs |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 140 skills across 23 categories** (category index files not counted)
+**Total: 141 skills across 23 categories** (category index files not counted)
 
 ## Quick Start
 
@@ -77,7 +77,7 @@ skills/
 ├── ios/                    # iOS code review, UI review, planning, navigation, iPad, migration, accessibility, device runs (CLI)
 ├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
 ├── product/                # Idea to App Store workflow (14 skills)
-├── generators/             # Code generators (62 skills)
+├── generators/             # Code generators (63 skills)
 │   ├── logging-setup/
 │   ├── analytics-setup/
 │   ├── networking-layer/
@@ -86,7 +86,7 @@ skills/
 │   ├── background-processing/
 │   ├── app-extensions/
 │   ├── data-export/
-│   └── ... (62 total)
+│   └── ... (63 total)
 ├── growth/                 # Analytics, press/media, community, indie business (4 skills)
 ├── legal/                  # Privacy policies, terms of service, EULAs
 ├── core-ml/                # Vision, NaturalLanguage, model integration
@@ -138,6 +138,7 @@ Generate production-ready Swift code that adapts to your project:
 | `push-notifications` | APNs setup |
 | `deep-linking` | URL schemes, universal links |
 | `test-generator` | Unit/UI tests (Swift Testing + XCTest) |
+| `preview-data-generator` | SwiftUI preview sample data + state/appearance variant matrix |
 | `accessibility-generator` | VoiceOver, Dynamic Type |
 | `widget-generator` | WidgetKit widgets with templates |
 | `feature-flags` | Local/remote feature flags with templates |

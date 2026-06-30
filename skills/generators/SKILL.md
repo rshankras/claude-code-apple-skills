@@ -1,6 +1,6 @@
 ---
 name: generators
-description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, app icons, image caching, pagination, HTTP caching, share cards, social export, subscription lifecycle, referral systems, watermarks, streak tracking, milestone celebrations, what's new screens, lapsed user re-engagement, usage insights, variable rewards, consent flows, account deletion, permission priming, force updates, state restoration, debug menus, offline queues, feedback forms, announcement banners, quick win sessions, Spotlight indexing, App Clips, screenshot automation, background processing, app extensions, or data export.
+description: Code generator skills that produce production-ready Swift code for common app components. Use when user wants to add logging, analytics, onboarding, review prompts, networking, authentication, paywalls, settings, persistence, error monitoring, CI/CD pipelines, localization, push notifications, deep linking, testing, accessibility, widgets, feature flags, app icons, image caching, pagination, HTTP caching, share cards, social export, subscription lifecycle, referral systems, watermarks, streak tracking, milestone celebrations, what's new screens, lapsed user re-engagement, usage insights, variable rewards, consent flows, account deletion, permission priming, force updates, state restoration, debug menus, offline queues, feedback forms, announcement banners, quick win sessions, Spotlight indexing, App Clips, screenshot automation, background processing, app extensions, data export, or SwiftUI preview sample data and variant matrices.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 ---
 
@@ -150,6 +150,14 @@ Test templates for unit, integration, and UI tests.
 - Mock object generation
 - ViewModel and service testing patterns
 - UI testing with page object pattern
+
+### preview-data-generator/
+Sample data and a multi-variant #Preview matrix for SwiftUI views.
+- Canvas sample data with visual edge cases (empty, long strings, missing, list)
+- Data-state previews (loaded/empty/loading/error) for UI prototyping
+- Appearance, Dynamic Type, locale/RTL, and device variant matrix
+- SwiftData in-memory seeded containers; iOS 18 PreviewModifier + @Previewable
+- Reuses test-data-factory fixtures instead of duplicating them
 
 ### accessibility-generator/
 Accessibility infrastructure for inclusive apps.
