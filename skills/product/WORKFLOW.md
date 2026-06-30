@@ -202,6 +202,7 @@ ProductAgent provides a complete "Idea to App Store" workflow through a combinat
 | Phase | How to Activate | Output |
 |-------|-----------------|--------|
 | Idea Discovery | Say "I don't know what to build" or "give me app ideas" | idea-shortlist.json |
+| App Naming | Say "name my app" or "what should I call it" | app-name-shortlist.json |
 | Product Planning | Say "validate this idea" or "should I build..." | product-plan-*.md |
 | Competitive Analysis | Say "analyze competitors" or "competitive analysis" | competitive-analysis.md |
 | Market Research | Say "market research" or "market sizing" | market-research.md |
@@ -218,6 +219,7 @@ ProductAgent provides a complete "Idea to App Store" workflow through a combinat
 ```
 project/
 ├── product-plan-*.md              # Product development plan (from CLI)
+├── app-name-shortlist.json        # Validated name candidates (from app-namer)
 ├── competitive-analysis.md        # Competitive analysis (from skill)
 ├── market-research.md             # Market research (from skill)
 └── docs/

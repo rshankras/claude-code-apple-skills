@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 139 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 140 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 33 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -20,7 +20,7 @@ Four repos, four layers — use one or all:
 | Category | Skills | Purpose |
 |----------|--------|---------|
 | **Generators** | 62 | Production-ready code for common features |
-| **Product** | 13 | Idea discovery to App Store workflow |
+| **Product** | 14 | Idea discovery to App Store workflow |
 | **iOS** | 9 | Code review, UI review, navigation, iPad, migration, accessibility, simulator/device runs |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
 | **Testing** | 8 | TDD workflows, test infrastructure, snapshot tests |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 139 skills across 23 categories** (category index files not counted)
+**Total: 140 skills across 23 categories** (category index files not counted)
 
 ## Quick Start
 
@@ -76,7 +76,7 @@ cp -r claude-code-apple-skills/skills ~/.claude/skills/
 skills/
 ├── ios/                    # iOS code review, UI review, planning, navigation, iPad, migration, accessibility, device runs (CLI)
 ├── macos/                  # macOS patterns, Tahoe APIs, SwiftData
-├── product/                # Idea to App Store workflow (13 skills)
+├── product/                # Idea to App Store workflow (14 skills)
 ├── generators/             # Code generators (62 skills)
 │   ├── logging-setup/
 │   ├── analytics-setup/
