@@ -2,7 +2,9 @@
 
 Skill ideas for Apple platform and general development workflows.
 
+<!-- Hidden until claude-code-life-skills is made public:
 > **Note**: For life/work skills (freelancing, finance, health, productivity), see [claude-code-life-skills](https://github.com/rshankras/claude-code-life-skills).
+-->
 
 ---
 
