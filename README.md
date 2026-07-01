@@ -87,7 +87,7 @@ skills/
 │   ├── app-extensions/
 │   ├── data-export/
 │   └── ... (63 total)
-├── growth/                 # Analytics, press/media, community, indie business (4 skills)
+├── growth/                 # Analytics, store signals, press/media, community, indie business (5 skills)
 ├── legal/                  # Privacy policies, terms of service, EULAs
 ├── core-ml/                # Vision, NaturalLanguage, model integration
 ├── swiftui/                # AlarmKit, WebKit, text editing, toolbars, Charts 3D
@@ -102,7 +102,7 @@ skills/
 ├── visionos/               # visionOS widgets
 ├── testing/                # TDD workflows, test infrastructure, snapshot tests, flow walkthrough (9 skills)
 ├── monetization/           # Pricing strategy, tiers, free trials
-├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections, IAP finalize (8 skills)
+├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections, originality, IAP finalize (9 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
 ├── release-review/         # Security, privacy, UX, distribution audits
 └── shared/                 # Meta-skills: skill-creator, skill-auditor
@@ -192,6 +192,7 @@ Generate production-ready Swift code that adapts to your project:
 | Skill | What It Does |
 |-------|--------------|
 | `analytics-interpretation` | Interpret app metrics, AARRR funnels, decision trees |
+| `store-signals` | Turn live reviews/analytics/sales/crashes into a metric-tagged backlog + verify last cycle (read-only ASC) |
 | `press-media` | Press kit, journalist outreach, pitch templates |
 | `community-building` | Social media, building in public, content strategy |
 | `indie-business` | Business entity, taxes, revenue, hiring |
@@ -256,6 +257,7 @@ Generate production-ready Swift code that adapts to your project:
 | `review-response-writer` | Professional review responses |
 | `apple-search-ads` | Search Ads campaign setup, keyword bidding, ROAS |
 | `rejection-handler` | Handle rejections, response templates, appeals |
+| `originality-check` | Guideline-4.3 anti-spam gate: function/content/metadata distinctness before build or submit |
 | `iap-finalizer` | Finalize one-time IAP price + localization in ASC (dry-run) |
 | `marketing-strategy` | Comprehensive promotional strategy |
 
