@@ -24,7 +24,7 @@ Four repos, four layers — use one or all:
 | **iOS** | 9 | Code review, UI review, navigation, iPad, migration, accessibility, simulator/device runs |
 | **Testing** | 9 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
-| **App Store** | 7 | ASO, descriptions, keywords, reviews, search ads, rejections |
+| **App Store** | 8 | ASO, descriptions, keywords, reviews, search ads, rejections, IAP finalize |
 | **SwiftUI** | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
 | **Growth** | 4 | Analytics, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
@@ -33,7 +33,7 @@ Four repos, four layers — use one or all:
 | **Performance** | 2 | Instruments profiling, SwiftUI debugging |
 | **Security** | 2 | Secure storage, biometrics, privacy manifests |
 | **Core ML** | 1 | Vision, NaturalLanguage, model integration |
-| **Legal** | 1 | Privacy policies, terms of service, EULAs |
+| **Legal** | 2 | Privacy policies, terms of service, EULAs, publish + set ASC URLs |
 | **Monetization** | 1 | Pricing strategy, tiers, free trials |
 | **watchOS** | 1 | Watch apps, complications, health/fitness, widgets |
 | **SwiftData** | 1 | Class inheritance patterns |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 143 skills across 23 categories** (category index files not counted)
+**Total: 145 skills across 23 categories** (category index files not counted)
 
 ## Quick Start
 
@@ -102,7 +102,7 @@ skills/
 ├── visionos/               # visionOS widgets
 ├── testing/                # TDD workflows, test infrastructure, snapshot tests, flow walkthrough (9 skills)
 ├── monetization/           # Pricing strategy, tiers, free trials
-├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections (7 skills)
+├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections, IAP finalize (8 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
 ├── release-review/         # Security, privacy, UX, distribution audits
 └── shared/                 # Meta-skills: skill-creator, skill-auditor
@@ -201,6 +201,7 @@ Generate production-ready Swift code that adapts to your project:
 | Skill | What It Does |
 |-------|--------------|
 | `privacy-policy` | Privacy policies, Terms of Service, EULAs |
+| `privacy-publish` | Host legal pages + set ASC privacy/support URLs (dry-run) |
 
 ## Core ML Skills
 
@@ -255,6 +256,7 @@ Generate production-ready Swift code that adapts to your project:
 | `review-response-writer` | Professional review responses |
 | `apple-search-ads` | Search Ads campaign setup, keyword bidding, ROAS |
 | `rejection-handler` | Handle rejections, response templates, appeals |
+| `iap-finalizer` | Finalize one-time IAP price + localization in ASC (dry-run) |
 | `marketing-strategy` | Comprehensive promotional strategy |
 
 ## Security Skills
