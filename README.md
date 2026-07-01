@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 141 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 143 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 33 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -22,14 +22,14 @@ Four repos, four layers — use one or all:
 | **Generators** | 63 | Production-ready code for common features |
 | **Product** | 14 | Idea discovery to App Store workflow |
 | **iOS** | 9 | Code review, UI review, navigation, iPad, migration, accessibility, simulator/device runs |
+| **Testing** | 9 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
-| **Testing** | 8 | TDD workflows, test infrastructure, snapshot tests |
 | **App Store** | 7 | ASO, descriptions, keywords, reviews, search ads, rejections |
 | **SwiftUI** | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
 | **Growth** | 4 | Analytics, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
-| **Design** | 2 | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animation patterns |
+| **Design** | 3 | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animation patterns, UI prototyping |
 | **Performance** | 2 | Instruments profiling, SwiftUI debugging |
 | **Security** | 2 | Secure storage, biometrics, privacy manifests |
 | **Core ML** | 1 | Vision, NaturalLanguage, model integration |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 141 skills across 23 categories** (category index files not counted)
+**Total: 143 skills across 23 categories** (category index files not counted)
 
 ## Quick Start
 
@@ -92,7 +92,7 @@ skills/
 ├── core-ml/                # Vision, NaturalLanguage, model integration
 ├── swiftui/                # AlarmKit, WebKit, text editing, toolbars, Charts 3D
 ├── apple-intelligence/     # Foundation Models, Visual Intelligence, App Intents
-├── design/                 # Liquid Glass, animation patterns
+├── design/                 # Liquid Glass, animation patterns, UI prototyping
 ├── performance/            # Instruments profiling, SwiftUI debugging
 ├── security/               # Keychain, biometrics, network security, privacy manifests
 ├── swift/                  # Concurrency patterns, Swift 6.2, InlineArray/Span
@@ -100,7 +100,7 @@ skills/
 ├── mapkit/                 # GeoToolbox, place descriptors
 ├── foundation/             # AttributedString updates
 ├── visionos/               # visionOS widgets
-├── testing/                # TDD workflows, test infrastructure, snapshot tests (8 skills)
+├── testing/                # TDD workflows, test infrastructure, snapshot tests, flow walkthrough (9 skills)
 ├── monetization/           # Pricing strategy, tiers, free trials
 ├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections (7 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
@@ -142,7 +142,7 @@ Generate production-ready Swift code that adapts to your project:
 | `accessibility-generator` | VoiceOver, Dynamic Type |
 | `widget-generator` | WidgetKit widgets with templates |
 | `feature-flags` | Local/remote feature flags with templates |
-| `app-icon-generator` | Programmatic app icons via CoreGraphics |
+| `app-icon-generator` | Placeholder app icons + layered source for Icon Composer (Liquid Glass) |
 | `live-activity-generator` | ActivityKit Live Activities + Dynamic Island |
 | `tipkit-generator` | TipKit inline/popover tips |
 | `cloudkit-sync` | CKSyncEngine CloudKit sync |
@@ -220,6 +220,7 @@ Generate production-ready Swift code that adapts to your project:
 | `snapshot-test-setup` | SwiftUI visual regression with swift-snapshot-testing |
 | `test-data-factory` | Factory/fixture helpers for test data |
 | `integration-test-scaffold` | Cross-module test harness with mock server |
+| `flow-walkthrough` | Drive user flows (XCUITest + screenshots), audit the nav graph for dead-ends |
 
 ## Monetization
 
