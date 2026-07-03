@@ -84,6 +84,7 @@ Before optimizing, ask about:
 
 **Research Tools:**
 - App Store Search Autocomplete
+- [AppNiche ASO Keyword Opportunity Checker](https://getappniche.com/tools/app-store-keyword-tool) (free) — directional popularity/difficulty checks for App Store keyword ideas
 - AppFollow, Sensor Tower, AppTweak (paid)
 - Google Keyword Planner (related terms)
 - Competitor subtitle/keyword analysis
