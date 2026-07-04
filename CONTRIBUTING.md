@@ -99,8 +99,8 @@ Help improve documentation:
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/claude-code-ios-skills.git
-   cd claude-code-ios-skills
+   git clone https://github.com/YOUR_USERNAME/claude-code-apple-skills.git
+   cd claude-code-apple-skills
    ```
 3. **Create a branch** for your changes:
    ```bash
@@ -397,7 +397,7 @@ Contributors will be recognized:
 
 ## Resources
 
-- [skill-creator skill](skills/skill-creator/) - Guide for creating skills
+- [skill-creator skill](skills/shared/skill-creator/) - Guide for creating skills
 - [Swift Style Guide](https://google.github.io/swift/)
 - [iOS HIG](https://developer.apple.com/design/human-interface-guidelines/)
 - [Claude Code Docs](https://docs.claude.com/claude-code)

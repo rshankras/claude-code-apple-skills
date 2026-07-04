@@ -345,4 +345,4 @@ When reviewing code that uses SwiftData class inheritance, verify each item:
 
 - [Preserving your app's model data across launches](https://developer.apple.com/documentation/swiftdata/preserving-your-apps-model-data-across-launches)
 - [SwiftData documentation](https://developer.apple.com/documentation/swiftdata)
-- Apple doc: `/Users/ravishankar/Downloads/docs/SwiftData-Class-Inheritance.md`
+- Local captured doc (optional): `~/Downloads/docs/SwiftData-Class-Inheritance.md` — read if present; skip silently if absent.

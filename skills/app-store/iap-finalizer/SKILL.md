@@ -19,7 +19,11 @@ Finish a **one-time** in-app purchase on the store side: **price + localization*
 
 ## Prerequisites
 
-- `_shared/asc-api/` set up (see its README — key + `~/.appstoreconnect/`).  `ASC=python3 ~/.claude/swiftship-skills/_shared/asc-api/asc.py`
+- `_shared/asc-api/` set up (see its README — key + `~/.appstoreconnect/`).
+- Set `ASC="python3 <path to asc.py>"`. `asc.py` lives at `_shared/asc-api/asc.py` under the same `skills/` root as this skill — resolve it **relative to this SKILL.md file's location** (`../../_shared/asc-api/asc.py` from this skill's directory), never relative to the project cwd (skills run with cwd = the user's project). Known install locations:
+  - SwiftShip symlink install: `~/.claude/swiftship-skills/_shared/asc-api/asc.py`
+  - Copied install: `.claude/skills/_shared/asc-api/asc.py` (project) or `~/.claude/skills/_shared/asc-api/asc.py` (global)
+  - Plugin install: resolve from this file's location — the `_shared/` tree ships with the plugin.
 - The IAP already exists in ASC. Get its id with the MCP: `list_iap` → pick the product.
 - Price decided in Phase 4. Read it from `.planning/` and confirm — don't invent it.
 

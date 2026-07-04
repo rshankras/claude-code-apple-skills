@@ -249,4 +249,4 @@ Before shipping App Intents integration:
 - [App Shortcuts](https://developer.apple.com/documentation/AppIntents/app-shortcuts)
 - [IndexedEntity](https://developer.apple.com/documentation/AppIntents/IndexedEntity)
 - [Spotlight integration](https://developer.apple.com/documentation/CoreSpotlight)
-- `/Users/ravishankar/Downloads/docs/AppIntents-Updates.md`
+- Local captured doc (optional): `~/Downloads/docs/AppIntents-Updates.md` — read if present; skip silently if absent.

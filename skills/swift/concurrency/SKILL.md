@@ -447,7 +447,7 @@ nonisolated struct JSONParser {
 - Xcode build settings: Swift Compiler > Concurrency
 - SwiftSettings API for Swift packages
 - Official migration tooling: [swift.org/migration](https://www.swift.org/migration)
-- Apple doc reference: `/Users/ravishankar/Downloads/docs/Swift-Concurrency-Updates.md`
+- Local captured doc (optional): `~/Downloads/docs/Swift-Concurrency-Updates.md` — read if present; skip silently if absent.
 
 ---
 
@@ -622,7 +622,7 @@ When reviewing code that uses or should use Swift 6.2 concurrency features:
 - **Actors and isolation deep dive**: `swift/concurrency-patterns/actors-and-isolation.md`
 - **Structured concurrency patterns**: `swift/concurrency-patterns/structured-concurrency.md`
 - **Swift 6 migration guide**: `swift/concurrency-patterns/migration-guide.md`
-- **Apple documentation**: `/Users/ravishankar/Downloads/docs/Swift-Concurrency-Updates.md`
+- **Local captured doc (optional)**: `~/Downloads/docs/Swift-Concurrency-Updates.md` — read if present; skip silently if absent.
 
 ## References
 
