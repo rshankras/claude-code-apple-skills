@@ -33,5 +33,7 @@ jobs:
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
 
+      # Not --strict: the plugin.json no-version warning is deliberate
+      # (git-SHA versioning — every commit to main is a release). Errors fail.
       - name: Validate plugin + marketplace
-        run: claude plugin validate . --strict
+        run: claude plugin validate .
