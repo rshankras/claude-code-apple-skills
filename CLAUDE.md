@@ -70,7 +70,7 @@ Use `skills/shared/skill-creator/SKILL.md` as the guide. Key requirements:
 
 ## Apple Docs Reference
 
-Apple documentation files are stored at `/Users/ravishankar/Downloads/docs/`. Skills should reference these for latest API patterns.
+Prefer public `developer.apple.com` links in skill References. A locally captured docs folder (`~/Downloads/docs/`) may be referenced only behind a check-if-exists instruction ("read if present; skip silently if absent") — never hardcode absolute user paths (`/Users/...`) in skills; they break every install that isn't this machine.
 
 See `docs/ROADMAP.md` for planned skills based on available Apple docs.
 

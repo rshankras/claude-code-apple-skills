@@ -253,6 +253,6 @@ The 9 C-01 offenders all use `## When to Use` (non-canonical) rather than `## Wh
 
 ## References
 
-- `/Users/ravishankar/Work/MyApps/claude-code-apple-skills/CLAUDE.md` — normative source for frontmatter schema, naming, emoji convention
+- `../../../CLAUDE.md` (repo root, resolved relative to this SKILL.md — not the project cwd) — normative source for frontmatter schema, naming, emoji convention. If absent (skills-only copies), use https://github.com/rshankras/claude-code-apple-skills/blob/main/CLAUDE.md
 - `skills/shared/skill-creator/SKILL.md` — companion meta-skill for creating new skills (this auditor only audits; it does not create)
 - `skills/ios/SKILL.md` — canonical aggregator example

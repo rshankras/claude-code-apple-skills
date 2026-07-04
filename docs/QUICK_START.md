@@ -30,10 +30,10 @@ cp -r /path/to/claude-code-apple-skills/skills/* .claude/skills/
 Copy only the categories you need:
 
 ```bash
-# Just generators (52 skills)
+# Just generators (63 skills)
 cp -r /path/to/claude-code-apple-skills/skills/generators .claude/skills/
 
-# Just testing/TDD (8 skills)
+# Just testing/TDD (9 skills)
 cp -r /path/to/claude-code-apple-skills/skills/testing .claude/skills/
 
 # Just iOS review skills

@@ -713,4 +713,4 @@ struct MusicShortcuts: AppShortcutsProvider {
 - [AppIntentsPackage](https://developer.apple.com/documentation/AppIntents/AppIntentsPackage)
 - [Visual Intelligence integration](https://developer.apple.com/documentation/VisualIntelligence)
 - [NSUserActivity](https://developer.apple.com/documentation/foundation/nsuseractivity)
-- `/Users/ravishankar/Downloads/docs/AppIntents-Updates.md`
+- Local captured doc (optional): `~/Downloads/docs/AppIntents-Updates.md` — read if present; skip silently if absent.

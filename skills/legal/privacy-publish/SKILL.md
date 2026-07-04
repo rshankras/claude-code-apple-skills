@@ -13,7 +13,11 @@ Close the "hosted legal pages + ASC URLs" gap: render `.planning/legal/{privacy,
 ## Prerequisites
 
 - Legal drafts exist: `.planning/legal/privacy.md`, `.planning/legal/terms.md` (from `legal/privacy-policy`).
-- `_shared/asc-api/` set up (README).  `ASC=python3 ~/.claude/swiftship-skills/_shared/asc-api/asc.py`
+- `_shared/asc-api/` set up (README).
+- Set `ASC="python3 <path to asc.py>"`. `asc.py` lives at `_shared/asc-api/asc.py` under the same `skills/` root as this skill — resolve it **relative to this SKILL.md file's location** (`../../_shared/asc-api/asc.py` from this skill's directory), never relative to the project cwd (skills run with cwd = the user's project). Known install locations:
+  - SwiftShip symlink install: `~/.claude/swiftship-skills/_shared/asc-api/asc.py`
+  - Copied install: `.claude/skills/_shared/asc-api/asc.py` (project) or `~/.claude/skills/_shared/asc-api/asc.py` (global)
+  - Plugin install: resolve from this file's location — the `_shared/` tree ships with the plugin.
 - The app has a current editable App Store version + an en-US `appInfoLocalization` and `appStoreVersionLocalization` (get their ids first).
 
 ## Flow — dry-run → confirm → apply
