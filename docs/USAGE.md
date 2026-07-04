@@ -143,33 +143,9 @@ Differences:
 
 ## Skill Categories
 
-| Category | Count | Purpose | When to Use |
-|----------|-------|---------|-------------|
-| `generators/` | 52 | Generate code | Add features to any app |
-| `product/` | 13 | Idea to specs | New app planning, beta testing, localization |
-| `macos/` | 8 | macOS development | Code review, UI review, Tahoe APIs |
-| `testing/` | 8 | TDD & testing | TDD workflows, snapshots, test infrastructure |
-| `app-store/` | 7 | ASO & marketing | Descriptions, keywords, search ads, rejections |
-| `ios/` | 7 | iOS development | Code review, navigation, iPad, migration |
-| `swiftui/` | 5 | SwiftUI features | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
-| `growth/` | 5 | User acquisition | Analytics, press, community, indie business |
-| `swift/` | 3 | Swift language | Concurrency, Swift 6.2, memory (InlineArray/Span) |
-| `apple-intelligence/` | 3 | AI features | Foundation Models, Visual Intelligence, App Intents |
-| `design/` | 2 | Modern UI | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animations |
-| `legal/` | 2 | Legal documents | Privacy policies, terms of service, EULAs |
-| `performance/` | 2 | Performance | Instruments profiling, SwiftUI debugging |
-| `security/` | 2 | Security | Keychain, biometrics, privacy manifests |
-| `core-ml/` | 1 | On-device ML | Vision, NaturalLanguage, Core ML models |
-| `monetization/` | 1 | Revenue strategy | Pricing models, tiers, free trials |
-| `swiftdata/` | 1 | Data persistence | Class inheritance patterns |
-| `mapkit/` | 1 | Maps & location | GeoToolbox, place descriptors |
-| `foundation/` | 1 | Foundation | AttributedString updates |
-| `visionos/` | 1 | visionOS | Widget development |
-| `watchos/` | 1 | watchOS | Watch apps, complications, health/fitness, widgets |
-| `release-review/` | 1 | Pre-release | Security, privacy, UX audit |
-| `shared/` | 1 | Skill creation | Templates for creating new skills |
-
-**Total: 148 skills across 23 categories**
+**147 skills across 23 categories.** The per-category breakdown lives in one
+place — the [What's Included table in the README](../README.md#whats-included)
+— so it can't drift from the tree (`scripts/check-counts.sh` enforces it in CI).
 
 ---
 
