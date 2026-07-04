@@ -10,8 +10,8 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 143 skills — how to build right |
-| Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 33 /apple:* commands — spec-driven idea → App Store |
+| Knowledge | **claude-code-apple-skills** ← you are here | 147 skills — how to build right |
+| Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 49 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
 
@@ -24,9 +24,9 @@ Four repos, four layers — use one or all:
 | **iOS** | 9 | Code review, UI review, navigation, iPad, migration, accessibility, simulator/device runs |
 | **Testing** | 9 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
-| **App Store** | 8 | ASO, descriptions, keywords, reviews, search ads, rejections, IAP finalize |
+| **App Store** | 9 | ASO, descriptions, keywords, reviews, search ads, rejections, originality, IAP finalize |
 | **SwiftUI** | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
-| **Growth** | 4 | Analytics, press/media, community, indie business |
+| **Growth** | 5 | Analytics, store signals, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
 | **Design** | 3 | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animation patterns, UI prototyping |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 145 skills across 23 categories** (category index files not counted)
+**Total: 147 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 
@@ -105,7 +105,8 @@ skills/
 ├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections, originality, IAP finalize (9 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
 ├── release-review/         # Security, privacy, UX, distribution audits
-└── shared/                 # Meta-skills: skill-creator, skill-auditor
+├── shared/                 # Meta-skills: skill-creator, skill-auditor
+└── _shared/                # Internal helpers, not skills (asc-api — ASC REST helper used by iap-finalizer & privacy-publish)
 ```
 
 ## Documentation

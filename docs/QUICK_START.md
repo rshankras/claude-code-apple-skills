@@ -130,25 +130,11 @@ Good: "Add a subscription paywall with monthly and yearly tiers"
 Vague: "Add payments"
 ```
 
-## Skill Categories (148 skills across 23 categories)
+## Skill Categories
 
-| Category | Count | Purpose |
-|----------|-------|---------|
-| `generators/` | 52 | Production-ready code for common features |
-| `product/` | 13 | Idea to App Store workflow, beta testing, localization |
-| `testing/` | 8 | TDD workflows, test infrastructure |
-| `macos/` | 8 | macOS development patterns |
-| `app-store/` | 7 | ASO, descriptions, keywords, search ads, rejections |
-| `ios/` | 7 | iOS code review, UI review, planning, migration |
-| `swiftui/` | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
-| `growth/` | 5 | Analytics, press/media, community, indie business |
-| `swift/` | 3 | Concurrency, Swift 6.2, memory |
-| `apple-intelligence/` | 3 | Foundation Models, Visual Intelligence, App Intents |
-| `design/` | 2 | Liquid Glass, animations |
-| `legal/` | 2 | Privacy policies, terms of service, EULAs |
-| `performance/` | 2 | Instruments, SwiftUI debugging |
-| `security/` | 2 | Keychain, biometrics, privacy manifests |
-| + 9 more | 9 | Core ML, Monetization, SwiftData, MapKit, Foundation, visionOS, watchOS, Release Review, Shared |
+**147 skills across 23 categories** — see the
+[What's Included table in the README](../README.md#whats-included) for the
+per-category breakdown (kept in sync with the tree by `scripts/check-counts.sh`).
 
 ## Troubleshooting
 
