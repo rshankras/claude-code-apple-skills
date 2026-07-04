@@ -15,3 +15,23 @@ jobs:
         run: |
           chmod +x scripts/check-counts.sh
           ./scripts/check-counts.sh
+
+      - name: Every SKILL.md has valid frontmatter
+        run: |
+          chmod +x scripts/check-frontmatter.sh
+          ./scripts/check-frontmatter.sh
+
+  plugin-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Validate plugin + marketplace
+        run: claude plugin validate . --strict

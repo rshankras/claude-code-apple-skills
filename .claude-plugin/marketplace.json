@@ -1,0 +1,18 @@
+{
+  "name": "indie-apple-stack",
+  "owner": {
+    "name": "Ravi Shankar"
+  },
+  "metadata": {
+    "description": "The indie Apple developer stack: Apple platform skills now, SwiftShip workflow commands to follow."
+  },
+  "plugins": [
+    {
+      "name": "apple-skills",
+      "source": "./",
+      "description": "147 Apple platform development skills across 23 categories (iOS, macOS, watchOS, visionOS): code generators, product workflow, App Store/ASO, testing and TDD, design, performance, security, and more. Surfaced as 23 category skills that route to the full library.",
+      "strict": false,
+      "skills": ["./skills"]
+    }
+  ]
+}
