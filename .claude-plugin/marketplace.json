@@ -4,7 +4,7 @@
     "name": "Ravi Shankar"
   },
   "metadata": {
-    "description": "The indie Apple developer stack: Apple platform skills now, SwiftShip workflow commands to follow."
+    "description": "The indie Apple developer stack: the apple-skills knowledge library and the SwiftShip /apple:* workflow."
   },
   "plugins": [
     {
@@ -12,7 +12,18 @@
       "source": "./",
       "description": "147 Apple platform development skills across 23 categories (iOS, macOS, watchOS, visionOS): code generators, product workflow, App Store/ASO, testing and TDD, design, performance, security, and more. Surfaced as 23 category skills that route to the full library.",
       "strict": false,
-      "skills": ["./skills"]
+      "skills": [
+        "./skills"
+      ]
+    },
+    {
+      "name": "apple",
+      "source": {
+        "source": "github",
+        "repo": "rshankras/SwiftShip"
+      },
+      "description": "SwiftShip \u2014 49 /apple:* workflow commands + 6 pinned agents: idea validation, roadmap, plan, build, review, TestFlight, App Store submission, and post-launch growth. Install apple-skills alongside it (its commands read that library).",
+      "strict": false
     }
   ]
 }

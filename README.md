@@ -72,6 +72,13 @@ demand, so only 23 short descriptions sit in context. Update any time with
 `/plugin marketplace update indie-apple-stack` — no version pinning, you
 always track `main`.
 
+Want the full workflow too? The same marketplace carries
+[SwiftShip](https://github.com/rshankras/SwiftShip)'s 49 `/apple:*` commands:
+
+```
+/plugin install apple@indie-apple-stack
+```
+
 ### Manual Install (copy)
 
 ```bash
