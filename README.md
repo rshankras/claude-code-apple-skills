@@ -57,7 +57,22 @@ Four repos, four layers — use one or all:
 
 See **[docs/USAGE.md](docs/USAGE.md)** for complete guide.
 
-### Installation
+### Install as a Plugin (recommended)
+
+In Claude Code:
+
+```
+/plugin marketplace add rshankras/claude-code-apple-skills
+/plugin install apple-skills@indie-apple-stack
+```
+
+This surfaces the library as 23 category skills (`/apple-skills:generators`,
+`/apple-skills:testing`, ...); each category skill routes to its sub-skills on
+demand, so only 23 short descriptions sit in context. Update any time with
+`/plugin marketplace update indie-apple-stack` — no version pinning, you
+always track `main`.
+
+### Manual Install (copy)
 
 ```bash
 # Clone

@@ -9,6 +9,19 @@ Get up and running with Claude Code Apple Skills in under 5 minutes!
 
 ## Installation (1 minute)
 
+### Option 0: Plugin Install (recommended)
+
+In Claude Code:
+
+```
+/plugin marketplace add rshankras/claude-code-apple-skills
+/plugin install apple-skills@indie-apple-stack
+```
+
+Skills appear as 23 category skills, namespaced by plugin — invoke as
+`/apple-skills:<category>` (e.g. `/apple-skills:generators`). Update with
+`/plugin marketplace update indie-apple-stack`.
+
 ### Option 1: Full Install
 
 ```bash
@@ -56,6 +69,8 @@ Check that skills are installed:
 ls .claude/skills/
 # Should show: generators  ios  macos  testing  monetization  product  ...
 ```
+
+Plugin installs: run `/plugin` and confirm `apple-skills` lists 23 skills.
 
 ## First Use (2 minutes)
 
@@ -140,6 +155,7 @@ per-category breakdown (kept in sync with the tree by `scripts/check-counts.sh`)
 
 ### Skill Not Activating
 
+0. Plugin installs: names are namespaced — try `/apple-skills:<category>` (e.g. `/apple-skills:testing`)
 1. Check skill is in `.claude/skills/` directory
 2. Verify YAML front matter is valid: `head -5 .claude/skills/testing/SKILL.md`
 3. Use explicit trigger phrases from the skill's "When This Skill Activates" section

@@ -151,6 +151,9 @@ place — the [What's Included table in the README](../README.md#whats-included)
 
 ## FAQ
 
+### How do I install these skills?
+Plugin (recommended): in Claude Code run `/plugin marketplace add rshankras/claude-code-apple-skills`, then `/plugin install apple-skills@indie-apple-stack` — the library appears as 23 category skills (`/apple-skills:<category>`), updated via `/plugin marketplace update indie-apple-stack`. Or copy `skills/` into `.claude/skills/` per the README.
+
 ### Can I skip phases for a new app?
 Yes, but not recommended. Specs build on each other. Skipping means less structured implementation.
 
