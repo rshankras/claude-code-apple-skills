@@ -400,7 +400,7 @@ Use market-research **after** initial discovery:
 1. **Use Multiple Sources:** Don't rely on one number
 2. **Be Conservative:** Better to underestimate than over
 3. **Validate with Proxies:** Compare to similar successful apps
-4. **Check App Annie/Sensor Tower:** For actual app market data
+4. **Check app intelligence tools:** Sensor Tower, Appfigures, or similar for directional market/revenue estimates — cross-check with App Store rankings, reviews, and public sources
 5. **Read Financial Reports:** Public companies disclose market data
 
 ## When to Run This Analysis
