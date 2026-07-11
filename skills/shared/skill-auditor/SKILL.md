@@ -216,6 +216,10 @@ Scope: <all | category | single file>
 - **No Swift compilation.** Code-block validity is beyond scope; patterns are matched textually.
 - **No WWDC session cross-referencing.** A future `wwdc-to-skill-workflow` skill owns that.
 
+## Relationship to CI
+
+CI (`scripts/check-freshness.sh`) owns the deterministic subset of M-02: a recency keyword AND a stale version (major ≤ current−2) on the **same line** is a blocking build failure. This auditor's M-02 remains the broader net — ±2-line context, `current`/`target`/`requires` keywords, human-reviewed. Findings unique to M-02 are review candidates, not CI failures; anything CI already blocks will never appear here because it can't merge. C-01 is likewise fully delegated: `scripts/check-frontmatter.sh` blocks missing frontmatter at PR time.
+
 ## Maintenance
 
 The drift heuristic hardcodes "known-current" version constants:
@@ -226,22 +230,22 @@ The drift heuristic hardcodes "known-current" version constants:
 
 ## Verification
 
-After running the auditor on the full repo, counts should fall within this tolerance band (baseline taken 2026-04-20, 149 total `SKILL.md` files):
+After running the auditor on the full repo, counts should fall within this tolerance band (baseline re-taken 2026-07-11, 165 total `SKILL.md` files scanned — 142 leaf skills + 23 category indexes; the README's "147 skills" counts leaf dirs plus the 5 single-skill categories):
 
 | Finding | Expected |
 |---|---|
-| C-01 missing frontmatter | **9** — legacy batch in `app-store/` (keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer) and `generators/` (accessibility-generator, ci-cd-setup, deep-linking, localization-setup, push-notifications) |
-| H-01 missing `allowed-tools` | **9** — same set as C-01 (they lack frontmatter entirely) |
+| C-01 missing frontmatter | **0** — the 2026-04 legacy batch was fixed, and `scripts/check-frontmatter.sh` now blocks regressions in CI |
+| H-01 missing `allowed-tools` | **0** |
 | H-02 broken supporting refs | 0 |
 | H-03 H1 mismatch | flag outliers manually |
-| M-01 missing activation section | **28** — includes the 9 C-01 offenders (which use `## When to Use` instead) plus 19 newer skills missing the section entirely |
-| M-02 version drift | ~50 (±10) — stage-1 Grep returns ~228 raw hits across ~69 files; stage-2 keyword filtering narrows to this band |
-| M-03 pre-`@Observable` no callout | ~29 (±5) |
+| M-01 missing activation section | **6** — ui-prototyping, iap-finalizer, originality-check, store-signals, flow-walkthrough, privacy-publish |
+| M-02 version drift | stage-1 Grep returns ~369 raw hit lines across ~147 files (2026-07-11); the stage-2 narrowed band must be re-derived on the next full run — the pre-hardening band (~50±10) was measured against ~228 raw hits, and CI's `check-freshness.sh` has since removed the same-line recency subset |
+| M-03 pre-`@Observable` no callout | ~29 (±5) — re-verify on the next full run |
 | M-04 oversized single-file | TBD — flag outliers |
 
-### Known legacy pattern: `## When to Use`
+### Known legacy pattern: `## When to Use` (resolved)
 
-The 9 C-01 offenders all use `## When to Use` (non-canonical) rather than `## When This Skill Activates`. The auditor flags this as M-01 correctly; the suggested fix is to rename the heading when adding frontmatter. Do **not** widen the M-01 regex to accept `## When to Use` — the whole point is to normalize onto the canonical heading.
+The 2026-04 batch of files using `## When to Use` as their activation heading has been fully normalized — as of 2026-07-11 no SKILL.md uses it in place of the canonical heading. The rule stands for future contributions: do **not** widen the M-01 regex to accept `## When to Use` — the whole point is to normalize onto the canonical heading. (A `## When to Use …` heading deeper in a file as *content* — e.g. `swift/memory`'s "When to Use / When NOT to Use" section about the technique itself — is fine and not an M-01 signal.)
 
 ### Smoke tests
 

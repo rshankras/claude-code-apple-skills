@@ -54,6 +54,13 @@ for f in docs/USAGE.md docs/QUICK_START.md; do
     grep -qF "$TOTAL skills across $CATS categories" "$f" \
         || fail "$f: expected '$TOTAL skills across $CATS categories'"
 done
+grep -qF "**$TOTAL across $CATS categories**" docs/ROADMAP.md \
+    || fail "docs/ROADMAP.md: expected '**$TOTAL across $CATS categories**'"
+# The plugin manifests hardcode the total in their descriptions too.
+for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json; do
+    grep -qF "$TOTAL " "$f" \
+        || fail "$f: description should mention '$TOTAL' skills"
+done
 
 # --- 2. Per-category counts in the README table ------------------------------
 echo ""

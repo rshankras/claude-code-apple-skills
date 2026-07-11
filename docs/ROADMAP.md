@@ -204,7 +204,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
-| **Total** | **149 across 23 categories** |
+| **Total** | **147 across 23 categories** |
 
 ---
 
@@ -266,5 +266,5 @@ Tracked here so they don't get lost. Baselined after running `skill-auditor` on 
 
 ### Maintenance
 
-- Update `skill-auditor`'s hardcoded "known-current" version constants (iOS 26, macOS 26, Swift 6.x) after each WWDC cycle. Also widen the stage-1 regex range.
-- 5 files in `skills/macos/*/skill.md` are lowercase-tracked in git — rename to `SKILL.md` uppercase for cross-platform (case-sensitive FS) consistency.
+- **Post-WWDC bump (once per June):** update `scripts/versions.env` — the single source of truth for the current OS generation — together with `skill-auditor`'s known-current constants and stage-1 regex upper bound (keep it at CURRENT−2). CI's `check-freshness.sh` cross-checks the two and fails if they drift apart; also tag `wwdc<NN>-era-final` before the refresh begins (see CHANGELOG.md).
+- **Deferred: Claude-powered PR audit job.** Sketch: a PR-only workflow with a gate job exposing `has-key` from `secrets.ANTHROPIC_API_KEY` (secrets aren't readable in job-level `if`), then a claude-code-action job running `skill-auditor` scoped to changed files, commenting findings — never a required check. Deferred because fork PRs can't see secrets, auditor output needs human judgment, and everything with teeth is already deterministic in CI (freshness, frontmatter, counts, Swift parse).
