@@ -137,7 +137,7 @@ struct OpenSettingsIntent: AppIntent {
 // MARK: - Content Type Entity
 
 /// App Intents entity for content types.
-struct ContentTypeEntity: AppEnum {
+enum ContentTypeEntity: String, AppEnum {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Content Type")
 
     static let caseDisplayRepresentations: [ContentTypeEntity: DisplayRepresentation] = [

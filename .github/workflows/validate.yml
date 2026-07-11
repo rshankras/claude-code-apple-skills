@@ -27,6 +27,19 @@ jobs:
           ./scripts/check-freshness.sh --self-test
           ./scripts/check-freshness.sh
 
+  swift-templates:
+    runs-on: ubuntu-latest
+    # Official image, pinned minor — no third-party action in the supply
+    # chain. Templates adopting newer-Swift-only syntax need a tag bump.
+    container: swift:6.1
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Generator template .swift files parse
+        run: |
+          chmod +x scripts/check-swift-templates.sh
+          ./scripts/check-swift-templates.sh
+
   plugin-validate:
     runs-on: ubuntu-latest
     steps:
