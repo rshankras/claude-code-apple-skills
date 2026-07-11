@@ -267,6 +267,7 @@ cp -r skills/your-skill /path/to/test-project/.claude/skills/
 - [ ] No typos or grammar errors
 - [ ] Follows project structure
 - [ ] Tested in real project
+- [ ] Content-changing PRs: add a line under `[Unreleased]` in [CHANGELOG.md](CHANGELOG.md) (advisory, not CI-enforced)
 
 ## Submitting Changes
 
@@ -377,9 +378,8 @@ Maintainers will:
 1. Review PR for quality and fit
 2. Test changes in multiple scenarios
 3. Request changes if needed
-4. Merge when approved
-5. Tag releases with version numbers
-6. Update changelog
+4. Merge when approved (every commit to `main` is a release — no version numbers)
+5. Curate [CHANGELOG.md](CHANGELOG.md) and create the yearly `wwdc<NN>-era-final` tag before each post-WWDC content refresh
 
 ## Recognition
 

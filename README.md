@@ -92,6 +92,12 @@ cp -r claude-code-apple-skills/skills your-project/.claude/skills/
 cp -r claude-code-apple-skills/skills ~/.claude/skills/
 ```
 
+### Pinning and rollback
+
+Plugin installs track `main` with no version pinning. If you need a stable
+snapshot, annotated era tags mark each WWDC content boundary (see
+[CHANGELOG.md](CHANGELOG.md)): `git clone --branch wwdc25-era-final https://github.com/rshankras/claude-code-apple-skills.git` and copy `skills/` manually as above.
+
 ## Directory Structure
 
 ```
