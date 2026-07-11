@@ -291,6 +291,11 @@ Best for: social apps, fitness, competitions.
 - For `SwiftData` or `CoreData` apps, consider storing unlock state alongside the user's data model
 - Sync unlock state via CloudKit if the app supports multiple devices
 
+### App Store Guidelines
+- **Guideline 4.5.4**: Milestone-announcement pushes ("you're 1 away from a badge!") are promotional — explicit opt-in consent and an in-app opt-out are required.
+- **Guideline 2.3.1**: Screenshots showing badges and achievements must reflect what the app actually awards — aspirational metadata is a rejection risk.
+- **Guideline 4.3 (Spam)**: Celebrations don't differentiate a thin app. If this is one of several similar apps on your account, run `app-store/originality-check` before submitting.
+
 ## References
 
 - **templates.md** — All production Swift templates

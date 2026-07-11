@@ -327,6 +327,11 @@ Different calendars (Islamic, Hebrew, Japanese) have different day boundaries an
 ### App Reinstall / Data Loss
 SwiftData stores persist across app updates but are lost on reinstall. For critical streak data, consider syncing to CloudKit or a backend. The templates include a `lastSyncDate` hook in `StreakManager` for this purpose.
 
+### App Store Guidelines
+- **Guideline 4.5.4**: Streak-reminder pushes ("don't lose your 12-day streak!") are marketing notifications — they require explicit opt-in consent in your UI plus an in-app opt-out, not just the system permission prompt.
+- **Guideline 3.1.1**: If streak freezes or repairs are sold, they are digital content and must go through IAP — never an external purchase link.
+- **Guideline 4.3 (Spam)**: A streak mechanic doesn't differentiate a thin app. If this is one of several similar apps on your account, run `app-store/originality-check` before submitting.
+
 ## References
 
 - **templates.md** — All production Swift templates for streak tracking

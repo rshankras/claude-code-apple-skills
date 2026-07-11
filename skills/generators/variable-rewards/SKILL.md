@@ -368,6 +368,12 @@ SwiftData stores persist across app updates but are lost on reinstall. For valua
 ### Midnight Reset Race Condition
 If a user claims a reward at 11:59:59 PM and the daily reset fires at midnight, ensure the claim is attributed to the correct day. The templates use `Calendar.current.startOfDay(for: claimDate)` to normalize all claims to their calendar day, avoiding off-by-one errors at the boundary.
 
+### App Store Guidelines
+- **Guideline 3.1.1**: If randomized rewards can be purchased (paid spins, mystery boxes bought via IAP or a paid currency), Apple requires disclosing the odds of receiving each item type *before* purchase — the loot-box rule. Free daily spins with no paid entry point are exempt.
+- **Guideline 4.5.4**: "Your daily spin is ready" pushes are promotional notifications — allowed only with explicit opt-in consent shown in your UI and an in-app opt-out, not just the system permission prompt.
+- **Age rating**: Slot-style spins and near-miss animations can read as simulated gambling and force a higher age rating. Keep the presentation clearly non-monetary if your rating assumes otherwise.
+- **Guideline 4.3 (Spam)**: Reward mechanics layered onto a thin app don't create distinctness. If this is one of several similar apps on your account, run `app-store/originality-check` before submitting.
+
 ## References
 
 - **templates.md** — All production Swift templates for variable rewards

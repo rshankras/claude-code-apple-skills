@@ -312,6 +312,11 @@ let context = CIContext(options: [.workingColorSpace: CGColorSpaceCreateDeviceRG
 ### Thread Safety
 `WatermarkRenderer` performs CGContext operations that are not inherently thread-safe. Either use it from a single actor or create a new renderer per task. The generated code uses value types (struct) to avoid shared mutable state.
 
+### App Store Guidelines
+- **Guideline 3.1.1**: Watermark removal is a digital feature — unlock it exclusively through IAP; linking out to a website checkout for removal is a rejection.
+- **Guideline 2.3.1**: Screenshots and previews must not present watermark-free output as the default experience if the free tier always watermarks — metadata must show what free users actually get.
+- **Guideline 4.3 (Spam)**: A watermark-plus-paywall wrapper around a template feature set is the classic 4.3 profile. Run `app-store/originality-check` before submitting, especially for portfolio apps.
+
 ## References
 
 - **templates.md** — All production Swift templates for the watermark engine

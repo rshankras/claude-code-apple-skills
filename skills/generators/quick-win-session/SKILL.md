@@ -258,6 +258,12 @@ QuickWinCelebrationView(
 - **Keep it under 60 seconds** — If a quick win takes longer, it's not quick. Trim steps ruthlessly. Three steps is ideal, five is the maximum.
 - **Test with real timing** — Run the flow yourself with a stopwatch. If it feels slow, it is slow.
 
+### App Store Guidelines
+- **Guideline 5.1.1(v)**: Don't gate the quick win behind account creation — apps may not require sign-in for features that don't functionally need an account. Let users reach their first win before any registration ask.
+- **Guideline 2.3.1**: The guided first win must exercise real app functionality — a scripted demo that misrepresents what the app does is a metadata/functionality mismatch.
+- **Guideline 4.5.4**: "Finish what you started" re-engagement pushes are promotional — explicit opt-in consent and an in-app opt-out are required.
+- **Guideline 4.3 (Spam)**: Onboarding polish doesn't differentiate a thin app. If this is one of several similar apps on your account, run `app-store/originality-check` before submitting.
+
 ## References
 
 - **templates.md** — All production Swift templates
