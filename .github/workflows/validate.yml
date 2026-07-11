@@ -22,7 +22,6 @@ jobs:
           ./scripts/check-frontmatter.sh
 
       - name: Freshness — no recency claims against stale OS versions
-        continue-on-error: true   # advisory until the flagged content is fixed
         run: |
           chmod +x scripts/check-freshness.sh
           ./scripts/check-freshness.sh --self-test

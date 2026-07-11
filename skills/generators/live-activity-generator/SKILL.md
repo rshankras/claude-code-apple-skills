@@ -238,7 +238,7 @@ Note: The `apns-topic` must be your app bundle ID with `.push-type.liveactivity`
 
 ### Testing Instructions
 
-1. **Device required:** Live Activities and Dynamic Island cannot be tested in Simulator (as of Xcode 15). Use a physical device with iOS 16.1+.
+1. **Verify on a physical device:** Live Activities run in the Simulator in current Xcode releases, but Lock Screen, StandBy, and Dynamic Island presentation is only authoritative on hardware. Test on a device with iOS 16.1+ before shipping.
 2. **Dynamic Island:** Requires iPhone 14 Pro or later (devices with the Dynamic Island hardware).
 3. **Push-to-update testing:** Use a tool like `apnspush` or `curl` with an APNs auth key (.p8 file) to send test payloads.
 4. **Debug tips:**

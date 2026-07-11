@@ -38,7 +38,7 @@ If found, ask user:
 
 ## Apple Docs Reference
 
-**Latest StoreKit Updates (iOS 18.4+):**
+**StoreKit subscription APIs (iOS 18.4+):**
 - `SubscriptionOfferView` - New SwiftUI view for merchandising subscriptions
 - `subscriptionStatusTask` modifier for tracking subscription state
 - `Transaction.currentEntitlements(for:)` - New API for entitlements
@@ -116,7 +116,7 @@ Sources/Store/
 └── Views/
     ├── PaywallView.swift        # Full paywall screen
     ├── SubscriptionButton.swift # Plan selection button
-    └── SubscriptionOfferCard.swift # New iOS 18.4+ view
+    └── SubscriptionOfferCard.swift # iOS 18.4+ view
 ```
 
 ### Integration Steps
@@ -160,7 +160,7 @@ struct ContentView: View {
 }
 ```
 
-**New iOS 18.4+ SubscriptionOfferView:**
+**SubscriptionOfferView (iOS 18.4+):**
 ```swift
 // Simple merchandising view
 SubscriptionOfferView(productID: "com.app.subscription.monthly")

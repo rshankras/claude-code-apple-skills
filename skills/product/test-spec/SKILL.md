@@ -933,7 +933,7 @@ Run before every release to ensure new changes don't break existing functionalit
 **Participants**: 20-50 external beta testers
 **Duration**: 2 weeks before App Store submission
 **Platforms**: iPhone (all sizes), iPad (if supported)
-**iOS Versions**: iOS 17.0 - latest
+**iOS Versions**: [minimum deployment target] – latest
 
 **Recruitment**:
 - Internal team members

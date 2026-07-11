@@ -323,7 +323,7 @@ if let image = renderer.uiImage {
 - Handle timezone changes gracefully — store timestamps in UTC, display in local time
 
 ### Swift Charts Considerations
-- Swift Charts is iOS 16+ / macOS 13+, but works best with iOS 17+ for latest features
+- Swift Charts is iOS 16+ / macOS 13+; iOS 17 added interactive selection and scrolling APIs
 - Keep chart data points reasonable (7 for weekly, 30 for monthly, 12 for yearly)
 - Use `.chartYScale(domain:)` to prevent axis from starting at a misleading value
 - Provide VoiceOver descriptions with `.accessibilityLabel` on chart marks

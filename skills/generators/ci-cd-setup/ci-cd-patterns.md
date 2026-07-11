@@ -7,9 +7,9 @@ Best practices for continuous integration and deployment of iOS/macOS apps.
 ### Runner Selection
 
 ```yaml
-# macOS runners for Xcode builds
-runs-on: macos-14  # M1 runner with Xcode 15+
-runs-on: macos-15  # Latest with Xcode 16+
+# macOS runners for Xcode builds — one Xcode major per macOS image
+runs-on: macos-15  # Apple silicon, carries Xcode 16
+runs-on: macos-26  # carries Xcode 26
 
 # Available Xcode versions (check runner images for current list)
 # https://github.com/actions/runner-images/blob/main/images/macos
