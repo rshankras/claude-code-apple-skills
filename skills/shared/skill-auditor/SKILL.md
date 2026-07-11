@@ -89,8 +89,8 @@ Group findings by severity (🔴 → 🟢), sort within each group by file path,
      - **Flag M-02** if surrounding lines contain: `latest`, `newest`, `current`, `target`, `deployment target`, `requires`, `minimum`, `as of`, `new in`, `now supports`, `today`
      - **Suppress** if surrounding lines contain: `legacy`, `pre-`, `prior to`, `before`, `deprecated`, `old`, `migrate from`, `backport`, `fallback`, `if available`, `#available`, or the version mention has a trailing `+` (e.g., `iOS 17+`)
      - **Neither** → L-03 (ambiguous)
-- **Known-current constants** (dated 2026-04-20, update per WWDC): iOS 26, macOS 26, Swift 6.x. Mentions of these with drift context are always clean.
-- **Fix**: Update the reference to iOS 26 / macOS 26 / Swift 6.x, or annotate as legacy context with one of the suppression keywords.
+- **Known-current constants** (dated 2026-07-11, update per WWDC): iOS 27, macOS 27 (announced WWDC26; iOS 26 / macOS 26 are within the one-generation grace), Swift 6.x. Normative source: `scripts/versions.env`. Mentions of these with drift context are always clean.
+- **Fix**: Update the reference to the current generation (see `scripts/versions.env`), or annotate as legacy context with one of the suppression keywords.
 
 **M-03 · Pre-`@Observable` pattern without deprecation callout.** Uses `@StateObject` or `ObservableObject` without acknowledging that `@Observable` is the current pattern.
 - **Detection**: `Grep` for `@StateObject|ObservableObject` with line numbers; for each hit, secondary `Grep` of the same file for `@Observable|deprecated|legacy|pre-@Observable|migration|old pattern` within ±10 lines. No secondary match → M-03.
@@ -220,9 +220,9 @@ Scope: <all | category | single file>
 
 The drift heuristic hardcodes "known-current" version constants:
 
-- iOS 26, macOS 26, Swift 6.x (dated 2026-04-20)
+- iOS 27, macOS 27, Swift 6.x (dated 2026-07-11; announced WWDC26)
 
-**Update these constants** when Apple ships a new major platform version (usually post-WWDC each June). The stage-1 regex ranges (`iOS 1[7-9]|2[0-5]`, `macOS 1[3-9]|2[0-5]`) must also be widened to include the newly-retired version.
+**Update these constants** when Apple ships a new major platform version (usually post-WWDC each June), together with `scripts/versions.env` — CI's `check-freshness.sh` cross-checks that this file mentions the manifest's current iOS generation and fails if they drift apart. The stage-1 regex ranges (`iOS 1[7-9]|2[0-5]`, `macOS 1[3-9]|2[0-5]`) must also be widened each cycle so their upper bound stays at CURRENT−2 (the previous generation sits inside a one-generation grace and is not stale; the ranges are unchanged for the iOS 27 cycle since 17–25 already ends at 27−2).
 
 ## Verification
 
