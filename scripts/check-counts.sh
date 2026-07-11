@@ -117,9 +117,11 @@ done
 # --- 4. Cross-repo: SwiftShip command count (skipped if no sibling checkout) --
 echo ""
 echo "== Cross-repo counts =="
+# SwiftShip's commands live at commands/*.md — the /apple: prefix comes from
+# the plugin name, not a subdirectory.
 SWIFTSHIP="${SWIFTSHIP_DIR:-$REPO_DIR/../SwiftShip}"
-if [ -d "$SWIFTSHIP/commands/apple" ]; then
-    CMDS=$(ls "$SWIFTSHIP"/commands/apple/*.md 2>/dev/null | wc -l | tr -d ' ')
+if [ -d "$SWIFTSHIP/commands" ]; then
+    CMDS=$(ls "$SWIFTSHIP"/commands/*.md 2>/dev/null | wc -l | tr -d ' ')
     grep -qF "$CMDS /apple:* commands" README.md \
         || fail "README stack table: SwiftShip row says stale command count (checkout has $CMDS)"
     echo "  SwiftShip: $CMDS commands"

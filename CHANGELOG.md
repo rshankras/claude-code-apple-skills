@@ -28,6 +28,7 @@ from the local copy (see "Pinning and rollback" in the README).
 - `scripts/check-counts.sh` now also guards `docs/ROADMAP.md`, `plugin.json`, and `.claude-plugin/marketplace.json` counts
 
 ### Fixed
+- `check-counts.sh` cross-repo check pointed at `commands/apple/` but SwiftShip's commands live at `commands/` — the count guard could never fire; README docs table now lists CHANGELOG.md
 - Stale recency claims in paywall-generator, test-spec, live-activity-generator, usage-insights, ci-cd-setup
 - `deep-linking/templates/AppShortcuts.swift`: `ContentTypeEntity` declared as `struct` with `case` members — did not parse; now `enum ContentTypeEntity: String, AppEnum`
 - `docs/ROADMAP.md` skill total (149 → 147) and stale maintenance bullets
