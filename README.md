@@ -143,6 +143,7 @@ skills/
 |-----|-------------|
 | [docs/USAGE.md](docs/USAGE.md) | How to use for new vs existing apps |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Skills roadmap and status |
+| [CHANGELOG.md](CHANGELOG.md) | Notable changes and era tags (pinning/rollback points) |
 | [skills/product/WORKFLOW.md](skills/product/WORKFLOW.md) | Full idea to App Store workflow |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
 
