@@ -185,6 +185,16 @@ struct RelevantProvider: TimelineProvider {
 
 **Tip:** Assign high relevance during active moments (workout in progress, flight boarding soon) and low relevance during idle periods.
 
+### System Relevance Signals
+
+Beyond scores, the Smart Stack boosts widgets on five signals — align timeline entries with them:
+
+1. **Imminent time or date** -- an event about to start
+2. **Location reached** -- inferred Home/Work/School locations need no GPS or location permission
+3. **Headphones connected** -- media widgets surface
+4. **Wake / bedtime** -- morning summary, evening recap
+5. **Workout start / end** -- fitness content before and after
+
 ## Widget Suggestions (watchOS 10+)
 
 Proactively suggest widgets to users who haven't added them yet.
@@ -204,8 +214,26 @@ func suggestWidget() {
 
 ## watchOS Design Considerations
 
+### Six Standard Layouts (WWDC23)
+
+Users engage with the Smart Stack for about 10 seconds — pick one standard layout and make a single point:
+
+| Layout | Best For |
+|--------|----------|
+| Three-line text | Date + primary + secondary line |
+| Grouped / collection | Multiple color-coded items (calendar, stocks) |
+| Bar gauge + text | Progress toward a goal |
+| Circular graphic + text | One metric with an icon or gauge |
+| Large text / single word | One unmistakable value |
+| Chart | Trends over time |
+
+Lead with an SF Symbol — or vector icons that lock with text so they scale together — and use the provided text-styling classes for sizes, weights, and margins rather than hand-tuning.
+
+### Sessions and the Session Control Widget
+Active sessions (music, timers, workouts) get an automatic Session Control widget pinned to the top of the stack. Design your widget to lead INTO a session or follow up after one — never duplicate the session's controls.
+
 ### Dark Background
-watchOS widgets always render on a dark background. Design accordingly.
+watchOS widgets default to a dark material with white text. Design accordingly — though a background may aid recognition or convey meaning (a dynamic weather gradient, red/green for movement, a blurred cover for ambience). Never color for mere decoration.
 
 ```swift
 struct WatchWidgetView: View {
@@ -414,3 +442,7 @@ let container = try ModelContainer(
 7. **Use `.containerBackground`** -- Required on watchOS 10+. Omitting it causes a runtime warning and default background.
 
 8. **Support `.widgetAccentable()`** -- Mark key visual elements so they adopt the watch face accent color in accented rendering mode.
+
+9. **Design complications as a set** -- The Combo widget (three user-chosen circular complications) sits in every Smart Stack by default; make your circular complications work well together.
+
+10. **Respect manual control** -- Users can add, remove, and pin widgets. Relevance influences ordering; it never overrides a pinned arrangement.

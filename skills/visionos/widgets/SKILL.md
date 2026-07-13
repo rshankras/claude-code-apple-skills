@@ -81,13 +81,22 @@ struct MyWidget: Widget {
 }
 ```
 
-**Mounting styles**: `.elevated` (default) sits on surfaces like tables. `.recessed` embeds into walls like a framed picture. Omit `.supportedMountingStyles()` to use elevated only.
+**Mounting styles**: `.elevated` (default) sits on surfaces like tables. `.recessed` embeds into walls like a framed picture. Omit `.supportedMountingStyles()` to use elevated only. Recessed works only on vertical surfaces — placements on horizontal surfaces are always elevated. On horizontal surfaces the system also applies a gentle tilt toward the user; design for that angle rather than fighting it.
 
 **Textures**: `.glass` (default) is transparent and blends with the environment. `.paper` is opaque and poster-like, best for rich imagery.
 
+## Spatial Behavior (WWDC25)
+
+Widgets are permanent room fixtures: they persist across sessions, room changes, and device power cycles, and they snap only to **physical** surfaces — never to virtual environments. Multiple instances of the same widget can coexist in a room.
+
+- **User resizing**: a corner affordance lets users scale a widget from **75% to 125%** of its template size — layouts must survive the entire range.
+- **Frames**: users pick from **five frame widths** (thin to thick), independent of template size. The recessed style fixes the frame width.
+- **Frame tinting**: the widget frame always receives the user's color tint and cannot opt out. Even when the background opts out of tinting, foregrounds must hold up under all **7 light and 7 dark** system palettes.
+- **Assets**: widgets render at real-world scale — ship high-resolution assets so imagery stays sharp at close range.
+
 ## Proximity Awareness (Level of Detail)
 
-The system tracks user distance and transitions between detail levels automatically with animation.
+The system tracks user distance and transitions automatically, with animation, between exactly two detail levels: `.default` when the user is close and `.simplified` at a distance. In the simplified state, cut information density and enlarge the key info.
 
 ```swift
 struct MyWidgetView: View {
@@ -126,7 +135,7 @@ Always handle `@unknown default` for forward compatibility.
 | `.systemMedium` | Wide rectangle -- two-column or list preview |
 | `.systemLarge` | Large square -- charts, detailed content |
 | `.systemExtraLarge` | Extra-large landscape -- dashboards |
-| `.systemExtraLargePortrait` | Extra-large portrait -- visionOS only |
+| `.systemExtraLargePortrait` | Extra-large portrait -- visionOS only; wall-art "statement" widgets |
 
 Guard the visionOS-only family in multiplatform targets:
 
@@ -249,6 +258,7 @@ struct GoodProximityView: View {
 - [ ] Mounting style explicitly set if widget should appear recessed or support both
 - [ ] Texture set to `.paper` for widgets with rich imagery
 - [ ] Widget tested in both elevated and recessed placements (if both supported)
+- [ ] Layout survives user resizing from 75% to 125% of the template size
 
 ### Proximity Awareness
 - [ ] `@Environment(\.levelOfDetail)` provides simplified layout for distant viewers
@@ -265,6 +275,7 @@ struct GoodProximityView: View {
 - [ ] Widget renders correctly in both full color and accented modes
 - [ ] `showsWidgetContainerBackground` checked if foreground colors depend on background
 - [ ] System semantic colors used for glass texture compatibility
+- [ ] Foreground legible under all 7 light and 7 dark frame-tint palettes
 
 ## References
 

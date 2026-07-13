@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 157 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 158 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 50 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -39,11 +39,11 @@ Four repos, four layers — use one or all:
 | **SwiftData** | 1 | Class inheritance patterns |
 | **MapKit** | 1 | GeoToolbox, place descriptors |
 | **Foundation** | 1 | AttributedString updates |
-| **visionOS** | 1 | Widget development |
+| **visionOS** | 2 | Spatial design, widget development |
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 157 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 158 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 
@@ -127,7 +127,7 @@ skills/
 ├── swiftdata/              # Class inheritance patterns
 ├── mapkit/                 # GeoToolbox, place descriptors
 ├── foundation/             # AttributedString updates
-├── visionos/               # visionOS widgets
+├── visionos/               # Spatial design (ergonomics, comfort, environments), widgets (2 skills)
 ├── testing/                # TDD workflows, test infrastructure, snapshot tests, flow walkthrough (9 skills)
 ├── monetization/           # Pricing strategy, tiers, free trials, external purchases, bundles & licensing (3 skills)
 ├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, ad attribution, rejections, originality, IAP finalize, ratings, web presence (12 skills)
