@@ -123,7 +123,7 @@ LISTED=0
 
 # 4a. README per-skill tables — categories that have one must name every skill.
 #     Give a new category a README table? Add it here.
-README_TABLE_CATS="generators growth legal testing monetization swiftui performance app-store security"
+README_TABLE_CATS="generators growth legal testing monetization swiftui performance app-store security design visionos"
 for cat in $README_TABLE_CATS; do
     for f in $(find "skills/$cat" -mindepth 2 -maxdepth 2 -name "SKILL.md" 2>/dev/null); do
         s=$(basename "$(dirname "$f")")

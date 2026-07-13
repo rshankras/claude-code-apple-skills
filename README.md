@@ -263,6 +263,25 @@ Generate production-ready Swift code that adapts to your project:
 | `external-purchases` | US web checkout via the External Purchase Link entitlement — 0%-commission era, commission-flip architecture |
 | `bundles-and-licensing` | Own-app bundles, Family Sharing, cross-developer suites, Group/Volume Purchasing (announced) |
 
+## Design Skills
+
+| Skill | What It Covers |
+|-------|----------------|
+| `design/liquid-glass` | Liquid Glass implementation + design rules (SwiftUI/AppKit/UIKit, never glass-on-glass, Regular vs Clear) |
+| `design/animation-patterns` | Springs, PhaseAnimator/KeyframeAnimator, transitions (incl. zoom + interruptibility), symbol effects |
+| `design/ui-prototyping` | Divergent UI directions as named #Preview variants — go wide, remix, tune |
+| `design/design-principles` | The evergreen canon: wayfinding, discoverability, fluid-gesture physics, idea→interface process |
+| `design/ux-writing` | Interface copy: PACE framework, voice/tone, alert anatomy, feature naming |
+| `design/sf-symbols` | Choosing/configuring symbols, custom-symbol authoring, animation vocabulary |
+| `design/typography` | Text styles, Dynamic Type, optical sizes, the SF family + width axis |
+
+## visionOS Skills
+
+| Skill | What It Covers |
+|-------|----------------|
+| `visionos/spatial-design` | Spatial layout ergonomics, eyes-and-hands input, motion comfort, immersion, environment budgets |
+| `visionos/widgets` | Mounting styles, glass/paper textures, proximity-aware layouts, spatial families |
+
 ## SwiftUI Skills
 
 | Skill | What It Covers |
