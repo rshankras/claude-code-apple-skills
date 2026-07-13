@@ -181,18 +181,18 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 
 | Category | Count | Skills |
 |----------|-------|--------|
-| generators/ | 52 | logging-setup, analytics-setup, networking-layer, auth-flow, paywall-generator, settings-screen, persistence-setup, onboarding-generator, review-prompt, error-monitoring, ci-cd-setup, localization-setup, push-notifications, deep-linking, test-generator, accessibility-generator, widget-generator, app-icon-generator, feature-flags, live-activity-generator, tipkit-generator, cloudkit-sync, http-cache, pagination, image-loading, share-card, social-export, subscription-lifecycle, referral-system, watermark-engine, streak-tracker, milestone-celebration, whats-new, lapsed-user, usage-insights, variable-rewards, consent-flow, account-deletion, permission-priming, force-update, state-restoration, debug-menu, offline-queue, feedback-form, announcement-banner, quick-win-session, spotlight-indexing, app-clip, screenshot-automation, background-processing, app-extensions, data-export |
-| product/ | 13 | idea-generator, product-agent, competitive-analysis, market-research, prd-generator, architecture-spec, ux-spec, implementation-guide, implementation-spec, test-spec, release-spec, beta-testing, localization-strategy |
+| generators/ | 63 | logging-setup, analytics-setup, networking-layer, auth-flow, paywall-generator, settings-screen, persistence-setup, onboarding-generator, review-prompt, error-monitoring, ci-cd-setup, localization-setup, push-notifications, deep-linking, test-generator, accessibility-generator, widget-generator, app-icon-generator, feature-flags, live-activity-generator, tipkit-generator, cloudkit-sync, http-cache, pagination, image-loading, share-card, social-export, subscription-lifecycle, referral-system, watermark-engine, streak-tracker, milestone-celebration, whats-new, lapsed-user, usage-insights, variable-rewards, consent-flow, account-deletion, permission-priming, force-update, state-restoration, debug-menu, offline-queue, feedback-form, announcement-banner, quick-win-session, spotlight-indexing, app-clip, screenshot-automation, background-processing, app-extensions, data-export, subscription-offers, win-back-offers, promoted-iap, in-app-events, custom-product-pages, product-page-optimization, featuring-nomination, offer-codes-setup, pre-orders, app-store-assets, preview-data-generator |
+| product/ | 14 | idea-generator, product-agent, app-namer, competitive-analysis, market-research, prd-generator, architecture-spec, ux-spec, implementation-guide, implementation-spec, test-spec, release-spec, beta-testing, localization-strategy |
 | macos/ | 8 | app-planner, coding-best-practices, architecture-patterns, swiftdata-architecture, ui-review-tahoe, macos-tahoe-apis, macos-capabilities, appkit-swiftui-bridge |
-| testing/ | 8 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold |
+| testing/ | 9 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold, flow-walkthrough |
 | app-store/ | 11 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer, marketing-strategy, apple-search-ads, rejection-handler, originality-check, iap-finalizer, ratings-mechanics, web-presence |
-| ios/ | 7 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access |
+| ios/ | 9 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access, run-simulator, run-device |
 | swiftui/ | 5 | alarmkit, webkit, text-editing, toolbars, charts-3d |
 | growth/ | 6 | analytics-interpretation, press-media, community-building, indie-business, store-signals, store-growth-audit |
 | swift/ | 3 | concurrency-patterns, concurrency, memory |
 | apple-intelligence/ | 3 | foundation-models, visual-intelligence, app-intents |
-| design/ | 2 | liquid-glass, animation-patterns |
-| legal/ | 2 | privacy-policy |
+| design/ | 3 | liquid-glass, animation-patterns, ui-prototyping |
+| legal/ | 2 | privacy-policy, privacy-publish |
 | performance/ | 2 | profiling, swiftui-debugging |
 | security/ | 2 | security, privacy-manifests |
 | core-ml/ | 1 | core-ml (with patterns.md, templates.md) |

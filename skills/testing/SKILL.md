@@ -50,6 +50,9 @@ Test fixture factories for your models. Makes writing tests faster by eliminatin
 **integration-test-scaffold/**
 Cross-module test harness with mock servers, in-memory stores, and test configuration. For testing networking + persistence + business logic together.
 
+**flow-walkthrough/**
+Drive each user flow in the Simulator (XCUITest + per-step screenshots), audit the navigation graph for dead-ends, and run a human discoverability check.
+
 ## How to Use
 
 1. Identify whether user is working on **new code** or **existing code**

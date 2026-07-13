@@ -114,7 +114,50 @@ for d in $(find skills -mindepth 1 -maxdepth 1 -type d ! -name "_shared" -exec b
         || fail "skills/$d exists but has no row mapping in this script — add it to PAIRS and the README table"
 done
 
-# --- 4. Cross-repo: SwiftShip command count (skipped if no sibling checkout) --
+# --- 4. Listings match the tree (README tables, category indexes, ROADMAP) ----
+# Counts alone let name lists rot (a skill lands, the table row count is bumped,
+# but the skill is never *named*). Three surfaces claim per-skill name coverage:
+echo ""
+echo "== Listings match the tree =="
+LISTED=0
+
+# 4a. README per-skill tables — categories that have one must name every skill.
+#     Give a new category a README table? Add it here.
+README_TABLE_CATS="generators growth legal testing monetization swiftui performance app-store security"
+for cat in $README_TABLE_CATS; do
+    for f in $(find "skills/$cat" -mindepth 2 -maxdepth 2 -name "SKILL.md" 2>/dev/null); do
+        s=$(basename "$(dirname "$f")")
+        grep -q "$s" README.md \
+            || fail "README: skills/$cat/$s is not named in its per-skill table"
+        LISTED=$((LISTED + 1))
+    done
+done
+
+# 4b. Category indexes — a SKILL.md with an '## Available Skills' section must
+#     name every member skill.
+for idx in skills/*/SKILL.md; do
+    grep -q "## Available Skills" "$idx" || continue
+    catdir=$(dirname "$idx")
+    for f in $(find "$catdir" -mindepth 2 -maxdepth 2 -name "SKILL.md"); do
+        s=$(basename "$(dirname "$f")")
+        grep -q "$s" "$idx" \
+            || fail "$idx: 'Available Skills' does not name $s"
+        LISTED=$((LISTED + 1))
+    done
+done
+
+# 4c. ROADMAP's 'Skills by Category' name lists claim full coverage — every
+#     skill dir must be named somewhere in docs/ROADMAP.md.
+for f in $(find skills -mindepth 3 -maxdepth 3 -name "SKILL.md" ! -path "skills/_shared/*"); do
+    s=$(basename "$(dirname "$f")")
+    c=$(basename "$(dirname "$(dirname "$f")")")
+    grep -q "$s" docs/ROADMAP.md \
+        || fail "docs/ROADMAP.md: $c/$s is not named in any category row"
+    LISTED=$((LISTED + 1))
+done
+echo "  checked $LISTED listing entries"
+
+# --- 5. Cross-repo: SwiftShip command count (skipped if no sibling checkout) --
 echo ""
 echo "== Cross-repo counts =="
 # SwiftShip's commands live at commands/*.md — the /apple: prefix comes from
