@@ -1,6 +1,14 @@
 # Core Animations
 
-Fundamentals of SwiftUI animation: `withAnimation`, spring configurations, completions, transactions, and timing curves.
+Fundamentals of SwiftUI animation: `withAnimation`, spring configurations, completions, transactions, timing curves — and how the animation system actually works.
+
+## How Animation Works (WWDC23)
+
+Every SwiftUI animation has two separable halves: an **animatable attribute** — anything conforming to `Animatable` (opacity, scale, position, color) — and an **`Animation`** that supplies the timing. When state changes inside an animated transaction, SwiftUI interpolates the attribute in the render tree; the view's `body` does not re-run per frame for built-in effects.
+
+- **SwiftUI animates the delta, not the destination.** The animation runs over the vector *difference* between old and new values. A second change landing mid-flight adds its own delta animation on top, so concurrent animations merge additively instead of jumping.
+- **Springs preserve velocity.** A retargeted spring merges with the in-flight one and carries its velocity toward the new target — the reason springs are the right default for anything interactive. Timing curves don't merge; overlapping ones run concurrently and their deltas sum.
+- **The bare default is a smooth spring.** `withAnimation { }` with no argument uses `.smooth` on iOS 17+. Think of a spring as *perceived duration + bounce*, not physics homework — that's exactly what the Gen 3 parameters encode.
 
 ## withAnimation vs .animation Modifier
 
@@ -42,6 +50,31 @@ Circle()
 // ✅ Always pass value:
 Circle()
     .animation(.spring, value: isActive)
+```
+
+### Scoped Variants (iOS 17+)
+
+Two further scoping tools keep animation from leaking where you didn't intend it (WWDC23):
+
+**Body-closure variant** — the animation applies only to the attributes inside the closure. Essential for reusable components: the animation cannot propagate to child views the caller passes in:
+
+```swift
+content
+    .animation(.smooth) { view in
+        view
+            .opacity(isSelected ? 1 : 0.6)
+            .scaleEffect(isSelected ? 1.03 : 1)
+    }
+```
+
+**Stacked per-property timing** — `.animation(_:value:)` animates the modifiers *above* it in the chain, up to the previous `.animation`. Stack several at different points for per-property timing without reaching for a KeyframeAnimator:
+
+```swift
+Circle()
+    .scaleEffect(selected ? 1.2 : 1)
+    .animation(.bouncy, value: selected)   // scale animates with bounce
+    .opacity(selected ? 1 : 0.5)
+    .animation(.smooth, value: selected)   // opacity animates smoothly
 ```
 
 ## Spring Configurations
@@ -216,6 +249,38 @@ Text(count, format: .number)
     }
 ```
 
+A bare `.transaction { }` rewrites the transaction for *every* change flowing through the view. Prefer `.animation(_:value:)` scoped to a value — or the scoped variants `.transaction(value:)` (fires only when that value changes) and `.transaction(_:body:)` (applies only to the attributes inside the closure), both iOS 17+.
+
+### TransactionKey — Animate by Cause (iOS 17+)
+
+When the same state change should animate differently depending on *why* it happened, define a custom `TransactionKey`, tag the change site, and read the cause where the view reacts (WWDC23):
+
+```swift
+struct FromUserTapKey: TransactionKey {
+    static let defaultValue = false
+}
+
+extension Transaction {
+    var fromUserTap: Bool {
+        get { self[FromUserTapKey.self] }
+        set { self[FromUserTapKey.self] = newValue }
+    }
+}
+
+// Change site: tag the cause
+withTransaction(\.fromUserTap, true) {
+    model.selection = item
+}
+
+// Reacting view: pick the animation from the cause
+ItemView(item)
+    .transaction { t in
+        t.animation = t.fromUserTap ? .bouncy : .smooth
+    }
+```
+
+This beats threading a `Bool` through view initializers: the cause travels with the state change itself, so a model updated from both user taps and server pushes animates correctly from either source.
+
 ## Timing Curves
 
 Non-spring animations for specific use cases (opacity fades, progress bars).
@@ -243,7 +308,7 @@ Non-spring animations for specific use cases (opacity fades, progress bars).
 
 ## Animation Modifiers
 
-Chain these onto any `Animation` value:
+Higher-order modifiers: each wraps a base animation and transforms its timing, so they compose with springs, timing curves, and `CustomAnimation`s alike. Chain them onto any `Animation` value:
 
 ```swift
 // Repeat forever (for loading spinners, pulsing effects)
@@ -334,6 +399,20 @@ struct CountingText: View, Animatable {
 ```
 
 Use `withAnimation` to drive the value change — SwiftUI interpolates `animatableData` each frame.
+
+Requirements and mechanics (WWDC23):
+
+- `animatableData` must be **readwrite** and conform to `VectorArithmetic`. The built-in types are vectors too: `CGFloat`/`Double` animate as 1D vectors, `CGPoint`/`CGSize` as 2D, `CGRect` as 4D.
+- Combine multiple properties with `AnimatablePair` (nest pairs for more dimensions):
+
+```swift
+var animatableData: AnimatablePair<Double, Double> {
+    get { AnimatablePair(angle, radius) }
+    set { angle = newValue.first; radius = newValue.second }
+}
+```
+
+- **Cost warning:** when a `View` conforms to `Animatable`, the animatable attribute is the view itself — SwiftUI calls its `body` **every frame** of the animation, skipping the render-tree fast path that built-in effects use. Reach for it only when no built-in effect can express the motion — e.g. moving views along an arc by animating the angle input of a custom layout, where interpolating an `offset` would cut straight across the chord instead of following the curve. Keep that `body` trivial.
 
 ## Fluid Interface Principles (WWDC18)
 

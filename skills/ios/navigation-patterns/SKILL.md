@@ -78,6 +78,23 @@ The container APIs above decide *how* navigation is built; these rules decide *w
 - Nav bar title = the current location; the back button shows the *previous* screen's title.
 - Chevron disclosure indicator ONLY on rows that push — never on rows that present modally or perform an action.
 
+## The Three Cookbook Recipes (WWDC22)
+
+Nearly every app is one of these three shapes. Pick one per scene, then lift its navigation state.
+
+1. **Pushable stack** — `NavigationStack(path:)` + `NavigationLink(value:)` + `.navigationDestination(for:)`. Pop-to-root is `path.removeAll()`; a deep link is just assigning the path.
+2. **Multi-column without stacks** — `NavigationSplitView` + `List(selection:)` in each leading column. Value links auto-drive the next column's selection, so programmatic navigation is setting the selection value.
+3. **Split + stack (Photos-style)** — `NavigationSplitView` with a `NavigationStack(path:)` *inside the detail column*: sidebar selection picks the collection, the stack drills into it.
+
+**Path type rule:** pushing a single type → typed array (`@State private var path: [Recipe] = []`); heterogeneous destinations → `NavigationPath`.
+
+**Rules that make the recipes hold up:**
+- ❌ Never attach `.navigationDestination` INSIDE a lazy container (`List`, `LazyVGrid`, `LazyVStack`) — lazily-created rows may never load, so the destination may never register. Place it *outside* the lazy container, near the links it serves.
+- Build with `NavigationSplitView` even for iPhone-first apps — it auto-collapses to a single stack in compact width, and iPad/Mac layouts come free.
+- Lift navigation state: exactly one bound `path`/selection per container. That single source of truth is what makes pop-to-root, deep links, and restoration one-line operations.
+
+**State restoration, robustly:** encode ONLY identifiers, never full models — a `Codable` `NavigationModel` whose `encode` writes `path.map(\.id)` and whose decode rebuilds via `compactMap`, so items deleted between launches drop silently instead of failing the whole decode. Persist through `@SceneStorage("navigation")` plus a `.task` that restores once on appear, then streams subsequent path changes back into storage.
+
 ## Process
 
 ### 1. Identify Navigation Needs
@@ -103,7 +120,8 @@ Apply patterns from the reference files. Check for common mistakes:
 
 - [ ] Using deprecated `NavigationView` instead of `NavigationStack`/`NavigationSplitView`
 - [ ] Using `NavigationLink(destination:)` instead of `NavigationLink(value:)` + `.navigationDestination`
-- [ ] Placing `NavigationStack` inside `NavigationSplitView` detail (usually wrong)
+- [ ] Placing `NavigationStack` in a sidebar/content column of `NavigationSplitView` (a stack belongs only in the detail column — Recipe 3)
+- [ ] `.navigationDestination` attached inside a lazy container (destination may never register)
 - [ ] Missing `.navigationDestination` registration for a value type
 - [ ] NavigationPath not `@State` or not in the right scope
 - [ ] Multiple NavigationStacks competing for the same navigation context

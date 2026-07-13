@@ -47,7 +47,7 @@ Present the named set; the user flips between them and reacts. **Expect duds** (
 ### Stage 2 — Remix + make it lived-in
 
 1. **Remix.** The user names what they liked *by preview name and element* — "the standings board from *Club Hub* + the current-book cover from *Cozy*." Generate new **hybrid** variations from only those elements, each its own new named preview. Go wide → remix → repeat until one direction feels right.
-2. **Lived-in content.** Empty scaffolding lies about how a screen feels. Generate **reusable sample models in their own file** (delegate to `generators/preview-data-generator`) so you can edit them, and make the content *plausible for the audience* — a book club's discussions are about books, not lorem ipsum.
+2. **Lived-in content.** Empty scaffolding lies about how a screen feels. Generate **reusable sample models in their own file** (delegate to `generators/preview-data-generator`) so you can edit them, and make the content *plausible for the audience* — a book club's discussions are about books, not lorem ipsum. Plausible also means **messy, not idealized**: prototype with real data ranges, because the layout that flatters a hilly San Francisco route must also survive a pancake-flat New York one (WWDC23). Ideal placeholders hide exactly the cases that break a design.
 3. **Edge-case previews.** Think the states through yourself; don't let the agent silently pick the happy path. Cover at minimum:
    - **Empty / blank-slate** — no meeting scheduled yet, zero items. Is there a call-to-action and an account/management entry, or does it just look broken?
    - **Unbounded growth** — many members, long message threads, dozens of past items, long titles. Truncate, or an expand control? (The leaderboard that pushes the discussion off-screen is the classic bug.)
@@ -65,6 +65,7 @@ Signature interactions — a cover-to-detail transition, a staggered list entran
 4. **Tuning panels generalize** beyond animation: swap app states, colors, fonts, visual offsets. Use `design/animation-patterns` for the curve knowledge; the panel is its runnable counterpart.
 5. **Prototype beyond static layout.** Friction, inertia, device-motion effects (gyroscope parallax), and haptics are all promptable and panel-tunable the same way — and they're *feel*, only judgeable running on a device, not in a screenshot (WWDC26).
 6. **Guard it behind DEBUG / a launch arg** so it never ships — same discipline as walkthrough's `-uiTestSeed`.
+7. **On device early; review as a demo app.** Don't wait for "done" to leave the canvas — feel parameters (Digital Crown sensitivity, spring values) only tune while running live, so the earlier a prototype is on hardware the cheaper every iteration. And when it's time for a design review, bundle the competing prototypes into one on-device demo app rather than exporting stills: "no slide deck in the world can compare with one spectacular demo" (WWDC23).
 
 ## Output: `.planning/PROTOTYPE.md` + real Swift
 

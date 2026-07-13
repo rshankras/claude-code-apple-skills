@@ -1,6 +1,6 @@
 ---
 name: charts-3d
-description: 3D chart visualization with Swift Charts using Chart3D, SurfacePlot, interactive pose control, and surface styling. Use when creating 3D data visualizations.
+description: 3D chart visualization with Swift Charts using Chart3D, SurfacePlot, interactive pose control, and surface styling — plus a 2D Swift Charts construction reference (marks, axes, selection, SectorMark, scrollable charts). Use when creating data visualizations with Swift Charts.
 allowed-tools: [Read, Glob, Grep]
 ---
 
@@ -19,6 +19,7 @@ Use this skill when the user:
 - Needs to style 3D surfaces with gradients or height-based coloring
 - Wants to render multiple surfaces in a single 3D chart
 - Asks about data-driven 3D plots from an array of points
+- Needs the 2D Swift Charts API layer: marks, axes, series styling, selection, SectorMark pies/donuts, or scrollable charts
 
 ## Decision Tree
 
@@ -366,6 +367,174 @@ These apply to every chart you build — 2D or 3D. The pillars: **focused, appro
 - **Color enhances, never solely conveys** — differentiate series with symbols/shapes first, color second. Verify contrast in Dark, Light, and Increase Contrast, and balance saturation so no series visually outweighs the others.
 - **Every visual encoding needs a non-visual representation** — VoiceOver labels and Audio Graphs; Swift Charts provides both, so don't break them with custom drawing.
 
+## Swift Charts Construction Reference (2D)
+
+The design fundamentals above apply to every chart; this is the API layer for standard 2D charts (iOS 16+ unless noted; selection, SectorMark, and scrolling are iOS 17+).
+
+### Marks Compose
+
+A `Chart` is a composition of marks — `BarMark`, `LineMark`, `PointMark`, `AreaMark`, `RuleMark`, `RectangleMark`. The `.value("Label", v)` factory arguments do double duty: they bind data AND drive the automatic axes and legend, so label them meaningfully:
+
+```swift
+Chart(salesData) { sale in          // Identifiable data — no explicit ForEach needed
+    BarMark(
+        x: .value("Day", sale.day, unit: .day),   // unit: .day buckets temporal values per day
+        y: .value("Sales", sale.count)
+    )
+}
+```
+
+- Transpose a chart by swapping the x/y value pairs — horizontal bars need no other change.
+- `unit:` (`.day`, `.month`, `.hour`) controls temporal bucketing; omit it and every timestamp is its own position.
+
+### Series: Style + Symbol, Never Color Alone
+
+`.foregroundStyle(by:)` splits marks into series; pair it with `.symbol(by:)` so series stay distinguishable without color (WWDC22):
+
+```swift
+Chart(data) { point in
+    LineMark(x: .value("Day", point.day), y: .value("Sales", point.sales))
+        .foregroundStyle(by: .value("City", point.city))
+        .symbol(by: .value("City", point.city))
+}
+```
+
+- Remap series colors with `.chartForegroundStyleScale(["Cupertino": .indigo, "San Francisco": .teal])`.
+- `.position(by: .value("City", point.city))` converts stacked bars into grouped bars.
+
+### Pin Scales for Stability
+
+Automatic scales recalculate on every data update — a filtered dataset makes the whole chart jump. Pin them:
+
+```swift
+.chartYScale(domain: 0...maxExpectedSales)
+.chartXScale(domain: startDate...endDate)
+```
+
+### Composing Statistics into a Chart
+
+Marks compose freely, so summary statistics are just more marks:
+
+```swift
+Chart {
+    ForEach(data) { point in
+        AreaMark(                                    // min–max band
+            x: .value("Day", point.day),
+            yStart: .value("Min", point.min),
+            yEnd: .value("Max", point.max)
+        )
+        .opacity(0.3)
+
+        LineMark(x: .value("Day", point.day), y: .value("Average", point.average))
+    }
+
+    RuleMark(y: .value("Overall", overallAverage))   // overall average line
+        .foregroundStyle(.secondary)
+        .annotation(position: .top, alignment: .leading) {
+            Text("Avg: \(overallAverage, format: .number.precision(.fractionLength(0)))")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+}
+```
+
+### Axes Are Builders
+
+```swift
+.chartXAxis {
+    AxisMarks(values: .stride(by: .month)) { value in
+        AxisGridLine()
+        AxisTick()
+        AxisValueLabel(format: .dateTime.month(.narrow))
+    }
+}
+.chartYAxis {
+    AxisMarks(position: .leading)   // move the value axis to the leading edge
+}
+```
+
+- Conditional styling belongs *inside* the builder — check `value.as(Date.self)` in the closure to, say, bold only the first month of each quarter.
+- `.chartXAxis(.hidden)` removes an axis entirely; `.chartPlotStyle { $0.frame(height: 200).background(.gray.opacity(0.05)).border(.quaternary) }` sizes and styles the plot area itself.
+
+### Interactivity: Selection First
+
+Prefer the built-in selection binding over hand-rolled overlay gestures (iOS 17):
+
+```swift
+@State private var selectedDay: Date?
+
+Chart(data) { ... }
+    .chartXSelection(value: $selectedDay)
+```
+
+Render the selection as marks — a `RuleMark` with `zIndex(-1)` so it draws behind the data, and an annotation that stays inside the plot:
+
+```swift
+if let selectedDay {
+    RuleMark(x: .value("Selected", selectedDay, unit: .day))
+        .foregroundStyle(.gray.opacity(0.3))
+        .zIndex(-1)
+        .annotation(
+            position: .top, spacing: 0,
+            overflowResolution: .init(x: .fit(to: .chart), y: .disabled)
+        ) {
+            SelectionDetailCard(day: selectedDay)
+        }
+}
+```
+
+For fully custom hit-testing, drop to `ChartProxy` inside `.chartOverlay` with a `GeometryReader`: `proxy.value(atX:)` converts gesture locations to data values, `proxy.position(forX:)` converts back.
+
+### SectorMark: Pies and Donuts (iOS 17+)
+
+```swift
+Chart(data) { item in
+    SectorMark(
+        angle: .value("Sales", item.sales),
+        innerRadius: .ratio(0.62),     // donut hole
+        angularInset: 1.5              // 1.5 per side = 3pt gaps between sectors
+    )
+    .cornerRadius(4)
+    .foregroundStyle(by: .value("Name", item.name))
+}
+.chartBackground { proxy in
+    GeometryReader { geo in            // headline metric in the donut hole
+        if let anchor = proxy.plotFrame {
+            let frame = geo[anchor]
+            Text("Best: \(topSellerName)")
+                .position(x: frame.midX, y: frame.midY)
+        }
+    }
+}
+```
+
+### Large Datasets: Scroll a Window
+
+Don't cram a year into one screen — show a window and scroll (WWDC23):
+
+```swift
+Chart(yearOfData) { ... }
+    .chartScrollableAxes(.horizontal)
+    .chartXVisibleDomain(length: 3600 * 24 * 30)   // 30-day window
+    .chartScrollPosition(x: $scrollDate)           // read/write the scroll offset
+    .chartScrollTargetBehavior(
+        .valueAligned(
+            matching: DateComponents(hour: 0),                    // land on day boundaries
+            majorAlignment: .matching(DateComponents(day: 1))     // snap paging to month starts
+        )
+    )
+```
+
+### Accessibility Per Mark
+
+Auto-generated VoiceOver descriptions read raw values; per-mark labels beat them:
+
+```swift
+BarMark(x: .value("Day", sale.day, unit: .day), y: .value("Sales", sale.count))
+    .accessibilityLabel(sale.day.formatted(date: .abbreviated, time: .omitted))
+    .accessibilityValue("\(sale.count) pancakes sold")
+```
+
 ## Top Mistakes
 
 | # | Mistake | Fix |
@@ -404,6 +573,7 @@ These apply to every chart you build — 2D or 3D. The pillars: **focused, appro
 
 ## References
 
+- [Swift Charts](https://developer.apple.com/documentation/charts)
 - [Swift Charts — Chart3D](https://developer.apple.com/documentation/Charts/Chart3D)
 - [Swift Charts — SurfacePlot](https://developer.apple.com/documentation/Charts/SurfacePlot)
 - [Swift Charts — Chart3DPose](https://developer.apple.com/documentation/Charts/Chart3DPose)

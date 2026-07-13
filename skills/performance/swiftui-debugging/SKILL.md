@@ -21,6 +21,10 @@ Use this skill when the user:
 - Uses `AnyView` and asks about performance implications
 - Has a hang or stutter traced to SwiftUI rendering
 
+## The Performance Loop
+
+Every investigation follows the same loop: **symptom -> measure -> identify -> optimize -> RE-MEASURE**. The last step is the one people skip -- an "optimization" that was never re-measured is a guess, and SwiftUI guesses are wrong often enough (a fix can shift cost elsewhere) that the loop is not optional. Never close a performance issue on the strength of the diff alone.
+
 ## Decision Tree
 
 ```
@@ -75,6 +79,30 @@ What SwiftUI performance problem are you seeing?
 | 4 | Observing entire model when only one property is needed | Split into smaller `@Observable` objects or extract subviews | body-reevaluation.md |
 | 5 | Unstable `.id()` values causing full view recreation every render | Use stable identifiers (database IDs, UUIDs), never array indices or random values | view-identity.md |
 
+## Lists, Tables, and ForEach: Identity Is the Cost Model
+
+`List` and `Table` gather **all identifiers eagerly** at load -- even though row *views* are lazy. Cheap, precomputed IDs mean fast loads; an `id:` key path that computes or hashes something expensive runs for every element before anything renders.
+
+**The row-count equation:** rows = elements x views-per-element, and views-per-element must be a **constant** the framework can read without executing your closures.
+
+- ❌ No `if` filters and no `AnyView` inside `ForEach` -- both make views-per-element non-constant, forcing SwiftUI to run every closure just to count rows (and defeating `List`'s constant-count optimizations).
+- ✅ Filter in the data, not the view -- and **cache the filtered collection in the model**: an inline `items.filter { ... }` in `body` re-runs linearly on every single body evaluation.
+- ✅ `listRowBackground` (and row modifiers generally) go *after* the row's stack, not inside the `ForEach` content per-branch.
+- ✅ For `Table`, prefer the streamlined `ForEach(collection)` initializer (no `id:`, no per-row closure gymnastics) -- it keeps row counts statically constant.
+
+## Common Slow-Update Causes
+
+When a body or update shows up slow in the profile, it is almost always one of these:
+
+1. **Expensive dynamic-property initialization** -- e.g. a `@StateObject`/`@State` object doing I/O in its initializer
+2. **Work in `body`** -- string interpolation/formatting, sorting, filtering
+3. **Heap allocations in `body`** -- formatters, predicates, intermediate arrays
+4. **Bundle/resource lookups in `body`** -- `Bundle.main` searches, decoding images synchronously
+
+Move loading and expensive derivation to `.task` (or the model), then re-measure.
+
+**Scope dependencies tightly -- but not obsessively.** Pass the child view the `Image` it renders, not the whole model object, so unrelated model changes stop invalidating it. Don't over-rotate: splitting a huge struct into dozens of single-property parameters costs more in plumbing than it saves. `@Observable` already narrows invalidation to the properties a body actually *reads* -- lean on that first.
+
 ## Debugging Tools
 
 ### Self._printChanges()
@@ -88,8 +116,15 @@ var body: some View {
 }
 ```
 
-Output reads: `ViewName: @self, @identity, _propertyName changed.`
-See body-reevaluation.md for full interpretation guide.
+Output reads: `ViewName: @self, @identity, _propertyName changed.` Shorthand: `@self` = the view's *value* changed (parent rebuilt it), a named property = that specific dependency changed. See body-reevaluation.md for the full interpretation guide.
+
+Also callable from LLDB without editing code -- pause in a view context and run:
+
+```
+(lldb) expression Self._printChanges()
+```
+
+It is debug-only API with real runtime cost: use it during an investigation, then delete it. Never ship it.
 
 ### Instruments SwiftUI Template
 
@@ -98,6 +133,8 @@ See body-reevaluation.md for full interpretation guide.
 3. Record, reproduce the slow interaction, stop
 4. **View Body** lane shows which views had their body evaluated and how often
 5. **View Properties** lane shows which properties changed
+
+The redesigned SwiftUI instrument (WWDC25, Instruments 26) upgrades this workflow: it surfaces **long body evaluations** and **long view updates** directly as flagged intervals, with per-update cause analysis -- start there when the question is "which body is blowing the frame budget."
 
 ### os_signpost for Custom Measurement
 
@@ -147,3 +184,4 @@ View in Instruments with the **os_signpost** instrument to count body evaluation
 | [lazy-loading.md](lazy-loading.md) | Lazy vs eager containers, `List`, `ForEach`, grid performance |
 | [common-pitfalls.md](common-pitfalls.md) | `AnyView`, object creation in body, over-observation, expensive computations |
 | [../profiling/SKILL.md](../profiling/SKILL.md) | General Instruments profiling (Time Profiler, Memory, Energy) |
+| [../../swiftui/data-flow/SKILL.md](../../swiftui/data-flow/SKILL.md) | The identity/lifetime mental model behind all of the above -- read it when fixes feel like guesswork |

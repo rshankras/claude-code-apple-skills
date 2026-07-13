@@ -21,7 +21,7 @@ PhaseAnimator(
 
 ### Auto-Advancing (Continuous Loop)
 
-Omit `trigger` to loop forever. Phases must be `CaseIterable`.
+Omit `trigger` to loop forever — the **ambient** mode (WWDC23): idle shimmer, pulse, or breathing effects that run for the view's lifetime. With `trigger:` the animator instead runs one full cycle per trigger change. Phases must be `CaseIterable` to use `allCases`.
 
 ```swift
 enum PulsePhase: CaseIterable {
@@ -78,6 +78,32 @@ PhaseAnimator([0.0, 1.0, 0.5, 1.0]) { content, opacity in
     content.opacity(opacity)
 } animation: { _ in
     .easeInOut(duration: 0.4)
+}
+```
+
+### Enum Phases with Computed Properties
+
+For more than a couple of modifiers, give the phase enum computed properties instead of scattering `phase == .x` checks through the content closure — the closure stays declarative and each phase's look lives in one place:
+
+```swift
+enum EmphasisPhase: CaseIterable {
+    case idle, lifting, settling
+
+    var scale: Double {
+        switch self {
+        case .idle: 1.0
+        case .lifting: 1.15
+        case .settling: 1.05
+        }
+    }
+
+    var shadowRadius: Double { self == .idle ? 2 : 10 }
+}
+
+PhaseAnimator(EmphasisPhase.allCases, trigger: didScore) { content, phase in
+    content
+        .scaleEffect(phase.scale)
+        .shadow(radius: phase.shadowRadius)
 }
 ```
 
@@ -198,6 +224,11 @@ KeyframeTrack(\.opacity) {
 }
 ```
 
+Two behaviors that change how tracks feel (WWDC23):
+
+- `SpringKeyframe`'s `duration` **caps** the spring — the track moves to the next keyframe at `duration` even if the spring hasn't settled.
+- Consecutive `CubicKeyframe`s blend into a single Catmull-Rom spline, drawing one smooth curve through all their values rather than separate eased segments — ideal for arcs and loops.
+
 ### Multi-Property Example
 
 ```swift
@@ -246,6 +277,12 @@ struct ErrorShake: View {
 }
 ```
 
+### Keyframes Are Clips, Not Interactive Animations
+
+Treat a keyframe animation like a video clip: it plays exactly as authored (WWDC23). Unlike springs, keyframes never retarget — changing the trigger mid-flight restarts the clip rather than smoothly redirecting it. Don't use KeyframeAnimator where the UI must stay interactive or track a gesture; springs merge and preserve velocity, keyframes don't.
+
+Performance: the `content` closure runs **every frame** while the animation plays. Read the values and apply modifiers — no formatting, allocation, or layout math inside it.
+
 ### Continuous KeyframeAnimator
 
 Omit `trigger` and add `repeating: true` for looping animations:
@@ -268,6 +305,46 @@ KeyframeAnimator(
         CubicKeyframe(1.0, duration: 1.0)
     }
 }
+```
+
+### MapKit Camera Keyframes (iOS 17+)
+
+`.mapCameraKeyframeAnimator(trigger:)` drives a `MapCamera` along keyframe tracks. If the user touches the map mid-animation, the animation cancels and the user keeps control — no extra handling required (WWDC23):
+
+```swift
+Map(initialPosition: .region(region))
+    .mapCameraKeyframeAnimator(trigger: selectedLandmark) { initialCamera in
+        KeyframeTrack(\MapCamera.centerCoordinate) {
+            CubicKeyframe(selectedLandmark.coordinate, duration: 2.0)
+        }
+        KeyframeTrack(\MapCamera.distance) {
+            CubicKeyframe(initialCamera.distance * 1.5, duration: 1.0)  // pull back...
+            CubicKeyframe(800, duration: 1.0)                            // ...then dive in
+        }
+    }
+```
+
+### KeyframeTimeline — Sample Values Anywhere
+
+The same keyframes work outside the animator. `KeyframeTimeline` turns them into a pure function of time — use it to scrub an animation from scroll position, or to drive custom rendering from a `TimelineView`:
+
+```swift
+let timeline = KeyframeTimeline(initialValue: BounceValues()) {
+    KeyframeTrack(\.scale) {
+        SpringKeyframe(1.5, duration: 0.3)
+        SpringKeyframe(1.0, duration: 0.3)
+    }
+    KeyframeTrack(\.yOffset) {
+        LinearKeyframe(-30, duration: 0.2)
+        SpringKeyframe(0, duration: 0.4, spring: .bouncy)
+    }
+}
+
+// Scrub by scroll: map progress (0...1) into the timeline
+let values = timeline.value(progress: scrollProgress)
+
+// Or sample by absolute time (e.g. from TimelineView(.animation))
+let values = timeline.value(time: elapsed)   // timeline.duration = total length
 ```
 
 ### Anti-Patterns
@@ -354,3 +431,11 @@ withAnimation(Animation(CustomBounce())) {
     isExpanded.toggle()
 }
 ```
+
+The protocol hooks map directly onto built-in behavior (WWDC23):
+
+| Hook | Role | How built-ins use it |
+|------|------|----------------------|
+| `animate(value:time:context:)` | Return the interpolated vector for `time`, or `nil` when finished | `value` is the *delta* being animated, not an absolute value |
+| `shouldMerge(previous:value:time:context:)` | Return `true` to take over an in-flight animation of the same type | Springs return `true` — they retarget, preserving state; timing curves return `false`, so old and new run concurrently and their deltas combine additively |
+| `velocity(value:time:context:)` | Report current velocity (has a default implementation) | Lets a merging successor preserve momentum — implement it if your animation may be interrupted |
