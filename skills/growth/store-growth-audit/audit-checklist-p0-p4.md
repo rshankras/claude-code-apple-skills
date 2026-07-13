@@ -149,7 +149,7 @@ Evidence keys (`EV.*`) are defined in `detection-playbook.md`. IDs are stable �
 - detect: MCP `EV.reviews`
 - rule: ✅ 1–3★ reviews from the last 90 days have developer responses · 🟠 some answered · 🔴 none answered (updated ratings replace old scores — replies are recoverable stars)
 - new-app: defer — activates with first reviews
-- fix: app-store/review-response-writer → route replies via ASC (surfaced by /apple:learn-from-store)
+- fix: app-store/review-response-writer → /apple:ratings (gated replies via the ASC API)
 
 #### P4.3 Phased release + manual version release habit
 - detect: MANUAL Q7

@@ -38,6 +38,7 @@ from the local copy (see "Pinning and rollback" in the README).
 - App Store Guidelines risk sections in the five engagement-mechanic generators (variable-rewards, streak-tracker, milestone-celebration, watermark-engine, quick-win-session), cross-linked to `app-store/originality-check`
 
 ### Changed
+- Audit routes updated for SwiftShip's new /apple:ratings: P4.2 fix-route and the routing map now point review replies at the gated command; README stack-table row bumped to 51 /apple:* commands
 - store-growth-audit watchlist graduations, verified against WWDC26 transcripts: P5.3 Creative Assets (Asset Library live, renders on iOS 27), P8.3 Retention Messaging (ASC tier open to all; real-time API access-gated), P8.6 Group/Volume Purchasing (live for StoreKit 2 subs, on by default) — all three moved from ⏳ announced to live detection rules; P1.7 extended with App Store Tags curation, P5.2 with keyword→CPP routing
 - skill-auditor known-current constants bumped to the iOS 27 / WWDC26 era; M-02 now defers to `scripts/versions.env` as the normative source
 - `scripts/check-counts.sh` now also guards `docs/ROADMAP.md`, `plugin.json`, and `.claude-plugin/marketplace.json` counts
@@ -60,6 +61,7 @@ from the local copy (see "Pinning and rollback" in the README).
 - ASC-automation skills: `iap-finalizer`, `privacy-publish`, `_shared/asc-api` (#13)
 
 ### Changed
+- Audit routes updated for SwiftShip's new /apple:ratings: P4.2 fix-route and the routing map now point review replies at the gated command; README stack-table row bumped to 51 /apple:* commands
 - All documented counts synced to reality (147) with `scripts/check-counts.sh` making drift impossible (#17)
 - App Annie reference replaced with vendor-neutral app intelligence tools (#25)
 

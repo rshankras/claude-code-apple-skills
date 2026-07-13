@@ -190,7 +190,7 @@ The only place the full route list lives; stanzas carry the short form.
 | Icon + PPO + CPP experiments | `generators/product-page-optimization`, `generators/custom-product-pages` | `/apple:experiment` |
 | In-app events | `generators/in-app-events` | `/apple:event` |
 | Localization + PPP pricing | `product/localization-strategy`, `monetization` (pricing-models) | `/apple:localize` |
-| Ratings: prompting, replies, protection | `app-store/ratings-mechanics`, `generators/review-prompt`, `app-store/review-response-writer` | `/apple:ship` (phased release) |
+| Ratings: prompting, replies, protection | `app-store/ratings-mechanics`, `generators/review-prompt`, `app-store/review-response-writer` | `/apple:ratings` (health + replies); `/apple:ship` (phased release) |
 | Featuring nominations | `generators/featuring-nomination` | — (ASC manual, calendar-driven) |
 | New-OS adoption | — | `/apple:modernize` |
 | App Intents / Spotlight | `apple-intelligence/app-intents`, `generators/spotlight-indexing` | `/apple:plan` |
