@@ -19,6 +19,23 @@ Guide for implementing Assistive Access support in iOS and iPadOS apps. Assistiv
 
 ## Setup
 
+### The Three Integration Levels (WWDC25 238)
+
+- **No adoption**: the app runs in a reduced frame to leave room for the system back
+  button always shown along the bottom (back returns to the Assistive Access Home
+  Screen). The reduced frame keeps apps built for specific device sizes rendering
+  correctly.
+- **Full screen as-is** (`UISupportsFullScreenInAssistiveAccess`): for apps already
+  designed for cognitive accessibility — AAC apps and similar tools. The app looks
+  identical to normal, just full-screen; requires layout that adapts to arbitrary sizes.
+- **`AssistiveAccess` scene** (`UISupportsAssistiveAccess` + the scene below, iOS 26/
+  iPadOS 26): a tailored experience where native controls automatically render in the
+  large, prominent Assistive Access style and follow the user's grid-or-rows layout
+  setting. Recommended when unsure (WWDC25 238).
+
+The Assistive Access mode itself shipped with iOS 17; the `AssistiveAccess` scene type,
+`UISupportsAssistiveAccess` key, and `.assistiveAccess` preview trait are iOS 26 APIs.
+
 ### Step 1: Declare Support in Info.plist
 
 Add these keys to your app's `Info.plist` so the system lists your app as an "Optimized App" in Assistive Access configuration:
@@ -113,23 +130,24 @@ Use this to hide advanced features, reduce information density, or switch to lar
 
 ## Navigation Icons
 
-Assistive Access uses large grid-based navigation. Provide a custom icon for your app's navigation tiles:
+Assistive Access uses large grid-based navigation, and icons paired with text reduce
+cognitive load. Give **every navigation title** an icon, not just the root (WWDC25 238):
 
 ```swift
-// Using an SF Symbol
-ContentView()
-    .assistiveAccessNavigationIcon(systemImage: "star.fill")
+// Paired with the navigation title of each screen
+DrawView()
+    .navigationTitle("Draw")
+    .assistiveAccessNavigationIcon(systemImage: "hand.draw.fill")
 
 // Using a custom image from the asset catalog
-ContentView()
+GalleryView()
+    .navigationTitle("Gallery")
     .assistiveAccessNavigationIcon(Image("custom-icon"))
 ```
 
-Apply this modifier to the root view of your `AssistiveAccess` scene.
-
 ## Design Principles
 
-These five principles guide what to build in your Assistive Access scene.
+These six principles guide what to build in your Assistive Access scene.
 
 ### 1. Distill to Core Functionality
 
@@ -210,7 +228,14 @@ Button {
 
 ### 4. Intuitive Navigation
 
-Use step-by-step flows with clear back buttons. Avoid deep hierarchies or complex branching. Each screen should have one obvious path forward and one obvious way to go back.
+Use step-by-step flows with **one decision per screen** and reasonably few steps — reorder
+decisions if needed. The session's drawing-app demo inserted a dedicated color-selection
+view between "Draw" and the canvas, replacing the in-canvas color picker, so everyone
+arrives at the canvas with a color already chosen (WWDC25 238). Avoid deep hierarchies or
+complex branching.
+
+The system back button traverses back up your `NavigationStack` automatically — do not
+build your own back affordance (WWDC25 238).
 
 ```swift
 // ✅ Good: Linear step-by-step flow
@@ -231,7 +256,9 @@ NavigationSplitView {
 
 ### 5. Safe Interactions
 
-Prevent irreversible actions. Always confirm destructive operations with a clear, understandable prompt.
+Prevent irreversible actions. Prefer **removing destructive actions from the Assistive
+Access scene entirely** — the session's demo dropped undo-stroke and delete-drawing — and
+where one must stay, confirm it twice with clear, understandable prompts (WWDC25 238).
 
 ```swift
 // ✅ Good: Confirmation before destructive action
@@ -252,6 +279,25 @@ Button("Delete Photo", role: .destructive) {
 // ❌ Bad: Immediate destructive action with no confirmation
 Button("Delete") {
     deletePhoto()
+}
+```
+
+### 6. No Timed Interactions
+
+Redesign anything that disappears or changes state after a timeout — auto-dismissing
+toasts, countdown confirmations, rotating banners. Everyone works at their own pace, and
+UI that acts on a timer creates pressure and errors (WWDC25 238).
+
+```swift
+// ✅ Good: Persistent confirmation the user dismisses
+if didSave {
+    Label("Saved", systemImage: "checkmark.circle.fill")
+    Button("OK") { didSave = false }
+}
+
+// ❌ Bad: Toast that vanishes after 3 seconds
+.onAppear {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) { didSave = false }
 }
 ```
 
@@ -288,7 +334,9 @@ Use the `.assistiveAccess` preview trait to see your Assistive Access scene in t
 | Exposing all app features in the Assistive Access scene | Overwhelming for users with cognitive disabilities; defeats the purpose | Distill to 1-2 core features |
 | Custom-drawn controls instead of native SwiftUI | Misses automatic Assistive Access styling from the system | Use standard Button, Toggle, Picker |
 | Icon-only buttons without text labels | Users may not understand the icon; no fallback representation | Use `Label` with both text and icon |
-| Destructive actions without confirmation | Risk of accidental, irreversible data loss | Add `.confirmationDialog` or `.alert` |
+| Destructive actions without confirmation | Risk of accidental, irreversible data loss | Remove them from the AA scene, or confirm twice |
+| Timed UI (auto-dismissing toasts, countdowns) | Users work at their own pace; state changing on a timer causes errors | Make state changes user-driven; remove timeouts |
+| Custom back buttons inside the AA scene | Duplicates the system back button, which already traverses `NavigationStack` | Rely on the system back button |
 | Only testing in standard mode | Assistive Access layout and behavior differ from standard mode | Test with `.assistiveAccess` preview trait and on-device |
 
 ## Review Checklist
@@ -301,9 +349,11 @@ When reviewing an app's Assistive Access implementation, verify each item:
 - [ ] Assistive Access scene contains only 1-2 core features
 - [ ] All controls use native SwiftUI components (Button, Toggle, Picker)
 - [ ] All buttons have both text and icon via `Label`
-- [ ] Navigation is linear and shallow (no deep hierarchies)
-- [ ] Destructive actions require confirmation
-- [ ] `.assistiveAccessNavigationIcon` is set on the root view
+- [ ] Navigation is linear and shallow (no deep hierarchies); one decision per screen
+- [ ] No custom back affordance — the system back button traverses the NavigationStack
+- [ ] No timed interactions — nothing disappears or changes state on a timeout
+- [ ] Destructive actions removed from the scene, or double-confirmed
+- [ ] Every navigation title has an `.assistiveAccessNavigationIcon`
 - [ ] Runtime detection via `@Environment(\.accessibilityAssistiveAccessEnabled)` is used where shared views need conditional behavior
 - [ ] Xcode previews use `#Preview(traits: .assistiveAccess)`
 - [ ] Tested on-device in Assistive Access mode

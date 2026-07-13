@@ -76,6 +76,19 @@ VStack {
 
 SwiftUI mirrors most of these as environment values (`\.accessibilityReduceMotion` above, plus `\.accessibilityDifferentiateWithoutColor`, `\.legibilityWeight`, `\.accessibilityReduceTransparency`).
 
+## Deep Patterns (accessibility-patterns.md)
+
+The full recipes live in [accessibility-patterns.md](accessibility-patterns.md):
+
+- Label-writing rules — context ladder, no control types, succinctness, localize (WWDC19 254)
+- Custom actions doctrine — clutter/speed rationale, hide replaced buttons, widget intents (WWDC19 250, WWDC24 10073)
+- Custom rotors, UIKit and SwiftUI (WWDC20 10116, WWDC21 10119)
+- Data-rich rows via the More Content rotor / `AXCustomContent` (WWDC21 10121)
+- Announcements with priorities, `.isToggle`, zoom, direct touch, block-based setters (WWDC23 10036)
+- Custom-control technique selection: adjustable vs passthrough vs custom actions vs direct touch (WWDC26 220)
+- Switch Control grouping and timeout rules (WWDC20 10019); Full Keyboard Access (WWDC21 10120)
+- Reading-app text navigation, page turns, `UITextInput` adoption (WWDC26 219)
+
 ## Inclusive Design Principles (WWDC25)
 
 - **About 1 in 7 people has a disability** — accessibility features are mainstream features.
@@ -102,6 +115,8 @@ Sources/Accessibility/
 - [ ] Dynamic Type is supported
 - [ ] Reduce Motion is respected
 - [ ] VoiceOver order is logical
+- [ ] Custom controls expose purpose, value, actions, and feedback (WWDC26 220)
+- [ ] Automated audit + Nutrition Label evaluation — see `ios/accessibility-audit`
 
 ## References
 
