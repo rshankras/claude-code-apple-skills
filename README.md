@@ -11,7 +11,7 @@ Four repos, four layers — use one or all:
 | Layer | Repo | What it is |
 |---|---|---|
 | Knowledge | **claude-code-apple-skills** ← you are here | 152 skills — how to build right |
-| Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 49 /apple:* commands — spec-driven idea → App Store |
+| Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 50 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
 
