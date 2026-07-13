@@ -37,6 +37,9 @@ What concurrency problem are you solving?
 ├─ Bridging old APIs (delegates, callbacks) to async/await
 │  └─ continuations-bridging.md
 │
+├─ Hangs, slow parallelism, thread-pool problems, profiling
+│  └─ concurrency-internals.md
+│
 └─ General async/await patterns
    └─ See macos/coding-best-practices/modern-concurrency.md for basics
 ```
@@ -56,6 +59,10 @@ What concurrency problem are you solving?
 | Isolated conformances | `@MainActor` type conforming to protocol (6.2) | `swift62-concurrency.md` |
 | `withCheckedContinuation` | Bridge callback API to async | `continuations-bridging.md` |
 | `AsyncStream` | Bridge delegate/notification API to async sequence | `continuations-bridging.md` |
+| `@TaskLocal` | Context (IDs, tracing) down the task tree | `structured-concurrency.md` |
+| `Atomic` / `Mutex` | Sendable wrappers for synchronous hot paths (Swift 6) | `actors-and-isolation.md` |
+| Custom actor executors | Bridge existing DispatchSerialQueue synchronization | `concurrency-internals.md` |
+| Swift Concurrency Instrument | Diagnose hangs, actor contention, continuation leaks | `concurrency-internals.md` |
 | Strict concurrency migration | Incremental Swift 6 adoption | `migration-guide.md` |
 
 ## Process
@@ -70,11 +77,12 @@ Read the user's code or error messages to determine:
 ### 2. Load Relevant Reference Files
 
 Based on the problem, read from this directory:
-- `swift62-concurrency.md` — Swift 6.2 approachable concurrency features
-- `structured-concurrency.md` — async let, TaskGroup, .task modifier lifecycle
-- `actors-and-isolation.md` — Actor patterns, reentrancy, @MainActor, Sendable
-- `continuations-bridging.md` — withCheckedContinuation, AsyncStream, legacy bridging
-- `migration-guide.md` — Incremental Swift 6 strict concurrency adoption
+- `swift62-concurrency.md` — Swift 6.2 approachable concurrency features, Apple's adoption doctrine, Swift 6.3/6.4 additions
+- `structured-concurrency.md` — async let, TaskGroup, .task modifier lifecycle, task-locals, cancellation semantics
+- `actors-and-isolation.md` — Actor patterns, reentrancy, @MainActor, Sendable, Atomic/Mutex
+- `concurrency-internals.md` — cooperative pool, unsafe primitives, actor scheduling, Swift Concurrency Instrument
+- `continuations-bridging.md` — withCheckedContinuation, AsyncStream, built-in async sequences, legacy bridging
+- `migration-guide.md` — Incremental Swift 6 strict concurrency adoption (WWDC24 doctrine)
 
 ### 3. Review Checklist
 
