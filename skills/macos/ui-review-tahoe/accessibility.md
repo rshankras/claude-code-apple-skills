@@ -4,6 +4,48 @@ VoiceOver, keyboard navigation, Dynamic Type, and accessibility standards for ma
 
 ## VoiceOver Support
 
+### Container-First Navigation (WWDC25 229)
+
+Mac VoiceOver is driven by keyboard shortcuts (VO+Right Arrow to the next element) and,
+unlike iOS, navigates **by container** — moving quickly across the app and only focusing
+into a container when the user asks. Mac UIs are denser, and containers nest into a
+tree of accessibility elements, so container structure matters more than on iPhone.
+Shape it deliberately, and avoid excessive nesting — every extra level slows navigation.
+
+```swift
+// ✅ GOOD: Group related controls into one navigable container
+VStack {
+    FirstView()
+    SecondView()
+}
+.accessibilityElement(children: .contain)
+
+// ✅ GOOD: Merge a title + Apply pair into a single element
+HStack {
+    PresetTitleView(preset: preset)
+    Button("Apply") { apply() }
+}
+.accessibilityElement(children: .combine)
+```
+
+Measured win from the session's Format Inspector demo (WWDC25 229): a flat scroll area of
+22 swipe stops became 15 top-level items with an 8-item presets group — VoiceOver users
+skip the whole group in one keystroke unless they want it.
+
+If the reading order feels wrong under VoiceOver, fix it with `accessibilitySortPriority`
+— default is 0, higher reads first, and equal priorities fall back to visual position
+(WWDC25 229):
+
+```swift
+VStack {
+    Text(book.author)
+    Text(book.title)
+        .accessibilitySortPriority(1)   // title read before author
+    DescriptionView(book: book)
+}
+.accessibilityElement(children: .combine)
+```
+
 ### SwiftUI Accessibility
 
 ```swift
@@ -110,6 +152,54 @@ Spacer()
     .accessibilityHidden(true)
 ```
 
+### Rotors and Default Focus (WWDC25 229)
+
+Give VoiceOver users a jump list for the content that matters, instead of stepping
+through every item ("Page 2 bookmarked. Page 3. Page 4. Page 5 bookmarked…"):
+
+```swift
+// ✅ GOOD: Bookmarks rotor — jump straight between bookmarked pages
+List(pages) { page in
+    PageListItemView(page: page)
+}
+.accessibilityRotor("Bookmarks") {
+    ForEach(pages) { page in
+        if page.isBookmarked {
+            AccessibilityRotorEntry(page.title, id: page.id)
+        }
+    }
+}
+```
+
+Suggest where VoiceOver should land when a new window or scene opens — the system still
+respects the user's preference (WWDC25 229):
+
+```swift
+@AccessibilityFocusState(for: .voiceOver) var focusedForVoiceOver
+
+SecondView()
+    .accessibilityDefaultFocus($focusedForVoiceOver, true)
+```
+
+### Hover-Revealed Controls (WWDC25 229)
+
+VoiceOver users never move the pointer — anything revealed only on hover or by a trackpad
+gesture is invisible to them. Mirror every hover affordance as an accessibility action; it
+surfaces in VoiceOver's Actions menu and also serves Switch Control and Voice Control:
+
+```swift
+// ❌ BAD: bookmark button only appears .onHover — unreachable without a pointer
+// ✅ GOOD: same operation exposed as an action
+VStack {
+    ThumbnailView(page: page)
+    Text(page.title)
+}
+.onHover { isHovering = $0 }
+.accessibilityAction(named: page.isBookmarked ? "Remove Bookmark" : "Bookmark") {
+    page.isBookmarked.toggle()
+}
+```
+
 ## Keyboard Navigation
 
 ### Focus Management
@@ -156,6 +246,10 @@ struct LoginView: View {
 ```
 
 ### Keyboard Shortcuts
+
+Keyboard shortcuts are an accessibility feature, not just a power-user nicety — for
+anyone who can't use a mouse they may be the only comfortable path through the app
+(WWDC25 229). Cover the common tasks, not only the exotic ones.
 
 ```swift
 // ✅ GOOD: Keyboard shortcuts with VoiceOver announcements
@@ -349,6 +443,8 @@ if reduceMotion {
 // 1. Run app in Simulator
 // 2. Settings > Accessibility > VoiceOver
 // 3. Use Accessibility Inspector
+// Automated audits (performAccessibilityAudit — macOS has .action and .parentChild
+// audit types) and Nutrition Label evaluation: see ios/accessibility-audit
 
 // Print accessibility tree (debugging)
 #if DEBUG
@@ -456,6 +552,10 @@ struct CustomSlider: View {
 ## Accessibility Checklist
 
 - [ ] All interactive elements have labels
+- [ ] Related controls grouped into containers, without excessive nesting (Mac VoiceOver navigates container-first)
+- [ ] Reading order corrected with `accessibilitySortPriority` where visual position misleads
+- [ ] Hover-only controls mirrored as accessibility actions (VoiceOver never moves the pointer)
+- [ ] Long lists offer custom rotors for key content; new windows suggest a default VoiceOver focus
 - [ ] Images have descriptions or are marked decorative
 - [ ] Buttons announce their action
 - [ ] Forms can be completed with VoiceOver
