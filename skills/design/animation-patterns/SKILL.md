@@ -1,6 +1,6 @@
 ---
 name: animation-patterns
-description: SwiftUI animation patterns including springs, transitions, PhaseAnimator, KeyframeAnimator, and SF Symbol effects. Use when implementing, reviewing, or fixing animation code on iOS/macOS.
+description: SwiftUI animation patterns including springs, transitions, PhaseAnimator, KeyframeAnimator, SF Symbol effects, scroll-driven effects, mesh gradients, text renderers, and shader effects. Use when implementing, reviewing, or fixing animation or visual-effect code on iOS/macOS.
 allowed-tools: [Read, Glob, Grep]
 ---
 
@@ -20,6 +20,8 @@ Use this skill when the user:
 - Asks about **reduce motion** / animation accessibility
 - Wants to sequence or chain animations
 - Mentions **withAnimation**, **animation completions**, or **Transaction**
+- Wants **scroll-driven effects** (parallax, carousels, `scrollTransition`, `visualEffect`)
+- Mentions **MeshGradient**, **TextRenderer**, or **Metal shader effects** (`colorEffect`, `distortionEffect`, `layerEffect`)
 
 ## Decision Tree
 
@@ -62,6 +64,14 @@ What are you animating?
 │  └─ → symbol-effects.md
 │     └─ .symbolEffect(.bounce), .pulse, .wiggle, .breathe, .rotate
 │
+├─ A scroll-driven, geometry-driven, or shader effect
+│  └─ → visual-effects.md
+│     ├─ .scrollTransition — carousel scale/parallax/caption fades
+│     ├─ .visualEffect — position-based effects without GeometryReader
+│     ├─ MeshGradient — animatable multi-point gradients
+│     ├─ TextRenderer — per-line / per-glyph text animation
+│     └─ ShaderLibrary + .colorEffect / .distortionEffect / .layerEffect
+│
 └─ Spring physics / timing configuration
    └─ → core-animations.md (Spring Configurations section)
 ```
@@ -84,6 +94,13 @@ What are you animating?
 | `.symbolEffect()` | iOS 17 | symbol-effects.md |
 | `.transition(.blurReplace)` | iOS 17 | transitions.md |
 | `.contentTransition(.symbolEffect(.replace))` | iOS 17 | transitions.md |
+| `Transition` protocol / `TransitionPhase` | iOS 17 | transitions.md |
+| `TransactionKey`, scoped `.animation` / `.transaction` variants | iOS 17 | core-animations.md |
+| `KeyframeTimeline`, `.mapCameraKeyframeAnimator` | iOS 17 | phase-keyframe-animators.md |
+| `.scrollTransition`, `.visualEffect` | iOS 17 | visual-effects.md |
+| Shaders: `.colorEffect` / `.distortionEffect` / `.layerEffect` | iOS 17 | visual-effects.md |
+| `MeshGradient` | iOS 18 | visual-effects.md |
+| `TextRenderer` / `TextAttribute` | iOS 18 | visual-effects.md |
 | `.matchedTransitionSource` | iOS 18 | transitions.md |
 | `.navigationTransition(.zoom)` — push, sheet, fullScreenCover | iOS 18 | transitions.md |
 | `UIViewController.preferredTransition = .zoom` | iOS 18 | transitions.md |
@@ -110,12 +127,14 @@ When reviewing animation code, verify:
 - [ ] **Correct spring generation** — parameter names match the same API generation (never mix `response` with `bounce`)
 - [ ] **Completion handlers** — using `withAnimation(_:completionCriteria:_:completion:)` (iOS 17+), not inventing `.onAnimationCompleted`
 - [ ] **Transition scope** — `.transition()` only affects views inside `if`/`switch` controlled by state; not for views that are always present
+- [ ] **Per-frame closures stay cheap** — KeyframeAnimator `content` closures, `visualEffect` closures, `TextRenderer.draw`, and `Animatable` view bodies run every frame; no allocation, formatting, or layout math inside
 
 ## Reference Files
 
 | File | Content |
 |------|---------|
-| [core-animations.md](core-animations.md) | withAnimation, springs, completions, transactions, timing curves, fluid-interface principles (momentum projection, rubber-banding, hysteresis) |
-| [phase-keyframe-animators.md](phase-keyframe-animators.md) | PhaseAnimator, KeyframeAnimator, custom animations |
-| [transitions.md](transitions.md) | View transitions, matched geometry, navigation/zoom transitions (SwiftUI + UIKit), interruptibility, UIKit↔SwiftUI bridging, gesture-driven springs |
+| [core-animations.md](core-animations.md) | withAnimation, springs, completions, transactions + TransactionKey, timing curves, Animatable mechanics, fluid-interface principles (momentum projection, rubber-banding, hysteresis) |
+| [phase-keyframe-animators.md](phase-keyframe-animators.md) | PhaseAnimator, KeyframeAnimator, KeyframeTimeline, MapKit camera keyframes, custom animations |
+| [transitions.md](transitions.md) | View transitions, custom Transition protocol, matched geometry, navigation/zoom transitions (SwiftUI + UIKit), interruptibility, UIKit↔SwiftUI bridging, gesture-driven springs |
 | [symbol-effects.md](symbol-effects.md) | SF Symbol effects, accessibility |
+| [visual-effects.md](visual-effects.md) | scrollTransition, visualEffect, MeshGradient, TextRenderer, shader effects (colorEffect/distortionEffect/layerEffect), effect pipelines, semantic alignment guides |

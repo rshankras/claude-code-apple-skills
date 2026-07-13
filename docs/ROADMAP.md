@@ -187,7 +187,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | testing/ | 9 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold, flow-walkthrough |
 | app-store/ | 12 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer, marketing-strategy, apple-search-ads, ad-attribution, rejection-handler, originality-check, iap-finalizer, ratings-mechanics, web-presence |
 | ios/ | 9 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access, run-simulator, run-device |
-| swiftui/ | 5 | alarmkit, webkit, text-editing, toolbars, charts-3d |
+| swiftui/ | 7 | data-flow, layout, alarmkit, webkit, text-editing, toolbars, charts-3d |
 | growth/ | 6 | analytics-interpretation, press-media, community-building, indie-business, store-signals, store-growth-audit |
 | swift/ | 3 | concurrency-patterns, concurrency, memory |
 | apple-intelligence/ | 3 | foundation-models, visual-intelligence, app-intents |
@@ -204,7 +204,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
-| **Total** | **158 across 23 categories** |
+| **Total** | **160 across 23 categories** |
 
 ---
 

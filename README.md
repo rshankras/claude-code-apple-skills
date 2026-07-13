@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 158 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 160 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 50 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -25,7 +25,7 @@ Four repos, four layers — use one or all:
 | **Testing** | 9 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
 | **App Store** | 12 | ASO, descriptions, keywords, reviews, search ads, ad attribution, rejections, originality, IAP finalize, ratings mechanics, web presence |
-| **SwiftUI** | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
+| **SwiftUI** | 7 | Data flow, layout & containers, AlarmKit, WebKit, text editing, toolbars, Charts 3D |
 | **Growth** | 6 | Analytics, store signals, growth audit, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 158 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 160 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 
@@ -118,7 +118,7 @@ skills/
 ├── growth/                 # Growth audit, analytics, store signals, press/media, community, indie business (6 skills)
 ├── legal/                  # Privacy policies, terms of service, EULAs
 ├── core-ml/                # Vision, NaturalLanguage, model integration
-├── swiftui/                # AlarmKit, WebKit, text editing, toolbars, Charts 3D
+├── swiftui/                # Data flow, layout & containers, AlarmKit, WebKit, text editing, toolbars, Charts 3D (7 skills)
 ├── apple-intelligence/     # Foundation Models, Visual Intelligence, App Intents
 ├── design/                 # Liquid Glass, animation patterns, UI prototyping, design principles, UX writing, SF Symbols, typography (7 skills)
 ├── performance/            # Instruments profiling, SwiftUI debugging
@@ -286,6 +286,8 @@ Generate production-ready Swift code that adapts to your project:
 
 | Skill | What It Covers |
 |-------|----------------|
+| `swiftui/data-flow` | View identity/lifetime/dependencies (the Demystify canon), Observation, state ownership, concurrency contract |
+| `swiftui/layout` | Layout protocol, custom containers, lazy-stack + scrolling performance rules |
 | `swiftui/alarmkit` | AlarmKit alarms and timers with Live Activities |
 | `swiftui/webkit` | WebView and WebPage integration |
 | `swiftui/text-editing` | AttributedString, TextEditor, rich text formatting |
