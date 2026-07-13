@@ -31,9 +31,9 @@ Before recruiting testers, understand Apple's two-tier beta system.
 
 | Attribute | Details |
 |-----------|---------|
-| Max testers | 100 |
+| Max testers | 100 team members, each on up to 30 devices |
 | App Review required | No |
-| Build availability | Immediate after upload |
+| Build availability | Immediate after upload — enable Automatic Distribution so every new build reaches the group without manual selection |
 | Tester requirement | Must be App Store Connect users |
 | Best for | Team, close collaborators, developer friends |
 | Expiration | 90 days from build upload |
@@ -48,11 +48,11 @@ Before recruiting testers, understand Apple's two-tier beta system.
 | Attribute | Details |
 |-----------|---------|
 | Max testers | 10,000 |
-| App Review required | Yes (Beta App Review — usually 24-48 hours) |
+| App Review required | Yes — the first build (and builds with significant changes) pass Beta App Review, usually 24-48 hours |
 | Build availability | After Beta App Review approval |
 | Tester requirement | Anyone with an email address and iOS/macOS device |
 | Best for | Real users, broader audience, validating product-market fit |
-| Expiration | 90 days from build upload |
+| Expiration | 90 days from build upload — plan your build cadence around it |
 
 **Use external testing for:**
 - Validating with real users who have no context about your app
@@ -62,6 +62,8 @@ Before recruiting testers, understand Apple's two-tier beta system.
 #### The Public-Link Waitlist Play
 
 Publish your TestFlight **public link** on your landing page and socials as a pre-launch waitlist — up to 10,000 external testers with zero email-collection infrastructure. Testers convert to day-one installers and early reviewers at launch, feeding the first-48-hours velocity that new apps get ranked on.
+
+The enrollment cap is settable anywhere from 1 to 10,000 — start small (~100) and raise it as feedback quality holds.
 
 #### Group Management
 
@@ -148,10 +150,11 @@ Build a simple feedback mechanism directly in the app. Three fields are enough:
 TestFlight's native feedback is surprisingly useful:
 - Users take a screenshot, annotate it, and add text
 - Feedback arrives in App Store Connect with device/OS metadata
-- Crash reports are automatic
+- Crash reports are automatic — upload symbols with your build so crashes symbolicate
 - No extra infrastructure needed
+- Webhooks + the Feedback API can automate triage — screenshot and crash feedback arrive with device info (crash logs via the `crashLog` endpoint), and a notification digest keeps volume sane (WWDC25)
 
-**Tip:** In your TestFlight "What to Test" field, be specific:
+**Tip:** Write per-build "What to Test" notes — update the field with every upload, and be specific:
 ```
 This week, please test:
 1. Creating a new [item] from scratch

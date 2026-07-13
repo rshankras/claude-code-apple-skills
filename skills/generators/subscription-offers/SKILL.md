@@ -44,11 +44,12 @@ If existing offer code found, ask:
 - **StoreKit 2**: `product.subscription?.introductoryOffer`
 
 ### 2. Promotional Offers
-- **Who**: Current or lapsed subscribers (you control eligibility)
-- **Types**: Free, pay-as-you-go, pay-up-front
-- **Limit**: Up to 10 per subscription group
-- **Requires**: Server-side signature generation
+- **Who**: Current or lapsed subscribers. Baseline eligibility is deliberately broad — any current or lapsed subscriber of *any* subscription in the app, even mid-intro — so layer YOUR business rules on top
+- **Types**: Free, pay-as-you-go, pay-up-front (pay-up-front prices are deliberately NOT price-validated — this is what enables bundle-style pricing)
+- **Limit**: Up to 10 active offers per subscription
+- **Requires**: Server-side signature generation — sign server-side only; signatures are valid 24 hours, so generate just before display
 - **StoreKit 2**: `product.subscription?.promotionalOffers`
+- **Attribution**: identify redemptions by `offerType` (1 = introductory, 2 = promotional, 3 = offer code) + `offerIdentifier`
 
 ### 3. Offer Codes
 - **Who**: Anyone with a valid code (you distribute)
@@ -61,6 +62,33 @@ If existing offer code found, ask:
 - **Types**: Free or discounted period
 - **Eligibility**: Automatic via App Store (iOS 18+)
 - **StoreKit 2**: `product.subscription?.winBackOffers`
+
+## Offer Strategy (Apple's Data)
+
+- **Intro offers work**: 60% of active paid subscriptions began with an introductory offer — mostly free trials, outside Greater China.
+- **Trial length follows category norms** — match what customers in your category already expect:
+
+| Typical trial | Categories |
+|---------------|------------|
+| ~1 month | Entertainment, social, music, books |
+| 1 week | Health & fitness, productivity, education, weather |
+| 3 days | Photo/video, games, utilities, business |
+
+- **…and regional norms**: monthly trials dominate in the US/Canada/Europe/Australia/NZ; 7-day in Greater China/Japan/Latin America; 3-day in Southeast Asia and EMEA.
+- **Annual pricing**: ~33% off the effective monthly rate is the cited pattern — "12 months for the price of 8".
+- **Reduce trial anxiety**: show an in-app countdown of trial days remaining and offer an opt-in push reminder before the trial converts.
+- ❌ Never hard-code offer merchandising ("Try 1 week free") — check `isEligibleForIntroOffer` and render only offers the user can actually redeem.
+
+### The Six Churn Playbooks (WWDC19 — still the strategy canon)
+
+| Playbook | Trigger | Move |
+|----------|---------|------|
+| Win-back | Subscription expired | Offer on relaunch / re-engagement |
+| Retention | Auto-renew flipped off — you get the server notification the moment it flips | Save offer before expiry |
+| Upgrade | Downgrade notification received | Nudge back to the higher tier |
+| Customer-service appeasement | Support flags a bad experience | Offer on next launch |
+| Loyalty | Long tenure (e.g., a free month at the 11th consecutive renewal) | Surprise reward |
+| Save | User heads to Manage Subscriptions | Intercept with an offer first |
 
 ## Configuration Questions
 

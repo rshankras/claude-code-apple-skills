@@ -32,12 +32,27 @@ Use this skill when the user:
 
 ## How Custom Product Pages Work
 
-- You can create up to **35 custom product pages** per app
-- Each page gets a unique URL you can share or use in ad campaigns
+- You can create up to **35 custom product pages** per app — prioritize a few distinctive pages over filling all 35
+- Each page gets a unique URL: your default App Store link plus a product-page-ID parameter; devices below iOS 15 (or a disabled page) fall back to the default page
 - You can customize: **screenshots**, **app previews**, and **promotional text**
 - The app icon, name, subtitle, and description remain the same across all pages
-- Each page can be localized independently
-- Available on iOS 15+ and macOS 12+
+- Each page is fully localizable, independently of the default page
+- Available on iOS 15+ and macOS 12+; the App Store Connect API automates page creation at scale
+
+### Review & Compliance
+
+- CPP metadata goes through App Review (Guideline 2.3 — accurate metadata), though submission is binary-independent — no new build needed
+- ❌ No pricing, offers, or sales language in page metadata ("50% off", "free trial") — prices vary by region and change without the page changing
+- Partner/ad-network tracking against CPP traffic requires App Tracking Transparency consent
+- Today-tab Apple Search Ads campaigns require a CPP with **≥4 portrait or ≥5 landscape assets** plus a separate creative review
+
+### Search Keyword Assignment (WWDC25)
+
+You can assign keywords to a custom product page, per language, so App Store searches on that keyword land on the matching CPP instead of the default page:
+
+- Assignment alone needs no App Review — the page was already approved
+- Make keyword selections unique per page — don't point multiple pages at the same term
+- Read per-CPP search traffic in App Analytics to see which assignments pull weight
 
 ### CPP vs Product Page Optimization (PPO)
 | Feature | Custom Product Pages | Product Page Optimization |
@@ -102,6 +117,8 @@ Design the screenshot order for each page to match the audience's priorities:
 - **Screenshot 1**: The hook — the single most compelling feature for this audience
 - **Screenshot 2-3**: Core value proof — features that solve their specific problem
 - **Screenshot 4-5**: Depth and trust — breadth of features, social proof
+
+At minimum, customize the **first two screenshots** — they're the most visible (per Apple's Tech Talk). And align each page's creative with the exact ad creative sending the traffic: the page should feel like a continuation of the ad, not a reset.
 
 ### Step 4: Produce Strategy Document
 
@@ -203,10 +220,22 @@ Example: Photo editing app with multiple use cases
 ## Measurement & Optimization
 
 ### Key Metrics per Page
-- **Impressions**: How many people see the page
-- **Conversion rate**: Impressions → Downloads
-- **Retention**: Do users from this page stick around?
-- **Revenue**: Do users from this page convert to paid?
+
+App Analytics reports each CPP separately: page views, downloads, conversion rate, average proceeds per paying user, retention, and sessions — segmentable by territory and source.
+
+- **Conversion rate**: the headline number per page
+- **Retention per page**: monitor alongside CVR — a page can convert well yet attract the wrong audience; retention confirms audience quality
+- **Average proceeds per paying user**: whether the page's audience monetizes
+
+❌ **NEVER compare custom pages head-to-head** — each page sees a different audience, so raw CVR gaps are audience differences, not creative quality. For apples-to-apples creative testing, run PPO on a single page instead.
+
+### Proven Results (Apple-cited)
+
+| Developer | Tactic | Result |
+|-----------|--------|--------|
+| FunPlus | Audience-matched pages per campaign | +33% conversion, −14% cost per install |
+| CBS Sports | Seasonal March Madness pages | +20% conversion |
+| Baidu / Otto | Pairing ASA ad variations with matching CPPs | +10–12% install rate |
 
 ### Optimization Cadence
 1. **Week 1-2**: Launch all pages, gather baseline data

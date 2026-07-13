@@ -71,6 +71,9 @@ Apple Search Ads campaign strategy for indie developers.
 - Campaign structure templates and measurement KPIs
 - Custom Product Pages integration for ad groups
 
+### ad-attribution/
+Privacy-preserving paid-traffic measurement with AdAttributionKit (SKAdNetwork's successor) — install + re-engagement attribution, conversion-value design under crowd anonymity, postback testing. (Apple Ads itself attributes via AdServices — see apple-search-ads.)
+
 ### rejection-handler/
 Handle App Store rejections and prepare submissions to avoid them.
 - Pre-submission audit checklist by guideline section

@@ -134,17 +134,37 @@ if let offer = winBackOffer {
 
 **Present Win-Back Offer:**
 ```swift
-// Native (iOS 18+)
+// Native (iOS 18+) — raw StoreKit path
+if case .verified(let renewalInfo) = status.renewalInfo,
+   let bestID = renewalInfo.eligibleWinBackOfferIDs.first,   // first ID = best offer
+   let offer = product.subscription?.winBackOffers.first(where: { $0.id == bestID }) {
+    let result = try await product.purchase(options: [.winBackOffer(offer)])
+}
+
+// With StoreKit views, choose the merchandised offer instead
 SubscriptionStoreView(groupID: groupID)
     .preferredSubscriptionOffer { product, subscription, offers in
         offers.first { $0.type == .winBack }
     }
 ```
 
+Hide win-back merchandising from anyone still entitled with auto-renew on — the offer is for lapsed subscribers only.
+
+### Where Offers Surface (WWDC24)
+
+The App Store does the distribution — eligible lapsed subscribers see your win-back offer on:
+
+- Your **product page** (offer card)
+- **Today / Games / Apps** editorial placements
+- The App Store's **Subscriptions** management page
+- **In-app**, via the APIs above
+
+**Streamlined purchasing is ON by default:** users can redeem on the App Store before ever reopening your app, so the transaction arrives via `Transaction.updates` — listen from launch. If you disable streamlined purchasing, implement `PurchaseIntent` to complete the purchase in-app.
+
 ### Testing Instructions
 
-1. **Sandbox Account**: Create a subscriber, cancel, wait for expiry
-2. **StoreKit Testing**: Use Transaction Manager to simulate churn
+1. **Sandbox Account**: Create a subscriber, cancel, wait for expiry — and enable "Display Win-back Offers" in the sandbox account settings
+2. **StoreKit Testing**: Use Transaction Manager to simulate churn; the Xcode StoreKit configuration file has per-offer eligibility toggles to simulate any eligibility state
 3. **Message Testing**: Test App Store message presentation
 4. **Verify flow**: Churned → Offer shown → Purchase → Active subscriber
 
@@ -152,21 +172,38 @@ SubscriptionStoreView(groupID: groupID)
 
 1. Go to Subscriptions > Your Group > Win-Back Offers
 2. Create offer with pricing and duration
-3. Set eligibility criteria (days since churn, previous subscription duration)
-4. Configure offer priority if multiple offers exist
+3. Set the three declarative eligibility knobs (WWDC24):
+   - **Minimum paid subscription months** — most recent *consecutive* paid months; any subscription in the group counts, and upgrades/downgrades don't reset the count
+   - **Time since last subscribed** — both a minimum AND a maximum, in months
+   - **Redemption cooldown** (optional) — wait between redemptions, starting after the offer period ends
+   - Worked example: paid ≥ 3 months, lapsed 2–24 months, 6-month cooldown, offer = 1 month free
+4. Configure offer priority if multiple offers exist — it decides which offer is "best" when several are eligible
+
+**Config gotchas:**
+- Offer identifier and pricing are immutable after creation
+- Eligibility criteria lock at the offer's start date
+- Stopping App Store promotion requires deleting the offer
 
 ### Retention Messaging (At-Cancel Save Offers)
 
-> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
+> The App Store Connect tier is open to all developers (WWDC26); the real-time server API is gated behind an access-request form + a mandatory sandbox performance test. (Per the session "Explore Retention Messaging in App Store Connect".)
 
-The App Store can present a save offer at the exact moment a user goes to cancel, configured via App Store Connect or the API. It complements win-back rather than replacing it:
+The App Store presents your message on the **cancel confirmation page** — the last screen before a subscriber churns. It complements win-back rather than replacing it:
 
 | Mechanism | Fires |
 |-----------|-------|
 | Retention messaging | At cancel — before the user churns |
 | Win-back offer | After lapse — once the subscription has expired |
 
-Configure both once eligible — they cover opposite ends of the churn window.
+Configure both — they cover opposite ends of the churn window.
+
+**Mechanics (from Apple's session):**
+
+- Three formats: message only · message + image (from the Asset Library) · message + **retention offer**.
+- Attach **multiple offers** to one subscription with confidence — "the App Store will automatically choose the best offer for eligible customers."
+- Setup (no server needed): ASC → Subscriptions → Retention Messaging → name it, write the message, optionally attach image + offers, pick subscriptions, **test in sandbox first**. Also configurable via the ASC API.
+- Real-time variant: the App Store calls your endpoint for a per-customer message, falling back automatically (your ASC messages → API defaults → system fallback) if it times out — so always configure the ASC tier even when using real-time.
+- Apple's observed impact: average **save-rate lift +1.4 points (~82%)**; messages carrying a promotional offer reached **+5.5 points (~223%)** — with "varying results across developers." (Save rate = % of subscribers who keep the subscription after reaching the cancel confirmation page.)
 
 ## References
 

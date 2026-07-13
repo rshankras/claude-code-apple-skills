@@ -13,16 +13,15 @@ Evidence keys (`EV.*`) are defined in `detection-playbook.md`. IDs are stable �
 
 #### P5.2 Custom Product Pages for distinct audiences
 - detect: MCP `EV.cpp`
-- rule: ✅ CPPs live and mapped to audiences/campaigns (35 slots available) · 🟠 one token CPP · 🔴 none despite distinct audiences · ⚪ genuinely single-audience app
+- rule: ✅ CPPs live, mapped to audiences/campaigns AND search keywords assigned per page (35 slots) · 🟠 pages exist but unkeyed/token · 🔴 none despite distinct audiences · ⚪ genuinely single-audience app
 - new-app: defer
 - fix: generators/custom-product-pages → /apple:experiment
 
-#### P5.3 Creative Assets — ⏳ ANNOUNCED (WWDC26)
-> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
-- prep: keep a motion-capable asset library (from PPO/CPP work) ready — rich video/animated media for the product-page header and search results, submittable without an app update
-- recheck: every audit — is the Creative Assets section live in ASC? When live, apply:
-- dormant rule: ✅ rich media asset live in header/search · 🔴 not adopted within a quarter of availability
-- fix: app-store/screenshot-planner → /apple:screenshots
+#### P5.3 Creative Assets: Product Page Header + Search Results visuals
+- detect: HYBRID — Asset Library state isn't exposed via the current MCP tools, so MANUAL ("header/search creative assets submitted in the Asset Library?") with `EV.meta`/`EV.ppo` as partial signals
+- rule: ✅ header + search visuals live (pre-approved in the Asset Library, refreshed with campaigns) · 🟠 assets prepared but not submitted · 🔴 still default screenshots everywhere (surfaces render on iOS 27/iPadOS 27)
+- new-app: plan — design header/search assets alongside the screenshot set
+- fix: app-store/screenshot-planner (Creative Assets section) → /apple:screenshots
 
 #### P5.4 In-app events cadence + badge variety
 - detect: MCP `EV.events`
@@ -133,11 +132,11 @@ Evidence keys (`EV.*`) are defined in `detection-playbook.md`. IDs are stable �
 - new-app: defer
 - fix: generators/win-back-offers → /apple:subscription
 
-#### P8.3 Retention Messaging (save offer at cancel) — ⏳ ANNOUNCED (WWDC26)
-> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
-- prep: draft the save-offer copy and eligibility rules now; decide the discount you can afford at the cancel moment
-- recheck: every audit — Retention Messaging live in ASC/API? When live, apply:
-- dormant rule: ✅ save offer configured at cancel moment · 🔴 not configured within a quarter of availability · applies-if: subscriptions
+#### P8.3 Retention Messaging (save offer at cancel)
+- detect: MANUAL Q ("Retention Messaging configured in ASC → Subscriptions?") — `EV.subs` partial signal
+- rule: ✅ message + retention offer live on the cancel confirmation page, tested in sandbox · 🟠 message-only (no offer — offers reached +5.5pts save-rate lift vs +1.4 average in Apple's data) · 🔴 not configured · applies-if: auto-renewable subscriptions
+- new-app: defer — activates with the first live subscribers
+- note: ASC tier open to all developers; the real-time server API stays access-gated (interest form + sandbox performance test)
 - fix: generators/win-back-offers (Retention Messaging section) → /apple:subscription
 
 #### P8.4 US web checkout / External Purchase Links — core
@@ -152,12 +151,12 @@ Evidence keys (`EV.*`) are defined in `detection-playbook.md`. IDs are stable �
 - new-app: defer
 - fix: monetization/bundles-and-licensing
 
-#### P8.6 Group Purchases + Volume Purchasing — ⏳ ANNOUNCED (WWDC26)
-> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
-- prep: identify whether schools/clinics/businesses buy your app; if yes, prepare multi-seat pricing now
-- recheck: every audit — Group Purchases / Apple School & Business Manager licensing live? When live, apply:
-- dormant rule: ✅ institutional licensing configured · 🔴 institutional demand exists but unconfigured · applies-if: B2B/edu buyer segment
-- fix: monetization/bundles-and-licensing
+#### P8.6 Group Purchases + Volume Purchasing
+- detect: HYBRID — `EV.subs` (StoreKit 2 subscriptions exist; volume price bands not exposed via current MCP tools) + MANUAL ("volume price bands configured? group value merchandised?")
+- rule: ✅ volume pricing bands set (≤5) and group purchase merchandised where a team/school/family-of-buyers segment exists · 🟠 live-by-default but never configured (every seat sells at full price) · 🔴 institutional demand exists, nothing configured · applies-if: auto-renewable subs on StoreKit 2 + a multi-seat buyer segment
+- note: live for StoreKit 2 subscriptions (WWDC26) — on by default; Family Sharing-enabled subs are opted out by default
+- new-app: plan — decide the seats model with the subscription design
+- fix: monetization/bundles-and-licensing → /apple:subscription
 
 #### P8.7 Own-app bundles + Family Sharing
 - detect: MCP `EV.iaps` + `EV.subs` (familySharable) + MANUAL (bundles)

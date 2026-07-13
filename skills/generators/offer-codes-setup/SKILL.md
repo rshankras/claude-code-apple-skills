@@ -20,22 +20,24 @@ Use this skill when the user:
 ## How Offer Codes Work
 
 - Create in **App Store Connect** under Subscriptions > Offer Codes
-- Two types: **one-time use codes** and **custom codes** (reusable, max 25 chars)
-- Maximum **150,000 codes per app per quarter** (per subscription)
-- Users redeem via: App Store, your app (using `presentOfferCodeRedeemSheet()`), or direct link
+- Up to **10 active offers per subscription** SKU
+- Two types: **one-time use codes** (generated in batches of 500–25,000) and **custom codes** (reusable, up to 64 characters, no special characters, redemption limit up to 25,000 per code)
+- One redemption per customer per offer
+- Quarterly ceiling: **1,000,000 codes per app per quarter** — raised from the old 150,000, and now spanning subscriptions + one-time IAP combined (per WWDC25). Sandbox: 10,000 codes/app/quarter, with unlimited redemptions per sandbox account
+- Beyond subscriptions, codes now cover **consumables, non-consumables, and non-renewing subscriptions**, with campaign eligibility criteria (never purchased / purchased but not in the last 30 days / purchased in the last 30 days) and auto-install of the app on redemption if it's absent (WWDC25)
 - Offer applies the configured discount (free period, discounted rate, etc.)
-- Codes expire after the date you set in App Store Connect
+- Expiry is configurable from 1 day to 6 months — one-time codes auto-expire at 6 months. Print the expiry date in every marketing asset
 
 ### Code Types
 | Type | Description | Best For |
 |------|-------------|----------|
 | One-time use | Unique codes, each used once | Email campaigns, individual distribution |
-| Custom codes | Reusable keyword codes (e.g., "LAUNCH2025") | Social media, events, partnerships |
+| Custom codes | Reusable keyword codes (e.g., "LAUNCH2025"), ≤64 chars | Social media, events, partnerships |
 
 ### Redemption Methods
-1. **App Store > Account > Redeem Gift Card or Code**
-2. **In your app** via `AppStore.presentOfferCodeRedeemSheet()`
-3. **Direct URL**: `https://apps.apple.com/redeem?ctx=offercodes&id=APPID&code=CODE`
+1. **In your app** via `AppStore.presentOfferCodeRedeemSheet()` — preferred: your app stays in the foreground, so put a "Redeem Code" button on the paywall
+2. **Direct URL**: `https://apps.apple.com/redeem?ctx=offercodes&id=APPID&code=CODE` — ideal for QR codes and email; state the minimum iOS version in marketing materials
+3. **App Store > Account > Redeem Gift Card or Code**
 
 ## Configuration Questions
 
@@ -185,7 +187,8 @@ struct SettingsView: View {
 | Metric | How to Track |
 |--------|-------------|
 | Codes distributed | Your distribution records |
-| Codes redeemed | App Store Connect > Offer Codes |
+| Codes redeemed | App Store Connect > Offer Codes (redemptions report) |
+| Per-campaign attribution | `offer_code_reference_name` in transactions + `OFFER_REDEEMED` server notification |
 | Redemption rate | Redeemed / Distributed |
 | Post-offer retention | Retained after offer period ends |
 | Conversion to paid | Continued subscription after offer |
@@ -226,6 +229,13 @@ struct SettingsView: View {
 - **Offer**: 1-3 months free
 - **Distribution**: QR code on slides/booth, printed cards
 - **Tracking**: Post-event redemption monitoring
+
+## Gotchas
+
+- **Intro-offer stacking order is locked at creation** — whether a code redeems before or after the introductory offer can NEVER be changed later
+- **Treat any code that leaves your systems as spent** — unredeemed codes can't be recovered or reissued
+- **Never let a code land an active subscriber on a lower tier** — exclude current subscribers from campaigns priced below their plan
+- **Listen on `Transaction.updates` from launch** — redemptions happen outside your app (App Store, URL), so entitlements arrive asynchronously
 
 ## References
 

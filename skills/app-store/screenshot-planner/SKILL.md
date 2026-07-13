@@ -215,11 +215,24 @@ Notes: [Close the deal]
 0:20-0:30  Final CTA with value prop
 ```
 
-### Creative Assets
+### Creative Assets, Product Page Header & Search Results Visuals
 
-> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
+> Introduced at WWDC26; submittable via App Store Connect's Asset Library, rendering on iOS 27 / iPadOS 27. (Per the session "Enhance your presence on the App Store".)
 
-Rich video/animated media in the product-page header AND in search results — submittable **without an app update** and testable via Custom Product Pages / PPO. Plan a motion-capable asset library now (source-quality screen captures, layered project files) so you can adopt the moment it reaches your account.
+Two new surfaces beyond screenshots, both fed from the **Asset Library** (ASC's central hub for screenshots, previews, event media, and the new marketing images/videos called creative assets):
+
+- **Product Page Header** — an image or video *above* your screenshots; the first visual element people see. Header, icon, and screenshots should "work together" — one visual identity, video when you want to control the narrative.
+- **Custom Search Results visuals** — replace the default screenshot strip in search with an impactful image/video; you can show a **tailored asset per search keyword**, pairing it with the matching Custom Product Page and deep link.
+
+Working rules from Apple's session:
+
+- ✅ **Pre-approve assets** in the Asset Library — approved assets can then update the header and search visuals **in real time, without another review or an app update**. Two flows: attach to a version submission, or submit assets standalone.
+- ✅ Use the **same asset** on header and search results for a seamless discovery→install experience.
+- ✅ A/B every new visual through PPO ("test different visuals and see exactly which ones your audience respond best to"); use the ASC Preview tool across iPhone/iPad, orientations, and languages before submitting.
+- ✅ Automate uploads/submissions via the App Store Connect API.
+- ❌ Don't treat these as decoration — assets must "clearly communicate your app's core value" (aspirational imagery for outdoor apps, destinations for travel, gameplay/characters for games).
+
+Keep a motion-capable asset library (source-quality captures, layered project files) so every PPO/CPP learning can graduate into header and search assets.
 
 ## Localization
 

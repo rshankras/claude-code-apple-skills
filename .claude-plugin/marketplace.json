@@ -10,7 +10,7 @@
     {
       "name": "apple-skills",
       "source": "./",
-      "description": "152 Apple platform development skills across 23 categories (iOS, macOS, watchOS, visionOS): code generators, product workflow, App Store/ASO, testing and TDD, design, performance, security, and more. Surfaced as 23 category skills that route to the full library.",
+      "description": "153 Apple platform development skills across 23 categories (iOS, macOS, watchOS, visionOS): code generators, product workflow, App Store/ASO, testing and TDD, design, performance, security, and more. Surfaced as 23 category skills that route to the full library.",
       "skills": [
         "./skills"
       ]

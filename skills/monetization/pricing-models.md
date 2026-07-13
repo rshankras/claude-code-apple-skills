@@ -220,13 +220,15 @@ Pro ($4.99 one-time): Themes, widgets, export
 
 ## Pricing Localization
 
-Apple provides 87 price tiers with automatic localization. Key considerations:
+Apple provides 900 price points (up to $1,000 by default; another 100 up to $10,000 on request). Key mechanics:
 
-- **Price tier 1** ($0.99) is universal baseline
-- Higher tiers have regional variation (e.g., Tier 5 = $4.99 US, ¥800 Japan)
-- Some regions have purchasing power adjustments
-- Consider offering **lower tiers in emerging markets** via App Store pricing tools
-- Apple's "Pricing and Availability" now supports per-country pricing
+- **Pick your base storefront deliberately** — its price NEVER auto-updates, so align it with your primary earnings market
+- Other storefronts equalize against the base **pre-tax** — Apple collects and remits tax in 77 storefronts
+- **Apps and one-time IAPs auto-reprice** on sustained FX moves (~10% over 2-3 quarters); you get an email plus an ASC "Upcoming Changes" view at least 14 days ahead
+- **Auto-renewable subscription prices are NEVER auto-adjusted** — recheck them against FX manually
+- Any storefront you custom-price is **excluded from automatic management forever**; a Global Price Change resets it to automatic
+- **Temporary Price Changes auto-revert** at the end date — the mechanism behind deal-site price-drop campaigns
+- Match local pricing conventions — each storefront offers 4-5 (e.g., Korea's ₩9,901 pattern), not just .99
 
 ### PPP Pricing Playbook
 
@@ -254,3 +256,12 @@ Apple's automatic price equalization converts currency — it ignores purchasing
 - Use introductory offers for new price points
 - A/B test with offer codes
 - Announce upcoming price increase to drive urgency
+
+### Subscription Price Increase Mechanics
+
+- **"Preserve current price for existing subscribers"** protects your base while new subscribers pay more
+- Markets/increase sizes that require subscriber consent show an indicator in ASC before you commit
+- Apple notifies affected subscribers at least 30 days ahead (email + in-app messaging, plus a push at 7 days); the increase lands on day 30 unless they cancel
+- Preserved cohorts can only be raised **stepwise to the next-highest price** — no multi-point jumps
+- Price **decreases** apply to everyone automatically
+- A live price change **cannot be edited or undone** — schedule carefully

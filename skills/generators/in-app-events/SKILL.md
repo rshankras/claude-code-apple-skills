@@ -25,7 +25,21 @@ In-App Events appear on:
 - Editorial features and collections
 - Personalized recommendations
 
-Events are visible to ALL users — including people who haven't downloaded your app. This makes them a powerful discovery and re-engagement tool.
+Events are visible to ALL users — including people who haven't downloaded your app. This makes them a powerful discovery and re-engagement tool. Users who opt in also get an App Store notification when the event starts.
+
+### Rules & Limits (per Apple)
+
+| Rule | Value |
+|------|-------|
+| Event duration | 15 minutes to 31 days |
+| Publish ahead of start | Up to 14 days early — the card shows the start time |
+| Concurrent limits | 10 approved / 5 published simultaneously across storefronts — ASC blocks submission beyond either |
+| Per-country schedules | Custom start/end per country, within ±48 hours of the default schedule |
+| Review time | ~24 hours typical |
+| Past-event URL | Stays live for 30 days after the event ends |
+| Card media | One image, or a looping video ≤30 seconds |
+| Submission conflict | Marketing role can't submit an event while an app version is in submission |
+| Analytics | Event analytics appear only after ≥5 downloads from the event |
 
 ## Configuration Questions
 
@@ -64,7 +78,7 @@ For each event, collect:
 ### Step 2: Generate Metadata
 
 For each event, produce:
-1. **Event Reference Name** (internal, not shown to users)
+1. **Event Reference Name** (64 characters max, internal, not shown to users)
 2. **Event Badge** (one of the 7 badge types)
 3. **Event Name** (30 characters max, shown on event card)
 4. **Short Description** (50 characters max, shown on event card)
@@ -78,6 +92,7 @@ Provide exact image specifications for event cards:
 - **Event Card Image**: 1080 x 1920 pixels (portrait) or 1920 x 1080 (landscape)
 - **Format**: PNG or JPEG
 - **Safe zones**: Keep critical content within center 80%
+- **No text or logos in card art** (per Apple) — the card already renders your event name and app name over it; preview the image for cropping across placements
 
 ### Step 4: Produce Output Document
 
@@ -95,6 +110,8 @@ Write a markdown document with all metadata ready for copy/paste into App Store 
 | **New Season** | Seasonal content refreshes | "Winter Season", "Chapter 3" |
 | **Premiere** | First-time content or feature debut | "Introducing Dark Mode", "New Game Mode" |
 
+**The badge-fit rule** (per Apple): if none of the badges fits what you're promoting, it shouldn't be an event. Two badges Apple polices closely — **Live Event** must introduce new features, content, or goods (not just "we're streaming"), and **Major Update** must exceed UI tweaks and bug fixes.
+
 ### Announced Badge Types
 
 > Status: announced (WWDC26) — verify availability in App Store Connect before executing.
@@ -107,9 +124,11 @@ Write a markdown document with all metadata ready for copy/paste into App Store 
 ## Metadata Best Practices
 
 ### Event Name (30 chars)
-- **DO**: Use action-oriented language ("Join the Challenge", "Explore New Features")
+- **DO**: Name the event like a title, in Title Case ("Summer Photo Week", "Championship Finals")
 - **DO**: Include time urgency ("This Week Only", "24-Hour Event")
 - **DON'T**: Use generic names ("Special Event", "Update")
+- **DON'T**: Style the name as a call to action ("Watch the Live Stream") or use ALL CAPS — App Review flags both (per Apple's Tech Talk)
+- **DON'T**: Repeat the badge type in the name — the badge already says it
 - **DON'T**: Include app name (it's already shown)
 
 ### Short Description (50 chars)
@@ -122,6 +141,24 @@ Write a markdown document with all metadata ready for copy/paste into App Store 
 - **DO**: Provide specific details about what users will experience
 - **DO**: Include clear call to action
 - **DON'T**: List features — describe the experience
+
+### App Review Rules (Guidelines 2.3.13 + 2.3.8)
+
+- Metadata must be suitable for a **4+ audience in every region** the event runs
+- No unverifiable claims ("best", "#1") and no specific prices — prices vary by region
+- Don't repeat the badge type in the name or description
+- Declare accurately whether the event **requires an IAP or subscription** — it's shown on the card, and an inaccurate declaration stalls review
+
+### Purpose & Priority
+
+- **Purpose** (Attract New Users / Keep Active Users Informed / Bring Back Lapsed Users) feeds the App Store's on-device personalized recommendations — pick honestly; it determines who sees the card
+- **High priority** only reorders YOUR events relative to each other — it has no effect on search rank against other apps
+
+### Deep Link (required)
+
+- Prefer a **universal link** over a custom URL scheme; **no shorteners or redirects** — review rejects them
+- Route by state: event live → straight to the event; before start → an anticipation screen; new user → onboarding first, then the event
+- Test by pasting the link into Notes and tapping it
 
 ## Output Format
 
@@ -141,7 +178,7 @@ Write a markdown document with all metadata ready for copy/paste into App Store 
 | Long Description | [120 chars max] |
 | Start Date | [YYYY-MM-DD HH:MM timezone] |
 | End Date | [YYYY-MM-DD HH:MM timezone] |
-| Event Purpose | [Primary / Informational] |
+| Event Purpose | [Attract New Users / Keep Active Users Informed / Bring Back Lapsed Users] |
 | Event Priority | [Normal / High] |
 | Deep Link | [yourapp://event/event-id] |
 
@@ -154,7 +191,7 @@ Write a markdown document with all metadata ready for copy/paste into App Store 
 | Safe Zone | Center 80% for critical content |
 | Background | [Color/gradient suggestion] |
 | Content | [Visual description] |
-| Text Overlay | [Text to include on image] |
+| Text/Logos | None — event name renders over the art; preview for cropping |
 
 ## Deep Link Configuration
 

@@ -19,17 +19,19 @@ Use this skill when the user:
 
 ## How PPO Works
 
-- Test up to **3 treatments** against your original (control)
+- Test up to **3 treatments** against your original (control); a single test can include up to 3 app preview videos per treatment
 - Testable elements: **app icon**, **screenshots**, **app previews**
-- Traffic split: Evenly distributed among variants
-- Duration: Apple recommends minimum 7 days (typically run 14-28 days)
-- Statistical confidence: Apple shows results when statistically significant
-- Localization: Tests can run in specific localizations
+- Traffic proportion: you choose **1–50%** of page traffic, split evenly across treatments (30% over 3 treatments = 10% each) — no treatment may exceed the original page's share
+- Duration: run at least 1 week and extend in **7-day increments** to capture weekday/weekend cycles; hard cap **90 days**
+- Statistical confidence: no confidence shown for the first 7 days; **90% confidence is the decision bar** — per Apple, "9 of 10 reruns would repeat the result"
+- Localization: tests can target specific localizations only — confirm those locales have enough traffic to conclude within 90 days
 - Icon treatments: can only use icons that already ship in the app binary's asset catalog as alternate icons — plan icon tests one release ahead
+- Prerequisites: app must be Ready for Sale; role must be Account Holder, Admin, App Manager, or Marketing
 
 ### Important Limitations
 - Cannot test: app name, subtitle, description, keyword field, or price
 - One test at a time per localization
+- Only one test submission can be in App Review at a time
 - Results apply to organic App Store traffic only
 - Minimum traffic required for statistical significance
 
@@ -44,6 +46,30 @@ Use this skill when the user:
 | **20,000+** | Aggressively | Test 3 variants, rapid iteration. Can test icon + screenshots sequentially. |
 
 **If below threshold:** Focus on qualitative improvements (follow the Quick Win Checklist in the output) rather than running inconclusive A/B tests.
+
+## Test Discipline (per Apple's Tech Talk)
+
+- ✅ **Estimate before you start**: use App Store Connect's Estimate Your Test Duration tool — example: detecting a 5% improvement at 50% traffic needs ~174k impressions ≈ 2 weeks
+- ✅ **Make treatments NOTABLY different** — subtle tweaks (small color shifts, reordered captions) typically end inconclusive
+- ✅ **Have next-test assets ready before each release window** — icon candidates must ship in the binary, so an unprepared release stalls the pipeline a full cycle
+- ✅ **A winning control is still learning** — you've validated the existing page and eliminated a hypothesis
+- ❌ Don't stop a test early because a treatment "looks ahead" — confidence isn't even shown for the first 7 days
+- ❌ Don't port A/B winners from other platforms or ad networks — App Store audiences convert differently
+
+### Applying Winners
+
+| Winning element | How it ships |
+|-----------------|--------------|
+| Screenshots / app previews | "Apply Treatment to Original Product Page" in App Store Connect — no new binary or review |
+| App icon | Ship it as the default icon in the next app binary |
+
+### Real Results (Apple-cited)
+
+| App | Test | Result |
+|-----|------|--------|
+| Peak | Icon variants | +8% conversion at 98% confidence (44 days, 154K impressions per treatment) |
+| Angry Birds 2 | Seasonal art vs. control | Control won (+1.5%, 100% confidence) — validated existing creative |
+| Simply Piano | Screenshots-only vs. app preview | Screenshots-only won, +3.3% in 12 days |
 
 ## Configuration Questions
 

@@ -43,9 +43,13 @@ One page, one job: convert a web visitor into a store visitor.
   <meta name="apple-itunes-app" content="app-id=YOUR_APP_ID, app-argument=https://yourapp.com/from-web">
   ```
 
-  ✅ Installed users tapping it deep-link into the app (`app-argument`); everyone else gets a
-  one-tap path to the listing. ❌ Custom "download our app" interstitials — Safari users get the
+  ✅ The banner shows **Open** for installed users — deep-linking into the app, down to specific
+  in-app content via `app-argument` — and **View** for everyone else, opening the App Store in
+  one tap. ❌ Custom "download our app" interstitials — Safari users get the
   native banner for free, and interstitials tank your Google page experience.
+- **App Store Marketing Tools** (tools.applemediaservices.com) generate short links, QR codes,
+  and localized badge assets — use them for referral campaigns and offline/print placements
+  instead of hand-rolling links.
 - The landing page is also where pre-launch waitlists live (TestFlight public link — see
   `product/beta-testing`) and where press/link-in-bio traffic should land, because you can
   measure it before it enters the store funnel.
