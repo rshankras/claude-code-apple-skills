@@ -28,6 +28,13 @@ Your app implements:
 - `AppEntity` types for searchable content
 - Display representations for results
 
+## Platform Availability (WWDC26 297)
+
+- Visual Intelligence runs on iOS, iPadOS, and macOS — the same entities, query, and OpenIntent code works unchanged on all three.
+- The input mix differs by platform: on iOS it's often **camera captures of physical objects**; on iPad and Mac the primary entry point is **screenshots of digital media**. Your search must handle both content styles.
+- On Mac, the input pixel buffer can be **much larger** than what you'd encounter on iPhone — consider whether resizing is necessary before matching.
+- Provider ordering in the Visual Intelligence sheet is **system-decided** among available Image Search providers — not something you control.
+
 ## Quick Start
 
 ### 1. Import Frameworks
@@ -150,6 +157,12 @@ func values(for input: SemanticContentDescriptor) async throws -> [ProductEntity
 
 Use `@UnionValue` when your app has different content types.
 
+Rules (WWDC26 297):
+
+- **An app can have only ONE `IntentValueQuery` that accepts a `SemanticContentDescriptor`.** All result types must flow through that single query — a `@UnionValue` enum with one case per entity type.
+- **Every entity type in the union needs its own `OpenIntent`** — without one, results of that type can't appear in image search.
+- Think beyond pixel matching: an album matched by image similarity can also surface the artist's **nearby concerts** — be creative about the type of content you return based on the context.
+
 ```swift
 @UnionValue
 enum SearchResult {
@@ -178,6 +191,17 @@ struct VisualSearchQuery: IntentValueQuery {
 ## Display Representations
 
 Create compelling visual representations for search results.
+
+### Result Card Real Estate (WWDC26 297)
+
+- The search-result card gives about **three lines of text** for a title and subtitle, plus a thumbnail image — put the most important identifying info there (album name + artist).
+- With multiple results the sheet uses a **two-column layout**: if you initialize `DisplayRepresentation` with an image **URL**, serve a **thumbnail-sized** image, not the full-resolution asset — smaller images load faster.
+- Exception: a **single** result renders its image at the **full width** of the results sheet — don't over-shrink for that case.
+
+```swift
+// ❌ Full-res image URLs in DisplayRepresentation for multi-result responses
+// ✅ Thumbnail-sized images (two-column sheet); full-width only when returning one result
+```
 
 ### Basic Display
 
@@ -215,9 +239,45 @@ var displayRepresentation: DisplayRepresentation {
 }
 ```
 
+## On-Device Image Matching (WWDC26 297)
+
+Whether you're searching on device or hitting a server, the same principles apply: **return results fast and ranked**.
+
+Vision-framework pattern:
+
+- **Pre-compute** `GenerateImageFeaturePrintRequest` feature prints for your catalog — never at query time.
+- At query time: convert the pixel buffer via VideoToolbox (`VTCreateCGImageFromCVPixelBuffer`), generate one feature print, compare distances.
+- Filter with a **maximum distance threshold** to drop dissimilar results, **sort ascending by distance** so the best match is first, and **cap the result count**. Apple's sample signature: `search(matching:limit: Int = 10, maxDistance: Double = 1.0)`.
+- Return `[]` when nothing matches or the pixel buffer is absent — the system handles displaying an empty response. ❌ Don't pad with weak matches.
+
+```swift
+// ❌ Compute feature prints at query time
+// ✅ Pre-compute catalog prints; query = 1 print + threshold + sort + limit
+let matches = catalogPrints
+    .map { entry in (entry, entry.print.distance(to: queryPrint)) }
+    .filter { $0.1 <= maxDistance }
+    .sorted { $0.1 < $1.1 }
+    .prefix(limit)
+```
+
+Vision offers more than feature prints for visual search: text extraction, barcode scanning, face detection, image classification (WWDC26 297).
+
 ## Deep Linking
 
 Enable users to open specific content from search results.
+
+### OpenIntent Rules (WWDC26 297)
+
+Tapping a result runs your `OpenIntent` for that entity type, and its `perform()` runs **as the app comes to the foreground**:
+
+- Do navigation in `perform()`; **defer heavy loading until after the view appears**.
+- Take people **straight to the content they selected** — no intermediate screens.
+- ✅ Reuse the OpenIntent from your existing App Intents adoption — you don't need a separate one just for Visual Intelligence. ❌ Duplicate per-feature OpenIntents.
+
+```swift
+// ❌ Heavy loading inside OpenIntent.perform (runs during foregrounding)
+// ✅ Navigate only; load after the view appears; reuse one OpenIntent everywhere
+```
 
 ### URL-based Deep Links
 
@@ -279,6 +339,30 @@ struct ViewMoreProductsIntent: AppIntent, VisualIntelligenceSearchIntent {
     }
 }
 ```
+
+### semanticContentSearch Schema (WWDC26 297)
+
+The schema-based form: conform to `.visualIntelligence.semanticContentSearch` and the system supplies the `semanticContent` property automatically:
+
+```swift
+@AppIntent(schema: .visualIntelligence.semanticContentSearch)
+struct SemanticContentSearchIntent: AppIntent {
+    static let openAppWhenRun: Bool = true
+
+    var semanticContent: SemanticContentDescriptor
+
+    func perform() async throws -> some IntentResult {
+        let results = try await library.search(matching: semanticContent)
+        await MainActor.run { AppState.shared.openSearch(with: results) }
+        return .result()
+    }
+}
+```
+
+Rules (WWDC26 297):
+
+- **Pre-populate** the in-app search view from the captured context — never land people on a blank search screen.
+- Use the in-app surface to expose what the Visual Intelligence sheet can't: filters, categories, the full depth of your content.
 
 ## Complete Example
 
@@ -434,6 +518,18 @@ var displayRepresentation: DisplayRepresentation {
 }
 ```
 
+## Receiving Visual Intelligence Data (WWDC26 297)
+
+Two integration directions: your app **provides** results (everything above), and your app **receives** data Visual Intelligence writes into shared system stores:
+
+| Visual Intelligence system action | Store | Your app reads via |
+|-----------------------------------|-------|--------------------|
+| Create calendar events — including multiple events at once | EventKit | `EKEventStore` |
+| Add to contacts | Contacts | `CNContactStore` |
+| Log medical device readings (blood pressure monitors, glucose meters, weight scales) | HealthKit | `HKHealthStore` |
+
+If your app already reads from these stores, Visual Intelligence becomes a source of input automatically — zero VI-specific code. One requirement: **observe change notifications** so VI-created data appears without a relaunch. EventKit pattern from Apple's sample: `requestFullAccessToEvents()` → fetch with a predicate (a 90-day window) → observe `.EKEventStoreChanged` notifications and refetch.
+
 ## Testing
 
 1. Build and run on physical device
@@ -442,6 +538,7 @@ var displayRepresentation: DisplayRepresentation {
 4. Point at objects relevant to your app
 5. Verify results appear
 6. Test tapping results opens your app correctly
+7. On iPad and Mac, test with screenshots of digital media — the primary entry point there (WWDC26 297)
 
 ## Checklist
 
@@ -452,7 +549,12 @@ var displayRepresentation: DisplayRepresentation {
 - [ ] Create DisplayRepresentation for each entity
 - [ ] Implement deep linking URLs
 - [ ] Handle URLs in app with onOpenURL
-- [ ] Add "More Results" intent if needed
+- [ ] Add "More Results" intent if needed — pre-populated, never a blank search screen
+- [ ] Only one SemanticContentDescriptor-accepting IntentValueQuery in the app (WWDC26 297)
+- [ ] OpenIntent per entity type; navigation only in `perform()`, heavy loading deferred (WWDC26 297)
+- [ ] Thumbnail-sized display images for multi-result responses (WWDC26 297)
+- [ ] Return `[]` when nothing matches — no weak-match padding (WWDC26 297)
+- [ ] Feature prints pre-computed, results filtered by max distance and sorted best-first (WWDC26 297)
 - [ ] Test on physical device
 - [ ] Optimize for performance (< 1s response)
 - [ ] Localize display text

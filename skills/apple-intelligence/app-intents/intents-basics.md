@@ -2,6 +2,36 @@
 
 Core patterns for the AppIntent protocol, parameters, the `perform()` method, and App Shortcuts with voice phrases.
 
+## What Deserves to Be an Intent
+
+Scope doctrine from Apple's design sessions:
+
+- **"Anything your app does should be an App Intent"** (WWDC24 10176). First-time adopters can start with the most habitual features, but the end-state is full coverage of your app's tasks. Counterweight: flexibility must not come at the cost of comprehensibility — a rich set of flexible intents beats a pile of unclear, brittle ones.
+- Vocabulary: **intents are verbs, entities are nouns, enums are fixed nouns**, and App Shortcuts are sentences that promote one intent (WWDC25 244, WWDC24 10210). If a set of values is fixed at compile time, model it as an `AppEnum`; if instances are user data or unbounded, use an `AppEntity` + query — don't model dynamic data as an enum (WWDC25 244).
+- Start from the fundamental verb families seen across Shortcuts — Open, Create, Show, Set — when deciding what to surface first (WWDC24 10176).
+- Name intents for **user-meaningful tasks, never implementation names or UI gestures** (WWDC24 10210).
+
+```swift
+// ❌ One intent per variant of the same task (WWDC24 10176)
+struct OpenWorkReminders: AppIntent { }
+struct OpenHomeReminders: AppIntent { }
+struct OpenGroceryReminders: AppIntent { }
+
+// ✅ One flexible intent, variant as a parameter
+struct OpenRemindersList: AppIntent {
+    @Parameter(title: "List") var list: ReminderListEntity
+}
+
+// ❌ Intent that triggers a specific UI element -- hides the actual task
+struct TapCancelButtonIntent: AppIntent { }
+
+// ✅ Model the underlying task those elements perform
+struct SaveDraftIntent: AppIntent { }
+struct DeleteDraftIntent: AppIntent { }
+```
+
+- Apps with **Live Activities, audio playback, or recording** should provide intents that run those from the background — ideal for simple intents needing no further in-app action (WWDC24 10176).
+
 ## The AppIntent Protocol
 
 Every intent conforms to `AppIntent` and must provide a static title and a `perform()` method.
@@ -22,6 +52,18 @@ struct OpenSettingsIntent: AppIntent {
         return .result()
     }
 }
+```
+
+### Metadata Is Extracted at Build Time
+
+Everything in the App Intents surface is read at **build time, per target**, by a static metadata extraction pass (WWDC25 244). `title`, `typeDisplayRepresentation`, and `caseDisplayRepresentations` must be **constant literals** — computed properties or function calls silently break extraction.
+
+```swift
+// ❌ Computed title -- extraction silently fails
+static var title: LocalizedStringResource { makeTitle() }
+
+// ✅ Constant literal (static let)
+static let title: LocalizedStringResource = "Open Settings"
 ```
 
 ### Intent with Dialog Result
@@ -57,6 +99,13 @@ struct ComposeMessageIntent: AppIntent {
     }
 }
 ```
+
+Opening the app is common, expected behavior — specifically to *show the user the change the intent made* (WWDC24 10176). Exactly two open patterns:
+
+1. The intent **inherently opens to a view** (Open Stopwatch) → conform to `OpenIntent` (see "OpenIntent for Entities" below); it implies `openAppWhenRun`.
+2. The intent **completes with a UI change or shows search results** (Create Board finishing on the new board) → the system surfaces this as an **"Open When Run" toggle, default on**, so people can switch it off inside multi-step shortcuts where several intents run back-to-back without each app foregrounding.
+
+When opening to show a result, land **directly on the changed content with no additional in-app animations** — the user should be able to start working immediately (WWDC24 10176).
 
 ## Parameters
 
@@ -114,6 +163,16 @@ struct OpenNoteIntent: AppIntent {
 }
 ```
 
+A parameter that refers to an entity must BE the entity, not data describing it (WWDC24 10210):
+
+```swift
+// ❌ Data describing the entity
+@Parameter(title: "Note") var noteName: String     // or a UUID
+
+// ✅ The entity itself -- system gets picker, search, validation for free
+@Parameter(title: "Note") var note: NoteEntity
+```
+
 ### Enum Parameters
 
 Enums used as parameters must conform to `AppEnum`:
@@ -137,6 +196,38 @@ enum ReminderPriority: String, AppEnum {
     }
 }
 ```
+
+### Prefer Optional Parameters
+
+An unset optional parameter never triggers a follow-up question — the intent acts immediately and degrades gracefully (WWDC24 10176). "Show Folder" with no folder set should open the folders list, giving the full in-app picking experience, rather than interrogating on every run.
+
+Mark a parameter **required only when the intent is useless without it** (Search Mail's query text). Required means the user is asked a follow-up question you write (`requestValueDialog`) on every run — keep it concise and clear (WWDC24 10176, WWDC25 244).
+
+Parameter type ladder (WWDC24 10176): built-in types for simple input (numbers, text, dates) → static `AppEnum` for fixed option sets (your app's tabs) → `AppEntity` dynamic parameters when options change over time (folders the user adds), so the option list stays current.
+
+### Binary Intents Default to Toggle
+
+Two-state set-intents must support a toggle value and default to it — otherwise every run interrogates "on or off?" (WWDC24 10176):
+
+```swift
+// ❌ Binary set-intent with no toggle default -- prompts on every run
+@Parameter(title: "State") var state: FlashlightState        // .on / .off
+
+// ✅ Toggle is a supported value AND the default -- runs without asking
+@Parameter(title: "State", default: .toggle) var state: FlashlightState  // .on / .off / .toggle
+```
+
+### Parameter Summaries
+
+Without a `parameterSummary`, essential parameters sit "below the fold" in Shortcuts. Provide a natural-language sentence embedding every essential parameter — and it must read as a grammatical sentence for **every possible parameter value combination**, both while browsing and while editing the parameter inline (WWDC24 10210, 10176):
+
+```swift
+static var parameterSummary: some ParameterSummary {
+    Summary("Open \(\.$note)")
+}
+```
+
+An intent's summary reads: app name → verb → parameters (WWDC24 10176). The summary is also a hard visibility gate for running intents from Spotlight on Mac — see `entities-spotlight.md`.
 
 ### Parameter Validation
 
@@ -300,8 +391,6 @@ struct OpenRecipeIntent: AppIntent, OpenIntent {
     @Parameter(title: "Recipe")
     var target: RecipeEntity
 
-    static var openAppWhenRun = true
-
     func perform() async throws -> some IntentResult {
         await MainActor.run {
             NavigationState.shared.navigate(to: .recipe(id: target.id))
@@ -312,6 +401,8 @@ struct OpenRecipeIntent: AppIntent, OpenIntent {
 ```
 
 This enables "Open [recipe name] in [App Name]" automatically for all recipes.
+
+`OpenIntent` defines the `target` parameter and **implies `openAppWhenRun`** — delete the explicit property (WWDC24 10210).
 
 ## Patterns
 

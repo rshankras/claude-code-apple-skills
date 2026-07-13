@@ -35,6 +35,20 @@ struct RecipeEntity: AppEntity {
 }
 ```
 
+### The Entity ID Contract
+
+The `id` must be **persistent and re-resolvable** (WWDC25 244). The system stores entity IDs — in saved shortcuts, Spotlight, and suggestions — and calls `entities(for:)` to round-trip them back into entities later, across launches. If an ID can't be resolved later, every saved shortcut referencing it breaks.
+
+```swift
+// ❌ Unstable ID -- breaks every saved shortcut after a reorder or rename
+var id: String { "\(name)-\(listIndex)" }
+
+// ✅ Persistent identifier from your data layer -- survives renames and reorders
+var id: UUID
+```
+
+Two entity architectures — choose deliberately (WWDC24 10210): (a) conform your **model type directly** only when the whole model fits in memory; (b) a **separate entity struct that refers to the model** when instances are created on demand or the model has expensive properties your intents don't need.
+
 ### Display Representations
 
 Control how entities appear across the system:
@@ -85,6 +99,19 @@ The `numericFormat` is used when Siri says things like "I found 5 recipes."
 ## Entity Queries
 
 Entities need queries so Siri and Shortcuts can find them. Choose the right query protocol based on how users will discover entities.
+
+A query's job: turn *questions about entities* into *entities* (WWDC24 10210). Parameter configuration asks exactly two: "what entities are there?" (options list for the picker) and "what entity has this ID?" (rehydrate the saved ID at run time so `perform` receives an entity, never a raw ID).
+
+### Query Capability Ladder
+
+`entities(for identifiers:)` is the one non-negotiable requirement. Add capabilities as needed (WWDC25 244):
+
+1. `suggestedEntities()` — curated list (favorites, recents) shown in pickers before the user types
+2. `EnumerableEntityQuery.allEntities()` — small bounded sets
+3. `EntityStringQuery.entities(matching:)` — text search
+4. `EntityPropertyQuery.entities(matching:mode:sortedBy:limit:)` — filterable/sortable Find actions
+
+`EnumerableEntityQuery` is the conceptually simplest, and when built with the iOS 18 SDK, App Intents derives the more complicated query kinds from it automatically — but `allEntities()` is only valid if **all entities fit in memory** (WWDC24 10210). For large or unbounded sets (or when you can beat the derived behavior), implement the specific sub-protocols instead.
 
 ### EntityStringQuery (Text Search)
 
@@ -159,12 +186,21 @@ struct RecipePropertyQuery: EntityPropertyQuery {
 
 | Query Type | Use When | Example |
 |------------|----------|---------|
+| `EnumerableEntityQuery` | All entities fit in memory | Timezones, app tabs |
 | `EntityStringQuery` | User searches by name/text | "Open recipe Pasta Carbonara" |
 | `EntityPropertyQuery` | User filters by attributes | "Show Italian recipes under 30 minutes" |
 
 ## IndexedEntity for Spotlight
 
 Make entities appear in Spotlight search results. Requires iOS 18 / macOS 15.
+
+Adopting `IndexedEntity` with per-property `indexingKey` does triple duty (WWDC25 244, 260):
+
+1. **Semantic Spotlight search** — meaning-based matching over donated entities ("pets" matches cats, dogs, snakes), not just literal text
+2. **Auto-generated Shortcuts Find action** — the zero-boilerplate alternative to hand-writing `EnumerableEntityQuery`/`EntityPropertyQuery`
+3. **Spotlight parameter filtering** — typing in an intent's parameter field searches indexed entities
+
+Why bother vs a plain `CSSearchableItem`: a searchable item alone can't take action; an indexed entity lets Siri find it *and* run intents on it (WWDC24 10134).
 
 ### Conforming to IndexedEntity
 
@@ -264,6 +300,8 @@ Common `CSSearchableItemAttributeSet` key paths:
 | `\.keywords` | `[String]?` | Searchable keywords |
 | `\.contentType` | `String?` | UTI content type |
 
+Mapping rules (WWDC25 260): `DisplayRepresentation` title/subtitle/image map to Spotlight attributes automatically; other properties map explicitly to a standard Core Spotlight key via `@Property(indexingKey:)`; properties with **no standard Spotlight equivalent use a custom indexing key** (`customIndexingKey`) — e.g. a free-form `notes` property.
+
 ### Attribute Sets for Rich Metadata
 
 For additional metadata beyond `@Property` indexing keys, provide a `CSSearchableItemAttributeSet`:
@@ -282,6 +320,13 @@ extension RecipeEntity {
     }
 }
 ```
+
+The default implementation populates the attribute set from `DisplayRepresentation` only — override `attributeSet` to add real search signal (location fields, keywords from the entity's activities). More attributes mean better search *and* better Siri semantic understanding (WWDC24 10134).
+
+Two more indexing levers (WWDC24 10134):
+
+- **Priority**: all IndexedEntity indexing APIs accept a `priority` — larger value = more important (boost favorites above non-favorites).
+- **Existing `CSSearchableItem` pipelines**: call `associateAppEntity(_:)` on the searchable item before indexing — this is what lets semantic search find and act on your already-indexed content without re-plumbing.
 
 ## Triggering Indexing
 
@@ -331,6 +376,85 @@ func applicationDidFinishLaunching() {
     }
 }
 ```
+
+## Transferable Entities and FileEntity
+
+### Transferable
+
+Conform an `AppEntity` to `Transferable` so Siri/Shortcuts can convert it into standard content types and hand it to other apps' intents — attach to Mail, save a PNG to Photos, append RTF to Notes (WWDC24 10134):
+
+```swift
+extension RecipeEntity: Transferable {
+    static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: .recipeDocument)   // highest fidelity first
+        DataRepresentation(exportedContentType: .rtf) { entity in
+            try entity.renderRTF()
+        }
+        ProxyRepresentation(exporting: \.name)                // plain text last
+    }
+}
+```
+
+Rules (WWDC24 10134):
+
+- **Declare representations highest-fidelity → lowest** (private `Codable` first, then RTF, then plain text/PNG) — Shortcuts picks the best match for the receiver.
+- Xcode must understand `transferRepresentation` **at compile time** — no dynamic representations.
+- `ProxyRepresentation` may only reference entity properties annotated `@Property`.
+- Receiving side: declare `supportedContentTypes` on an `IntentFile` parameter; Siri/Shortcuts then auto-convert any Transferable entity flowing in.
+
+### FileEntity
+
+Use `Transferable` when the entity is a DB/server object exported *as* a file; use `FileEntity` when the file **is** the canonical entity (document-based apps: text docs, images) (WWDC24 10134). FileEntity lets Siri/Shortcuts broker secure direct access so another app's intent can mutate the file **in place** — the owning app detects the change and updates its UI.
+
+- Requirements beyond a normal AppEntity: `supportedContentTypes: [UTType]`, and an `id` of type `FileEntityIdentifier` — created from a URL, or as a **draft identifier when the file doesn't exist yet**.
+- The identifier stores URL **bookmark data**, so the entity survives file moves and renames.
+
+## Spotlight on Mac: Visibility Gates
+
+Intents run directly from Spotlight on Mac — but only if they pass two gates (WWDC25 244, 260):
+
+**Gate 1 — the parameter summary rule.** The `parameterSummary` must reference **every required parameter that lacks a default value**. If the intent has no required parameters, the summary may be omitted (the title is used).
+
+```swift
+// ✅ Visible -- all required parameters appear in the summary
+static var parameterSummary: some ParameterSummary {
+    Summary("Create event \(\.$title) from \(\.$startDate) to \(\.$endDate)")
+}
+
+// ❌ Hidden -- a required `notes` parameter exists but isn't in the summary.
+// Fixes: add it to the summary, make it optional, or give it a default value.
+```
+
+**Gate 2 — don't hide the intent.** `isDiscoverable = false`, assistant-only schema flags, or a widget-configuration intent with **no `perform()`** all exclude an intent from Spotlight (WWDC25 260).
+
+Parameter-field UX in Spotlight, in priority order (WWDC25 260):
+
+1. Suggestions: implement `suggestedEntities()` (subset of a large/unbounded set — today's events) or `allEntities()` via `EnumerableEntityQuery` (small bounded sets — timezones)
+2. On-screen boost: set `appEntityIdentifier` on the view's `NSUserActivity` so the visible entity tops the suggestions
+3. Learned suggestions: conform the intent to `PredictableIntent` for usage-pattern-based ranking
+4. Typing in the field: basic filtering is free once suggestions exist; real search needs `EntityStringQuery` or `IndexedEntity`
+
+## Entities and the Use Model Action
+
+Shortcuts' Use Model action runs Apple Intelligence over your entities — Private Cloud Compute, on-device, or ChatGPT backends — with the output type inferred from the downstream action (WWDC25 260). What your app must do to participate:
+
+**Accept `AttributedString` on text parameters.** Model output is rich text (bold/italic/lists/tables); a `String` parameter silently strips that formatting:
+
+```swift
+// ❌ Strips model-generated formatting
+@Parameter(title: "Text") var text: String
+
+// ✅ Lossless handoff from Use Model output
+@Parameter(title: "Text") var text: AttributedString
+```
+
+**Entities are passed to the model as JSON**: type name from `TypeDisplayRepresentation.name`, plus `DisplayRepresentation` title/subtitle, plus every exposed `@Property` stringified (WWDC25 260). Consequences:
+
+- Expose the properties you want the model to reason over — unexposed data is invisible to the model.
+- Keep `TypeDisplayRepresentation.name` short and literal ("Calendar Event") — it's the model's type hint.
+- Whatever string a property renders as in the Shortcuts editor is exactly what the model sees — validate the entity JSON by eyeballing it there.
+
+**Provide a Find action** — that's how users get entities into Use Model (WWDC25 260). Two routes: hand-write `EnumerableEntityQuery`/`EntityPropertyQuery`, or adopt `IndexedEntity` + per-property `indexingKey` and the system generates the Find action for you.
 
 ## Patterns
 

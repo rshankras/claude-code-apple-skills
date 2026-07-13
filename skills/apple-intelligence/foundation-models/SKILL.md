@@ -6,15 +6,20 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 
 # Foundation Models
 
-Integrate Apple's on-device LLM into your apps for privacy-preserving AI features.
+Integrate Apple's on-device LLM into your apps for privacy-preserving AI features. Companion references: **safety-and-guardrails.md** (model limits, prompt design, the four-layer safety stack) and **models-and-agents.md** (Private Cloud Compute, `LanguageModel` protocol, vision input, `DynamicProfile` agentic sessions — the iOS 27 wave).
 
 ## When This Skill Activates
 
 - User wants AI text generation features
 - User needs structured data from natural language
 - User asks about prompting or LLM integration
-- User wants to implement AI assistants
+- User wants to implement AI assistants or agentic features (tool loops, multi-profile sessions)
 - User needs content summarization or extraction
+- User asks about Private Cloud Compute, guardrails, or model safety
+
+## Model Fit — Check Before Building
+
+The on-device model is ~3B parameters (2-bit quantized): built for **summarization, extraction, classification, tagging, revision, short chat** — not math, code generation, facts, or world knowledge (WWDC25 248). For capability boundaries, prompt-design rules, and the safety stack, read `safety-and-guardrails.md` first. For anything bigger, `PrivateCloudComputeLanguageModel` (32k context, reasoning) and third-party backends are in `models-and-agents.md`.
 
 ## Quick Start
 
@@ -165,6 +170,13 @@ struct Recipe {
 | `.count(n)` | Exact array length | `.count(5)` |
 | `.count(min...max)` | Array length range | `.count(3...10)` |
 
+### Two Rules the Macro Hides (WWDC25 301)
+
+- **Don't re-describe your schema in the prompt.** The framework injects your `@Generable` type's details "in a specific format that the model has been trained on" — hand-written "respond in JSON with fields…" text duplicates it and wastes tokens. Constrained decoding masks invalid tokens per-step, so structural correctness is guaranteed, not prompted for.
+- **Property order is generation order.** "Properties are generated in the order they are declared on your Swift struct… you may find that the model produces the best summaries when they're the last property" (WWDC25 286). Put conditioning fields (context, inputs, reasoning) *before* the properties that should depend on them; put summaries last. This affects output quality *and* streaming animations.
+
+For schemas only known at runtime, build a `DynamicGenerationSchema` (supports `arrayOf:` and `referenceTo:` cross-references), validate with `GenerationSchema(root:dependencies:)` (throws on unresolved references), respond via `session.respond(to:schema:)`, and read untyped values with `response.content.value(String.self, forProperty: "question")`.
+
 ### Generate Structured Data
 
 ```swift
@@ -216,19 +228,28 @@ Let the model call your code to access data or perform actions.
 
 ```swift
 struct WeatherTool: Tool {
-    let name = "getWeather"
-    let description = "Get current weather for a location"
+    let name = "getWeather"                              // verb, short, no abbreviations
+    let description = "Get current weather for a location"  // ~one sentence
 
-    struct Arguments: Codable {
+    @Generable
+    struct Arguments {
+        @Guide(description: "City name")
         var location: String
     }
 
     func call(arguments: Arguments) async throws -> ToolOutput {
         let weather = await WeatherService.shared.fetch(for: arguments.location)
-        return .string("Temperature: \(weather.temp)°F, Conditions: \(weather.conditions)")
+        return ToolOutput("Temperature: \(weather.temp)°F, Conditions: \(weather.conditions)")
     }
 }
 ```
+
+Rules from the deep dive (WWDC25 301):
+- **Name = verb, description = one sentence.** "These strings are put verbatim in your prompt. So longer strings means more tokens, which can increase the latency." No abbreviations, no implementation details.
+- **Arguments are `@Generable`** — guided generation guarantees valid arguments; nest `@Generable` enums to give the model a closed set of options.
+- **The session holds one instance for its whole lifetime** — tools may be stateful (e.g. track already-returned results to avoid repeats).
+- **Tools can be called in parallel within a single request** — tool state must be concurrency-safe.
+- Tool output lands in the transcript like model output — it consumes context window.
 
 ### Use Tools in Session
 
@@ -353,12 +374,34 @@ final class ChatViewModel {
 do {
     let response = try await session.respond(to: prompt)
 } catch LanguageModelSession.GenerationError.exceededContextWindowSize {
-    // Context too large (>4,096 tokens)
-    // Solution: Start new session, break into smaller requests
+    // Context too large — recover by carrying a condensed transcript (below)
+} catch LanguageModelSession.GenerationError.guardrailViolation {
+    // Safety block: proactive features ignore silently;
+    // user-initiated features explain + offer alternatives (see safety-and-guardrails.md)
+} catch LanguageModelSession.GenerationError.unsupportedLanguageOrLocale {
+    // Also pre-check SystemLanguageModel.default.supportedLanguages before prompting
 } catch LanguageModelSession.GenerationError.cancelled {
     // Request was cancelled
 } catch {
     print("Unexpected error: \(error)")
+}
+```
+
+### Context-Overflow Recovery: Condense, Don't Discard (WWDC25 301)
+
+Apple's shown heuristic keeps the **first** transcript entry (the instructions — dropping it silently drops your persona *and* safety wording) plus the **last** entry:
+
+```swift
+private func newSession(previousSession: LanguageModelSession) -> LanguageModelSession {
+    let allEntries = previousSession.transcript.entries
+    var condensed = [Transcript.Entry]()
+    if let first = allEntries.first {
+        condensed.append(first)                          // instructions live here
+        if allEntries.count > 1, let last = allEntries.last {
+            condensed.append(last)
+        }
+    }
+    return LanguageModelSession(transcript: Transcript(entries: condensed))
 }
 ```
 
@@ -371,7 +414,9 @@ Don't hardcode `4096` — query the model at runtime:
 ```swift
 let model = SystemLanguageModel.default
 let contextSize = try await model.contextSize
-print("Context size: \(contextSize)") // 4096 (current limit)
+print("Context size: \(contextSize)")
+// 4,096 on the first-generation model; 8,192 on the rebuilt iOS 27 on-device model;
+// 32,000 on PrivateCloudComputeLanguageModel (WWDC26 241) — always query, never hardcode
 ```
 
 > `contextSize` is marked `@backDeployed(before: iOS 26.4, macOS 26.4, visionOS 26.4)`.
@@ -474,21 +519,28 @@ func processLargeDocument(_ document: String) async throws -> [Summary] {
 ## Generation Options
 
 ```swift
-let options = GenerationOptions(
-    temperature: 0.7  // 0.0 = deterministic, 2.0 = creative
-)
+// Deterministic output: greedy sampling, not temperature 0
+let response = try await session.respond(to: prompt,
+    options: GenerationOptions(sampling: .greedy))
 
-let response = try await session.respond(
-    to: prompt,
-    options: options
-)
+// Variance dial (scale runs to 2.0 — WWDC25 301)
+let lowVariance  = GenerationOptions(temperature: 0.5)
+let highVariance = GenerationOptions(temperature: 2.0)
 ```
 
-| Temperature | Use Case |
+| Setting | Use Case |
 |-------------|----------|
-| 0.0-0.3 | Factual extraction, data processing |
-| 0.5-0.7 | Balanced creativity and accuracy |
+| `sampling: .greedy` | Deterministic outputs (tests, caching) — deterministic only per model version; OS model updates change outputs |
+| 0.3-0.7 | Factual extraction, balanced tasks |
 | 1.0-2.0 | Creative writing, brainstorming |
+
+## Specialized Use Cases & Dev Tooling (WWDC25 286)
+
+- **Content tagging adapter**: `SystemLanguageModel(useCase: .contentTagging)` — specialized for tag/topic/action/emotion extraction; combine with `@Generable` results and `@Guide(.maximumCount(3))`; works with custom instructions.
+- **Custom adapters**: trainable with Apple's adapter-training toolkit, but Apple's caveat — it "requires responsibility to retrain as Apple improves the base model." Reach for prompt engineering + guided generation first.
+- **`#Playground` macro**: prompt the model from any Swift file in your project and see responses in the Xcode canvas (with access to your project's `@Generable` types) — the fastest prompt-iteration loop.
+- **Instruments**: the Foundation Models profiling template breaks down request latency — "understanding where latency goes can help you tweak the verbosity of your prompts, or determine when to call useful APIs such as prewarming" (`session.prewarm()` before the user's first request).
+- Gate submit buttons on `session.isResponding` — one request per session at a time.
 
 ## Common Patterns
 
@@ -562,9 +614,18 @@ Before shipping:
 - [ ] Test streaming UX feels responsive
 - [ ] Ensure instructions are clear and specific
 - [ ] Include safety boundaries in instructions
+- [ ] Never interpolate user input into instructions (prompts only — see safety-and-guardrails.md)
+- [ ] Conditioning properties declared before dependent ones; summaries last
+- [ ] Guardrail errors handled per feature type (silent for proactive, explained for user-initiated)
+- [ ] Right model per feature (on-device vs Private Cloud Compute vs third-party — see models-and-agents.md)
 
 ## References
 
+- **safety-and-guardrails.md** (this skill) — model limits, prompt design, guardrails, Swiss-cheese safety stack, evals
+- **models-and-agents.md** (this skill) — PCC, LanguageModel protocol, vision input, DynamicProfile agents, tool-calling modes, KV-cache rules
+- [WWDC25 — Meet the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2025/286/)
+- [WWDC25 — Deep dive into the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2025/301/)
+- [WWDC26 — What's new in the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2026/241/)
 - [Foundation Models Documentation](https://developer.apple.com/documentation/FoundationModels)
 - [Generating content and performing tasks](https://developer.apple.com/documentation/FoundationModels/generating-content-and-performing-tasks-with-foundation-models)
 - [Guided generation](https://developer.apple.com/documentation/FoundationModels/generating-swift-data-structures-with-guided-generation)
