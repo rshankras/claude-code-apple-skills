@@ -34,6 +34,8 @@ Ask the user via AskUserQuestion:
 4. **What they want to know**
    - "Are my metrics good?" / "What should I fix?" / "Should I keep going?"
 
+Also pull App Store Connect **peer group benchmarks** (App Analytics → Benchmarks): Apple's percentile comparison of your conversion rate, crash rate, and retention against a privacy-preserving peer group of similar apps. This establishes whether a metric is "bad for you" or "bad for the category" — do this before interpreting any trend.
+
 ### Step 2: Identify Key Metrics by App Type
 
 Different monetization models have different north star metrics.

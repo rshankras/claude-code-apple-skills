@@ -172,6 +172,8 @@ content. The "Buy on Web" button and associated links have been
 removed. All digital purchases now go through IAP exclusively.
 ```
 
+**US storefront exception:** Apps on the United States storefront may link out using the StoreKit External Purchase Link entitlement (currently 0% commission on those sales; litigation ongoing in mid-2026 — re-verify before relying on it). The rejection pattern above applies to links WITHOUT the entitlement and to all non-US storefronts. For the strategy trade-offs, see `monetization/external-purchases`.
+
 ## Guideline 3.1.2: Subscriptions
 
 ### 3.1.2 — Subscription Requirements

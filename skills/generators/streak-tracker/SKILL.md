@@ -329,7 +329,7 @@ SwiftData stores persist across app updates but are lost on reinstall. For criti
 
 ### App Store Guidelines
 - **Guideline 4.5.4**: Streak-reminder pushes ("don't lose your 12-day streak!") are marketing notifications — they require explicit opt-in consent in your UI plus an in-app opt-out, not just the system permission prompt.
-- **Guideline 3.1.1**: If streak freezes or repairs are sold, they are digital content and must go through IAP — never an external purchase link.
+- **Guideline 3.1.1**: If streak freezes or repairs are sold, they are digital content and must go through IAP — never an external purchase link. The one sanctioned exception is the US storefront with the StoreKit External Purchase Link entitlement (see `monetization/external-purchases`); everywhere else the rule stands.
 - **Guideline 4.3 (Spam)**: A streak mechanic doesn't differentiate a thin app. If this is one of several similar apps on your account, run `app-store/originality-check` before submitting.
 
 ## References

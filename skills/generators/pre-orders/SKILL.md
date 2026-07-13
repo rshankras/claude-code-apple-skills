@@ -32,6 +32,10 @@ Use this skill when the user:
 3. **Featuring eligibility**: Apple can feature pre-order apps
 4. **Marketing anchor**: Give audiences a concrete action ("Pre-order now")
 
+### Not Just for Launches: Regional Pre-Orders
+
+An **existing app** entering new storefronts can run a pre-order (up to 180 days) in just those territories. Accumulated pre-orders convert on day one in the new market — the same velocity spike a launch gets, aimed at the new market's chart entry.
+
 ### Limitations
 - Cannot change app name or primary category after pre-order starts
 - Price increases require 7-day notice to pre-order customers

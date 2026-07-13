@@ -143,7 +143,7 @@ Differences:
 
 ## Skill Categories
 
-**147 skills across 23 categories.** The per-category breakdown lives in one
+**152 skills across 23 categories.** The per-category breakdown lives in one
 place — the [What's Included table in the README](../README.md#whats-included)
 — so it can't drift from the tree (`scripts/check-counts.sh` enforces it in CI).
 

@@ -79,6 +79,18 @@ Handle App Store rejections and prepare submissions to avoid them.
 - Appeal escalation path (Resolution Center → phone → App Review Board)
 - Top 20 common rejections with fixes (common-rejections.md)
 
+### originality-check/
+Guideline 4.3 anti-spam / originality gate — verify an app (and each portfolio addition) is meaningfully distinct in function, content, and metadata before you invest or submit.
+
+### iap-finalizer/
+Take a one-time In-App Purchase from MISSING_METADATA to READY_TO_SUBMIT via the App Store Connect API — price tier plus localized name/description.
+
+### ratings-mechanics/
+How ratings actually behave — per-storefront isolation (your US stars show nowhere else), the never-reset rule, and phased release + manual release as rating protection.
+
+### web-presence/
+Discovery outside the store app — the apps.apple.com page as a Google citizen, an owned landing page with Smart App Banner, and the deal-site ecosystem that auto-amplifies price drops.
+
 ## Related Generator Skills
 
 These generator skills produce code, metadata, and configuration for App Store features:

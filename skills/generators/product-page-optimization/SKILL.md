@@ -25,6 +25,7 @@ Use this skill when the user:
 - Duration: Apple recommends minimum 7 days (typically run 14-28 days)
 - Statistical confidence: Apple shows results when statistically significant
 - Localization: Tests can run in specific localizations
+- Icon treatments: can only use icons that already ship in the app binary's asset catalog as alternate icons — plan icon tests one release ahead
 
 ### Important Limitations
 - Cannot test: app name, subtitle, description, keyword field, or price
@@ -166,6 +167,8 @@ While waiting for PPO results, implement these proven improvements:
 | Style | 3D/detailed | Flat/minimal | Modernized perception |
 | Element | Full logo | Key symbol only | Better small-size recognition |
 | Background | Solid | Gradient | Shelf standout |
+
+**Plan one release ahead:** add candidate icons to the asset catalog as alternate app icons in THIS release so you can PPO-test them in the NEXT one. Shipping them costs nothing — users never see unused alternates.
 
 ### Screenshot Tests
 | Test | Control | Variant | Expected Impact |

@@ -97,6 +97,10 @@ Stage 3: Product Page (competitor audiences)
 Stage 4: Search Tab (brand awareness)
 ```
 
+### Discovery Campaigns as Keyword Research
+
+Beyond acquisition, a low-budget broad-match discovery campaign is the cheapest source of Apple's official keyword popularity data and the real queries users type. Even if it never turns a profit, harvest the Search Terms report into your organic metadata — see `keyword-optimizer` advanced tactics (§14) for the quarterly routine.
+
 ## Keyword Strategy
 
 ### Keyword Categories
@@ -123,6 +127,13 @@ Stage 4: Search Tab (brand awareness)
 - Lower volume but very high intent
 - Often cheapest CPT because few advertisers target them
 - Excellent ROAS potential
+
+### The ASA → Organic Halo
+
+Paid conversions on a keyword lift that keyword's **organic** rank — Apple's algorithm reads them as conversion velocity. Two implications:
+
+- Run exact-match campaigns on your target organic terms to accelerate ranking while metadata changes take hold
+- Always defend your brand term once competitors bid on it — brand CPAs are the cheapest in your account, and losing the top slot bleeds organic installs too
 
 ### Keyword Research Process
 
@@ -235,6 +246,10 @@ Apple Search Ads supports linking ad groups to Custom Product Pages (CPPs) for t
 | Feature keywords | Show the specific feature being searched |
 | Audience segments | Different messaging for students vs. professionals |
 | Seasonal campaigns | Holiday or event-themed screenshots/descriptions |
+
+### The Pairing Rule
+
+Every exact-match ad group should point to a CPP whose **first screenshots match that keyword's intent** — 35 CPP slots is enough for every major keyword theme. A user searching "habit tracker" who lands on habit-first screenshots taps through and converts measurably better than one landing on your default page.
 
 ### CPP Setup for Ads
 
