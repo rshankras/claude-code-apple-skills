@@ -147,7 +147,7 @@ Vague: "Add payments"
 
 ## Skill Categories
 
-**157 skills across 23 categories** — see the
+**158 skills across 23 categories** — see the
 [What's Included table in the README](../README.md#whats-included) for the
 per-category breakdown (kept in sync with the tree by `scripts/check-counts.sh`).
 

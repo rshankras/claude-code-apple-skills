@@ -43,6 +43,46 @@ Use this skill when the user:
 - Prefer timeline-based content over live updates
 - Keep views lightweight
 
+## watchOS Design Rules (WWDC20/23)
+
+### The Ten-Second Test
+Design for roughly ten seconds of attention: "if you had ten seconds of someone's attention, which information would you surface?" Launch directly into that detail view — chosen by location, recency, or frequency — and make it so unmistakable it needs no title.
+
+### Three Foundational Layouts
+| Layout | Use For | Notes |
+|--------|---------|-------|
+| **Dial** | Dense at-a-glance status | Up to 4 corner controls; `.scenePadding(.horizontal)` to align with the bezel |
+| **Infographic** | Charts + metrics | One chart with supporting numbers |
+| **List** | Scrollable finding | When the user must locate an item |
+
+### Navigation Model
+- Prefer **vertical pagination** via the Digital Crown between purposeful, single-screen-height pages — horizontal paging is "more difficult to navigate".
+- Prefer the two-level **Source List** pattern with `NavigationSplitView`: always initialize the selection so the app launches straight to detail, and leave the source list untitled.
+- Reach for `NavigationStack` only when neither fits — and hierarchical navigation should remember the last destination across launches.
+- The Digital Crown anchors navigation, scrolling, and precision input, but ALWAYS back it up with touch.
+
+```swift
+// Source List: launch to detail, not the list
+NavigationSplitView {
+    List(rooms, selection: $selectedRoom) { room in  // source list stays untitled
+        Text(room.name)
+    }
+} detail: {
+    RoomView(room: selectedRoom)
+}
+// Initialize selectedRoom (last used / most relevant) so launch lands on detail
+```
+
+### Backgrounds and Materials
+- Backgrounds must carry utility — recognition or information (a solar gradient tracking the sun, a state change from black to orange) — never mere flourish.
+- Four vibrant full-screen materials (Ultra Thin → Thick) pair with Primary–Quaternary vibrant foreground styles and vibrant semantic colors to keep content legible over any background.
+
+### Toolbars and Action Buttons
+- Toolbar placements: `.topBarLeading`, `.topBarTrailing` (moves the time to the center), and `.bottomBar`.
+- Bottom-of-detail action buttons are the most discoverable pattern. A red label signals destructive — add a confirmation if the data isn't recoverable.
+- The More button (ellipsis in a circular container: white at 85% opacity with a 1pt black outer glow at 50%) holds ONLY secondary actions — never a primary action.
+- Toolbar-revealed buttons belong only in scrolling views — scrolling is what makes them discoverable.
+
 ## Architecture Patterns
 
 ### App Structure
@@ -333,6 +373,7 @@ What are you building?
 |
 +- General watchOS app development
    -> This file (SKILL.md)
+      +- Design rules: ten-second test, layouts, navigation model, action buttons
       +- App structure, navigation, lists
       +- Digital Crown, haptics, Now Playing
 ```

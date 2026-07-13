@@ -200,11 +200,11 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | swiftdata/ | 1 | inheritance |
 | mapkit/ | 1 | geotoolbox |
 | foundation/ | 1 | attributed-string |
-| visionos/ | 1 | widgets |
+| visionos/ | 2 | widgets, spatial-design |
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
-| **Total** | **157 across 23 categories** |
+| **Total** | **158 across 23 categories** |
 
 ---
 
