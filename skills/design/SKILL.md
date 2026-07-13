@@ -41,6 +41,9 @@ SwiftUI animation patterns for iOS 13–18+.
 - SF Symbol effects
 - Animation completions, transactions, timing curves
 
+### ui-prototyping/
+Explore divergent UI directions for a screen as named, runnable Swift `#Preview` variants — compare, remix, and tune before committing to one design.
+
 ## Key Principles
 
 ### 1. Platform Consistency

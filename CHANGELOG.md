@@ -17,6 +17,7 @@ from the local copy (see "Pinning and rollback" in the README).
 ## [Unreleased]
 
 ### Added
+- `check-counts.sh` now guards **listings**, not just counts: README per-skill tables, category `## Available Skills` indexes, and ROADMAP's category name lists must each name every skill in the tree — the drift class where counts get bumped but names never land is now CI-impossible
 - `growth/store-growth-audit`: **Scoped Runs** — audit a single phase (`P3`, or a range like `P1-P3`): evidence batches subset to the scope, only in-scope scorecard rows update, output is the phase worklist instead of the top-5
 - `growth/store-growth-audit` — the 54-item P0–P9 store-growth playbook as an auditable checklist (SKILL.md + detection-playbook + two phase checklists); every item scored via ASC MCP read / codebase grep / explicit question, routed to the skill that fixes it; backs SwiftShip's `/apple:growth`
 - `app-store/ratings-mechanics` — per-storefront ratings isolation, the never-reset rule, phased + manual release as rating armor
@@ -35,6 +36,7 @@ from the local copy (see "Pinning and rollback" in the README).
 - `scripts/check-counts.sh` now also guards `docs/ROADMAP.md`, `plugin.json`, and `.claude-plugin/marketplace.json` counts
 
 ### Fixed
+- Listing drift the new guard exposed: `design`/`legal`/`testing` category indexes were missing ui-prototyping, privacy-publish, flow-walkthrough; ROADMAP name lists were missing 17 skills (the 11 store-feature generators, run-simulator/run-device, app-namer, and the three above) with stale row counts
 - README detail drift: the Growth/Monetization/App Store per-skill tables and directory-tree comments were missing the five new skills (only the summary-table counts are CI-guarded)
 - Category index drift: `app-store/SKILL.md` and `growth/SKILL.md` "Available Skills" were missing previously added members (iap-finalizer, originality-check, store-signals); `docs/ROADMAP.md` per-category rows for app-store/growth/monetization brought current
 - `check-counts.sh` cross-repo check pointed at `commands/apple/` but SwiftShip's commands live at `commands/` — the count guard could never fire; README docs table now lists CHANGELOG.md

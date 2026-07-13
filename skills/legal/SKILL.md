@@ -24,6 +24,9 @@ Use this skill when the user:
 ### privacy-policy/
 Generate privacy policies, terms of service, and EULAs tailored to your app's data collection practices, third-party SDKs, and target regions. Includes Apple Privacy Nutrition Label mapping and hosting guidance.
 
+### privacy-publish/
+Publish the generated legal pages to hosted URLs and set the App Store Connect Privacy Policy / Support URLs via the ASC API (dry-run first).
+
 ## How to Use
 
 1. User requests legal documents or compliance guidance
