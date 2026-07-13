@@ -35,8 +35,9 @@ Grep the navigation surface and reason over it. Do this first; it's free and cat
 2. **Assert reachability & return paths.** For every screen: how do you get in, and does every `Done`/`Back`/`dismiss` land somewhere intentional? Flag any `popToRoot()` that discards an in-progress or just-saved entity.
 3. **CRUD-completeness.** For every `@Model` with a **Create** path, is there a **Read** *and* an **Update/reopen** path from the persistence surface (a list/history)? A list that only opens a read-only detail is a dead-end for editing — flag it.
 4. **Entry-point sanity.** Does "New X" always create a *fresh* entity with no way back to the previous one except an incomplete list? Flag create-only loops.
+5. **Nested navigation containers.** For every `NavigationLink`/`navigationDestination` destination, check whether the destination view declares its own `NavigationView`/`NavigationStack` — a pushed view must never wrap one. This renders a second nav bar under the parent's and its leading bar items displace the back button. It's a cross-file bug: each file looks correct alone (and previews fine in isolation), so single-file review never catches it — only this pairwise check does.
 
-Output each finding as `DEAD-END` / `NO-EDIT-PATH` / `ORPHANS-ENTITY` with the file:line and the missing arrow.
+Output each finding as `DEAD-END` / `NO-EDIT-PATH` / `ORPHANS-ENTITY` / `NESTED-NAV` with the file:line and the missing arrow.
 
 ### Layer 2 — Automated flow driving (XCUITest + per-step screenshots)
 
@@ -63,6 +64,7 @@ Turn each `<flow>` into a UI test that taps through it and screenshots every ste
    ```
    (The `xcresulttool` attachment-export subcommand name shifts across Xcode versions — check `xcrun xcresulttool --help` and adapt.)
 4. **Read the screenshots** in order → a "filmstrip." Confirm each step lands where the flow says it should. A failed assertion or a wrong screen = a flow bug with visual proof.
+5. **One unseeded pass (fresh-install reality).** Every seeded run hides zero states — run at least one pass with NO seed argument that visits each top-level screen and screenshots it, in light mode. Assert each zero state renders something intentional (an empty-state view, a hint), not a blank expanse. A user's first launch is unseeded; if every automated capture is seeded, blank first-run screens ship unseen.
 
 ### Layer 3 — Human discoverability pass (the irreducible residue)
 

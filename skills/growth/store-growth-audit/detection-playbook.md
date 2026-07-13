@@ -4,6 +4,9 @@ The audit's evidence-gathering machinery. Run **all three passes up front**, sto
 under the keys below, then evaluate every checklist item against the stored evidence. Never
 interleave gathering with scoring; never ask MANUAL questions one at a time.
 
+Phase-scoped runs (SKILL.md → Scoped Runs) execute only the table rows whose "Feeds items"
+column intersects the scope — same three-pass order, smaller batches.
+
 ## Pass 1 — MCP evidence batch (read-only, ~14 calls)
 
 One call per row; each populates an evidence key consumed by the listed items.
