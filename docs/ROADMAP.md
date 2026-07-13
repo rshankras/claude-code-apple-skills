@@ -65,6 +65,7 @@ Skills tracking based on Apple documentation and gap analysis.
 | iPad Stage Manager, multi-window, drag & drop | `ios/ipad-patterns` | ✅ Complete |
 | Migration guides (CoreData→SwiftData, UIKit→SwiftUI, etc.) | `ios/migration-patterns` | ✅ Complete |
 | Assistive Access | `ios/assistive-access` | ✅ Complete |
+| Accessibility audits + Nutrition Labels (WWDC19–26 harvest) | `ios/accessibility-audit` | ✅ Complete |
 | visionOS widgets | `visionos/widgets` | ✅ Complete |
 
 ### Security
@@ -186,7 +187,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | macos/ | 8 | app-planner, coding-best-practices, architecture-patterns, swiftdata-architecture, ui-review-tahoe, macos-tahoe-apis, macos-capabilities, appkit-swiftui-bridge |
 | testing/ | 9 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold, flow-walkthrough |
 | app-store/ | 12 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer, marketing-strategy, apple-search-ads, ad-attribution, rejection-handler, originality-check, iap-finalizer, ratings-mechanics, web-presence |
-| ios/ | 9 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access, run-simulator, run-device |
+| ios/ | 10 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access, accessibility-audit, run-simulator, run-device |
 | swiftui/ | 7 | data-flow, layout, alarmkit, webkit, text-editing, toolbars, charts-3d |
 | growth/ | 6 | analytics-interpretation, press-media, community-building, indie-business, store-signals, store-growth-audit |
 | swift/ | 3 | concurrency-patterns, concurrency, memory |
@@ -204,7 +205,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
-| **Total** | **160 across 23 categories** |
+| **Total** | **161 across 23 categories** |
 
 ---
 
@@ -246,7 +247,6 @@ Tracked here so they don't get lost. Baselined after running `skill-auditor` on 
 **Tier 1 — high leverage:**
 | Skill | Why |
 |---|---|
-| `ios/accessibility-audit` | EU Accessibility Act mandatory since 2025; App Store reviewers flagging |
 | `media/` (AVFoundation, PhotoKit, Camera, ScreenCaptureKit) | Biggest framework gap; unlocks whole app categories |
 | `app-store/asc-api-workflows` | Orchestrate the 50+ ASC MCP tools into guided flows |
 | `ios/localization-catalogs` | Xcode 15+ String Catalogs (xcstrings), pluralization, device variants |

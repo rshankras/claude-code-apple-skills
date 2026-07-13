@@ -22,6 +22,7 @@ Use this skill when the user:
 - Wants to build **watchOS widgets** or Smart Stack widgets
 - Asks about **widget relevance**, Smart Stack ordering, or widget suggestions
 - Needs to share widgets **cross-platform** between iOS and watchOS
+- Asks about **watchOS accessibility** — VoiceOver, AssistiveTouch, or Dynamic Type on the Watch
 
 ## Key Principles
 
@@ -82,6 +83,64 @@ NavigationSplitView {
 - Bottom-of-detail action buttons are the most discoverable pattern. A red label signals destructive — add a confirmation if the data isn't recoverable.
 - The More button (ellipsis in a circular container: white at 85% opacity with a 1pt black outer glow at 50%) holds ONLY secondary actions — never a primary action.
 - Toolbar-revealed buttons belong only in scrolling views — scrolling is what makes them discoverable.
+
+## Accessibility on watchOS (WWDC21 10223)
+
+### Dynamic Type on the Watch
+- watchOS has 11 text styles; a fixed `.font(.system(size: 24))` never scales — use `.font(.title3)` and friends.
+- Let text wrap: `lineLimit(1)` truncates at accessibility sizes — set the real maximum you support (`.lineLimit(3)`) or remove the limit.
+- Watch setup defaults text size to the closest match to the paired iPhone's setting — expect real users at accessibility sizes (WWDC21 10223).
+- Swap layout when wrapping gets crowded:
+
+```swift
+@Environment(\.sizeCategory) var sizeCategory
+
+var body: some View {
+    if sizeCategory < .extraExtraLarge {
+        PlantViewHorizontal(plant: $plant)   // default layout
+    } else {
+        PlantViewVertical(plant: $plant)     // stacked layout for large sizes
+    }
+}
+```
+
+### VoiceOver
+- `NavigationLink` combines its children's accessibility automatically — don't add extra grouping inside one; the whole row becomes a single element (WWDC21 10223).
+- Label icon+text rows so they read as meaning, not parts: `.accessibilityLabel("Watering in five days")` instead of "Drop, image. Five days." Label icon-only buttons too: `.accessibilityLabel("Log \(task.name)")` → "Log watering, button".
+- Steppers/counters: collapse [minus, value, plus] into one adjustable element. Put the changing number in the **value** — it is re-spoken on every change; the label is spoken only on navigation:
+
+```swift
+CustomCounter(value: value, increment: increment, decrement: decrement)
+    .accessibilityElement()               // drops the +/- buttons as separate stops
+    .accessibilityAdjustableAction { direction in
+        switch direction {
+        case .increment: increment()      // swipe up
+        case .decrement: decrement()      // swipe down
+        default: break
+        }
+    }
+    .accessibilityLabel("\(task.name) frequency")
+    .accessibilityValue("\(value) days")
+```
+
+- Complications and dynamic notifications need the same treatment — they're extra content paths out of your app. Expand abbreviations ("Wednesday, March 9th", not "Wednesday Mar 9"), and label image complications or VoiceOver speaks the asset name (WWDC21 10223).
+
+### AssistiveTouch
+Hand gestures drive the watch with zero screen touches: **clench = tap, double-clench = action menu, pinch = next element, double-pinch = previous** (WWDC21 10223). A cursor focuses only interactive elements — Button, Toggle, NavigationLink, views with tap gestures, accessibility actions, or actionable traits; static text and disabled elements are skipped.
+
+```swift
+// ✅ static text whose parent owns the tap gesture — make it a cursor stop
+FreeDrinkInfoView()
+    .accessibilityRespondsToUserInteraction(true)
+
+// ✅ cursor frame == tappable area; enlarge tiny hit targets
+NavigationLink(destination: EditView()) {
+    Image(systemName: "ellipsis").symbolVariant(.circle)
+}
+.contentShape(Circle().scale(1.5))
+```
+
+VoiceOver custom actions appear in the AssistiveTouch action menu automatically. Supply a real icon via the `Label` form of `.accessibilityAction { } label: { Label("Edit", systemImage: "ellipsis.circle") }` — otherwise the menu falls back to the first letter of the action name (WWDC21 10223).
 
 ## Architecture Patterns
 

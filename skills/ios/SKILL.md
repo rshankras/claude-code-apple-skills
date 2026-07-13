@@ -38,6 +38,13 @@ UI/UX review against Apple HIG.
 - Accessibility review (VoiceOver, color contrast)
 - SwiftUI best practices for iOS/watchOS
 
+### accessibility-audit/
+Structured accessibility audit workflow (advisory).
+- Automated XCUITest audits (`performAccessibilityAudit`) + CI patterns
+- Accessibility Inspector workflow
+- Manual VoiceOver / Voice Control / Dynamic Type passes per common task
+- App Store Accessibility Nutrition Label evaluation + declaration
+
 ### navigation-patterns/
 SwiftUI navigation architecture patterns.
 - NavigationStack, NavigationLink, navigationDestination

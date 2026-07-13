@@ -365,7 +365,7 @@ These apply to every chart you build — 2D or 3D. The pillars: **focused, appro
 - **Touch targets stretch to full chart height** — a tap anywhere in a bar's column selects it, not just the drawn pixels.
 - Support **touch, keyboard, Voice Control, Switch Control, and VoiceOver equally** — every interaction needs a non-pointer path.
 - **Color enhances, never solely conveys** — differentiate series with symbols/shapes first, color second. Verify contrast in Dark, Light, and Increase Contrast, and balance saturation so no series visually outweighs the others.
-- **Every visual encoding needs a non-visual representation** — VoiceOver labels and Audio Graphs; Swift Charts provides both, so don't break them with custom drawing.
+- **Every visual encoding needs a non-visual representation** — per-mark VoiceOver labels and an Audio Graph descriptor; Swift Charts provides both by default, so don't break them with custom drawing. Custom-drawn charts implement them by hand — see "Audio Graphs: AXChartDescriptor" below.
 
 ## Swift Charts Construction Reference (2D)
 
@@ -535,6 +535,57 @@ BarMark(x: .value("Day", sale.day, unit: .day), y: .value("Sales", sale.count))
     .accessibilityValue("\(sale.count) pancakes sold")
 ```
 
+With hundreds or thousands of points, do NOT create one accessibility element per point —
+bucket the chart into reasonable intervals and expose one element per interval, each
+summarizing its bucket (WWDC21 10122). Better navigation and performance, still understandable.
+
+### Audio Graphs: AXChartDescriptor (WWDC21 10122)
+
+Audio Graphs let VoiceOver play a data series as a continuous tone — pitch = Y value,
+time = X position — with an explorer view (rotor → "Audio Graph" → Chart Details) that
+plays the sonification, scrubs it (double-tap-and-hold; pausing speaks the value at the
+current position), and shows automatically computed summary statistics. Swift Charts
+generates a default descriptor; custom-drawn charts conform to `AXChart` (UIKit) or use
+the `.accessibilityChartDescriptor(_:)` modifier with an `AXChartDescriptorRepresentable`
+(SwiftUI, iOS 15+):
+
+```swift
+var accessibilityChartDescriptor: AXChartDescriptor? {
+    let xAxis = AXNumericDataAxisDescriptor(
+        title: "Cups of coffee",
+        range: 0...10,
+        gridlinePositions: [],                              // gridlines render as haptics during playback
+        valueDescriptionProvider: { "\(Int($0)) cups" })    // "5 cups", never a bare "5"
+
+    let yAxis = AXNumericDataAxisDescriptor(
+        title: "Lines of code",
+        range: 0...100,
+        gridlinePositions: [],
+        valueDescriptionProvider: { "\(Int($0)) lines of code" })
+
+    let series = AXDataSeriesDescriptor(
+        name: "Productivity",
+        isContinuous: true,      // line → one continuous tone; false for bars/points → discrete tones
+        dataPoints: model.points.map { AXDataPoint(x: $0.x, y: $0.y) })
+
+    return AXChartDescriptor(
+        title: model.title,
+        summary: model.summary,  // 1–2 sentence alt text; spoken in the explorer view
+        xAxis: xAxis,
+        yAxis: yAxis,
+        additionalAxes: [],
+        series: [series])
+}
+```
+
+- Categorical axes use `AXCategoricalDataAxisDescriptor`; localize and pluralize the
+  `valueDescriptionProvider` output in production.
+- Visual floor for any chart (WWDC21 10122): foreground/background contrast **≥ 4.5:1**
+  (verify with Accessibility Inspector's Color Contrast Calculator); **never pair
+  red + green** (the most common color blindness) and avoid **blue + yellow** (the second
+  most common); use **symbols in addition to color** so series stay distinguishable with
+  no color perception at all.
+
 ## Top Mistakes
 
 | # | Mistake | Fix |
@@ -570,6 +621,11 @@ BarMark(x: .value("Day", sale.day, unit: .day), y: .value("Sales", sale.count))
 ### Multiple Surfaces
 - [ ] Each surface has a distinct color or opacity to differentiate
 - [ ] Axis labels are unique per surface or shared where appropriate
+
+### Accessibility
+- [ ] Contrast ≥ 4.5:1; no red+green or blue+yellow series pairs; symbols supplement color (WWDC21 10122)
+- [ ] Custom-drawn charts expose an `AXChartDescriptor` (Audio Graphs) — or keep Swift Charts' default intact
+- [ ] Large datasets expose one accessibility element per interval, not per point
 
 ## References
 
