@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 160 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 161 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 51 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -21,7 +21,7 @@ Four repos, four layers — use one or all:
 |----------|--------|---------|
 | **Generators** | 63 | Production-ready code for common features |
 | **Product** | 14 | Idea discovery to App Store workflow |
-| **iOS** | 9 | Code review, UI review, navigation, iPad, migration, accessibility, simulator/device runs |
+| **iOS** | 10 | Code review, UI review, navigation, iPad, migration, accessibility + audits, simulator/device runs |
 | **Testing** | 9 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
 | **App Store** | 12 | ASO, descriptions, keywords, reviews, search ads, ad attribution, rejections, originality, IAP finalize, ratings mechanics, web presence |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 160 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 161 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 

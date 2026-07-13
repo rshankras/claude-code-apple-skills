@@ -41,6 +41,30 @@ footnote), which manual font sizes can't replicate.
 - Line height moves only via leading traits: tight = −2pt, loose = +2pt (±1pt on watchOS); the
   system adds leading automatically for tall scripts (Arabic, Devanagari).
 
+## The Dynamic Type ladder (WWDC24 10074)
+
+12 sizes: 7 default + 5 accessibility sizes (AX1–AX5). `.body` runs 17pt at the default
+size, 28pt at AX1, 53pt at AX5 — roughly 3× taller, and layouts must expect that.
+Escalate in order:
+
+1. **Text styles** — `.font(.title)` / `preferredFont(forTextStyle:)` +
+   adjusts-for-content-size, line count 0 so text wraps instead of truncating.
+2. **`@ScaledMetric`** for the non-text riding alongside (icon frames, spacing); SF
+   Symbols scale via `UIImage.SymbolConfiguration(textStyle:)`. Prioritize scaling
+   essential content over decoration.
+3. **Switch layout axis at accessibility sizes** — branch on
+   `dynamicTypeSize.isAccessibilitySize` with `AnyLayout(HStackLayout())` /
+   `AnyLayout(VStackLayout())` (UIKit: flip the stack axis on
+   `preferredContentSizeCategory.isAccessibilityCategory`); give text the full line
+   width and relax `lineLimit`.
+4. **Large Content Viewer** — only for bars that legitimately can't grow: a tab bar takes
+   under 10% of screen height, and scaled to accessibility sizes it would eat almost a
+   quarter (WWDC24 10074). Scaling is always preferred; the viewer is the fallback, not
+   the fix.
+
+Test at all 12 sizes (Xcode Previews → Variants → Dynamic Type Variants), not just the
+biggest — mid-range accessibility sizes catch different wrap points.
+
 ## The San Francisco family — pick by job
 
 | Face | Job |

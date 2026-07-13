@@ -173,6 +173,37 @@ var body: some View {
 }
 ```
 
+### Size Model
+- 12 sizes total: 7 default + 5 accessibility sizes. `.body` runs 17pt at the default size, 28pt at the first accessibility size, 53pt at the largest — roughly 3× (WWDC24 10074).
+- The App Store Accessibility Nutrition Label claim bar is **200%** text scaling; the maximum accessibility size is ~**310%** — see `ios/accessibility-audit` for the label evaluation workflow.
+
+### Large Content Viewer
+**Scaling is always preferred** — use the viewer only for bars that legitimately can't grow: tab bars, nav bars, toolbars, custom fixed-height bars (WWDC19 261). Rationale: a tab bar takes under 10% of screen height; scaled to accessibility sizes it would eat almost a quarter (WWDC24 10074). At accessibility text sizes, long-pressing a bar item shows a large HUD of its glyph + title; lifting the finger activates it. System bars are automatic; custom bars adopt it:
+
+```swift
+// SwiftUI
+FigureButton(figure: figure)
+    .accessibilityShowsLargeContentViewer {
+        Label(figure.title, systemImage: figure.systemImage)
+    }
+
+// UIKit — UILargeContentViewerItem properties + the interaction (WWDC19 261)
+button.showsLargeContentViewer = true
+button.largeContentTitle = "Favorites"
+button.largeContentImage = UIImage(systemName: "star.fill")
+button.scalesLargeContentImage = true      // needs Preserve Vector Data on the asset
+customBar.addInteraction(UILargeContentViewerInteraction())
+```
+
+```swift
+// ❌ Body content that could scale, "fixed" with the viewer instead
+label.font = UIFont.systemFont(ofSize: 13)
+
+// ✅ Scale what can scale; the viewer is only for bars that can't
+label.font = UIFont.preferredFont(forTextStyle: .body)
+label.adjustsFontForContentSizeCategory = true
+```
+
 ## Color & Contrast
 
 ### Semantic Colors
@@ -244,6 +275,8 @@ Features:
 - Audit for common issues
 - Check color contrast
 - Test with different settings
+
+Full audit workflow — automated `performAccessibilityAudit` XCUITests, Inspector triage, and Accessibility Nutrition Label evaluation — lives in `ios/accessibility-audit`.
 
 ## Resources
 

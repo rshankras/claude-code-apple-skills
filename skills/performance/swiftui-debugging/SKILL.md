@@ -67,6 +67,7 @@ What SwiftUI performance problem are you seeing?
 | `LazyVGrid` / `LazyHGrid` | iOS 14 | lazy-loading.md |
 | `.id()` modifier | iOS 13 | view-identity.md |
 | Instruments SwiftUI template | Xcode 14+ | SKILL.md |
+| Redesigned SwiftUI instrument | Xcode 26 / Instruments 26 | SKILL.md |
 | `os_signpost` | iOS 12 | SKILL.md |
 
 ## Top 5 Mistakes -- Quick Reference
@@ -134,7 +135,67 @@ It is debug-only API with real runtime cost: use it during an investigation, the
 4. **View Body** lane shows which views had their body evaluated and how often
 5. **View Properties** lane shows which properties changed
 
-The redesigned SwiftUI instrument (WWDC25, Instruments 26) upgrades this workflow: it surfaces **long body evaluations** and **long view updates** directly as flagged intervals, with per-update cause analysis -- start there when the question is "which body is blowing the frame budget."
+### The Redesigned SwiftUI Instrument (Instruments 26 -- WWDC25 306)
+
+Requires Xcode 26 and recent OS releases on the profiled device (trace-recording support lives in the OS). Cmd+I builds Release and opens Instruments; the **SwiftUI template** bundles the SwiftUI instrument, **Time Profiler**, and **Hangs + Hitches** instruments. Start here when the question is "which body is blowing the frame budget."
+
+**Why body time matters:** each frame, the app handles events, runs the bodies of changed views, and must finish before the frame deadline; a body that overruns delays the whole train and the previous frame stays on screen too long -- a hitch. Two failure shapes blow the deadline the same way: (1) one long body update, (2) many individually-fast but unnecessary updates in one frame (WWDC25 306).
+
+**Top-level lanes:**
+
+| Lane | Meaning |
+|------|---------|
+| Update Groups | When SwiftUI is doing *any* work. If CPU spikes while this lane is empty, the problem is **outside SwiftUI** -- switch to the general profiling skill |
+| Long View Body Updates | `body` properties taking too long |
+| Long Representable Updates | UIView/UIViewController/NSView representable updates taking too long |
+| Other Long Updates | All other long SwiftUI work |
+
+Color coding: long updates are **orange or red by likelihood of contributing to a hitch or hang -- investigate red first**; normal updates are gray. Long updates at the very start of a trace are launch-time initial hierarchy builds -- expected, they won't hitch; don't chase them (WWDC25 306).
+
+**Workflow for a long body:**
+1. Expand the SwiftUI track -> select the **View Body Updates** subtrack; the detail pane summarizes every body that ran (process -> module -> view type)
+2. Switch the summary dropdown to **Long View Body Updates** to filter to offenders with counts
+3. Hover a view name -> arrow -> **Show Updates** -> right-click one -> **Set Inspection Range and Zoom**
+4. Select the **Time Profiler** track to see exactly what the CPU did during that one body run (Option-click expands the main-thread stack; Cmd+F to find your body frame)
+5. Fix, re-record, and confirm the view vanished from the Long View Body Updates summary
+
+The classic find (the session's demo): a computed property read in `body` created a `NumberFormatter` + `MeasurementFormatter` and formatted a string on every body run, per visible row. Fix: create formatters **once** (stored property on the model/manager), precompute strings into an **ID-keyed cache**, and let `body` do a dictionary lookup (WWDC25 306). See common-pitfalls.md for the general rule.
+
+### Cause & Effect Graph: Why Did Body Run? (WWDC25 306)
+
+Backtraces explain imperative UIKit updates but not SwiftUI -- a SwiftUI backtrace is recursive AttributeGraph frames and never says why *your* view updated. The mechanics: changing `@State` doesn't update views immediately; it creates a **transaction** that marks the state's attribute **outdated**, outdated-ness propagates down dependent attributes as a cheap flag, and at frame time SwiftUI re-evaluates only outdated attributes. So "why did body run?" really means "**what marked my body outdated?**" -- which is exactly what the instrument's **Cause & Effect Graph** answers (hover-arrow on a view name -> Show Cause & Effect Graph):
+
+- Nodes are updates, one icon per kind (view body, state change, gesture, `@Observable` change, environment); **blue nodes = your code / your interactions**; the graph reads left (cause) -> right (effect)
+- Edges are labeled **"update"** (caused a re-run) or **"Creation"** (made the view first appear)
+- A **dimmed icon** = the view was notified and checked but its **body did not run**
+- Selecting a state-change node shows a **backtrace of where the value was set**
+
+The demo bug it exposed: every row's `body` called `isFavorite(landmark)`, which read the shared `landmarks` array on an `@Observable` model -- so **every row depended on the whole array**, and one tap re-ran every visible row's body.
+
+```swift
+// ❌ Every row reads the shared array -> @Observable makes every row depend on it
+func isFavorite(_ landmark: Landmark) -> Bool {
+    favoritesCollection.landmarks.contains(landmark)   // whole-array dependency
+}
+
+// ✅ Per-item @Observable view model -> each row depends only on its own flag
+@Observable class ViewModel { var isFavorite: Bool = false }
+
+@ObservationIgnored private var viewModels: [Landmark.ID: ViewModel] = [:]
+// ^ @ObservationIgnored: don't observe the dictionary itself, only each model
+
+func isFavorite(_ landmark: Landmark) -> Bool {
+    viewModel(for: landmark).isFavorite   // body's read = narrow dependency
+}
+func addFavorite(_ landmark: Landmark) {
+    favoritesCollection.landmarks.append(landmark)
+    viewModel(for: landmark).isFavorite = true
+}
+```
+
+Verified in the trace: **2 taps = exactly 2 body updates**. Rule: **make data dependencies as granular as the UI that renders them** (WWDC25 306).
+
+**Environment rule:** `EnvironmentValues` is one value-type struct, and every view using `@Environment` depends on the whole struct. Any environment change notifies all such views; each compares its own key's value -- body only re-runs if it changed, but **the comparison itself costs time in every reading view**. Never store rapidly-changing values (geometry, timers) in the environment (WWDC25 306). The graph distinguishes **External Environment** nodes (changed outside SwiftUI, e.g. color scheme) from **EnvironmentWriter** nodes (changed via `.environment(...)`).
 
 ### os_signpost for Custom Measurement
 
