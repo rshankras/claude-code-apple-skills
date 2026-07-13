@@ -117,6 +117,13 @@ Rules engine that maps app attributes to recommended App Store promotional featu
 | 🟠 Medium | Featuring Nomination | "What's New" angle for major update |
 | 🟢 Low | Custom Product Pages | New pages for repositioned app |
 
+### Cross-Stage Distribution Levers
+
+Two tactics worth weaving into Growth and Mature stages that most matrices miss:
+
+- **Checkbox storefronts**: shipping a Catalyst/iPad-on-Mac, visionOS, watchOS, or tvOS variant enters tiny catalogs where charts and featuring are far easier to crack — treat the port as a distribution lever, not just a feature
+- **Secondary category**: costs nothing and gives a second chart presence — pick the less-competitive category where you'd rank higher, not the most descriptive one
+
 ---
 
 ## Dimension 3: App Category → Featuring Angles

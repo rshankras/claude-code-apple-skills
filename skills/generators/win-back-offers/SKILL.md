@@ -155,6 +155,19 @@ SubscriptionStoreView(groupID: groupID)
 3. Set eligibility criteria (days since churn, previous subscription duration)
 4. Configure offer priority if multiple offers exist
 
+### Retention Messaging (At-Cancel Save Offers)
+
+> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
+
+The App Store can present a save offer at the exact moment a user goes to cancel, configured via App Store Connect or the API. It complements win-back rather than replacing it:
+
+| Mechanism | Fires |
+|-----------|-------|
+| Retention messaging | At cancel — before the user churns |
+| Win-back offer | After lapse — once the subscription has expired |
+
+Configure both once eligible — they cover opposite ends of the churn window.
+
 ## References
 
 - **templates.md** — All production Swift templates

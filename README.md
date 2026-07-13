@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 147 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 152 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 49 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -24,9 +24,9 @@ Four repos, four layers — use one or all:
 | **iOS** | 9 | Code review, UI review, navigation, iPad, migration, accessibility, simulator/device runs |
 | **Testing** | 9 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
-| **App Store** | 9 | ASO, descriptions, keywords, reviews, search ads, rejections, originality, IAP finalize |
+| **App Store** | 11 | ASO, descriptions, keywords, reviews, search ads, rejections, originality, IAP finalize, ratings mechanics, web presence |
 | **SwiftUI** | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
-| **Growth** | 5 | Analytics, store signals, press/media, community, indie business |
+| **Growth** | 6 | Analytics, store signals, growth audit, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
 | **Design** | 3 | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animation patterns, UI prototyping |
@@ -34,7 +34,7 @@ Four repos, four layers — use one or all:
 | **Security** | 2 | Secure storage, biometrics, privacy manifests |
 | **Core ML** | 1 | Vision, NaturalLanguage, model integration |
 | **Legal** | 2 | Privacy policies, terms of service, EULAs, publish + set ASC URLs |
-| **Monetization** | 1 | Pricing strategy, tiers, free trials |
+| **Monetization** | 3 | Pricing strategy, tiers, free trials, external purchases, bundles & licensing |
 | **watchOS** | 1 | Watch apps, complications, health/fitness, widgets |
 | **SwiftData** | 1 | Class inheritance patterns |
 | **MapKit** | 1 | GeoToolbox, place descriptors |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 147 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 152 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 

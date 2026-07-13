@@ -267,6 +267,40 @@ Apple tracks **impressions → downloads** ratio. Higher conversion = higher ran
 - First screenshot is most important (70% decide from it alone)
 - First 3 words of subtitle are visible in search results
 
+## 12. Developer Name Is Indexed
+
+Your developer/brand name is an **indexed search field**. A descriptive name gives permanent keyword coverage across every app you ship — for free.
+
+```
+Weaker:   Acme LLC              (zero keyword value)
+Stronger: Acme Photo Tools      ("photo" + "tools" index for every app)
+```
+
+### Rules
+- Changing it is heavy (legal entity name change or DBA in App Store Connect) — treat it as a **one-time strategic choice**
+- Don't keyword-stuff it ("Photo Editor Filter Collage Inc") — metadata rejection risk
+
+## 13. Write for Apple's AI Tagging
+
+Apple's AI reads your metadata AND screenshot captions to tag apps for search and Personalized Collections. Ambiguous copy = wrong tags = wrong shelves.
+
+| Clever Caption (Tags Poorly) | Literal Caption (Tags Well) |
+|------------------------------|----------------------------|
+| "Your pocket time machine" | "Restore old photos in one tap" |
+| "Money, mastered" | "Track shared expenses with friends" |
+
+Write copy that is unambiguous about **what the app does** and **who it's for**. Pairs with tactic §2 — the same captions feed both the OCR index and the tagging model.
+
+## 14. Quarterly Keyword Refresh from Apple Ads Search-Term Reports
+
+Keep a small Apple Ads discovery campaign running. The search-term report shows the **literal queries users typed before converting** — ground truth no third-party ASO tool has.
+
+### Quarterly Routine
+1. Export the search-term report from Apple Ads
+2. Filter to terms that converted in paid but aren't in your metadata
+3. Move winners into the keyword field/subtitle at the next release
+4. Re-baseline rankings and repeat next quarter
+
 ## Quick Reference Checklist
 
 ### Zero-Risk Additions
@@ -284,12 +318,15 @@ Apple tracks **impressions → downloads** ratio. Higher conversion = higher ran
 - [ ] No singular AND plural forms
 - [ ] Primary keywords at START of title/subtitle
 - [ ] Most important keywords in first 2 screenshots
+- [ ] Captions written literally for AI tagging (no clever metaphors)
+- [ ] Developer name reviewed as an indexed keyword asset (one-time choice — don't stuff it)
 
 ### Tracking
 - [ ] Note baseline metrics before changes
 - [ ] Check rankings weekly
 - [ ] Update keywords every 4-6 weeks
 - [ ] Swap underperforming keywords (rank >100)
+- [ ] Quarterly: mine Apple Ads search-term report into keyword field/subtitle
 
 ## Sources
 

@@ -185,10 +185,10 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | product/ | 13 | idea-generator, product-agent, competitive-analysis, market-research, prd-generator, architecture-spec, ux-spec, implementation-guide, implementation-spec, test-spec, release-spec, beta-testing, localization-strategy |
 | macos/ | 8 | app-planner, coding-best-practices, architecture-patterns, swiftdata-architecture, ui-review-tahoe, macos-tahoe-apis, macos-capabilities, appkit-swiftui-bridge |
 | testing/ | 8 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold |
-| app-store/ | 7 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer, marketing-strategy, apple-search-ads, rejection-handler |
+| app-store/ | 11 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer, marketing-strategy, apple-search-ads, rejection-handler, originality-check, iap-finalizer, ratings-mechanics, web-presence |
 | ios/ | 7 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access |
 | swiftui/ | 5 | alarmkit, webkit, text-editing, toolbars, charts-3d |
-| growth/ | 5 | analytics-interpretation, press-media, community-building, indie-business |
+| growth/ | 6 | analytics-interpretation, press-media, community-building, indie-business, store-signals, store-growth-audit |
 | swift/ | 3 | concurrency-patterns, concurrency, memory |
 | apple-intelligence/ | 3 | foundation-models, visual-intelligence, app-intents |
 | design/ | 2 | liquid-glass, animation-patterns |
@@ -196,7 +196,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | performance/ | 2 | profiling, swiftui-debugging |
 | security/ | 2 | security, privacy-manifests |
 | core-ml/ | 1 | core-ml (with patterns.md, templates.md) |
-| monetization/ | 1 | monetization (with pricing-models.md, app-type-guides.md) |
+| monetization/ | 3 | monetization (with pricing-models.md, app-type-guides.md), external-purchases, bundles-and-licensing |
 | swiftdata/ | 1 | inheritance |
 | mapkit/ | 1 | geotoolbox |
 | foundation/ | 1 | attributed-string |
@@ -204,7 +204,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
-| **Total** | **147 across 23 categories** |
+| **Total** | **152 across 23 categories** |
 
 ---
 

@@ -59,6 +59,10 @@ Before recruiting testers, understand Apple's two-tier beta system.
 - Stress-testing with diverse devices, OS versions, and usage patterns
 - Gathering signal on whether the value proposition resonates
 
+#### The Public-Link Waitlist Play
+
+Publish your TestFlight **public link** on your landing page and socials as a pre-launch waitlist — up to 10,000 external testers with zero email-collection infrastructure. Testers convert to day-one installers and early reviewers at launch, feeding the first-48-hours velocity that new apps get ranked on.
+
 #### Group Management
 
 Create tester cohorts for targeted feedback:

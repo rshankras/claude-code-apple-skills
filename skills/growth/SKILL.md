@@ -1,6 +1,6 @@
 ---
 name: growth
-description: Growth skills for indie Apple developers — user acquisition, analytics interpretation, press/media outreach, community building, and indie business operations. Use when user asks about growing their app, understanding metrics, getting press coverage, or running an indie dev business.
+description: Growth skills for indie Apple developers — user acquisition, analytics interpretation, press/media outreach, community building, and indie business operations. Also covers the stage-by-stage store-growth audit and the post-launch store-signals loop. Use when user asks about growing their app, auditing growth levers, understanding metrics, getting press coverage, or running an indie dev business.
 allowed-tools: [Read, Glob, Grep, AskUserQuestion, WebSearch]
 ---
 
@@ -21,6 +21,12 @@ Use this skill when the user:
 
 ## Available Skills
 
+### store-growth-audit/
+Stage-by-stage audit of an app's App Store growth machinery against a 54-item P0–P9 playbook — every item scored from an ASC read, a codebase check, or an explicit question, then routed to the skill that fixes it. Read-only; works for live apps (audit) and pre-launch apps (growth plan).
+
+### store-signals/
+Close the post-launch loop — turn a live app's App Store signals (reviews, analytics, sales, crashes, listing conversion) into a metric-tagged backlog, and verify whether last cycle's changes moved the metric they promised to move.
+
 ### analytics-interpretation/
 Interpret app metrics and make data-driven decisions. Covers DAU/MAU, retention curves, LTV/ARPU, App Store Connect analytics, funnel analysis (AARRR), cohort analysis, and decision trees for what to fix based on which metric is underperforming.
 
@@ -36,10 +42,10 @@ Business fundamentals for indie app developers. Covers business entity setup (LL
 ## How to Use
 
 1. Identify what growth stage the user is at:
-   - **Pre-launch**: press-media (prepare press kit), community-building (build anticipation)
+   - **Pre-launch**: store-growth-audit (seed the growth plan), press-media (prepare press kit), community-building (build anticipation)
    - **Just launched**: analytics-interpretation (baseline metrics), press-media (launch outreach)
-   - **Growing**: analytics-interpretation (optimize funnel), community-building (scale engagement)
-   - **Established**: indie-business (formalize operations), analytics-interpretation (advanced cohorts)
+   - **Growing**: store-signals (monthly loop), analytics-interpretation (optimize funnel), community-building (scale engagement)
+   - **Established**: store-growth-audit (quarterly re-audit), indie-business (formalize operations), analytics-interpretation (advanced cohorts)
 2. Read the relevant sub-skill's SKILL.md for detailed workflow
 3. Ask clarifying questions about the user's app, audience, and current metrics
 4. Provide actionable guidance tailored to their specific situation

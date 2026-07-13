@@ -228,6 +228,14 @@ Apple provides 87 price tiers with automatic localization. Key considerations:
 - Consider offering **lower tiers in emerging markets** via App Store pricing tools
 - Apple's "Pricing and Availability" now supports per-country pricing
 
+### PPP Pricing Playbook
+
+Apple's automatic price equalization converts currency — it ignores purchasing-power differences. Set **manual per-storefront prices** for India, Brazil, Turkey, and Indonesia (commonly a 2-5x paid-conversion lift in those markets):
+
+- Pick from the storefront's price-point list near **local psychological thresholds** (₹99/₹199, R$9,90, ₺49,99, Rp29.000) — not the auto-converted value
+- Revisit annually — currency swings quietly break threshold pricing
+- Keep US/EU prices anchored; PPP cuts are for PPP markets only
+
 ## When to Change Your Price
 
 **Raise prices when:**

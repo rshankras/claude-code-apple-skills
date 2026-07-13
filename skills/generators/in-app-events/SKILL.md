@@ -95,6 +95,15 @@ Write a markdown document with all metadata ready for copy/paste into App Store 
 | **New Season** | Seasonal content refreshes | "Winter Season", "Chapter 3" |
 | **Premiere** | First-time content or feature debut | "Introducing Dark Mode", "New Game Mode" |
 
+### Announced Badge Types
+
+> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
+
+| Badge | Use For | Examples |
+|-------|---------|---------|
+| **Now On Sale** | Limited-time price drops on the app or IAPs | "Pro Unlock 50% Off — This Week" |
+| **Try Before You Buy** | Free-trial or demo-access promotions | "7-Day Free Trial Event" |
+
 ## Metadata Best Practices
 
 ### Event Name (30 chars)

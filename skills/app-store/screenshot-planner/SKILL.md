@@ -215,6 +215,12 @@ Notes: [Close the deal]
 0:20-0:30  Final CTA with value prop
 ```
 
+### Creative Assets
+
+> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
+
+Rich video/animated media in the product-page header AND in search results — submittable **without an app update** and testable via Custom Product Pages / PPO. Plan a motion-capable asset library now (source-quality screen captures, layered project files) so you can adopt the moment it reaches your account.
+
 ## Localization
 
 ### Considerations
