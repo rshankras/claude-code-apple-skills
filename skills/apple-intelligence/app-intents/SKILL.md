@@ -36,19 +36,35 @@ What do you need?
 +-- Make content searchable
 |   +-- In Spotlight
 |   |   --> IndexedEntity + @Property (entities-spotlight.md)
+|   +-- Runnable from Spotlight on Mac
+|   |   --> parameterSummary visibility gates (entities-spotlight.md)
 |   +-- In Visual Intelligence
 |   |   --> IntentValueQuery + SemanticContentDescriptor (advanced-features.md)
 |   +-- As onscreen entities for Siri/ChatGPT
-|       --> .userActivity() + EntityIdentifier (advanced-features.md)
+|       --> annotation APIs + EntityIdentifier (advanced-features.md)
+|
++-- Let Siri execute intents from natural language
+|   --> App Schemas: @AppIntent(schema:) / @AssistantIntent (advanced-features.md)
+|
++-- Feed entities to Apple Intelligence (Use Model action)
+|   --> AttributedString params + entity JSON + Find actions (entities-spotlight.md)
+|
++-- Hand entities to other apps as content/files
+|   --> Transferable / FileEntity (entities-spotlight.md)
 |
 +-- Show rich results in Siri
 |   +-- Static display only
 |   |   --> .result(view:) snippet (advanced-features.md)
 |   +-- Interactive buttons/controls
-|       --> SnippetIntent protocol (advanced-features.md)
+|   |   --> SnippetIntent protocol (advanced-features.md)
+|   +-- Custom spoken dialog
+|       --> IntentDialog(full:supporting:) (advanced-features.md)
 |
 +-- Present choices to the user
 |   --> requestChoice(between:) (advanced-features.md)
+|
++-- Teach Siri from in-app UI actions
+|   --> IntentDonationManager (advanced-features.md)
 |
 +-- Share intents via Swift Package
     --> AppIntentsPackage protocol (advanced-features.md)
@@ -72,6 +88,12 @@ What do you need?
 | `AppIntentsPackage` protocol | iOS 26 / macOS 26 | AppIntents |
 | Onscreen entities (`.userActivity()`) | iOS 26 / macOS 26 | AppIntents |
 | `@UnionValue` | iOS 18 / macOS 15 | AppIntents |
+| Assistant Schemas (`@AssistantIntent`) | iOS 18 | AppIntents |
+| `Transferable` entities, `FileEntity` | iOS 18 / macOS 15 | AppIntents |
+| `UndoableIntent` | iOS 26 / macOS 26 | AppIntents |
+| App Schemas on `@AppIntent(schema:)` | iOS 27 / macOS 27 | AppIntents |
+| `IntentDonationManager`, `OwnershipProvidingEntity` | iOS 27 / macOS 27 | AppIntents |
+| AppIntentsTesting framework | Xcode 26 cycle (WWDC26) | AppIntentsTesting |
 
 ## Quick Reference
 
@@ -92,6 +114,15 @@ What do you need?
 | Onscreen entity association | `.userActivity()` modifier | `advanced-features.md` |
 | Computed/deferred properties | `@ComputedProperty`, `@DeferredProperty` | `advanced-features.md` |
 | Share via packages | `AppIntentsPackage` | `advanced-features.md` |
+| Make intents Siri-executable | `@AppIntent(schema:)`, `@AssistantIntent` | `advanced-features.md` |
+| Update-intent "clear vs leave unchanged" | `valueState` (`.set`/`.set(nil)`/`.unset`) | `advanced-features.md` |
+| Custom Siri dialog | `IntentDialog(full:supporting:)` | `advanced-features.md` |
+| Donate in-app UI actions | `IntentDonationManager` | `advanced-features.md` |
+| Shared-content confirmations | `OwnershipProvidingEntity` | `advanced-features.md` |
+| Undo intent actions | `UndoableIntent` | `advanced-features.md` |
+| Export entities as content/files | `Transferable`, `FileEntity` | `entities-spotlight.md` |
+| Run from Spotlight on Mac | `parameterSummary` gates | `entities-spotlight.md` |
+| Accept model-generated rich text | `AttributedString` parameters | `entities-spotlight.md` |
 
 ## Process
 
@@ -179,7 +210,7 @@ struct ToggleFavoriteIntent: AppIntent {
 struct ToggleFavoriteIntent: AppIntent {
     static var title: LocalizedStringResource = "Toggle Favorite"
 
-    var supportedModes: IntentModes { .background }
+    static let supportedModes: IntentModes = .background
 
     func perform() async throws -> some IntentResult {
         toggleFavorite()
@@ -274,9 +305,29 @@ Before shipping App Intents integration:
 - [ ] App Shortcuts have clear, natural-language phrases with `\(.applicationName)`
 - [ ] Intent modes match the actual work: background for data ops, foreground for UI
 - [ ] Interactive snippets use `SnippetIntent` (not plain `AppIntent`)
+- [ ] SnippetIntent `perform()` never mutates state — mutations live in the button intents (WWDC25 275)
+- [ ] `parameterSummary` includes every required parameter without a default — the Spotlight-on-Mac visibility gate (WWDC25 260)
+- [ ] Text-accepting parameters use `AttributedString`, not `String` (Use Model rich text, WWDC25 260)
 - [ ] `perform()` handles errors gracefully and returns meaningful dialog
-- [ ] Intents are tested in Shortcuts app and via Siri voice
+- [ ] Intents are tested in the order: AppIntentsTesting → Shortcuts → Spotlight → Siri (WWDC26 240)
 - [ ] Deep links from entity results navigate to the correct screen
+
+## WWDC Session References
+
+Rules throughout the reference files carry inline attributions to these sessions:
+
+| Session | Covers |
+|---------|--------|
+| WWDC24 10133 — Bring your app to Siri | Assistant Schemas, 12 iOS 18 domains, semantic search |
+| WWDC24 10210 — Bring your app's core features to users | Core doctrine: intents, entities, queries, reuse across surfaces |
+| WWDC24 10134 — App Intents framework additions | IndexedEntity, Transferable, FileEntity, `@UnionValue` |
+| WWDC24 10176 — Design App Intents for system experiences | Scope + parameter design rules, Open When Run |
+| WWDC25 244 — Get to know App Intents | Protocol shapes, metadata extraction, ID contract, packaging |
+| WWDC25 275 — Advances in App Intents | SnippetIntent, intent modes, undo, onscreen entities |
+| WWDC25 260 — Develop for Shortcuts and Spotlight | Use Model action, Find actions, Mac Spotlight gates |
+| WWDC26 240 — Build intelligent Siri experiences with App Schemas | Unified schema macros, testing ladder |
+| WWDC26 343 — Advanced App Intents features for Siri | Dialogs, donations, ownership, annotation APIs |
+| WWDC26 344 — Code-along: Make your app available to Siri | Canonical integration sequence, `valueState` |
 
 ## References
 
