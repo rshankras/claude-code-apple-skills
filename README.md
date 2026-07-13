@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 153 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 157 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 50 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -29,7 +29,7 @@ Four repos, four layers — use one or all:
 | **Growth** | 6 | Analytics, store signals, growth audit, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
-| **Design** | 3 | Liquid Glass (SwiftUI/AppKit/UIKit/WidgetKit), animation patterns, UI prototyping |
+| **Design** | 7 | Liquid Glass, animation patterns, UI prototyping, design principles, UX writing, SF Symbols, typography |
 | **Performance** | 2 | Instruments profiling, SwiftUI debugging |
 | **Security** | 2 | Secure storage, biometrics, privacy manifests |
 | **Core ML** | 1 | Vision, NaturalLanguage, model integration |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 153 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 157 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 
@@ -120,7 +120,7 @@ skills/
 ├── core-ml/                # Vision, NaturalLanguage, model integration
 ├── swiftui/                # AlarmKit, WebKit, text editing, toolbars, Charts 3D
 ├── apple-intelligence/     # Foundation Models, Visual Intelligence, App Intents
-├── design/                 # Liquid Glass, animation patterns, UI prototyping
+├── design/                 # Liquid Glass, animation patterns, UI prototyping, design principles, UX writing, SF Symbols, typography (7 skills)
 ├── performance/            # Instruments profiling, SwiftUI debugging
 ├── security/               # Keychain, biometrics, network security, privacy manifests
 ├── swift/                  # Concurrency patterns, Swift 6.2, InlineArray/Span

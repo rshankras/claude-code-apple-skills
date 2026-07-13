@@ -145,6 +145,21 @@ enum NotificationCategory: String {
 }
 ```
 
+## Notification Design (WWDC18)
+
+"Interrupting people is a real privilege… a trust relationship." Design the strategy before the infrastructure:
+
+| Decision | Rule |
+|----------|------|
+| Authorization | Use **provisional authorization** (add `.provisional` to the options — delivered quietly to Notification Center, no prompt) for passive content like likes and comments; reserve the explicit prompt for **time-critical** content |
+| When to prompt | **Never at first launch.** Explain the value first, then ask at a contextually meaningful moment — right after the order is placed, not before the user has ordered |
+| Content bar | Every notification carries a **specific message or a completable task** — never an empty "open the app" nudge |
+| Timing | Deliver at relevant times; use time- and location-based delivery where it fits |
+| Settings | Offer **granular per-topic toggles in-app**, and add `.providesAppNotificationSettings` so "Manage" in system settings deep-links to your page |
+| Grouping | App-level grouping is the default; set `threadIdentifier` **only for meaningfully different streams** (conversations, distinct sources) — over-threading recreates the clutter grouping was meant to fix |
+| Rich content | A rich notification is a **self-contained package**: image/video plus actions that complete the task without launching the app |
+| Fatigue | **Pause notification types a user repeatedly ignores** (the Duolingo pattern) — silence beats an uninstall |
+
 ## Required Capabilities
 
 ### In Xcode

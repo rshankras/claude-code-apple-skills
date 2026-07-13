@@ -134,6 +134,26 @@ Use the templates in **templates.md** and customize based on user answers:
 - Set up App Group shared data access if needed
 - Configure timeline refresh policy based on update frequency
 
+## Widget Design Rules (WWDC20)
+
+Apply these when generating the size-specific views. A good widget idea is at least one of **personal** (the user's own data), **informational** (the most-wanted status at a glance), or **contextual** (the right thing for this moment). **Glanceability is the bar** — a widget is read in about a second on the way somewhere else.
+
+| Rule | Specific |
+|------|----------|
+| Small widget | Max ~4 pieces of information; exactly **one** tap target (the whole widget) |
+| Medium/Large | Multiple tap targets allowed — cell style for visually contained targets, content style for uncontained lists |
+| Margins | 16pt default; 11pt acceptable for tighter graphical shapes (circles, glyphs) |
+| Corners | Inner shapes must be **concentric** with the widget's corner radius |
+| Layouts | Design each family separately — never scale the small layout up to medium/large |
+| Typography | SF Pro, SF Pro Rounded, or SF Mono; custom fonts only when core to the brand |
+| Logo | Only if the app aggregates content from multiple sources — and always **top-right** |
+| Text bans | ❌ Instructional text ("tap to refresh") · ❌ "last updated/checked" language |
+| Appearance | Support both light and dark |
+| Placeholder | Ship a placeholder state (blocked shapes where content will be) for pre-data loading |
+
+- **Support configuration** where content is choosable (location, stock symbol, list) and design for the **multiple-widgets pattern** — users add several instances configured differently.
+- **Smart Stack rotates to the most relevant widget** — supply relevance metadata (`TimelineEntryRelevance`) so yours surfaces at the right moment.
+
 ## Output Format
 
 After generation, provide:

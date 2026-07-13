@@ -99,6 +99,19 @@ What iPad feature are you building?
 | 4 | No hover effects on interactive elements | Add `.hoverEffect()` to buttons, list rows, and custom controls | input-methods.md |
 | 5 | Not supporting multiple windows (single-scene only) | Add `WindowGroup` support and handle `NSUserActivity` for state restoration | multitasking.md |
 
+## iPad Design Rules (WWDC25)
+
+| Area | Rule |
+|------|------|
+| Adaptive navigation | The tab bar can morph into a sidebar -- use a sidebar for deep or nested content hierarchies, a tab bar when the app is compact and content-forward |
+| Window resizing | "Resizing an app should not permanently alter its layout" -- be opportunistic about reverting to the starting state when the window returns to its original size |
+| Immersion | Run content under the toolbar/sidebar with a scroll edge effect so a floating window still feels edge-to-edge |
+| Window controls | Wrap the toolbar around the window controls on the leading edge instead of reserving a safe-area strip above the content |
+| Documents | Each document opens in ITS OWN window, never "in place" -- and every window gets a unique, descriptive name so the app menu's window list stays navigable |
+| Pointer | Test with the pointer -- it is 1:1 precise with no magnetizing or rubber-banding to targets, so dense hit areas that survive touch forgiveness can still fail |
+| Menu bar | Order menu items by frequency of use (not alphabetically); push secondary actions into submenus; populate the View menu with tabs, their keyboard shortcuts, and sidebar toggles |
+| Menu stability | "Hiding menu items is not recommended -- people will find this disorienting." Dim inactive items instead, preserving spatial memory |
+
 ## Process
 
 ### 1. Identify iPad Features Needed

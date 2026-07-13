@@ -225,6 +225,42 @@ func indexAll() async throws {
 }
 ```
 
+## Design Guidelines
+
+How to decide *what* to expose and how it should behave — from Apple's design sessions.
+
+### App Shortcuts (WWDC22)
+
+- Pick **self-contained, straightforward features** completable without the app in focus.
+- Hard cap is **10 App Shortcuts**; aim for **2–5 high-quality** ones.
+- Invocation phrase: brief, memorable, and **must include the app name** — provide natural synonym variants per language ("Start a run" / "Begin a run").
+- At most **one dynamic parameter per phrase**; values must come from a **finite, front-of-mind list**, ordered by recency/frequency — the first value becomes the top Spotlight suggestion.
+- Three dialog flows: **Parameter Confirmation** (assume the likely value, confirm it), **Disambiguation** (short list that teaches the available values), **Intent Confirmation** only for consequential actions (financial, destructive, high-risk).
+- Snippet visuals: **semitranslucent material + vibrant label colors** — never opaque backgrounds.
+- **Suppress spoken dialog when the snippet fully communicates the result**, but keep the dialog complete for voice-only contexts (AirPods, CarPlay).
+- Surface in-app education **right before or after the user performs the action they'd repeat** — that's when the phrase sticks.
+
+### What deserves to be an intent (WWDC24)
+
+- **"Anything your app does should be an app intent."** Scope by task, not by a feature checklist.
+- Start from **fundamental verbs** — Create, Open, Search — then specialize.
+- **Consolidate near-duplicates** into one flexible intent with parameters ("Start Workout" with a workout-type parameter, not five separate intents).
+- Intents represent **tasks, never UI gestures** — "save the draft", not "tap the save button".
+- Live Activity and audio apps should expose **background read-intents** (current state, now playing), not just actions.
+- **Parameter summaries must read as complete sentences** for *every* possible value.
+- Make parameters **optional by default** so the intent runs immediately with no follow-up questions; **binary states default to a toggle** rather than explicit on/off.
+- Intents that end in the UI get an **"Open When Run" toggle, default on** — users composing shortcuts may want to suppress it.
+
+### Interactive snippet design (WWDC25)
+
+- **Max content height 340pt** — beyond that is clipped, not scrolled.
+- Use **larger-than-default type**; snippets are glanced at from a distance.
+- Show **only essential info** — link into the app for anything more.
+- Use **ContainerRelativeShape** for margins that adapt to the snippet's corner radius.
+- Vibrant brand backgrounds are fine, but **check contrast for distance viewing**.
+- Two types: **Result** (outcome + Done button) vs **Confirmation** (action-verb button like "Order"); **Confirmation → Result is the canonical flow**.
+- The snippet must be **self-sufficient even if Siri dialog is never shown or heard**.
+
 ## Review Checklist
 
 Before shipping App Intents integration:

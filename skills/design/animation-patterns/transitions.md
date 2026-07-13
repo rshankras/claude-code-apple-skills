@@ -244,6 +244,79 @@ PhotoDetailView(photo: photo)
     .navigationTransition(.zoom(sourceID: photo.id, in: namespace))
 ```
 
+### Zoom for Sheets and Full-Screen Covers
+
+The same pairing works for modal presentation, not just push (WWDC24):
+
+```swift
+CardView(item: item)
+    .matchedTransitionSource(id: item.id, in: namespace)
+
+.sheet(item: $selectedItem) { item in
+    ItemDetailView(item: item)
+        .navigationTransition(.zoom(sourceID: item.id, in: namespace))
+}
+```
+
+### UIKit Zoom Transitions (iOS 18+)
+
+Set `preferredTransition` on the *pushed* view controller. The closure re-runs whenever the system needs the source view, so capture **stable model identifiers, never views** — cells get reused, and a captured cell may display different content by the time the user swipes back:
+
+```swift
+let detail = ItemDetailViewController(item: item)
+detail.preferredTransition = .zoom { [id = item.id] context in
+    // Re-resolve the source view from the identifier on every call
+    collectionView.cellForItem(withID: id)
+}
+navigationController?.pushViewController(detail, animated: true)
+```
+
+### Interruptibility Rules (WWDC24)
+
+Zoom transitions are continuously interactive — users can grab the view mid-push:
+
+- An interrupted push is **never cancelled**. It completes to the Appeared state, then converts into a pop. Write appearance code assuming the push finishes.
+- ❌ Don't gate push/pop calls on "is a transition running" — deferring navigation until animations settle makes the app feel unresponsive.
+- ✅ Put cleanup in `viewDidAppear` / `viewDidDisappear` — with interruptible transitions these are the only callbacks guaranteed to fire.
+
+## Bridging UIKit and SwiftUI Animations (iOS 18+)
+
+Animate UIKit views with SwiftUI animation types, including springs that preserve gesture velocity (WWDC24):
+
+```swift
+UIView.animate(.spring(duration: 0.5)) {
+    circleView.center = targetPoint
+}
+```
+
+This animates the **layer's presentation values directly** — no `CAAnimation` is created, so presentation and model stay in sync mid-flight.
+
+Inside `UIViewRepresentable.updateUIView`, bridge the SwiftUI transaction to UIKit changes with `context.animate`:
+
+```swift
+func updateUIView(_ uiView: BeadView, context: Context) {
+    context.animate {
+        uiView.beadPosition = beadPosition  // runs with the surrounding SwiftUI animation, if any
+    }
+}
+```
+
+## Gesture-Driven Transitions
+
+Use `.interactiveSpring` while the gesture is changing and `.spring` when it ends — SwiftUI merges the two, retargets mid-flight, and carries the gesture's velocity into the settling spring automatically:
+
+```swift
+.gesture(
+    DragGesture()
+        .onChanged { value in
+            withAnimation(.interactiveSpring) { offset = value.translation }
+        }
+        .onEnded { _ in
+            withAnimation(.spring) { offset = .zero }
+        }
+)
+```
+
 ## Content Transitions
 
 Animate the content inside a view without adding/removing the view itself.

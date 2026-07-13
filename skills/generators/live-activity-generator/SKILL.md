@@ -246,6 +246,25 @@ Note: The `apns-topic` must be your app bundle ID with `.push-type.liveactivity`
    - Check Console.app for ActivityKit logs filtered by your app bundle ID
    - Activities are limited to a maximum of 5 concurrent per app
 
+## Design Rules (WWDC23)
+
+Apply when generating the Lock Screen and Dynamic Island views.
+
+**Lock Screen presentation:**
+- **14pt margins on all edges** — matches the notification layout the activity sits among.
+- Keep height compact, and **change it dynamically between moments** — collapse sections that are no longer relevant (e.g., drop the "preparing" row once the driver is en route).
+- Transitions: **numeric content transition** for counting values (scores, timers), **content-replace** when swapping graphics, and when reordering a list animate **only the row that moves**.
+- Provide explicit **background and foreground colors** — the system derives the dismiss button's appearance from them.
+- **Remove the activity shortly after it ends** — don't let a finished state linger; use a tight dismissal policy rather than the 4-hour default window.
+- **StandBy scales the presentation to 200% and won't draw under the sensor region** — verify the layout survives both.
+
+**Dynamic Island presentation:**
+- Shapes **concentric with the island's corner radius**, with even margins all around.
+- **Compact view: as narrow as possible**, content snug against the sensor housing on both sides.
+- **Expanded view preserves the compact view's relative element placement** — leading stays leading, trailing stays trailing, so the transition reads as growth, not rearrangement.
+- Avoid a **"forehead"** — an empty band above the sensor. Wrap content around the sensor region instead.
+- **Never draw UI that points at or interacts with the island** (arrows toward the cutout, faux hardware jokes).
+
 ## Common Patterns
 
 ### Delivery Tracking
