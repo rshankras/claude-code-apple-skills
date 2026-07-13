@@ -17,6 +17,7 @@ from the local copy (see "Pinning and rollback" in the README).
 ## [Unreleased]
 
 ### Added
+- `growth/store-growth-audit`: **Scoped Runs** — audit a single phase (`P3`, or a range like `P1-P3`): evidence batches subset to the scope, only in-scope scorecard rows update, output is the phase worklist instead of the top-5
 - `growth/store-growth-audit` — the 54-item P0–P9 store-growth playbook as an auditable checklist (SKILL.md + detection-playbook + two phase checklists); every item scored via ASC MCP read / codebase grep / explicit question, routed to the skill that fixes it; backs SwiftShip's `/apple:growth`
 - `app-store/ratings-mechanics` — per-storefront ratings isolation, the never-reset rule, phased + manual release as rating armor
 - `app-store/web-presence` — apps.apple.com Google SEO, landing page + Smart App Banner, the deal-site price-drop ecosystem

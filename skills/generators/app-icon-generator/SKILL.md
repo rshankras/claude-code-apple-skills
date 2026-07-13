@@ -252,6 +252,15 @@ For **iOS** (single size, system generates others):
 
 This is a manual GUI step by design — the skill prepares the layers and hands off; it does not author the `.icon`.
 
+### Step 4.6: Validate Before Install (hard checks — do not skip)
+
+An icon that "looks fine" as a 1024px file on a neutral canvas can still fail on a real Home Screen. All three checks below caught real shipped bugs:
+
+1. **Adjacent-element contrast.** Any mark element that touches the icon *background* (a header band, badge ring, tab, outline) must clearly contrast with that background — same-hue-slightly-darker vanishes at Home Screen size, amputating part of the mark. Elements sitting on the card/mark interior only need contrast against the card.
+2. **Judge at 60–64 px, not 1024.** `sips -Z 120` each variant and Read the small render — that's the size users see. Subtle contrast that survives at 1024 dies at 60.
+3. **Tinted variant must be strictly grayscale.** iOS 18+ overlays the user's tint on the tinted variant; baked-in color renders wrong. Beware colors hardcoded *inside* shared draw functions — the tinted call site can pass gray arguments while the function paints brand color anyway. Parametrize every color per variant, then verify the exported PNG has zero saturation (e.g. a quick pixel scan).
+4. **See it in place (required, not optional).** Build to a simulator and screenshot the Home Screen — the icon among other apps on a real wallpaper is the only honest review. Check light, dark, and tinted appearances.
+
 ### Step 5: Cleanup
 
 - Keep `scripts/generate-icon.swift` for future regeneration

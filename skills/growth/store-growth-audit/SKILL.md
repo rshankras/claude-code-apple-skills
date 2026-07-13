@@ -63,9 +63,10 @@ broken free machinery is burned money.
 
 ## Audit Process
 
-1. **Resolve app + mode.** Get the `appId` (from `.planning/STATE.md` when driven by SwiftShip,
-   else `list_apps` + confirm with the user). App live on the store → *existing* mode; not yet
-   shipped → *pre-launch* mode. A prior scorecard (`GROWTH.md`), if present, becomes the diff baseline.
+1. **Resolve app, mode, and scope.** Get the `appId` (from `.planning/STATE.md` when driven by
+   SwiftShip, else `list_apps` + confirm with the user). App live on the store → *existing* mode;
+   not yet shipped → *pre-launch* mode. Scope defaults to the full P0–P9; a named phase runs
+   scoped (see **Scoped Runs**). A prior scorecard (`GROWTH.md`), if present, is the diff baseline.
 2. **Gather evidence — one pass, per `detection-playbook.md`.** Run the full MCP read batch, the
    full codebase grep pass, and ONE batched AskUserQuestion round for every MANUAL item. Never
    interleave gathering with scoring; never ask questions one at a time.
@@ -135,6 +136,25 @@ without a binary release).
 | Output framing | audit + deltas | launch plan (history row tagged `mode: pre-launch`) |
 
 The first post-launch audit diffs cleanly against the pre-launch scorecard — same IDs, same schema.
+
+## Scoped Runs (single phase)
+
+"Run phase 3" = audit + worklist for that stage only.
+
+- **Scope**: one phase (`P3`, bare `3` accepted) or a short range/list (`P1-P3`, `P0,P4`).
+  Default remains the full P0–P9 audit.
+- **Evidence**: pull only the `detection-playbook.md` rows whose items are in scope — MCP calls,
+  greps, and MANUAL questions alike. A P1 run needs `get_metadata`/`list_locales`/`list_iap`/
+  `list_app_events`, not sales reports or paywall greps.
+- **Scorecard**: update only the in-scope phase tables and their Phase Scores rows; every other
+  row stays untouched (stable IDs make the partial update safe). Append an Audit History row
+  tagged `scope: P3`. Recompute the maturity level from the refreshed rows plus the untouched
+  remainder — mark it `(est.)` if any out-of-scope phase has never been audited.
+- **Output**: instead of the top-5, print the **phase worklist** — every applicable in-scope item
+  with status, evidence, and route — ordered `core` first, 🔴 before 🟠, lowest effort first.
+  End by offering to start the first route (gated, as always).
+- A scoped run never rewrites items outside its scope, and never counts as a full re-audit for
+  the Recurring Calendar's "announced-features recheck" row unless the ⏳ items are in scope.
 
 ## Output Format
 
