@@ -115,7 +115,7 @@ skills/
 │   ├── app-extensions/
 │   ├── data-export/
 │   └── ... (63 total)
-├── growth/                 # Analytics, store signals, press/media, community, indie business (5 skills)
+├── growth/                 # Growth audit, analytics, store signals, press/media, community, indie business (6 skills)
 ├── legal/                  # Privacy policies, terms of service, EULAs
 ├── core-ml/                # Vision, NaturalLanguage, model integration
 ├── swiftui/                # AlarmKit, WebKit, text editing, toolbars, Charts 3D
@@ -129,8 +129,8 @@ skills/
 ├── foundation/             # AttributedString updates
 ├── visionos/               # visionOS widgets
 ├── testing/                # TDD workflows, test infrastructure, snapshot tests, flow walkthrough (9 skills)
-├── monetization/           # Pricing strategy, tiers, free trials
-├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections, originality, IAP finalize (9 skills)
+├── monetization/           # Pricing strategy, tiers, free trials, external purchases, bundles & licensing (3 skills)
+├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections, originality, IAP finalize, ratings, web presence (11 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
 ├── release-review/         # Security, privacy, UX, distribution audits
 ├── shared/                 # Meta-skills: skill-creator, skill-auditor
@@ -222,6 +222,7 @@ Generate production-ready Swift code that adapts to your project:
 | Skill | What It Does |
 |-------|--------------|
 | `analytics-interpretation` | Interpret app metrics, AARRR funnels, decision trees |
+| `store-growth-audit` | Stage-by-stage audit of an app's growth machinery — 54 levers (P0–P9), each detected via ASC/codebase evidence and routed to its fix (read-only ASC) |
 | `store-signals` | Turn live reviews/analytics/sales/crashes into a metric-tagged backlog + verify last cycle (read-only ASC) |
 | `press-media` | Press kit, journalist outreach, pitch templates |
 | `community-building` | Social media, building in public, content strategy |
@@ -259,6 +260,8 @@ Generate production-ready Swift code that adapts to your project:
 | Skill | What It Does |
 |-------|--------------|
 | `monetization` | Readiness assessment, pricing model selection, tier structure, free trial strategy |
+| `external-purchases` | US web checkout via the External Purchase Link entitlement — 0%-commission era, commission-flip architecture |
+| `bundles-and-licensing` | Own-app bundles, Family Sharing, cross-developer suites, Group/Volume Purchasing (announced) |
 
 ## SwiftUI Skills
 
@@ -289,6 +292,8 @@ Generate production-ready Swift code that adapts to your project:
 | `rejection-handler` | Handle rejections, response templates, appeals |
 | `originality-check` | Guideline-4.3 anti-spam gate: function/content/metadata distinctness before build or submit |
 | `iap-finalizer` | Finalize one-time IAP price + localization in ASC (dry-run) |
+| `ratings-mechanics` | Per-storefront ratings isolation, never-reset rule, phased + manual release as rating armor |
+| `web-presence` | apps.apple.com SEO, landing page + Smart App Banner, deal-site price-drop ecosystem |
 | `marketing-strategy` | Comprehensive promotional strategy |
 
 ## Security Skills

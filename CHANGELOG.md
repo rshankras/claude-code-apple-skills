@@ -35,6 +35,7 @@ from the local copy (see "Pinning and rollback" in the README).
 - `scripts/check-counts.sh` now also guards `docs/ROADMAP.md`, `plugin.json`, and `.claude-plugin/marketplace.json` counts
 
 ### Fixed
+- README detail drift: the Growth/Monetization/App Store per-skill tables and directory-tree comments were missing the five new skills (only the summary-table counts are CI-guarded)
 - Category index drift: `app-store/SKILL.md` and `growth/SKILL.md` "Available Skills" were missing previously added members (iap-finalizer, originality-check, store-signals); `docs/ROADMAP.md` per-category rows for app-store/growth/monetization brought current
 - `check-counts.sh` cross-repo check pointed at `commands/apple/` but SwiftShip's commands live at `commands/` — the count guard could never fire; README docs table now lists CHANGELOG.md
 - Stale recency claims in paywall-generator, test-spec, live-activity-generator, usage-insights, ci-cd-setup
