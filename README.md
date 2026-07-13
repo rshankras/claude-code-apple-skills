@@ -11,7 +11,7 @@ Four repos, four layers — use one or all:
 | Layer | Repo | What it is |
 |---|---|---|
 | Knowledge | **claude-code-apple-skills** ← you are here | 161 skills — how to build right |
-| Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 51 /apple:* commands — spec-driven idea → App Store |
+| Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 52 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
 
@@ -73,7 +73,7 @@ demand, so only 23 short descriptions sit in context. Update any time with
 always track `main`.
 
 Want the full workflow too? The same marketplace carries
-[SwiftShip](https://github.com/rshankras/SwiftShip)'s 49 `/apple:*` commands:
+[SwiftShip](https://github.com/rshankras/SwiftShip) — 52 /apple:* commands:
 
 ```
 /plugin install apple@indie-apple-stack
