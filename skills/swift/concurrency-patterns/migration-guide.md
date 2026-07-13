@@ -1,6 +1,18 @@
 # Swift 6 Strict Concurrency Migration
 
-Step-by-step guide for incrementally adopting Swift 6 strict concurrency checking. Covers the migration path from Swift 5 to Swift 6.2.
+Step-by-step guide for incrementally adopting Swift 6 strict concurrency checking. Covers the migration path from Swift 5 to Swift 6.2. Doctrine sourced from Apple's WWDC24 "Migrate your app to Swift 6" (10169); full strategy guide at swift.org/migration.
+
+## Apple's Migration Doctrine (WWDC24 10169)
+
+- **Migrate per target, one at a time**: enable complete checking (warnings) → resolve all warnings → flip that target to Swift 6 language mode (locks in enforcement) → next target.
+- **Start with the UI/app target and work top-down.** The UI layer mostly runs on the main thread against SDK APIs already annotated `@MainActor`, and going app → your frameworks handles not-yet-migrated dependencies gracefully.
+- **Don't refactor while migrating.** Verbatim: "resist the temptation to blend together both significant refactoring and enabling data race safety. Try to do one at a time. If you try to do both at once, you'll probably find it too much change at once, and have to backtrack." Whole-app refactors (e.g. moving `nonisolated(unsafe)` state into actors) come *after* all targets are migrated.
+- **Don't pre-audit — let the compiler drive.** Skip the manual `@MainActor`/`Sendable` audit; turn on complete checking and follow the diagnostics ("like a pair programmer pointing out potential bugs").
+- **Don't panic at the warning count.** Warnings cluster: a few root issues produce many knock-on diagnostics. Hunt quick wins first (`var`→`let` on a global, one `@MainActor`, one `Sendable` conformance can clear dozens of sites).
+- **Migration is pausable.** You can turn complete checking back off to ship; every fix already made remains a valid improvement to commit.
+- **Re-check against the latest SDKs before fixing.** Newer SDKs added `@MainActor` annotations (the SwiftUI `View` protocol, many delegate protocols) — annotations you added under older SDKs may now be inferable and removable.
+- Building with a Swift 6 compiler changes nothing by itself — data-race enforcement is the *only* thing gated by the language mode; all other Swift 6 features are on regardless (WWDC24 10136).
+- If you maintain a public package, migrate it ASAP — downstream migrators benefit from Swift-6-clean dependencies.
 
 ## Migration Strategy
 
@@ -120,6 +132,10 @@ final class AppConfig: Sendable {
 nonisolated(unsafe) static var shared = AppConfig()
 ```
 
+Apple's preference order for "global shared mutable state" diagnostics (WWDC24 10169): (1) `var` → `let` if the type is Sendable — the best fix when possible; (2) isolate to a global actor (`@MainActor`); (3) `nonisolated(unsafe)` only when an external mechanism (e.g. a dispatch queue) already guards it.
+
+Worth knowing while migrating: Swift globals are initialized **lazily on first use** (unlike C/ObjC at-startup init) and initialization is **guaranteed atomic** — two threads racing on first use cannot create two instances.
+
 ### Non-Sendable Closures
 
 ```swift
@@ -198,6 +214,14 @@ import CoreLocation
 
 ### Delegate Patterns
 
+Every callback API falls into one of three isolation contracts (WWDC24 10169):
+
+| Contract | Example | Migration move |
+|---|---|---|
+| Guaranteed main thread | Most UI frameworks | Rely on / add `@MainActor` |
+| Arbitrary thread | Backend-style callbacks (e.g. HealthKit) | Receiver `nonisolated`, re-dispatch explicitly |
+| Dynamic guarantee | `CLLocationManager` (calls back on the thread that created it) | `nonisolated` + `MainActor.assumeIsolated` (below) |
+
 ```swift
 // ❌ Delegate callback crosses isolation
 class LocationService: NSObject, CLLocationManagerDelegate {
@@ -211,10 +235,10 @@ class LocationService: NSObject, CLLocationManagerDelegate {
 }
 ```
 
-**Fix:**
+**Fix (arbitrary-thread contract) — hop explicitly:**
 
 ```swift
-// ✅ Dispatch to MainActor
+// ✅ Dispatch to MainActor (new task; ordering not guaranteed)
 func locationManager(_ manager: CLLocationManager,
                       didUpdateLocations locations: [CLLocation]) {
     let location = locations.last
@@ -223,6 +247,26 @@ func locationManager(_ manager: CLLocationManager,
     }
 }
 ```
+
+**Fix (dynamic contract) — assert the isolation you can prove:** when docs/source guarantee the callback arrives on the main actor (e.g. the whole delegate class is `@MainActor`, so the manager was created on the main thread), use `MainActor.assumeIsolated` — no new task, and it **traps** if ever called off the main actor. Apple's rationale: "trapping isn't something you want, but it's better than a race condition that could corrupt user's data."
+
+```swift
+@MainActor
+class LocationService: NSObject, CLLocationManagerDelegate {
+    var lastLocation: CLLocation?
+
+    nonisolated func locationManager(_ manager: CLLocationManager,
+                                     didUpdateLocations locations: [CLLocation]) {
+        MainActor.assumeIsolated {
+            lastLocation = locations.last
+        }
+    }
+}
+```
+
+**Shorthand for a whole conformance**: `extension MyType: @preconcurrency SomeDelegate` assumes the conforming type's isolation at each requirement and traps if violated. It self-cleans: once the protocol gains a real `@MainActor` annotation, the compiler warns the attribute "has no effect" — remove it.
+
+**Prefer async-sequence APIs over delegates** when the deployment target allows (e.g. `for try await update in CLLocationUpdate.liveUpdates()`) — straight-line code instead of state stashed across delegate fires; Apple suggests this alone can justify raising a deployment target.
 
 ### Notification Observers
 
@@ -289,3 +333,11 @@ This prevents a flood of errors across the entire project.
 - [ ] Delegate callbacks dispatched to correct isolation context
 - [ ] Migration done module-by-module for large projects
 - [ ] Swift 6 language mode enabled after all warnings resolved
+- [ ] Sendable chains followed to the root: marking a type Sendable flags its non-Sendable stored properties — fix those, don't `@unchecked` the parent
+- [ ] `MainActor.assumeIsolated` / `@preconcurrency` conformance used only where the main-thread guarantee is documented
+- [ ] No refactoring mixed into the migration commits
+
+## References
+
+- [WWDC24 — Migrate your app to Swift 6](https://developer.apple.com/videos/play/wwdc2024/10169/)
+- [Swift 6 migration guide](https://www.swift.org/migration/)

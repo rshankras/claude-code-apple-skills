@@ -1,6 +1,21 @@
 # Continuations and Bridging
 
-Patterns for wrapping legacy callback-based, delegate-based, and notification-based APIs into async/await.
+Patterns for wrapping legacy callback-based, delegate-based, and notification-based APIs into async/await. AsyncSequence adoption rules sourced from Apple's WWDC21 "Meet AsyncSequence" (10058).
+
+## What to Convert (WWDC21 10058)
+
+Apple's candidate rule: "pretty much anything that does not need a response back and is just informing of a new value that occurs can be a prime candidate for making an async sequence" — multi-shot callbacks, closures, and many delegates. One-shot callbacks become continuations instead (see below).
+
+**Check the built-ins before writing an adapter** — these ship as async sequences (iOS 15+/macOS 12+):
+
+| API | What it yields |
+|---|---|
+| `URL.lines` / `URL.bytes` | Lines/bytes from a file **or** the network, streamed as received — process elements before the download completes |
+| `FileHandle.bytes` (+ `.lines`) | Bytes/lines from a file handle, incl. `FileHandle.standardInput` |
+| `URLSession.bytes(from:)` | `(bytes, response)` — validate `statusCode == 200` before iterating |
+| `NotificationCenter.notifications(named:)` | Notifications; combine with `.first { … }` to await a single matching one |
+
+Standard operators have async counterparts: `map`, `filter`, `reduce`, `dropFirst`, `first(where:)`, `prefix`. Termination rules: `nil` from the iterator and thrown errors are both terminal — "after an error happens, they'll return nil for any subsequent calls to next." To make an indefinite iteration externally cancellable, wrap the `for await` loop in a stored `Task` and cancel it.
 
 ## withCheckedContinuation
 
@@ -95,6 +110,10 @@ func fetchData() async throws -> Data {
 | `withUnsafeContinuation` | No checking | No checking | Performance-critical hot paths only |
 
 Always use `withCheckedContinuation` unless profiling shows the check is a bottleneck. The checked variant catches bugs that are extremely hard to debug otherwise.
+
+Diagnosing a leak in the field (WWDC22 110350): a never-resumed continuation prints a console warning when the continuation is destroyed ("the continuation leaked"), and the Swift Concurrency Instrument shows the task stuck indefinitely in the **continuation** state — see `concurrency-internals.md`.
+
+Swift 6.4 adds a noncopyable **`Continuation`** type that "checks at compile time that you only resume it once, making it even safer than a CheckedContinuation but just as efficient as an UnsafeContinuation" (WWDC26 262) — prefer it once your toolchain allows.
 
 ## Bridging Delegate APIs
 
@@ -243,6 +262,8 @@ Buffering policies:
 | `.unbounded` | Buffer everything (default, can grow unbounded) |
 | `.bufferingNewest(N)` | Keep only the N most recent values |
 | `.bufferingOldest(N)` | Keep only the N oldest values, drop new ones |
+
+Why AsyncStream over hand-rolled `AsyncSequence` conformance (WWDC21 10058): "it handles all of the things you would expect from an async sequence, like safety, iteration, and cancellation; but they also handle buffering," and it "is a suitable return type from your own APIs." Encapsulating the start/stop bookkeeping in the stream "reduces the need to replicate the same logic in every use site."
 
 ## AsyncThrowingStream
 

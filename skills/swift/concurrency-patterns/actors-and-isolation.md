@@ -1,6 +1,15 @@
 # Actors and Isolation
 
-Actors serialize access to mutable state, preventing data races at compile time. This file covers actor patterns, reentrancy pitfalls, `@MainActor`, `Sendable`, and isolation boundaries.
+Actors serialize access to mutable state, preventing data races at compile time. This file covers actor patterns, reentrancy pitfalls, `@MainActor`, `Sendable`, and isolation boundaries. Core doctrine sourced from Apple's WWDC21 "Protect mutable state with Swift actors" (10133) and WWDC22 "Eliminate data races using Swift Concurrency" (110351).
+
+## The Mental Model: Islands in a Sea of Concurrency (WWDC22 110351)
+
+Apple's canonical picture: **tasks are boats, actors are islands, non-isolated code is the open sea** (the global cooperative pool). "Each island is self-contained, with its own state that is isolated from everything else in the sea… Only one boat can visit the island to run code at a time." Every value that crosses a boat↔boat or boat↔island boundary — task-creation captures, task return values, actor call arguments and results — goes through **Sendable checking**.
+
+Three doctrine points that follow:
+- A **data race** needs shared *mutable* state: "If your data doesn't change or it isn't shared across multiple concurrent tasks, you can't have a data race on it" (WWDC21 10133). Races are nondeterministic and demand nonlocal reasoning — which is why the compiler, not review, must catch them.
+- Architecture: views and view controllers on the main actor, business logic on other actors, tasks shuttling **Sendable** data between them — "all of your concurrent code should primarily communicate in terms of Sendable types."
+- Actors are **not FIFO**: "Actors execute the highest-priority work first… a significant difference from serial Dispatch queues, which execute in a strictly First-In, First-Out order" (WWDC22 110351). Never port order-dependent serial-queue code onto an actor. For strict ordering, use a single task or an `AsyncStream`.
 
 ## Actor Basics
 
@@ -49,6 +58,8 @@ let store = UserStore()
 let id = store.storeIdentifier     // No await needed
 await store.addUser(user)          // await required
 ```
+
+**Synchronous protocol requirements** (WWDC21 10133): requirements like `Hashable.hash(into:)` can't be actor-isolated — there's no way for the protocol's callers to `await` them. Mark them `nonisolated`. The rule: "because nonisolated methods are treated as being outside the actor, they cannot reference mutable state on the actor" — immutable `let` properties only; hashing a `var` is a compiler error. Static methods have no `self` and are always outside actor isolation.
 
 ## Actor Reentrancy
 
@@ -109,7 +120,43 @@ actor BankAccount {
 }
 ```
 
-**Pattern 3: Use a synchronous method for the critical section**
+**Pattern 3: Cache the in-flight Task so concurrent callers share ONE operation**
+
+Apple's ImageDownloader fix (WWDC21 10133) — on a cache miss, store the in-flight `Task` synchronously *before* awaiting it, so a second caller awaits the same download instead of starting another:
+
+```swift
+// ✅ Deduplicates concurrent requests for the same key
+actor ImageDownloader {
+    private enum CacheEntry {
+        case inProgress(Task<Image, Error>)
+        case ready(Image)
+    }
+    private var cache: [URL: CacheEntry] = [:]
+
+    func image(from url: URL) async throws -> Image {
+        if let entry = cache[url] {
+            switch entry {
+            case .ready(let image): return image
+            case .inProgress(let task): return try await task.value
+            }
+        }
+        let task = Task { try await downloadImage(from: url) }
+        cache[url] = .inProgress(task)      // synchronous — no interleaving before this
+        do {
+            let image = try await task.value
+            cache[url] = .ready(image)
+            return image
+        } catch {
+            cache[url] = nil                // allow retry after failure
+            throw error
+        }
+    }
+}
+```
+
+Apple's design-for-reentrancy checklist (WWDC21 10133, verbatim): (1) "perform mutation of actor state within synchronous code"; (2) if state must be temporarily inconsistent, "make sure to restore consistency before an await"; (3) expect that after any resume "the overall program state will have changed" — "an await in your code means the world can move on and invalidate your assumptions."
+
+**Pattern 4: Use a synchronous method for the critical section**
 
 ```swift
 // ✅ No suspension point in the critical path
@@ -255,6 +302,43 @@ await withTaskGroup(of: Void.self) { group in
 
 Most closure parameters in the concurrency APIs are already marked `@Sendable`. You typically only need the annotation when the compiler can't infer it.
 
+The three `@Sendable` closure rules (WWDC21 10133, verbatim): they cannot capture mutable local variables ("that would allow data races on the local variable"); everything they capture must be Sendable; and a synchronous `@Sendable` closure cannot be actor-isolated ("that would allow code to be run on the actor from the outside"). Corollary: a non-Sendable closure formed *inside* an actor method (e.g. passed to `reduce` and run inline) stays actor-isolated and may call actor methods synchronously; the same-looking closure passed to `Task.detached` is `@Sendable` and must `await`.
+
+### Sendable Inference Is Not Public
+
+Internal structs/enums with Sendable storage get `Sendable` automatically; **public types never do** (WWDC24 10169) — conformance on a public type is an API guarantee to clients, so you must declare it explicitly.
+
+### The Returned-Reference Trap
+
+Returning a value type from an actor hands the caller a safe copy. Returning a **class** hands the caller "a reference into the mutable state of the actor" — mutating it from outside is a data race even though every access compiled (WWDC21 10133). Return value types or Sendable snapshots from actors.
+
+### Region-Based Isolation (Swift 6)
+
+Swift 6 accepts sending a **non-Sendable** value across an isolation boundary when the compiler can prove it's never referenced again from the origin (WWDC24 10136): a fresh `Client` created on `@MainActor` then passed to `await ClientStore.shared.addClient(client)` compiles without `Client: Sendable`, because there is no use after the send. If you get "sending 'x' risks causing data races," check whether the origin keeps using the value after the transfer — restructuring so it doesn't is often easier than adding conformances.
+
+### Atomic and Mutex (Swift 6 Synchronization module)
+
+For the narrow cases where an actor is the wrong tool (synchronous contexts, hot paths), Swift 6's `Synchronization` module replaces hand-rolled lock wrappers (WWDC24 10136):
+
+```swift
+import Synchronization
+
+final class Stats: Sendable {
+    private let counter = Atomic<Int>(0)          // must be stored in a `let`
+    func hit() { counter.wrappingAdd(1, ordering: .relaxed) }
+    var value: Int { counter.load(ordering: .relaxed) }
+}
+
+final class Registry: Sendable {
+    private let state = Mutex<[String: Int]>([:]) // must be stored in a `let`
+    func set(_ key: String, _ value: Int) {
+        state.withLock { $0[key] = value }        // all access through withLock
+    }
+}
+```
+
+A `final class` whose only storage is `Atomic`/`Mutex` values is legitimately `Sendable` — no `@unchecked` needed.
+
 ## Isolation Boundaries in Practice
 
 ### Sending Values Between Actors
@@ -367,3 +451,14 @@ actor SafeCache {
 - [ ] No heavy synchronous work on `@MainActor`
 - [ ] `nonisolated` on actor methods that don't access mutable state
 - [ ] Prefer `@MainActor` annotation over `MainActor.run` for clarity
+- [ ] Actors return value types / Sendable snapshots, never references into their own mutable state
+- [ ] No order-dependent logic assumes actor FIFO (actors schedule by priority)
+- [ ] Concurrent duplicate requests deduplicated via the in-flight-Task cache pattern
+- [ ] Public Sendable types declare conformance explicitly (no inference on public types)
+- [ ] `Atomic`/`Mutex` (Synchronization module) used instead of `@unchecked Sendable` + NSLock
+
+## References
+
+- [WWDC21 — Protect mutable state with Swift actors](https://developer.apple.com/videos/play/wwdc2021/10133/)
+- [WWDC22 — Eliminate data races using Swift Concurrency](https://developer.apple.com/videos/play/wwdc2022/110351/)
+- [WWDC24 — What's new in Swift (region-based isolation, Synchronization)](https://developer.apple.com/videos/play/wwdc2024/10136/)

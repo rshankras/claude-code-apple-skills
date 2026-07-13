@@ -1,6 +1,19 @@
 # Swift 6.2 Approachable Concurrency
 
-Swift 6.2 makes strict concurrency dramatically easier to adopt. The core philosophy: code runs on `@MainActor` by default, async functions stay on the calling actor, and you explicitly opt into background execution with `@concurrent`.
+Swift 6.2 makes strict concurrency dramatically easier to adopt. The core philosophy: code runs on `@MainActor` by default, async functions stay on the calling actor, and you explicitly opt into background execution with `@concurrent`. Sourced from Apple's WWDC25 "Embracing Swift concurrency" (268) and "What's new in Swift" (245); Swift 6.3/6.4 additions from WWDC26 "What's new in Swift" (262).
+
+## Apple's Adoption Doctrine (WWDC25 268)
+
+Apple prescribes an ordered path — do not skip steps:
+
+1. **Start single-threaded.** "Your apps should start by running all of their code on the main thread, and you can get really far with single-threaded code."
+2. **Introduce async/await only to hide latency** of high-latency operations (network, file I/O). Async ≠ parallel — it's still single-threaded interleaving.
+3. **Introduce parallelism only after profiling.** "If it's work that can be made faster without concurrency, do that first. If it can't be made faster, you might need to introduce concurrency."
+4. **Introduce actors last** — "when you find that storing data on the main actor is causing too much code to run on the main thread." Model classes "should generally be on the main actor with the UI, or kept non-Sendable, so that you don't encourage lots of concurrent accesses to your model."
+
+Two build settings implement this (exact names):
+- **"Approachable Concurrency"** — "enables a suite of upcoming features that make it easier to work with concurrency. We recommend that all projects adopt this setting."
+- **"Default Actor Isolation" = MainActor** — module-wide implicit `@MainActor`; on by default for app projects created with Xcode 26. Use for app/UI modules only, not general-purpose libraries.
 
 ## Async Functions Stay on the Calling Actor
 
@@ -37,6 +50,18 @@ final class StickerModel {
 ```
 
 **Why?** In 6.2, `extractSticker` stays on `@MainActor` because the caller is `@MainActor`. No hop, no data race.
+
+### The Mechanism: nonisolated(nonsending)
+
+The formal name for this behavior is **`nonisolated(nonsending)`** — nonisolated async functions run on the *caller's* actor instead of hopping to the concurrent executor. Under the Approachable Concurrency setting (upcoming feature `NonisolatedNonsendingByDefault`) this becomes the default for all nonisolated async functions. Apple's framing (WWDC25 245): Swift 6.2 "eliminates implicit background offloading. Async functions that aren't tied to a specific actor continue running on the actor they were called from." The payoff: arguments never leave the caller's actor, so **non-Sendable values can be passed to nonisolated async functions without data-race errors**.
+
+You can also write `nonisolated(nonsending)` explicitly on a single function to opt it into caller-inherited execution without the module-wide setting.
+
+### Library API Doctrine (WWDC25 268)
+
+- `nonisolated` runs on the caller's actor: "if you call it from the main actor, it will stay on the main actor. If you call it from a background thread, it will stay on a background thread. This makes it a great default for general-purpose libraries."
+- "For libraries, it's best to provide a **nonisolated API and let clients decide whether to offload work**." Apple's example: `nonisolated public class JSONDecoder`.
+- Three ways to break a main-actor tie from concurrent code: (1) move the main-actor code into a synchronous main-actor caller, (2) `await` the main actor from concurrent code, (3) mark the code `nonisolated` if it doesn't need the main actor at all.
 
 ## Infer Main Actor by Default
 
@@ -213,6 +238,63 @@ let resized = await ImageProcessor().resize(image: data, to: targetSize)
 | `Task {}` | Unstructured task inheriting current actor (usually MainActor) |
 
 Prefer `@concurrent` for compute-heavy functions. Prefer actors for shared state. Avoid `Task.detached` when structured concurrency works.
+
+## Concurrency in SwiftUI Views (WWDC25 266)
+
+The `View` protocol is `@MainActor`-isolated, so every conforming type inherits it — `body`, `@State`, all members, and any `Task {}` created in the body run on the main actor. All SwiftUI action callbacks (button actions, `onTapGesture`, …) are synchronous on the main thread by design.
+
+But SwiftUI calls **some** of your code off the main thread — these closures/requirements are `@Sendable` and may run on background threads:
+- `Shape.path(in:)` (called from a background thread during animation)
+- `.visualEffect { }` closures
+- `Layout` protocol method requirements
+- `.onGeometryChange` closures
+
+Sharing main-actor state into those closures — capture a Sendable copy by value:
+
+```swift
+// ❌ Sends self; reads @MainActor state from a Sendable background closure
+.visualEffect { content, _ in content.blur(radius: pulse ? 2 : 0) }
+
+// ✅ Capture a Sendable copy in the capture list
+.visualEffect { [pulse] content, _ in content.blur(radius: pulse ? 2 : 0) }
+```
+
+Async + animation rule: an `await` splits the function and resumption timing is not guaranteed — "this suspension could mean my task closure doesn't resume until much later, passing the refresh deadline." Structure work as a **sync/async sandwich**: set loading state synchronously → await the long-running work → set completion state synchronously. Never put time-sensitive UI mutations after an `await` when a frame deadline matters.
+
+For the data-flow side (view identity, `@State` ownership), see `swiftui/data-flow`.
+
+## Unsharing State Instead of Sharing It (WWDC25 270)
+
+When parallel branches (`async let`, task group children) both need a helper that holds mutable state, don't share one instance across them — give each branch its own:
+
+```swift
+// ❌ Shared stored property accessed from two parallel branches — data-race error
+let colorExtractor = ColorExtractor()          // stored on the type
+async let sticker = extractSticker(from: data)
+async let colors = extractColors(from: data)   // both branches touch colorExtractor
+
+// ✅ Create the instance locally inside the branch that uses it
+func extractColors(from data: Data) async -> ColorScheme {
+    let colorExtractor = ColorExtractor()      // each call gets its own
+    ...
+}
+```
+
+The same code-along establishes the offload recipe on a 6.1+ toolchain: mark the helper type `nonisolated` (on the *type* — all members become nonisolated, detaching it from the module's MainActor default), mark the heavy function `@concurrent`, pass Sendable values (like `Data`) across, and verify the hang is gone in Instruments before and after.
+
+## Swift 6.3 / 6.4 Additions (WWDC26 262)
+
+Concurrency-related language changes announced at WWDC26:
+
+| Feature | Version | What it does |
+|---|---|---|
+| Unhandled task error warning | 6.4 | Warning "if you silently ignore an error thrown from a Swift Concurrency task" — handle it inside `Task { do { … } catch { … } }` or store the task and check it later |
+| `async` in `defer` | 6.4 | "The old restriction on calling async functions from a defer block is now gone" |
+| `withTaskCancellationShield {}` | 6.4 | Inside the shield, `Task.isCancelled` reads false — finish or roll back critical work (keep the shielded region short) |
+| `Continuation` type | 6.4 | "Checks at compile time that you only resume it once, making it even safer than a CheckedContinuation but just as efficient as an UnsafeContinuation" (built on noncopyable types) |
+| `weak let` | 6.4 | Immutable weak references — a class previously forced into `@unchecked Sendable` by a `weak var` can keep real Sendable checking |
+| `~Sendable` | 6.4 | Explicitly declare a type non-Sendable; note it "doesn't stop subclasses from being Sendable" |
+| Module selectors `::` | 6.3 | `Rocket::SaturnV()` disambiguates same-named types across modules |
 
 ## Mental Model Summary
 
