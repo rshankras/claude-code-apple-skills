@@ -1,6 +1,6 @@
 ---
 name: design
-description: Design system skills for modern Apple platform UI including Liquid Glass, animations, and visual design patterns. Use when implementing new design language features.
+description: Design skills for Apple platform UI — Liquid Glass, animations, UI prototyping, evergreen design principles, UX writing, SF Symbols, and typography. Use when implementing design language features, structuring an app's UX, writing interface copy, or choosing type and iconography.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
 ---
 
@@ -21,6 +21,9 @@ Use this skill when the user:
 - Needs **view transitions**, **matched geometry**, or **hero transitions**
 - Wants **SF Symbol effects** (bounce, pulse, wiggle, breathe)
 - Asks about **animation completions** or **withAnimation**
+- Needs UX structure help: navigation clarity, discoverability, information architecture
+- Is writing or reviewing interface copy, alerts, or feature names
+- Asks about SF Symbols usage/authoring, fonts, Dynamic Type, or type hierarchy
 
 ## Available Skills
 
@@ -43,6 +46,18 @@ SwiftUI animation patterns for iOS 13–18+.
 
 ### ui-prototyping/
 Explore divergent UI directions for a screen as named, runnable Swift `#Preview` variants — compare, remix, and tune before committing to one design.
+
+### design-principles/
+The evergreen Apple design canon — wayfinding, feedback, mental models, progressive disclosure, fluid gesture physics, discoverability, and the idea→interface process.
+
+### ux-writing/
+Interface copy that works — voice/tone, the PACE framework, alert anatomy, feature naming, empty states, and the small-word edits that measurably improve UX.
+
+### sf-symbols/
+SF Symbols end-to-end — choosing/configuring system symbols (rendering modes, variable color/draw), authoring custom symbols that interpolate across weights, and the animation preset vocabulary.
+
+### typography/
+UI typography — text styles and Dynamic Type, the San Francisco family with its width axis, optical sizes, tracking vs kerning, and custom-font scaling obligations.
 
 ## Key Principles
 

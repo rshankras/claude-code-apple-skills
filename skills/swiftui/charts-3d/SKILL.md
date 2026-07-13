@@ -352,6 +352,20 @@ struct TerrainView: View {
 }
 ```
 
+## Chart Design Fundamentals (WWDC22)
+
+These apply to every chart you build — 2D or 3D. The pillars: **focused, approachable, accessible**.
+
+- **Pick marks by goal**: bars for patterns, ranges, and individual values; points for spotting outliers; lines for rates of change.
+- **Test with real, noisy data early** — placeholder sine waves hide layout failures. Design the edge cases explicitly (e.g., gaps in a line chart where data is missing).
+- **Bar charts fix the lower bound at 0** so a bar twice as tall reads as twice the value; let the upper bound adapt to the data.
+- **~4 horizontal gridlines** is a good baseline; pick intuitive intervals — multiples of 20 for counts, multiples of 7 for day-based axes.
+- **Descriptive takeaway title** ("Total Sales: 1,234 Pancakes"), not a generic label ("Sales") — and give the chart surrounding context.
+- **Touch targets stretch to full chart height** — a tap anywhere in a bar's column selects it, not just the drawn pixels.
+- Support **touch, keyboard, Voice Control, Switch Control, and VoiceOver equally** — every interaction needs a non-pointer path.
+- **Color enhances, never solely conveys** — differentiate series with symbols/shapes first, color second. Verify contrast in Dark, Light, and Increase Contrast, and balance saturation so no series visually outweighs the others.
+- **Every visual encoding needs a non-visual representation** — VoiceOver labels and Audio Graphs; Swift Charts provides both, so don't break them with custom drawing.
+
 ## Top Mistakes
 
 | # | Mistake | Fix |

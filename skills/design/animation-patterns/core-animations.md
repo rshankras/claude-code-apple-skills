@@ -334,3 +334,21 @@ struct CountingText: View, Animatable {
 ```
 
 Use `withAnimation` to drive the value change — SwiftUI interpolates `animatableData` each frame.
+
+## Fluid Interface Principles (WWDC18)
+
+Gesture/animation rules from Apple's "Designing Fluid Interfaces" — framework-agnostic and still the baseline:
+
+- **Tune springs by damping + response, not duration.** A spring never truly "ends"; choose how tightly it tracks the finger (`response`) and how it settles (`dampingFraction`) and let duration fall out. (Gen 3's `duration:` is an approximate settling time, not a hard stop.)
+- **Project momentum.** When a gesture ends, combine release velocity with a deceleration rate to compute where the content *would* coast to, then animate to the nearest anchor — never animate from the raw release position:
+
+  ```swift
+  func project(value: CGFloat, velocity: CGFloat,
+               decelerationRate: CGFloat = UIScrollView.DecelerationRate.normal.rawValue) -> CGFloat {
+      value + velocity * decelerationRate / (1 - decelerationRate)
+  }
+  ```
+
+- **~10pt hysteresis before committing to a direction.** For gestures that could be horizontal or vertical, wait about 10 points of travel before locking the axis — committing instantly misreads diagonal starts.
+- **Rubber-band soft boundaries.** Past a limit, move at a diminishing fraction of the finger's travel instead of stopping dead — the boundary communicates itself while staying responsive.
+- **Every gesture interruptible and redirectable mid-flight.** The user must be able to catch, reverse, or redirect an animating element at any moment — see the `.interactiveSpring` → `.spring` hand-off in transitions.md.

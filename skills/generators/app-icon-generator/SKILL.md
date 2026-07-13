@@ -111,6 +111,40 @@ Ask via AskUserQuestion:
 9. **Provide appearance variants** — light (default), dark, and tinted/mono. Make sure the mark reads on all three (tinted renders as a monochrome silhouette on a system-tinted background).
 10. **Layer, don't flatten (final icon)** — organize art into ≤4 depth groups for Icon Composer; SVG for shapes, PNG only for texture.
 
+## Designing the Icon (Apple's Rules)
+
+Design-layer guidance from Apple's icon sessions (WWDC25) plus evergreen craft tests. The numbered rules above are the hard constraints; this is how to make the artwork good.
+
+### Composition
+
+- **One 1024×1024 canvas** drives every platform — except **watchOS, which uses 1088×1088**, deliberately overshooting the circular mask so edge-to-edge art survives the crop. Either way the system applies the mask.
+- **Frontal, flat illustration** beats realistic 3D/perspective rendering — the glass material supplies the dimensionality, so pre-rendered depth fights it.
+- **Fewer, rounder layers beat dense detail.** Avoid sharp edges and thin lines: rounder corners carry the glass lighting; bolder weights survive small sizes.
+- **Soft gradients over flat fills.** For backgrounds, prefer the built-in **System Light / System Dark gradients** to pure white or black.
+- **Colored backgrounds keep light, dark, and tinted modes distinct** — a neutral field collapses across appearances.
+- **Translucency and blur are encouraged**, not risky: clear mode shows the wallpaper *through* the glass, so translucent layers are rewarded.
+
+### Appearance modes
+
+Author **three** variants — default, dark, mono — and the system derives **six** renders: default, dark, clear light/dark, tinted light/dark. Preview all six before shipping.
+
+### Icon Composer craft details
+
+1. Export artwork **flat and opaque**, each color region split into its own layer; SVG for flat graphics (**convert text to outlines** first), PNG for gradients and raster; export at canvas size.
+2. Prefix layer filenames with a **Z-order number** so stacking imports deterministically.
+3. Glass is applied **per layer** — if a narrow shape turns "pillowy", toggle that layer's specular off.
+4. Tune per appearance: swap any fill that vanishes against black in dark mode; in mono keep **one prominent white element** and step the rest down to grays.
+5. Choose **neutral vs chromatic shadows** per layer — chromatic tints the shadow with the layer's color, better for colorful art on light backgrounds.
+6. Test on real wallpapers, with the grid overlay, and at small sizes — then ship the exported `.icon` into Xcode.
+
+### Classic tests (evergreen)
+
+- **One identifiable metaphor** — if you can't name the single thing the icon depicts, users can't either.
+- **Squint test inside a folder**: still distinguishable among its neighbors?
+- Check the **Settings-list render**, not only the Home Screen (Step 4.6) — it's the smallest surface users see daily.
+- **Align key shapes to the icon grid** for optical balance (a guide, not a straitjacket).
+- An icon is **identity with lineage** — refine it release over release; don't redesign from scratch every update.
+
 ## Generation Process
 
 ### Step 1: Determine Icon Design

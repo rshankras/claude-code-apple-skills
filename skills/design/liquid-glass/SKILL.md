@@ -21,6 +21,30 @@ Implement Apple's Liquid Glass design language across all Apple UI frameworks. C
 - User needs to support accented rendering mode in widgets
 - User asks about widget textures or mounting styles on visionOS
 
+## Design Rules (WWDC25)
+
+Liquid Glass is the material of the **navigation layer floating above content** — bars, toolbars, floating controls. Never apply it to the content layer itself (tables, lists, rows in a scroll view).
+
+| Rule | Detail |
+|------|--------|
+| **Never glass on glass** | Don't stack glass. Elements sitting ON glass don't get the material again — style them with fills and vibrancy. |
+| **Two variants — never mix them** | **Regular** (default): works at any size, over anything, with adaptive legibility. **Clear**: only when ALL three hold — media-rich content underneath, a dimming layer is acceptable, and bold bright content sits above. Clear has no adaptive behaviors. One variant per interface. |
+| **Tint only primary actions** | "When every element is tinted, nothing stands out." |
+| **No steady-state intersections** | In resting layouts, content shouldn't sit half-under a glass element — reposition or scale the content instead. |
+| **Strip decorated bars** | Remove customized bar backgrounds and borders; build hierarchy through layout and grouping, not decoration. Never group a symbol with a text label in one toolbar group. Action sheets spring from their source element. |
+
+**Scroll edge effects** keep floating elements separated from scrolling content: soft (gradual fade — the iOS default) vs hard (denser, with a dividing line — mostly macOS). One per view edge, and they're not decorative — don't add one where no floating UI elements exist.
+
+**Shape system** — three families; let containers do the math:
+
+| Shape | Radius | Use |
+|-------|--------|-----|
+| Fixed | Constant | Standalone elements |
+| Capsule | Half the element height | Phone-scale controls — add extra margin from the screen edge |
+| Concentric | Parent radius minus padding | Nested containers (inner radii auto-calculate); iPad/Mac elements concentric with the window edge |
+
+**Accessibility comes free at the system level**: Reduced Motion decreases lensing and elastic effects; Increased Contrast renders glass elements black/white with a contrasting border. (Lensing is how glass appears — it materializes by modulating how it bends light, and adaptive shadows flip small elements light/dark for legibility over any content.)
+
 ## Quick Start (SwiftUI)
 
 ### Basic Glass Effect
@@ -44,6 +68,7 @@ Text("Hello")
 // Available shapes:
 // .capsule (default)
 // .rect(cornerRadius: CGFloat)
+// .rect(corner: .containerConcentric) — radius derived from the container, keeps nested shapes concentric
 // .circle
 ```
 
@@ -71,7 +96,7 @@ Text("Important")
 |--------|-------------|---------|
 | `.regular` | Standard glass effect | `.glassEffect(.regular)` |
 | `.tint(Color)` | Add color tint | `.glassEffect(.regular.tint(.orange))` |
-| `.interactive()` | React to touch/hover | `.glassEffect(.regular.interactive())` |
+| `.interactive()` | Scale, bounce, and shimmer on touch/hover | `.glassEffect(.regular.interactive())` |
 
 ## Multiple Glass Effects
 
@@ -81,6 +106,8 @@ When using multiple glass elements, wrap them in `GlassEffectContainer` for:
 - Better rendering performance
 - Proper blending between effects
 - Morphing transitions
+
+This is correctness, not just performance: glass can not sample other glass, so nearby glass elements must share ONE container to render and blend correctly.
 
 ```swift
 GlassEffectContainer(spacing: 40.0) {
@@ -198,7 +225,14 @@ Button("Primary Action") {
 
 ### Background Extension
 
-Stretch content under sidebar or inspector:
+Extend a hero image beyond the safe area — the system mirrors and blurs it under bars and sidebars:
+
+```swift
+Image("hero")
+    .backgroundExtensionEffect()
+```
+
+Or stretch content under sidebar or inspector:
 
 ```swift
 NavigationSplitView {
@@ -225,6 +259,43 @@ ScrollView(.horizontal) {
 }
 .scrollExtensionMode(.underSidebar)
 ```
+
+### Tab Bar Behaviors
+
+```swift
+TabView {
+    // tabs
+}
+.tabBarMinimizeBehavior(.onScrollDown)  // Tab bar recedes while scrolling content
+.tabViewBottomAccessory {               // Persistent control docked above the tab bar
+    MiniPlayerView()
+}
+```
+
+### Toolbar Spacers
+
+Split toolbar items into separate glass groups instead of customizing bar backgrounds:
+
+```swift
+.toolbar {
+    ToolbarItem { editButton }
+    ToolbarSpacer(.fixed)      // Visual break — starts a new glass group
+    ToolbarItem { shareButton }
+    ToolbarSpacer(.flexible)   // Pushes the following group apart
+    ToolbarItem { doneButton }
+}
+```
+
+### Scroll Edge Effect Style
+
+```swift
+ScrollView { content }
+    .scrollEdgeEffectStyle(.hard, for: .top)  // Hard style for dense UI, mostly macOS
+```
+
+### Sheets
+
+Remove custom `presentationBackground` modifiers — they interfere with the sheet's glass material and its morphing behavior.
 
 ## AppKit Implementation
 
@@ -351,6 +422,8 @@ struct FloatingActionBar: View {
 
 ### Card with Glass Effect
 
+For a card floating above content (e.g. overlaid on a map). Cards inside a scrolling list are content-layer — don't use glass there. Note the icon uses a fill, not a second `glassEffect`: elements on glass never get glass again.
+
 ```swift
 struct GlassCard: View {
     let title: String
@@ -362,7 +435,7 @@ struct GlassCard: View {
             Image(systemName: icon)
                 .font(.title)
                 .frame(width: 50, height: 50)
-                .glassEffect(.regular.tint(.blue))
+                .background(.blue.opacity(0.15), in: .rect(cornerRadius: 12))
 
             VStack(alignment: .leading) {
                 Text(title)
@@ -741,8 +814,8 @@ Button("Action") { }
 5. **Add interactivity** for touchable elements
    - `.interactive()` for buttons and controls
 
-6. **Tint strategically** to indicate state
-   - Selected items, primary actions
+6. **Tint sparingly** — reserve tint for the primary action
+   - See Design Rules: tinting everything makes nothing stand out
 
 7. **Consistent shapes** across your app
    - Establish a shape language (all capsules, or all rounded rects)
@@ -776,6 +849,9 @@ Button("Action") { }
 - [ ] Configure `.widgetTexture()` and `.supportedMountingStyles()` for visionOS
 
 ### General
+- [ ] Glass only on the navigation layer — never on content (tables, lists)
+- [ ] No glass stacked on glass; one variant (Regular or Clear) per interface
+- [ ] Only the primary action is tinted
 - [ ] Consider performance with many glass effects
 - [ ] Support both light and dark appearances
 

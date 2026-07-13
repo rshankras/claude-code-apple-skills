@@ -218,6 +218,25 @@ func onFeatureUsed() {
 
 6. **TipGroup ordering ignored** -- Tips in a TipGroup only show in order if their rules are all satisfied. If Tip B's rules pass but Tip A's do not, neither will show (Tip A blocks Tip B).
 
+## Tip Content Rules (WWDC23)
+
+Good tips are **actionable, instructional, and easy to remember**:
+- **Title** = a direct action phrase naming the feature ("Swipe to Save a Recipe"), not a greeting
+- **Message** = the benefit, or short instructions that stand alone without needing more context
+
+Never use tips for:
+- ❌ Promotion (upsells, sales, "try Pro")
+- ❌ Error messages or system status
+- ❌ Purely informational content with no action to take
+- ❌ Features too complex to explain in one short tip
+
+### Eligibility and cadence specifics
+
+- **Event rules accept date modifiers**: `$0.donations.donatedWithin(.days(5)).count >= 3` — "3 times in the past 5 days", not just a lifetime count
+- **Associated types on event donations** scope a rule to a specific entity: donate the item's ID with the event and require N donations *for that ID*, so the tip fires on the exact item the user keeps revisiting
+- The **`IgnoresDisplayFrequency(true)` tip option** exempts an urgent tip from the global `.displayFrequency` cadence
+- The **`MaxDisplayCount(n)` tip option** auto-stops a tip after N impressions, even if it is never dismissed or invalidated
+
 ## Patterns
 
 ### Good Patterns

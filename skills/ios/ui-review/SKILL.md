@@ -86,6 +86,29 @@ Apply these review categories based on the code type:
 - Proper error handling
 - Responsive layouts
 
+### 5. Component Checklists
+
+Apply when the reviewed code contains the component.
+
+**Search UX (WWDC26):**
+- [ ] Standard Search Field anatomy intact — leading magnifying-glass icon, placeholder, clear button; on iOS a Cancel button appears while focused. Don't rebuild these from scratch
+- [ ] iOS placement: prefer the bottom toolbar — it animates above the keyboard and stays within thumb reach
+- [ ] Tab apps: exactly one primary Search tab, not a search field per tab
+- [ ] iPad/Mac placement: trailing side of the toolbar, or pinned at the top of the sidebar
+- [ ] Recent searches shown on focus, with per-item removal and a clear-all affordance
+- [ ] Suggestions correspond to the typed text, visually distinguish the user's input from the predicted part, and are limited in count
+- [ ] Scope Bar used for lightweight filtering of where to search (e.g. All / Sender / Subject)
+- [ ] Search Tokens supplement — never replace — visible filter UI (tokens are less discoverable)
+- [ ] Empty results show a Content Unavailable view (`ContentUnavailableView.search`), not a blank list
+
+**Menus & Pickers (WWDC20):**
+- [ ] Menus preferred over action sheets/popovers for NON-destructive actions — the menu opens adjacent to the tap (less eye/finger travel) and doesn't dim the screen
+- [ ] Action sheets kept for destructive confirmation — their friction is deliberate
+- [ ] Never ALL primary actions hidden in a menu or "more" (ellipsis) button — menus hold secondary actions only
+- [ ] Each menu fits one of four uses: disambiguation, navigation, selection (check marks required), or secondary actions
+- [ ] Menu anatomy: label on the left, icon on the right, separators to group — and NO Cancel item (tapping outside cancels)
+- [ ] Date pickers: inline (calendar) when space allows, compact style when constrained
+
 ## Output Format
 
 Provide review in this structure:

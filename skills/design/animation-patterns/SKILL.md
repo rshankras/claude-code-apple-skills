@@ -51,7 +51,12 @@ What are you animating?
 ├─ A hero / zoom navigation transition
 │  └─ → transitions.md (matchedTransitionSource section)
 │     ├─ iOS 18+: matchedTransitionSource + .navigationTransition(.zoom)
+│     ├─ UIKit: preferredTransition = .zoom (capture stable IDs, never views)
 │     └─ iOS 14+: matchedGeometryEffect (NOT for NavigationStack)
+│
+├─ A UIKit view driven by SwiftUI state or gestures
+│  └─ → transitions.md (Bridging UIKit and SwiftUI Animations)
+│     └─ UIView.animate(.spring(...)) / context.animate in updateUIView
 │
 ├─ An SF Symbol animation
 │  └─ → symbol-effects.md
@@ -80,7 +85,9 @@ What are you animating?
 | `.transition(.blurReplace)` | iOS 17 | transitions.md |
 | `.contentTransition(.symbolEffect(.replace))` | iOS 17 | transitions.md |
 | `.matchedTransitionSource` | iOS 18 | transitions.md |
-| `.navigationTransition(.zoom)` | iOS 18 | transitions.md |
+| `.navigationTransition(.zoom)` — push, sheet, fullScreenCover | iOS 18 | transitions.md |
+| `UIViewController.preferredTransition = .zoom` | iOS 18 | transitions.md |
+| `UIView.animate(_: Animation)` / `context.animate` | iOS 18 | transitions.md |
 
 ## Top 5 Mistakes — Quick Reference
 
@@ -108,7 +115,7 @@ When reviewing animation code, verify:
 
 | File | Content |
 |------|---------|
-| [core-animations.md](core-animations.md) | withAnimation, springs, completions, transactions, timing curves |
+| [core-animations.md](core-animations.md) | withAnimation, springs, completions, transactions, timing curves, fluid-interface principles (momentum projection, rubber-banding, hysteresis) |
 | [phase-keyframe-animators.md](phase-keyframe-animators.md) | PhaseAnimator, KeyframeAnimator, custom animations |
-| [transitions.md](transitions.md) | View transitions, matched geometry, navigation transitions |
+| [transitions.md](transitions.md) | View transitions, matched geometry, navigation/zoom transitions (SwiftUI + UIKit), interruptibility, UIKit↔SwiftUI bridging, gesture-driven springs |
 | [symbol-effects.md](symbol-effects.md) | SF Symbol effects, accessibility |

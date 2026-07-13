@@ -58,6 +58,26 @@ What is the app structure?
 | Zoom transition | `.navigationTransition(.zoom)` | iOS 18 | `navigation-transitions.md` |
 | Custom transitions | `NavigationTransition` | iOS 18 | `navigation-transitions.md` |
 
+## Navigation Design Rules (WWDC22)
+
+The container APIs above decide *how* navigation is built; these rules decide *whether* it's designed right.
+
+**Tab bars**
+- Tabs are top-level **content categories**, not arbitrary groupings — balance features across tabs so each carries real weight.
+- ❌ No catch-all "Home" tab: "Home becomes the tab where every feature is fighting for real estate." Needing one signals a discoverability problem in the other tabs.
+- ❌ Never hide the tab bar while drilling into a stack.
+- ❌ Never auto-switch tabs in response to an action taken in another tab — "jarring and disorienting". Confirm in place instead.
+
+**Push vs modal**
+- Push (right-to-left) = traversing the app's hierarchy. Modal (slides up — covering the tab bar is *by design*) = a self-contained task apart from the hierarchy.
+- Modals come in three types: simple task, multi-step task, full-screen content.
+- Modal buttons: right = preferred action (bold, an affirmative verb naming the task — "Add", "Save"); left = Cancel. If the user entered data, show a confirmation alert on Cancel.
+- Limit modals presented over modals — each stacked layer buries the user deeper in transient state.
+
+**Wayfinding**
+- Nav bar title = the current location; the back button shows the *previous* screen's title.
+- Chevron disclosure indicator ONLY on rows that push — never on rows that present modally or perform an action.
+
 ## Process
 
 ### 1. Identify Navigation Needs

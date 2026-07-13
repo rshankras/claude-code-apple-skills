@@ -60,10 +60,11 @@ Present the named set; the user flips between them and reacts. **Expect duds** (
 Signature interactions — a cover-to-detail transition, a staggered list entrance — are where an app reads as considered or cheap. Don't hand-edit constants scattered across files; have the agent build a **tuning panel**.
 
 1. **Be specific about what you're tuning.** Ease (duration) vs. spring (stiffness / damping / mass)? A single element, or a transition where views enter and leave the hierarchy?
-2. **Break the animation into named phases** — "Phase 1: cover transitions to detail. Phase 2: rows stagger in." Phases give you and the agent a shared vocabulary and let you inspect one phase in isolation.
+2. **Break the animation into named phases** — "Phase 1: cover transitions to detail. Phase 2: rows stagger in." Phases give you and the agent a shared vocabulary; ask for controls per phase so you can inspect and retune one in isolation.
 3. **Lay the panel out side-by-side on a wide window**, not a modal that obstructs the content — toggle a parameter and see the effect without context-switching. Ask for a resize control that moves the panel beside the UI on a larger canvas.
 4. **Tuning panels generalize** beyond animation: swap app states, colors, fonts, visual offsets. Use `design/animation-patterns` for the curve knowledge; the panel is its runnable counterpart.
-5. **Guard it behind DEBUG / a launch arg** so it never ships — same discipline as walkthrough's `-uiTestSeed`.
+5. **Prototype beyond static layout.** Friction, inertia, device-motion effects (gyroscope parallax), and haptics are all promptable and panel-tunable the same way — and they're *feel*, only judgeable running on a device, not in a screenshot (WWDC26).
+6. **Guard it behind DEBUG / a launch arg** so it never ships — same discipline as walkthrough's `-uiTestSeed`.
 
 ## Output: `.planning/PROTOTYPE.md` + real Swift
 
