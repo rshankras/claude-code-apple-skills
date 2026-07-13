@@ -51,7 +51,7 @@ Have 100+ organic downloads/month?
 
 ## Campaign Types
 
-Apple Search Ads offers four placement types. Not all are useful for indie developers.
+Apple Search Ads offers four placement types. Not all are useful for indie developers. All placements price as **cost-per-tap on a second-price auction** — you pay just above the next-highest bid, never your max — with **no minimum spend**, and daily budgets are adjustable anytime.
 
 ### Search Results (Recommended Starting Point)
 
@@ -74,6 +74,7 @@ Apple Search Ads offers four placement types. Not all are useful for indie devel
 - **Where**: Today tab in the App Store
 - **Targeting**: Audience-based
 - **Cost model**: Cost Per Tap (CPT)
+- **Requirements**: Ads always come from a Custom Product Page with **≥4 portrait or ≥5 landscape assets**, and undergo a separate creative review
 - **Best for**: Mass awareness, seasonal pushes
 - **Indie priority**: Usually too expensive for indie budgets. Skip unless budget allows $500+/day.
 
@@ -316,6 +317,8 @@ CAMPAIGN: [App Name] - Product Page
 | **CPT** (Cost Per Tap) | Spend / Taps | Category-dependent (see benchmarks) |
 | **CPA** (Cost Per Acquisition) | Spend / Installs | < Customer LTV |
 | **ROAS** (Return on Ad Spend) | Revenue / Spend | > 1.0 (ideally > 2.0) |
+
+Apple cites **~60% average conversion rate** for search ads — if your CVR sits well below that, the product page (not the bid) is the problem. Also test the campaign destination: full product page vs. in-app store sheet (`SKStoreProductViewController`) — "the choice you make may meaningfully impact your conversion" (per Apple's App Analytics Tech Talk).
 
 ### Interpreting Metrics
 

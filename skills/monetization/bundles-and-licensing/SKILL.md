@@ -6,8 +6,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep]
 
 # Bundles & Licensing
 
-Four ways one piece of software earns more than one price tag. Ordered from
-available-today to announced.
+Four ways one piece of software earns more than one price tag.
 
 ## When This Skill Activates
 
@@ -32,17 +31,24 @@ price, with **Complete My Bundle** crediting what a user already paid.
 
 ## 2. Family Sharing (available now — chronically under-enabled)
 
-A checkbox per IAP/subscription in ASC, plus StoreKit handling for shared entitlements.
+A checkbox per IAP/subscription in ASC, plus StoreKit handling for shared entitlements. One
+purchase covers up to 5 additional family members — 6 entitlements, "6 for the price of 1".
 
 - ✅ Enable for subscriptions whose *job* is shareable (utilities, education, health, home) —
   "the whole family for one price" beats a 6× cheaper feel at maybe 1.5× usage cost, and it's a
   paywall differentiator against non-sharing competitors.
-- ✅ Handle `Transaction.currentEntitlements` for family members who never purchased; test the
-  revoked-from-family path.
+- ✅ Drive paywall copy off `isFamilyShareable` rather than hardcoding "share with your family".
+- ✅ Distinguish `ownershipType` — `PURCHASED` vs `FAMILY_PURCHASED` — to tailor onboarding;
+  the family member never saw your paywall or purchase flow.
+- ✅ Family entitlements arrive *outside* any purchase flow, and after a deliberate delay (the
+  purchaser gets a window to disable sharing first) — listen on `Transaction.updates`, and
+  check entitlement before merchandising (a family member may already be covered).
+- ✅ Handle `revocationDate` + the REVOKE server notification by re-deriving entitlements from
+  the full transaction history; test the revoked-from-family path.
 - ❌ Enabling it on a per-seat B2B-ish product where sharing cannibalizes real seats — that's
   what volume licensing (below) is for.
-- One-way door: you can turn Family Sharing **on** for existing subscribers, but turning it off
-  only affects new purchases.
+- One-way door: enabling takes effect **within hours for new and existing customers** and is
+  irreversible — turning it off only affects new purchases.
 
 ## 3. Cross-developer bundles & suites
 
@@ -62,19 +68,31 @@ Combined subscriptions spanning apps from *different* developers — the "indie 
 
 ## 4. Group Purchases & Volume Purchasing — institutional sales
 
-> Status: announced (WWDC26) — verify availability in App Store Connect before executing.
+Live for all auto-renewable subscriptions using StoreKit 2 (StoreKit 2 required). ON by default
+for most new and existing StoreKit 2 subscriptions — but Family Sharing-enabled subscriptions
+are opted OUT by default. Configure per subscription in ASC.
 
-Multi-seat subscription purchases and licensing through **Apple School Manager / Apple Business
-Manager** — the institutional unlock if your buyers are schools, clinics, or businesses.
+Two sale paths, same seat pool:
+- **In-app group purchases** — a customer buys N seats, shares an invite link, and accepters are
+  auto-assigned to seats.
+- **Volume purchasing** through **Apple Business Manager / Apple School Manager** — the
+  institutional channel for schools, clinics, and businesses.
 
-- prep now: identify whether an institutional segment already exists in your reviews/support mail
-  ("can we get this for our class/team?"); design a seats model (who assigns, who owns data) and
-  per-seat pricing before the tooling lands.
-- Custom Apps via Apple Business Manager exist today for bespoke B2B distribution; Group
-  Purchases extends the mainstream store to multi-seat — different tools, same buyer.
+Mechanics:
+- **Volume pricing = up to 5 price bands**, with full control of seat thresholds and each band's
+  price. The default is every seat at the current price — no discount exists until you configure
+  bands (e.g., $19.99 → $13.99 at 21–40 seats → $10.99 at 41+; a 50-seat purchase then averages
+  ~20% off).
+- ✅ Prefer the built-in seat management (invites, acceptance tracking, seat lifecycle) unless
+  you already run member management — then use the App Store Server API group endpoints instead.
+- ✅ Merchandise the group value in-app — buyers won't discover multi-seat pricing on their own.
 - ✅ Education/health apps: this often outearns consumer conversion optimization by an order of
   magnitude — one district buys more seats than a year of paywall A/B tests adds.
-- ❌ Building seat management UI before validating a single institutional buyer exists.
+- ❌ Building custom seat management UI before validating a single institutional buyer exists —
+  the built-in flow covers the first sale.
+- Custom Apps via Apple Business Manager remain the path for bespoke B2B distribution; Group
+  Purchases brings multi-seat to the mainstream store — different tools, same buyer.
+- Reference: the WWDC26 session on group purchases and volume purchasing.
 
 ## Decision sketch
 
@@ -83,7 +101,7 @@ Manager** — the institutional unlock if your buyers are schools, clinics, or b
 | 2+ paid apps, shared audience | Own-app bundle |
 | A shareable-job subscription | Family Sharing on |
 | A complementary indie peer with real traffic | Cross-developer suite (or mutual offer codes today) |
-| Institutions asking to buy seats | Group/Volume Purchasing prep now, ship when live |
+| Institutions asking to buy seats | Group Purchases / volume price bands (live — configure in ASC) |
 
 ## Output Format
 
@@ -91,7 +109,7 @@ Manager** — the institutional unlock if your buyers are schools, clinics, or b
 Portfolio: bundle-eligible apps? bundle live? Complete-My-Bundle pricing sane?
 Family Sharing: enabled where the job is shareable? entitlement handling tested?
 Partnerships: candidate named? terms sketched?
-Institutional: demand evidence? seats model drafted? feature availability rechecked?
+Institutional: demand evidence? seats model drafted? volume price bands configured?
 ```
 
 Each gap routed to the numbered section above; StoreKit implementation to

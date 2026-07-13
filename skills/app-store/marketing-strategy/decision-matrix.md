@@ -163,6 +163,7 @@ Two tactics worth weaving into Growth and Mature stages that most matrices miss:
 - **Seasonal peaks**: Holiday season, summer, game award season
 - **Apple tie-ins**: Game Center, Metal, Spatial Audio, Game controllers
 - **Event ideas**: Tournaments, seasonal content, limited-time modes
+- **Free discovery levers**: enabling Game Center automatically surfaces a game across App Store discovery surfaces — the dashboard, home-screen widgets, "Friends Are Playing", product page, search, and the Today/Games tabs — near-free discovery for one entitlement; declared game-controller support displays as a product-page capability; leaderboard friend-passing notifications drive re-engagement automatically
 
 ### Social & Communication
 - **Strong angles**: Community building, privacy, inclusive design

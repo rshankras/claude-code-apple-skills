@@ -10,6 +10,10 @@ Generate production StoreKit 2 subscription lifecycle management with real-time 
 
 **Different from paywall-generator:** The paywall generator handles the purchase UI and initial transaction. This skill handles everything that happens *after* purchase — monitoring subscription state changes, handling payment failures, retaining churning users, and managing tier transitions.
 
+**Why retention math dominates acquisition (per Apple's Tech Talk):**
+- Commission compounds: 70% net in year one → 85% once a subscriber passes 1 year. Retained subscribers are literally worth more per renewal.
+- The base compounds harder: from 10,000 subscribers, 12 months later 85% monthly retention leaves 1,673; 90% leaves 3,487; 95% leaves 5,688. A 5-point retention gain more than doubles the surviving base.
+
 ## When This Skill Activates
 
 Use this skill when the user:
@@ -229,11 +233,13 @@ func gracePeriodGrantsAccess() async throws {
 }
 
 @Test
-func billingRetryGrantsAccess() async throws {
+func billingRetryLimitsAccess() async throws {
     let monitor = SubscriptionMonitor()
     monitor.updateState(.inBillingRetry)
 
-    #expect(monitor.hasAccess == true)
+    // Apple's guidance: stop full service at billing retry (grace period is
+    // where you keep serving). Prefer limited access over a hard cut.
+    #expect(monitor.hasAccess == false)
     #expect(monitor.shouldShowPaymentWarning == true)
 }
 
@@ -277,6 +283,20 @@ default:
 }
 ```
 
+### Per-State Entitlement & Messaging
+
+Model the full subscriber state machine — each state gets its own entitlement decision and its own message:
+
+| State | Entitlement | Message |
+|-------|-------------|---------|
+| Active | Full | None |
+| Active, auto-renew off | Full | Save offer *before* expiry |
+| Grace period | Full | Countdown + deep link to payment settings |
+| Billing retry | Limited access (not a hard cut) | Persistent fix-payment banner — no offers |
+| Expired | None | Win-back, tailored by `expirationReason` |
+
+Do NOT re-pitch or discount users in billing retry — the App Store retries billing automatically for up to 60 days and is actively recovering them. And recoveries inside the grace window preserve billing-date continuity: no revenue gap.
+
 ### Grace Period Notification
 ```swift
 // Show in-app banner during grace period
@@ -288,6 +308,41 @@ if case .inGracePeriod(let days) = monitor.state {
     )
 }
 ```
+
+### Catch Voluntary Churn Before Expiry
+Per Apple's Tech Talk, >90% of customers cancel with at least 2 days of paid service remaining — the cancel-to-expiry window is your save-offer moment:
+
+```swift
+// Still entitled, but auto-renew just flipped off — surface a save offer NOW
+if status.state == .subscribed,
+   case .verified(let renewalInfo) = status.renewalInfo,
+   renewalInfo.willAutoRenew == false {
+    showSaveOffer()
+}
+
+// Tailor win-backs after expiry
+if let reason = renewalInfo.expirationReason,
+   reason == .didNotConsentToPriceIncrease {
+    // Price-sensitive churn — lead with a win-back offer
+}
+```
+
+### Defer Apple's Billing Sheet (Message API)
+The App Store wants to show its own payment-update sheet on next launch after a billing failure. Use the StoreKit Message API to defer it past critical moments (mid-checkout, mid-workout):
+
+```swift
+for await message in Message.messages where message.reason == .billingIssue {
+    await deferUntilSafeMoment()
+    try? message.display(in: windowScene)
+}
+```
+
+### Server Notifications to Wire (V2)
+| Notification | Meaning |
+|--------------|---------|
+| `DID_FAIL_TO_RENEW` | Subscriber entered billing retry |
+| `DID_RENEW` + subtype `BILLING_RECOVERY` | Retry succeeded — recovery complete |
+| `GRACE_PERIOD_EXPIRED` | Grace ended unrecovered — retry continues, entitlement decision is yours |
 
 ### Offer Code Redemption
 ```swift
@@ -307,13 +362,14 @@ let result = try await proProduct.purchase()
 
 ### Transaction.currentEntitlements vs Product.SubscriptionInfo.status
 - `Transaction.currentEntitlements` — Returns currently active transactions. Use for checking if user has access RIGHT NOW. Does not include grace period or billing retry details.
+- Migrate to `Transaction.currentEntitlements(for:)` — plural by design: one product can carry multiple current transactions (e.g., the user's own purchase plus a Family Sharing transaction).
 - `Product.SubscriptionInfo.status` — Returns detailed subscription status array including grace period state, billing retry, renewal info. Use for lifecycle management and showing appropriate UI.
 - **Rule:** Use `currentEntitlements` for simple access checks. Use `SubscriptionInfo.status` for lifecycle state handling.
 
 ### Grace Period vs Billing Retry Period
-- **Grace period** (if enabled in App Store Connect): User retains access for 6 or 16 days after payment failure. Apple shows its own payment failure messaging.
-- **Billing retry period**: After grace period expires (or if no grace period), Apple retries billing for up to 60 days. User access depends on your app's policy.
-- **Important:** Both `.inGracePeriod` and `.inBillingRetryPeriod` should typically grant continued access to reduce involuntary churn.
+- **Grace period** (opt-in in App Store Connect): choose 3, 16, or 28 days — pick 28 for maximum recovery. Per Apple's Tech Talk, ~40% of customers fix billing within 3 days, 75% within 16, and up to 90% within 28.
+- **Billing retry period**: After grace period expires (or if no grace period), Apple retries billing automatically for up to 60 days. Don't re-pitch users already in retry — the App Store is recovering them.
+- **Entitlement rule (`renewalState`):** keep serving `.inGracePeriod`; stop full service at `.inBillingRetryPeriod` — but prefer limited access over a hard cut, plus a persistent fix-payment banner.
 
 ### Sandbox vs Production Testing
 - Sandbox subscriptions renew at accelerated rates (monthly = ~5 minutes)

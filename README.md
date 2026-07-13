@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 152 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 153 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 50 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -24,7 +24,7 @@ Four repos, four layers — use one or all:
 | **iOS** | 9 | Code review, UI review, navigation, iPad, migration, accessibility, simulator/device runs |
 | **Testing** | 9 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
-| **App Store** | 11 | ASO, descriptions, keywords, reviews, search ads, rejections, originality, IAP finalize, ratings mechanics, web presence |
+| **App Store** | 12 | ASO, descriptions, keywords, reviews, search ads, ad attribution, rejections, originality, IAP finalize, ratings mechanics, web presence |
 | **SwiftUI** | 5 | AlarmKit, WebKit, text editing, toolbars, Charts 3D |
 | **Growth** | 6 | Analytics, store signals, growth audit, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 152 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 153 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 
@@ -130,7 +130,7 @@ skills/
 ├── visionos/               # visionOS widgets
 ├── testing/                # TDD workflows, test infrastructure, snapshot tests, flow walkthrough (9 skills)
 ├── monetization/           # Pricing strategy, tiers, free trials, external purchases, bundles & licensing (3 skills)
-├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, rejections, originality, IAP finalize, ratings, web presence (11 skills)
+├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, ad attribution, rejections, originality, IAP finalize, ratings, web presence (12 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
 ├── release-review/         # Security, privacy, UX, distribution audits
 ├── shared/                 # Meta-skills: skill-creator, skill-auditor
@@ -289,6 +289,7 @@ Generate production-ready Swift code that adapts to your project:
 | `screenshot-planner` | Screenshot sequences with keyword-rich captions |
 | `review-response-writer` | Professional review responses |
 | `apple-search-ads` | Search Ads campaign setup, keyword bidding, ROAS |
+| `ad-attribution` | AdAttributionKit install + re-engagement measurement, conversion-value strategy, postback testing |
 | `rejection-handler` | Handle rejections, response templates, appeals |
 | `originality-check` | Guideline-4.3 anti-spam gate: function/content/metadata distinctness before build or submit |
 | `iap-finalizer` | Finalize one-time IAP price + localization in ASC (dry-run) |

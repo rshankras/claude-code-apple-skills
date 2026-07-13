@@ -301,6 +301,30 @@ Keep a small Apple Ads discovery campaign running. The search-term report shows 
 3. Move winners into the keyword field/subtitle at the next release
 4. Re-baseline rankings and repeat next quarter
 
+## 15. Curate Your App Store Tags
+
+Apple assigns tags to your app that surface next to categories, in search results, and in
+browsable tag collections ("tag rooms"). You can — and should — edit them: App Information
+page → Edit tags.
+
+- ✅ Deselect tags that misrepresent the app — a deselected tag removes you from its tag room
+  AND from your product page, so wrong tags cost you misqualified traffic and muddy Apple's
+  model of what your app is.
+- ✅ Recheck after each major version — new features can earn new tags worth keeping.
+- Pairs with §13: tags are one more machine-read surface; literal metadata earns literal tags.
+
+## 16. Route Keywords to Custom Product Pages
+
+You can assign keywords (per language) to a specific Custom Product Page — when your app ranks
+for that keyword, searchers land on the matching page instead of the default one. Assigning
+keywords needs **no App Review**.
+
+- ✅ Map each keyword theme to a page whose first two screenshots answer that exact intent
+  ("meal planner" → planner screenshots first; "calorie counter" → tracker screenshots first).
+- ✅ Keep selections unique per page; read per-CPP search traffic in App Analytics to see which
+  intents convert.
+- Full CPP mechanics live in `generators/custom-product-pages`.
+
 ## Quick Reference Checklist
 
 ### Zero-Risk Additions

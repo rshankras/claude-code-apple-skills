@@ -34,7 +34,21 @@ Ask the user via AskUserQuestion:
 4. **What they want to know**
    - "Are my metrics good?" / "What should I fix?" / "Should I keep going?"
 
-Also pull App Store Connect **peer group benchmarks** (App Analytics → Benchmarks): Apple's percentile comparison of your conversion rate, crash rate, and retention against a privacy-preserving peer group of similar apps. This establishes whether a metric is "bad for you" or "bad for the category" — do this before interpreting any trend.
+Also pull App Store Connect **peer group benchmarks** (App Analytics → Benchmarks) before interpreting any trend — they establish whether a metric is "bad for you" or "bad for the category."
+
+#### How Peer Group Benchmarks Work
+
+- **Peer group** = App Store category + business model (free / freemium / paid / paidmium / subscription) + download-volume band
+- **Benchmarked metrics**: conversion rate, D1/D7/D28 retention, crash rate, average proceeds per paying user
+- You see the peer group's **25th / 50th / 75th percentile** bands (example: day-1 retention 13.4% / 21.3% / 27.4%)
+- Differential privacy adds noise and groups have minimum sizes — judge by **which quartile you're in**, not exact deltas
+- Improving ≠ done: an app that lifted conversion +5.5% over 90 days can still sit in the bottom half of its peer group
+
+| Below peers on... | Reach for... |
+|-------------------|--------------|
+| Conversion rate | Product Page Optimization + Custom Product Pages |
+| Retention | In-app events + App Clips |
+| Proceeds per paying user | Pricing tier review + promoted in-app purchases |
 
 ### Step 2: Identify Key Metrics by App Type
 
@@ -97,6 +111,14 @@ Day 30 Active Users
     ↓ Monetization
 Paying Users
 ```
+
+#### App Store Connect Definitions (get these right)
+
+- **Conversion rate** = total downloads ÷ **unique** impressions (not raw impressions)
+- **Total downloads** = first-time downloads + redownloads; auto-downloads (device syncing) are excluded
+- Segment every funnel metric by the **4 source types** — App Store browse, App Store search, app referrer, web referrer — and by **page type**: product page vs. store sheet vs. no page. A strong product-page CVR can hide a weak store-sheet CVR
+- Up to **7 filters** stack per metric (WWDC25) — e.g. search traffic + one territory + store sheet
+- **Payer metrics** (WWDC25): Download-to-Paid Conversion and Average Proceeds per Download connect acquisition quality to revenue
 
 #### Interpreting Each Funnel Step
 
@@ -286,6 +308,18 @@ Improvement: +11 percentage points → significant positive impact
 - < 3 percentage point change: likely noise
 - 3-10 percentage point change: meaningful, keep the change
 - > 10 percentage point change: major win, double down on this direction
+
+#### App Store Connect Subscription Metrics (WWDC25)
+
+App Analytics carries 50+ subscription metrics, organized as **states** (subscribers in an offer, paying full price, with billing issues, churned) and **events** (movement between states):
+
+- **Net Paid Plans** — new paid starts vs. voluntary + involuntary churn — is the single best subscription health headline
+- Track **Subscription Retention** two ways: by months-since-subscribing and by offer start (example shape: 67% trial→paid, then 78% retained at 3 months, 73% at 6)
+- Offers do three jobs — **acquire** (introductory), **retain** (promotional), **win back** — measure offer→full-price conversion for each job separately
+
+#### Segment Cohorts by Acquisition Source
+
+Cohort tables get sharper when split by source or custom product page. Example: a "runner" CPP segment converting at 1.3% vs. 3% overall means three different levers from one segmented number — fix that page's creative, redirect its ad spend, and re-engage its cohort via in-app events.
 
 ### Step 6: Diagnostic Decision Trees
 

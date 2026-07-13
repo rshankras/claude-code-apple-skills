@@ -185,7 +185,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | product/ | 14 | idea-generator, product-agent, app-namer, competitive-analysis, market-research, prd-generator, architecture-spec, ux-spec, implementation-guide, implementation-spec, test-spec, release-spec, beta-testing, localization-strategy |
 | macos/ | 8 | app-planner, coding-best-practices, architecture-patterns, swiftdata-architecture, ui-review-tahoe, macos-tahoe-apis, macos-capabilities, appkit-swiftui-bridge |
 | testing/ | 9 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold, flow-walkthrough |
-| app-store/ | 11 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer, marketing-strategy, apple-search-ads, rejection-handler, originality-check, iap-finalizer, ratings-mechanics, web-presence |
+| app-store/ | 12 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer, marketing-strategy, apple-search-ads, ad-attribution, rejection-handler, originality-check, iap-finalizer, ratings-mechanics, web-presence |
 | ios/ | 9 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access, run-simulator, run-device |
 | swiftui/ | 5 | alarmkit, webkit, text-editing, toolbars, charts-3d |
 | growth/ | 6 | analytics-interpretation, press-media, community-building, indie-business, store-signals, store-growth-audit |
@@ -204,7 +204,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
-| **Total** | **152 across 23 categories** |
+| **Total** | **153 across 23 categories** |
 
 ---
 

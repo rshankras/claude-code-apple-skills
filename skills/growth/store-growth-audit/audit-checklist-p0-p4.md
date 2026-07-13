@@ -67,11 +67,11 @@ Evidence keys (`EV.*`) are defined in `detection-playbook.md`. IDs are stable �
 - new-app: plan
 - fix: app-store/app-description-writer → /apple:metadata
 
-#### P1.7 Metadata written for Apple's AI tagging
-- detect: MCP heuristic on `EV.meta` — is the copy unambiguous about what the app does and who it's for? (judgment; default 🟠 unless clearly literal)
-- rule: ✅ literal, tag-friendly copy incl. screenshot captions · 🟠 clever/metaphorical copy that tags poorly · 🔴 misleading copy
+#### P1.7 Metadata written for Apple's AI tagging + App Store Tags curated
+- detect: MCP heuristic on `EV.meta` (copy unambiguous about what the app does and who it's for?) + MANUAL ("App Store Tags reviewed — irrelevant tags deselected?")
+- rule: ✅ literal, tag-friendly copy incl. screenshot captions AND tags curated in ASC · 🟠 clever/metaphorical copy or tags never reviewed · 🔴 misleading copy or wrong tags left live
 - new-app: plan
-- fix: app-store/keyword-optimizer (advanced-tactics §13) → /apple:metadata
+- fix: app-store/keyword-optimizer (advanced-tactics §13 + §15) → /apple:metadata
 
 ## P2 — Conversion assets
 
