@@ -27,6 +27,15 @@ jobs:
           ./scripts/check-freshness.sh --self-test
           ./scripts/check-freshness.sh
 
+      # Reads the committed scripts/api-symbols.txt — no Xcode needed, which is
+      # why the manifest is generated on a Mac (refresh-api-symbols.sh) rather
+      # than extracted here.
+      - name: API symbols — no invented or silently-deprecated Apple APIs
+        run: |
+          chmod +x scripts/check-api-symbols.sh
+          ./scripts/check-api-symbols.sh --self-test
+          ./scripts/check-api-symbols.sh
+
   swift-templates:
     runs-on: ubuntu-latest
     # Official image, pinned minor — no third-party action in the supply
