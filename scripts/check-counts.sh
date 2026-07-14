@@ -157,19 +157,52 @@ for f in $(find skills -mindepth 3 -maxdepth 3 -name "SKILL.md" ! -path "skills/
 done
 echo "  checked $LISTED listing entries"
 
-# --- 5. Cross-repo: SwiftShip command count (skipped if no sibling checkout) --
+# --- 5. Cross-repo: SwiftShip command count ----------------------------------
 echo ""
-echo "== Cross-repo counts =="
-# SwiftShip's commands live at commands/*.md — the /apple: prefix comes from
-# the plugin name, not a subdirectory.
+echo "== Cross-repo counts (SwiftShip) =="
+# History: marketplace.json advertised "49 /apple:* workflow commands" while the
+# README said 52 — i.e. the copy users read *in the install prompt* was the one
+# that rotted. The old check missed it twice over: it grepped only README.md,
+# and its single grep -qF passed if ANY line matched, so a second stale README
+# mention would also have slid through. It also ran only when a sibling
+# SwiftShip checkout happened to exist — never true on CI — so in practice it
+# was dead code.
+#
+# Two arms now, and the first one always runs:
+#   a) internal consistency — every surface that states the count must state the
+#      SAME count. Needs no checkout, so CI enforces it.
+#   b) ground truth — when a SwiftShip checkout IS present (local dev, or CI if
+#      a checkout step is ever added), that agreed count must equal the real
+#      number of commands/*.md files.
+#
+# Surfaces state the count in two phrasings ("N /apple:* commands" in README,
+# "N /apple:* workflow commands" in marketplace.json), so match the common
+# "N /apple:*" prefix rather than either full phrase.
 SWIFTSHIP="${SWIFTSHIP_DIR:-$REPO_DIR/../SwiftShip}"
-if [ -d "$SWIFTSHIP/commands" ]; then
-    CMDS=$(ls "$SWIFTSHIP"/commands/*.md 2>/dev/null | wc -l | tr -d ' ')
-    grep -qF "$CMDS /apple:* commands" README.md \
-        || fail "README stack table: SwiftShip row says stale command count (checkout has $CMDS)"
-    echo "  SwiftShip: $CMDS commands"
+SS_SURFACES="README.md .claude-plugin/marketplace.json"
+# shellcheck disable=SC2086
+SS_MENTIONS=$(grep -ohE '[0-9]+ /apple:\*' $SS_SURFACES)
+SS_N=$(printf '%s\n' "$SS_MENTIONS" | grep -c '[0-9]')
+
+# Vacuity guard: if a rewording drops the phrase, this check must fail loudly
+# rather than quietly verify nothing. Today: README x2, marketplace.json x1.
+if [ "$SS_N" -lt 3 ]; then
+    fail "expected >=3 SwiftShip command-count mentions across $SS_SURFACES, found $SS_N — did the wording change? Update this check, don't delete it"
 else
-    echo "  (no SwiftShip checkout at $SWIFTSHIP — skipping command-count check)"
+    SS_STATED=$(printf '%s\n' "$SS_MENTIONS" | grep -oE '^[0-9]+' | sort -u)
+    if [ "$(printf '%s\n' "$SS_STATED" | wc -l | tr -d ' ')" -ne 1 ]; then
+        fail "SwiftShip command count disagrees across surfaces ($(printf '%s' "$SS_STATED" | tr '\n' '/')) — README.md and .claude-plugin/marketplace.json must state the same number"
+    else
+        echo "  $SS_N mentions agree on $SS_STATED commands"
+        if [ -d "$SWIFTSHIP/commands" ]; then
+            CMDS=$(find "$SWIFTSHIP/commands" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
+            [ "$SS_STATED" -eq "$CMDS" ] \
+                || fail "docs say $SS_STATED SwiftShip commands but the checkout at $SWIFTSHIP has $CMDS"
+            echo "  ground truth: $SWIFTSHIP has $CMDS commands"
+        else
+            echo "  (no SwiftShip checkout at $SWIFTSHIP — internal consistency checked, ground truth skipped)"
+        fi
+    fi
 fi
 
 # --- Result -------------------------------------------------------------------
