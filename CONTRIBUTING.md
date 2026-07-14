@@ -255,6 +255,12 @@ When harvesting an API, check it against ground truth before writing:
 
 Secondary sources — including Apple's own READMEs and sample repos — drift. A past harvest shipped a `catch GenerationError.cancelled` for a case that has never existed in any SDK. Checking the interface file would have caught it; reading the docs prose did not.
 
+CI now enforces part of this automatically. `scripts/check-api-symbols.sh` fails the build if a skill names a member that isn't in the SDK, checking against `scripts/api-symbols.txt` — a manifest extracted from the real `.swiftinterface` files.
+
+- **Adding a type to police?** Add it to the `POLICED` list in `scripts/refresh-api-symbols.sh`, re-run it, commit the manifest. Good candidates are closed enums whose cases we enumerate; bad ones are large types whose members arrive via extensions.
+- **Installed a new Xcode?** Run `./scripts/refresh-api-symbols.sh` and review `git diff scripts/api-symbols.txt`. That diff *is* the list of things Apple changed under you.
+- **Writing a deliberate counter-example?** A line containing ❌ is exempt, so a "never write this" example may name the bad symbol. `<!-- api-check: ignore -->` is the explicit escape hatch.
+
 ## Testing Your Changes
 
 Before submitting, test your changes:
