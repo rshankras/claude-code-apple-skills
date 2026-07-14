@@ -42,10 +42,18 @@ Hallucination stakes rule: where facts are critical (user instructions), don't r
 ## Guardrails (WWDC25 248)
 
 - Apple-trained guardrails apply to **both input and output**: "Your instructions, prompts, and tool calls are all considered inputs… harmful model outputs are blocked, even if the prompts were crafted to bypass input guardrails."
-- Violations throw `LanguageModelSession.GenerationError.guardrailViolation`. Handle by feature type:
+- Violations throw `LanguageModelError.guardrailViolation` (iOS 27; was `LanguageModelSession.GenerationError.guardrailViolation`, deprecated — see the migration table in `SKILL.md`). Handle by feature type:
   - **Proactive feature** (not user-initiated): "simply ignore the error and not interrupt the UI."
   - **User-initiated feature**: explain the app can't process the request (alert) and offer alternatives (Image Playground offers undoing the offending prompt).
 - Guardrail false positives were reduced in the iOS 26.4 model update and refined again in the iOS 27 wave (WWDC26 241).
+
+### A guardrail block is not the only way the model says no
+
+`LanguageModelError.refusal` is a **separate, non-safety decline** — the model chose not to answer (out of scope, won't speculate), and nothing was flagged as harmful. It carries an `explanation` (and an `explanationStream`).
+
+Treat the two differently. A guardrail violation is a safety event: say little, offer an alternative, never echo the offending content back. A refusal is an ordinary conversational outcome: it's safe to surface `explanation` to the user, and the fix is usually a better prompt, not a safer one.
+
+❌ Don't fold `refusal` into your `guardrailViolation` branch — you'll show a scary safety message for a mundane "I don't have enough information to answer that."
 
 ## The Swiss-Cheese Safety Stack (WWDC25 248)
 
@@ -76,7 +84,7 @@ guard supportedLanguages.contains(Locale.current.language) else {
     // show unsupported-language disclaimer
     return
 }
-// …and still catch LanguageModelSession.GenerationError.unsupportedLanguageOrLocale
+// …and still catch LanguageModelError.unsupportedLanguageOrLocale
 ```
 
 ## Apple's Closing Safety Checklist (WWDC25 248, verbatim order)

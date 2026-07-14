@@ -6,7 +6,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
 
 # Foundation Models
 
-Integrate Apple's on-device LLM into your apps for privacy-preserving AI features. Companion references: **safety-and-guardrails.md** (model limits, prompt design, the four-layer safety stack) and **models-and-agents.md** (Private Cloud Compute, `LanguageModel` protocol, vision input, `DynamicProfile` agentic sessions — the iOS 27 wave).
+Integrate Apple's on-device LLM into your apps for privacy-preserving AI features. Companion references: **safety-and-guardrails.md** (model limits, prompt design, the four-layer safety stack), **models-and-agents.md** (Private Cloud Compute, `LanguageModel` protocol, vision input, `DynamicProfile` agentic sessions — the iOS 27 wave), and **utilities-package.md** (Apple's open-source utilities package: OpenAI-compatible endpoints, just-in-time Skills, history compression).
 
 ## When This Skill Activates
 
@@ -370,22 +370,62 @@ final class ChatViewModel {
 
 ## Error Handling
 
+⚠️ **`LanguageModelSession.GenerationError` is deprecated at iOS 27 and becomes _unavailable_ when you rebuild with Xcode 27.** This is a hard break, not a warning: Apple's deprecation note says apps built with Xcode 26 keep catching the old error until you rebuild, and you *must* move to the new types before submitting from Xcode 27. Its nine cases were split across **three** enums by concern.
+
 ```swift
 do {
     let response = try await session.respond(to: prompt)
-} catch LanguageModelSession.GenerationError.exceededContextWindowSize {
-    // Context too large — recover by carrying a condensed transcript (below)
-} catch LanguageModelSession.GenerationError.guardrailViolation {
+
+// ── LanguageModelError — model-level, backend-agnostic (any LanguageModel) ──
+} catch LanguageModelError.contextSizeExceeded(let e) {
+    // e.contextSize / e.tokenCount — recover by condensing the transcript (below)
+} catch LanguageModelError.guardrailViolation {
     // Safety block: proactive features ignore silently;
     // user-initiated features explain + offer alternatives (see safety-and-guardrails.md)
-} catch LanguageModelSession.GenerationError.unsupportedLanguageOrLocale {
+} catch LanguageModelError.refusal(let e) {
+    // NOT a safety block — the model declined for its own reasons.
+    // e.explanation (and .explanationStream) say why. Surface it; don't retry blindly.
+} catch LanguageModelError.rateLimited(let e) {
+    // Server-backed models only. e.resetDate tells you when to retry, when known.
+} catch LanguageModelError.unsupportedLanguageOrLocale {
     // Also pre-check SystemLanguageModel.default.supportedLanguages before prompting
-} catch LanguageModelSession.GenerationError.cancelled {
-    // Request was cancelled
+} catch LanguageModelError.unsupportedCapability(let e) {
+    // The backend doesn't do e.capability (tools / vision / reasoning / guided generation).
+    // Capabilities are NOT uniform across models — see models-and-agents.md.
+} catch LanguageModelError.timeout {
+
+// ── LanguageModelSession.Error — you drove the session wrong ──
+} catch LanguageModelSession.Error.concurrentRequests {
+    // Gate submit on session.isResponding — one request per session
+} catch LanguageModelSession.Error.transcriptMutationWhileResponding {
+    // Mutate session.transcript only while isResponding == false
+
+// ── SystemLanguageModel.Error — on-device assets ──
+} catch SystemLanguageModel.Error.assetsUnavailable {
+    // Model assets not on device — check availability first (see Quick Start)
+
 } catch {
     print("Unexpected error: \(error)")
 }
 ```
+
+### Migrating off `GenerationError`
+
+| iOS 26 `GenerationError` | iOS 27 replacement |
+|---|---|
+| `exceededContextWindowSize` | `LanguageModelError.contextSizeExceeded` — now carries `contextSize` **and** `tokenCount` |
+| `guardrailViolation` | `LanguageModelError.guardrailViolation` |
+| `refusal` | `LanguageModelError.refusal` |
+| `rateLimited` | `LanguageModelError.rateLimited` — now carries `resetDate` |
+| `unsupportedGuide` | `LanguageModelError.unsupportedGenerationGuide` (renamed) |
+| `unsupportedLanguageOrLocale` | `LanguageModelError.unsupportedLanguageOrLocale` |
+| `concurrentRequests` | `LanguageModelSession.Error.concurrentRequests` (moved) |
+| `assetsUnavailable` | `SystemLanguageModel.Error.assetsUnavailable` (moved) |
+| `decodingFailure` | No documented successor — don't assume one; keep a `catch`-all |
+
+New in iOS 27 with no iOS 26 equivalent: `LanguageModelError.timeout`, `.unsupportedCapability`, `.unsupportedTranscriptContent`, and `LanguageModelSession.Error.transcriptMutationWhileResponding`.
+
+❌ There is **no** `.cancelled` case — on any of these enums, in any OS version. Cancellation surfaces as Swift's `CancellationError`, so `catch is CancellationError` (or just let it propagate); don't write a `catch GenerationError.cancelled`, which never compiled.
 
 ### Context-Overflow Recovery: Condense, Don't Discard (WWDC25 301)
 
@@ -521,16 +561,18 @@ func processLargeDocument(_ document: String) async throws -> [Summary] {
 ```swift
 // Deterministic output: greedy sampling, not temperature 0
 let response = try await session.respond(to: prompt,
-    options: GenerationOptions(sampling: .greedy))
+    options: GenerationOptions(samplingMode: .greedy))
 
 // Variance dial (scale runs to 2.0 — WWDC25 301)
 let lowVariance  = GenerationOptions(temperature: 0.5)
 let highVariance = GenerationOptions(temperature: 2.0)
 ```
 
+⚠️ The `sampling:` label — `GenerationOptions(sampling:)` and the `sampling` property — is **deprecated**; use **`samplingMode`**. Same type, same `.greedy` / `.random(top:seed:)` / `.random(probabilityThreshold:seed:)` values, new name.
+
 | Setting | Use Case |
 |-------------|----------|
-| `sampling: .greedy` | Deterministic outputs (tests, caching) — deterministic only per model version; OS model updates change outputs |
+| `samplingMode: .greedy` | Deterministic outputs (tests, caching) — deterministic only per model version; OS model updates change outputs |
 | 0.3-0.7 | Factual extraction, balanced tasks |
 | 1.0-2.0 | Creative writing, brainstorming |
 
@@ -622,7 +664,8 @@ Before shipping:
 ## References
 
 - **safety-and-guardrails.md** (this skill) — model limits, prompt design, guardrails, Swiss-cheese safety stack, evals
-- **models-and-agents.md** (this skill) — PCC, LanguageModel protocol, vision input, DynamicProfile agents, tool-calling modes, KV-cache rules
+- **models-and-agents.md** (this skill) — PCC, LanguageModel protocol, capabilities, vision in/out, custom segments, DynamicProfile agents, tool-calling modes, KV-cache rules
+- **utilities-package.md** (this skill) — `apple/foundation-models-utilities`: chat-completions endpoints, JIT Skills, history-compression modifiers
 - [WWDC25 — Meet the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2025/286/)
 - [WWDC25 — Deep dive into the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2025/301/)
 - [WWDC26 — What's new in the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2026/241/)
