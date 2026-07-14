@@ -222,8 +222,38 @@ Force unwrapping will crash if the value is nil. Guard provides safe unwrapping 
 - ❌ Use vague descriptions
 - ❌ Provide opinions without reasoning
 - ❌ Include outdated practices
-- ❌ Copy copyrighted material
+- ❌ Reproduce source material instead of distilling it (see Sourcing below)
 - ❌ Add project-specific details
+
+### Sourcing — harvest hygiene
+
+Most content here is *harvested*: WWDC sessions, Tech Talks, Apple's docs, and Apple's open-source repos get distilled into skills. That's legitimate, but only when done a particular way, and "don't copy copyrighted material" is too blunt a rule to steer by — taken literally it would forbid the short attributed quotes this library correctly relies on.
+
+The line that actually matters: **facts are free, expression is not.**
+
+**Do:**
+- ✅ Harvest **facts** — API names, signatures, defaults, limits, failure modes, deprecations. These aren't ownable, and restating them in your own words isn't copying.
+- ✅ Write the prose yourself, in this repo's format (activation triggers, ✅/❌ pairs, checklists).
+- ✅ Quote sparingly when Apple's exact phrasing carries the point ("like a stack of Swiss cheese slices") — short, in quotes, and attributed to the specific session or page.
+- ✅ Cite the source in **References**, always. It's how the next person re-verifies when the API moves.
+- ✅ Write your own code examples. Use your own domain, not the source's.
+
+**Don't:**
+- ❌ **Commit transcripts.** Not `.vtt`, not `.srt`, not a pasted session transcript in a markdown file. This is the bright line.
+- ❌ Let quotes grow from a sentence into paragraphs. If a quote is carrying a whole section, you haven't distilled it.
+- ❌ Paste another project's docs into `skills/`. Even a permissive license (Apache-2.0) means the copied text keeps *its* license, which quietly makes this MIT repo mixed-license.
+- ❌ Imply Apple (or any vendor) endorses this library.
+
+### Verify against the SDK, not the write-up
+
+When harvesting an API, check it against ground truth before writing:
+
+1. The **SDK itself** — `.swiftinterface` files in the Xcode SDK are authoritative and offline:
+   `find /Applications/Xcode.app/Contents/Developer/Platforms -name "*.swiftinterface" -path "*FrameworkName*"`
+2. **Apple's DocC JSON** — the docs site is a JavaScript app that scrapers can't read, but the JSON behind it is plain:
+   `https://developer.apple.com/tutorials/data/documentation/<framework>/<symbol>.json`
+
+Secondary sources — including Apple's own READMEs and sample repos — drift. A past harvest shipped a `catch GenerationError.cancelled` for a case that has never existed in any SDK. Checking the interface file would have caught it; reading the docs prose did not.
 
 ## Testing Your Changes
 
