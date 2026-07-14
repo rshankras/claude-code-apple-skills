@@ -12,6 +12,12 @@ The WWDC26 layer of the Foundation Models framework: Private Cloud Compute, the 
 | Anthropic / Google Swift packages; Chat-Completions model (utilities package) | varies | Frontier server models as drop-in `LanguageModel` conformers — you handle auth + billing |
 
 - The **`LanguageModel` protocol** abstracts the backend: pass any conformer to `LanguageModelSession` and "everything downstream stays the same" — guided generation, tools, streaming all work.
+
+### ⚠️ Capabilities are not uniform across backends
+
+Every model declares a `LanguageModelCapabilities` set — `.toolCalling`, `.vision`, `.reasoning`, `.guidedGeneration`. Swapping the backend can silently swap away a capability your feature depends on. Ask for one the model didn't declare and the **framework throws `LanguageModelError.unsupportedCapability` for you** — you don't write defensive checks, but you *do* have to handle it.
+
+✅ Pick the model per feature, then confirm the feature's needs are in its capability set — especially `.guidedGeneration`, which many non-Apple and local backends don't truly enforce.
 - ❌ Never ship private API keys in the binary; ✅ fetch tokens via OAuth-style flows and store in the **Keychain** (Apple's explicit warning for third-party models).
 - Choose per-feature models by **privacy boundaries, capabilities, and cost** — e.g. brainstorming on PCC (creativity, breadth), quick review passes on-device (no server cost).
 - Token accounting for billing/budgets: `response.usage.input.totalTokenCount` / `.cachedTokenCount`, `.output.totalTokenCount` / `.reasoningTokenCount`.
@@ -30,6 +36,18 @@ let response = try await session.respond {
 ```
 
 `Attachment` accepts `UIImage`, `NSImage`, `CGImage`, Core Image types, CoreVideo pixel buffers, and file URLs. Any size/aspect ratio works — but **larger images cost more tokens and latency**; downscale when responsiveness matters.
+
+### Images also come *out* — `AttachmentSegment`
+
+Vision isn't only an input story. A model can emit media **inline in its response** — a generated diagram, an edited image — as a `Transcript.AttachmentSegment` (`content: .image(...)`, plus an optional `label` for caption/alt text). The enum is designed to grow past images.
+
+Walk a response's segments and render any attachment you find rather than assuming responses are text-only. Note there is **no replace**: attachments are added, and superseding one means removing it and adding a fresh one.
+
+### `Transcript.CustomSegment` — structured payloads that survive the turn
+
+`CustomSegment` is a **protocol you conform to**, not a fixed type — for provider- or app-specific structured data that must be readable on later turns (citations, retrieval hits, search results, debug traces). Its `Content` is any `Sendable & Equatable & Codable` type you design, and its `PromptRepresentable` / `InstructionsRepresentable` conformances control how the segment folds back into a future prompt — so render it as something the model can actually read.
+
+Use it for structure you'll read back later. For free-form prose, plain text segments are still the right answer.
 
 ## Built-In System Tools (WWDC26 241)
 
@@ -71,7 +89,7 @@ This replaces the old pattern of one session per mode plus manual transcript sur
 |---|---|---|---|
 | **Baton-pass** | Profiles share the full transcript; a tool flips the active-profile state (`.onToolCall { orchestrator.mode = .tutorial }`) | Whoever holds the baton | Shared context + handoff of authorship |
 | **Phone-a-friend** | A tool spawns an isolated child `LanguageModelSession` with its own profile/transcript, returns the answer as tool output | Always the parent | Isolated sub-task whose result feeds back |
-| **Skills** (utilities package) | `Skill(name:description:prompt:)` payloads loaded into context only when activated | The single profile | Procedural context loading — big reference text on demand |
+| **Skills** (utilities package) | `Skill(name:description:prompt:)` payloads loaded into context only when activated — the model activates them via a tool call. Two flavors, and the choice is a KV-cache decision: see **utilities-package.md** | The single profile | Procedural context loading — big reference text on demand |
 
 ## Tool-Calling Mode (WWDC26 242)
 
@@ -107,7 +125,8 @@ The transcript *is* the model's context; different backends have different limit
 
 - **Lifecycle modifiers** run imperative code at defined points; **`onResponse`** is the sanctioned clean point to summarize earlier entries and reclaim context; `onToolCall` powers baton-passing.
 - **Session properties** (`@SessionPropertyEntry` macro in an `extension SessionPropertyValues`) are shared state visible to every tool and profile — mutable, initial value required. Pattern: `onResponse` writes a running summary; each profile injects it into its `Instructions` so context survives dropped entries.
-- `session.transcript` is now **mutable** — but only while `isResponding == false` (mutating mid-response is a programmer error). `TranscriptErrorHandlingPolicy`: `.revertTranscript` (default — roll back on tool errors/cancellation) vs `.preserveTranscript` (resume-after-cancel flows; *you* must restore a good state).
+- `session.transcript` is now **mutable** — but only while `isResponding == false`. Mutating mid-response throws `LanguageModelSession.Error.transcriptMutationWhileResponding` (a typed error as of iOS 27, not just a documented footgun). `TranscriptErrorHandlingPolicy`: `.revertTranscript` (default — roll back on tool errors/cancellation) vs `.preserveTranscript` (resume-after-cancel flows; *you* must restore a good state).
+- **`GenerationSchema` is `Codable`, and encodes to standard [JSON Schema](https://json-schema.org).** So does every `Transcript.ToolDefinition.parameters`. Hand either to a `JSONEncoder` and drop the result straight into a server model's structured-output or function-parameters field — no hand-written schema translation.
 
 ## Performance & Accuracy Rules (WWDC26 242)
 
@@ -131,3 +150,4 @@ The transcript *is* the model's context; different backends have different limit
 
 - [WWDC26 — What's new in the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2026/241/)
 - [WWDC26 — Build agentic app experiences with the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2026/242/)
+- [apple/foundation-models-utilities](https://github.com/apple/foundation-models-utilities) — Skills, history modifiers, and the chat-completions model. See **utilities-package.md**.
