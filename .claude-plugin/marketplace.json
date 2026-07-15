@@ -21,8 +21,7 @@
         "source": "url",
         "url": "https://github.com/rshankras/SwiftShip.git"
       },
-      "description": "SwiftShip \u2014 52 /apple:* workflow commands + 6 pinned agents: idea validation, roadmap, plan, build, review, TestFlight, App Store submission, and post-launch growth. Install apple-skills alongside it (its commands read that library).",
-      "displayName": "SwiftShip"
+      "description": "SwiftShip \u2014 52 /apple:* workflow commands + 6 pinned agents: idea validation, roadmap, plan, build, review, TestFlight, App Store submission, and post-launch growth. Install apple-skills alongside it (its commands read that library)."
     }
   ]
 }
