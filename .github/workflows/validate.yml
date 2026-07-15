@@ -21,6 +21,14 @@ jobs:
           chmod +x scripts/check-frontmatter.sh
           ./scripts/check-frontmatter.sh
 
+      # The plugin-validate job runs the latest CLI, which accepts these
+      # keys — only this grep protects clients a few versions behind.
+      - name: Marketplace — no plugin keys old Claude Code clients reject
+        run: |
+          chmod +x scripts/check-marketplace-compat.sh
+          ./scripts/check-marketplace-compat.sh --self-test
+          ./scripts/check-marketplace-compat.sh
+
       - name: Freshness — no recency claims against stale OS versions
         run: |
           chmod +x scripts/check-freshness.sh
