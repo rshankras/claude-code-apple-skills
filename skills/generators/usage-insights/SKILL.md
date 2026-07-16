@@ -2,6 +2,9 @@
 name: usage-insights
 description: Generates user-facing usage statistics, activity summaries, and personalized insights dashboards (weekly recaps, year-in-review, Spotify Wrapped-style). Use when user wants to show usage stats, activity insights, or shareable recap screens. Different from analytics-setup which sends data to a backend — this shows insights to the USER on-device.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Usage Insights Generator

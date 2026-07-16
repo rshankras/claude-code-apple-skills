@@ -2,6 +2,9 @@
 name: localization-strategy
 description: Localization and internationalization strategy for iOS/macOS apps. Covers market prioritization, language tier recommendations, minimum viable localization levels, translation workflows, cultural adaptation, localized ASO, and testing. Use when planning localization, expanding to new markets, deciding which languages to support, or planning translation workflow.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion, WebSearch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Localization Strategy

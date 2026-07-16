@@ -2,6 +2,8 @@
 name: ui-prototyping
 description: Explore multiple *divergent* UI directions for a screen as named Swift #Previews, remix the strongest elements into hybrids, fill them with lived-in sample content and edge-case states, then tune signature animations with a generated tuning panel. Produces real native SwiftUI you carry forward, not throwaway mockups. Use early — after new-app or at the start of any UI-heavy phase, before /apple:plan commits to a single layout. Based on Apple's WWDC method for prototyping with coding agents in Xcode: go wide → remix → make lived-in → tune.
 allowed-tools: [Read, Write, Edit, Bash, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # UI Prototyping Skill

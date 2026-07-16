@@ -2,6 +2,8 @@
 name: ux-writing
 description: Interface copy that works — voice/tone, the PACE framework, alert anatomy, naming features, empty states, error messages, and the small-word edits that measurably improve UX. Distilled from Apple's writing sessions (2017–2026). Use when writing or reviewing any user-facing text — labels, alerts, onboarding, notifications, empty states, paywalls — or naming a feature.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # UX Writing

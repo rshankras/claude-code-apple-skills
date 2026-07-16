@@ -2,6 +2,8 @@
 name: store-signals
 description: Close the post-launch loop — turn a live app's App Store signals (reviews, analytics, sales, crashes, listing conversion) into a metric-tagged backlog for the next version, AND verify whether last cycle's changes moved the metric they promised to move. Read-only on App Store Connect; every change is surfaced and routed to another command, never auto-applied. Use before planning the next version, on a monthly cadence, or ~1-2 weeks after shipping to check if a change worked.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion, mcp__asc-metadata__list_apps, mcp__asc-metadata__list_reviews, mcp__asc-metadata__get_review, mcp__asc-metadata__get_analytics_report, mcp__asc-metadata__setup_analytics_reports, mcp__asc-metadata__get_sales_report, mcp__asc-metadata__get_diagnostics, mcp__asc-metadata__get_perf_metrics, mcp__asc-metadata__list_beta_feedback_crashes, mcp__asc-metadata__get_metadata]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Store Signals

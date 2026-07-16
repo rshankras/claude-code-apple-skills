@@ -152,8 +152,18 @@ Every SKILL.md must have:
 name: skill-name
 description: Brief description (1-2 sentences)
 allowed-tools: [Read, Write, Edit]
+last_verified: 2026-07-16          # date the content was last checked against reality
+review_by: 2027-06-22              # scheduled re-verification (~2 weeks after next WWDC)
+os_version: iOS 27 / macOS 27      # only if the skill cites OS/Swift versions
 ---
 ```
+
+`last_verified`/`review_by` are content-freshness dates, not release versions —
+the repo still has no version numbers (every commit to `main` is a release).
+CI requires the two dates (`scripts/check-frontmatter.sh`); a weekly workflow
+opens one rollup issue per category when skills pass `review_by`
+(`.github/workflows/stale-skills.yml`). When you materially edit a skill, bump
+`last_verified` to today.
 
 Followed by:
 

@@ -2,6 +2,8 @@
 name: integration-test-scaffold
 description: Generate cross-module test harness with mock servers, in-memory stores, and test configuration. Use when testing networking + persistence + business logic together.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Integration Test Scaffold

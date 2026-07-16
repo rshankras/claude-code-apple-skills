@@ -2,6 +2,8 @@
 name: mapkit
 description: MapKit and GeoToolbox skills — PlaceDescriptor patterns, geocoding, and cross-service place identifiers with MapKit integration. Use when working with maps, place data, or geocoding.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # MapKit Skills

@@ -2,6 +2,9 @@
 name: toolbars
 description: Modern SwiftUI toolbar patterns including customizable toolbars, search integration, transition effects, and platform-specific behavior. Use when implementing or customizing toolbars in SwiftUI.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # SwiftUI Toolbars

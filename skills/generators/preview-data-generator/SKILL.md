@@ -2,6 +2,9 @@
 name: preview-data-generator
 description: Generate sample data and a multi-variant #Preview matrix for SwiftUI views — empty/loading/error/loaded states, light/dark, Dynamic Type, locales/RTL, and devices. Use when the user says "add previews", "sample data for previews", "preview my view in different states", "preview data", "prototype this UI", or wants realistic Xcode canvas data without hand-rolling it.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Preview Data Generator

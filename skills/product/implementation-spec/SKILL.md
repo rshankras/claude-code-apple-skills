@@ -2,6 +2,9 @@
 name: implementation-spec
 description: Master orchestrator that generates all implementation specs (PRD, Architecture, UX, Implementation, Test, Release) from product plan. Use when generating complete specification package.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Implementation Specification Orchestrator Skill

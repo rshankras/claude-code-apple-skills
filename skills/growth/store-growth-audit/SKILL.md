@@ -2,6 +2,8 @@
 name: store-growth-audit
 description: Stage-by-stage audit of an app's App Store growth machinery against a 54-item P0–P9 playbook — every item scored from an App Store Connect MCP call, a codebase check, or an explicit question to the user, then routed to the skill or command that fixes it. Read-only on App Store Connect. Use for a growth audit or scorecard, a pre-launch growth plan, a quarterly re-audit, or "which growth levers am I missing."
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion, mcp__asc-metadata__list_apps, mcp__asc-metadata__get_metadata, mcp__asc-metadata__list_locales, mcp__asc-metadata__get_app_pricing, mcp__asc-metadata__list_price_points, mcp__asc-metadata__get_availability, mcp__asc-metadata__list_iap, mcp__asc-metadata__list_subscription_groups, mcp__asc-metadata__list_subscriptions, mcp__asc-metadata__list_app_events, mcp__asc-metadata__list_experiments, mcp__asc-metadata__list_custom_pages, mcp__asc-metadata__get_analytics_report, mcp__asc-metadata__get_sales_report, mcp__asc-metadata__list_reviews]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Store Growth Audit

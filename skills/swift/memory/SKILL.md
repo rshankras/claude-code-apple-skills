@@ -2,6 +2,9 @@
 name: memory
 description: Swift 6.2 InlineArray and Span types for zero-overhead memory access, fixed-size collections, and safe pointer alternatives. Use when optimizing performance-critical code paths.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # InlineArray and Span

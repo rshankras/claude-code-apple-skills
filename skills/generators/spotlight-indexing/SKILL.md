@@ -2,6 +2,9 @@
 name: spotlight-indexing
 description: Generates Core Spotlight indexing infrastructure for making app content searchable via system Spotlight with rich attributes and deep link integration. Use when user wants to index content for Spotlight search, Siri suggestions, or system-wide searchability.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Spotlight Indexing Generator

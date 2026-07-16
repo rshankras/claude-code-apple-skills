@@ -2,6 +2,8 @@
 name: originality-check
 description: Guideline-4.3 anti-spam / originality gate — score whether an app (and each portfolio addition) is meaningfully distinct in function, content, and metadata before you invest or submit. Use at validation/new-app time and again before submission. Protects the whole developer account from 4.3 (spam/duplicate) rejections. NOT rejection-handler (that works an existing rejection) and NOT competitive-analysis (that positions in the market).
 allowed-tools: [Read, Write, WebSearch, Glob, Grep, AskUserQuestion, mcp__asc-metadata__list_apps, mcp__asc-metadata__get_metadata]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Originality Check

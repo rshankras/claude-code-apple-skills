@@ -2,6 +2,9 @@
 name: cloudkit-sync
 description: Generate CloudKit sync infrastructure using CKSyncEngine with conflict resolution, sharing, and account monitoring. Use when adding iCloud sync to an iOS/macOS app.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # CloudKit Sync Generator

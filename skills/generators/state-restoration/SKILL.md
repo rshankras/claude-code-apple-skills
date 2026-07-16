@@ -2,6 +2,9 @@
 name: state-restoration
 description: Generates state preservation and restoration infrastructure for navigation paths, tab selection, scroll positions, and form data across app launches and background termination. Use when user wants to save/restore app state, remember where the user left off, or persist UI state.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # State Restoration Generator

@@ -2,6 +2,9 @@
 name: promoted-iap
 description: Generates Promoted In-App Purchase setup with StoreKit 2 product configuration, paywall integration, and App Store product page display. Use when setting up promoted purchases that appear on the App Store product page.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Promoted In-App Purchases Generator

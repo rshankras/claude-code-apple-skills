@@ -2,6 +2,8 @@
 name: external-purchases
 description: US web checkout via the StoreKit External Purchase Link entitlement — currently 0% Apple commission (litigation ongoing), how to ship it safely, and how to architect for a commission flip so a future ruling is a config change, not a rewrite. Use when adding external purchase links, weighing web checkout vs IAP, or planning US-storefront pricing strategy.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # External Purchases (US Web Checkout)

@@ -2,6 +2,9 @@
 name: app-icon-generator
 description: Generates an app icon for macOS or iOS — a fast CoreGraphics placeholder and/or flat layered source art to finish in Icon Composer (the Liquid Glass / iOS 26+ standard). Produces appearance variants (light/dark/tinted) and installs into the asset catalog. Use when the user wants to create, generate, iterate, or update an app icon.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # App Icon Generator

@@ -2,6 +2,9 @@
 name: press-media
 description: Get press coverage and media attention for your indie app. Covers press kit preparation, finding journalists/bloggers/YouTubers, pitch timing, embargo strategy, and story angles that get coverage. Use when user wants press coverage, is preparing for a launch, or wants to build a media kit.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion, WebSearch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Press & Media Outreach

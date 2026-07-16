@@ -2,6 +2,8 @@
 name: community-building
 description: Build and engage a user community around your indie app. Covers platform selection, building in public strategy, content calendars for solo developers, and converting community members into advocates. Use when user wants to grow social media presence, start building in public, or create a content strategy.
 allowed-tools: [Read, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Community Building

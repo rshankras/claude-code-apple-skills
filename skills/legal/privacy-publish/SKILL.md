@@ -2,6 +2,8 @@
 name: privacy-publish
 description: Turn drafted legal docs (privacy policy, terms) into hosted pages and set the App Store Connect Privacy Policy / Support / Marketing URLs via the ASC REST API. Use at Phase 6 / submission, after legal drafts exist. The App Privacy "nutrition label" stays manual (Apple exposes no API) — this prints the exact answers to click.
 allowed-tools: [Read, Bash, AskUserQuestion, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__computer, mcp__claude-in-chrome__read_page]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Privacy Publish

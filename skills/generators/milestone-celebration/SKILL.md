@@ -2,6 +2,9 @@
 name: milestone-celebration
 description: Generates achievement celebration UI with confetti animations, badge unlocks, progress milestones, haptic feedback, and optional share-to-social. Use when user wants to celebrate achievements, show confetti, display milestone badges, or trigger rewards on key thresholds.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Milestone Celebration Generator

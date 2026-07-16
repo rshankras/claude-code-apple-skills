@@ -2,6 +2,9 @@
 name: coding-best-practices
 description: Reviews macOS Swift 6+ code for modern idioms, SOLID principles, SwiftData patterns, and concurrency best practices. Use when reviewing macOS code quality or asking about best practices.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Coding Best Practices for macOS Development

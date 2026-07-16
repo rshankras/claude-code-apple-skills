@@ -2,6 +2,9 @@
 name: webkit-integration
 description: WebKit integration in SwiftUI using WebView and WebPage for embedding web content, navigation, JavaScript interop, and customization. Use when embedding web content in SwiftUI apps.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # WebKit Integration for SwiftUI

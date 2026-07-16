@@ -2,6 +2,9 @@
 name: pagination
 description: Generates pagination infrastructure with offset or cursor-based patterns, infinite scroll, and search support. Use when user wants to add paginated lists, infinite scrolling, or load-more functionality.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Pagination Generator

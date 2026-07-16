@@ -2,6 +2,9 @@
 name: assistive-access
 description: Assistive Access implementation for cognitive accessibility including simplified scenes, navigation icons, runtime detection, and design principles. Use when optimizing apps for Assistive Access mode.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Assistive Access

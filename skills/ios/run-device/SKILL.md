@@ -2,6 +2,9 @@
 name: run-device
 description: Build, install, and launch an iOS app on a physical iPhone or iPad entirely from the command line (no Xcode GUI), using xcodebuild + devicectl. Use when the user wants to run, test, or screenshot their app on a real device without opening Xcode.
 allowed-tools: [Bash, Read]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Run on a Physical Device (CLI)

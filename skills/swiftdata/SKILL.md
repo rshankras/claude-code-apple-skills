@@ -2,6 +2,8 @@
 name: swiftdata
 description: SwiftData skills — class inheritance patterns for hierarchical models, type-based querying, polymorphic relationships, and inheritance-vs-enum decisions. Use when designing SwiftData model hierarchies.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # SwiftData Skills

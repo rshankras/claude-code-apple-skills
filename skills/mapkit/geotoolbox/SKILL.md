@@ -2,6 +2,8 @@
 name: geotoolbox
 description: GeoToolbox PlaceDescriptor patterns with MapKit integration for location representation, geocoding, and multi-service place identifiers. Use when working with place descriptors, geocoding, or cross-service location data.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # GeoToolbox and PlaceDescriptor Patterns

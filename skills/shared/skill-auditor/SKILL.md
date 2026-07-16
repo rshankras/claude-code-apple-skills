@@ -2,6 +2,9 @@
 name: skill-auditor
 description: Audits skills in this repo for consistency, API drift, and structural gaps. Produces a prioritized report grouped by severity (Critical/High/Medium/Low). Use when asked to "audit skills", "check the skill repo for drift", or when planning bulk skill cleanup. Read-only — does not apply fixes.
 allowed-tools: [Read, Glob, Grep, Bash]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Skill Auditor
@@ -36,9 +39,12 @@ Use `Glob` with pattern `skills/**/SKILL.md` from the repo root. Filter by scope
 
 ### 2. Parse Frontmatter (Cached)
 
-Read the first 15 lines of each `SKILL.md`. Parse:
+Read the first 20 lines of each `SKILL.md`. Parse:
 - Whether `---` frontmatter block exists
 - `name:`, `description:`, `allowed-tools:` field values
+- Freshness keys: `last_verified:`, `review_by:` (dates, required — enforced
+  by `scripts/check-frontmatter.sh`), optional `os_version:`. Overdue
+  `review_by` dates are the stale-skills workflow's job, not a finding here.
 
 Cache this result. Checks C-01, H-01, H-03, L-02 all read from this cache — do not re-read.
 
@@ -230,7 +236,7 @@ The drift heuristic hardcodes "known-current" version constants:
 
 ## Verification
 
-After running the auditor on the full repo, counts should fall within this tolerance band (baseline re-taken 2026-07-11, 165 total `SKILL.md` files scanned — 142 leaf skills + 23 category indexes; the README's "147 skills" counts leaf dirs plus the 5 single-skill categories):
+After running the auditor on the full repo, counts should fall within this tolerance band (baseline re-taken 2026-07-16 after the blind-test audit deletions, 178 total `SKILL.md` files scanned — 155 leaf skills + 23 category indexes; the README's "159 skills" counts leaf dirs plus the 4 single-skill categories):
 
 | Finding | Expected |
 |---|---|

@@ -2,6 +2,8 @@
 name: analytics-interpretation
 description: Interpret app metrics and make data-driven decisions. Covers DAU/MAU, retention, LTV, ARPU, App Store Connect analytics, AARRR funnel analysis, cohort analysis, and diagnostic decision trees. Use when user wants to understand their metrics, diagnose problems, or build a data-driven growth plan.
 allowed-tools: [Read, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Analytics Interpretation

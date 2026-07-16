@@ -2,6 +2,9 @@
 name: data-flow
 description: SwiftUI's actual mental model — view identity, lifetime, and dependencies (the Demystify canon), state ownership decision rules, Observation's per-property tracking, body-performance discipline, and the main-actor concurrency contract. Use when state resets mysteriously, views re-render too often, animations glitch between branches, choosing @State vs @Bindable vs plain property, or debugging "why did body run."
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # SwiftUI Data Flow

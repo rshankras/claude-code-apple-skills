@@ -2,6 +2,9 @@
 name: core-ml
 description: Core ML, Create ML, Vision framework, Natural Language framework, on-device ML integration. Use when user wants image classification, text analysis, object detection, sound classification, model optimization, or custom model integration. Covers Core ML vs Foundation Models decision.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Core ML Skills

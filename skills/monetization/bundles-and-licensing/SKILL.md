@@ -2,6 +2,8 @@
 name: bundles-and-licensing
 description: Revenue beyond the single-app price tag — own-app bundles, Family Sharing as a conversion lever, cross-developer bundles & suites, and institutional licensing via Group Purchases / Apple School & Business Manager. Use when a developer has multiple apps, a subscription worth sharing, complementary indie partners, or school/clinic/business buyers.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Bundles & Licensing

@@ -2,6 +2,9 @@
 name: swiftdata-architecture
 description: Deep dive into SwiftData design patterns and best practices. Covers schema design, query patterns, repository pattern, and performance optimization. Use when designing data models or improving SwiftData usage.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # SwiftData Architecture Expert

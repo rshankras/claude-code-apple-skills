@@ -2,6 +2,8 @@
 name: flow-walkthrough
 description: Verify UI *workflow* correctness that a task list, code review, and static screenshots miss. Drives end-to-end user flows in the Simulator via XCUITest with per-step screenshots, statically audits the navigation graph for dead-ends and missing edit paths, and emits a human discoverability checklist. Use after building any phase/slice that adds or changes UI, or when a user reports "I could only figure out the flow by running it."
 allowed-tools: [Read, Write, Edit, Bash, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Flow Walkthrough Skill

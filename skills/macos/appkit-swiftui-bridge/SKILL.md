@@ -2,6 +2,9 @@
 name: appkit-swiftui-bridge
 description: Expert guidance for hybrid AppKit-SwiftUI development. Covers NSViewRepresentable, hosting controllers, and state management between frameworks. Use when bridging AppKit and SwiftUI.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # AppKit-SwiftUI Bridge Expert
