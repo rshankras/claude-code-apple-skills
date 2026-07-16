@@ -2,6 +2,9 @@
 name: macos-tahoe-apis
 description: Guide to macOS 26 Tahoe APIs and features. Covers Apple Intelligence (FoundationModels), MLX framework, and Continuity. Use when implementing macOS 26 specific features.
 allowed-tools: [Read, Glob, Grep, WebFetch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # macOS Tahoe APIs

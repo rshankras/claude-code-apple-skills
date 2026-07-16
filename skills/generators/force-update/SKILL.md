@@ -2,6 +2,9 @@
 name: force-update
 description: Generates a minimum version enforcement system with hard-block and soft-prompt update flows, App Store redirect, and remote config or App Store lookup for version checks. Use when user wants force update, mandatory update, or minimum version check.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Force Update Generator

@@ -2,6 +2,8 @@
 name: accessibility-audit
 description: Run a structured accessibility audit on an iOS/macOS app — automated XCUITest audits, Accessibility Inspector, manual VoiceOver/Dynamic Type passes, and App Store Accessibility Nutrition Label evaluation. Use before release, when preparing Nutrition Label declarations, or for EU Accessibility Act compliance.
 allowed-tools: [Read, Glob, Grep, Bash]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Accessibility Audit

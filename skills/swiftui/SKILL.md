@@ -2,6 +2,9 @@
 name: swiftui
 description: SwiftUI framework skills — data flow (identity, Observation, state ownership), layout & containers (Layout protocol, lazy-stack performance), AlarmKit, 3D charts, rich text editing, customizable toolbars, and WebKit embedding. Use for SwiftUI state/rendering bugs, custom layouts, scroll performance, or these feature areas.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # SwiftUI Skills

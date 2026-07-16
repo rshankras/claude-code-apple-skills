@@ -2,6 +2,8 @@
 name: test-data-factory
 description: Generate test fixture factories for your models. Builder pattern and static factories for zero-boilerplate test data. Use when tests need sample data setup.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Test Data Factory

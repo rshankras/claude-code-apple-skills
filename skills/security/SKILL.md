@@ -2,6 +2,8 @@
 name: security
 description: Security category index for Apple platforms. Routes to the privacy-manifests skill. General secure-storage/biometrics/ATS guidance was retired in the 2026 blind-test audit — current models cover it natively.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Security (category index)

@@ -2,6 +2,9 @@
 name: test-generator
 description: Generate test templates for unit tests, integration tests, and UI tests using Swift Testing and XCTest. Use when adding tests to iOS/macOS apps.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Test Generator

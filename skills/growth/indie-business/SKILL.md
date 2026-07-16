@@ -2,6 +2,8 @@
 name: indie-business
 description: Business fundamentals for indie app developers — LLC/entity setup, taxes, Apple Small Business Program, revenue tracking, hiring contractors, and financial planning for sustainability. Use when user asks about business setup, tax implications, hiring, or financial planning for their app business.
 allowed-tools: [Read, Glob, Grep, AskUserQuestion, WebSearch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Indie Business Operations

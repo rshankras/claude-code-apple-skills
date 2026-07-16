@@ -2,6 +2,9 @@
 name: widget-generator
 description: Generate WidgetKit widgets for iOS/macOS home screen and lock screen with timeline providers, interactive elements, and App Intent configuration. Use when adding widgets to an app.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Widget Generator

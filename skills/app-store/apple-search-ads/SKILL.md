@@ -2,6 +2,8 @@
 name: apple-search-ads
 description: Apple Search Ads campaign strategy for indie developers — paid acquisition, keyword bidding, budget planning, and ROAS optimization. Use when user asks about running ads, paid user acquisition, or Apple Search Ads campaigns.
 allowed-tools: [Read, Glob, Grep, AskUserQuestion, WebSearch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Apple Search Ads for Indie Developers

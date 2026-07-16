@@ -2,6 +2,9 @@
 name: idea-generator
 description: Brainstorm and rank iOS/macOS app ideas tailored to developer skills. Use when user says "what should I build", "give me app ideas", "I don't know what to build", "brainstorm app ideas", or "help me find an app idea".
 allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Idea Generator Skill

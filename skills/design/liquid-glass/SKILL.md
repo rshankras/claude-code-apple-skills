@@ -2,6 +2,9 @@
 name: liquid-glass
 description: Implement Liquid Glass design using .glassEffect() API for iOS/macOS 26+. Covers SwiftUI, AppKit, UIKit, and WidgetKit. Use when creating modern glass-based UI effects.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Liquid Glass Design

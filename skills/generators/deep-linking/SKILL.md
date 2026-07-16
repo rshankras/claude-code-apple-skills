@@ -2,6 +2,8 @@
 name: deep-linking
 description: Generate deep linking infrastructure with URL schemes, Universal Links, and App Intents for Siri/Shortcuts. Use when handling custom URL schemes, Universal Links/Associated Domains, or routing to specific content from external sources.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Deep Linking Generator

@@ -2,6 +2,9 @@
 name: ad-attribution
 description: Privacy-preserving ad measurement with AdAttributionKit (SKAdNetwork's successor) — install and re-engagement attribution, conversion-value strategy under crowd anonymity, and end-to-end postback testing. Use when running paid acquisition beyond Apple Ads, measuring re-engagement campaigns, designing conversion values, or migrating from SKAdNetwork.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Ad Attribution (AdAttributionKit)

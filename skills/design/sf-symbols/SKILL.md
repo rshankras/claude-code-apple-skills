@@ -2,6 +2,8 @@
 name: sf-symbols
 description: SF Symbols end-to-end — choosing and configuring the 7,000+ system symbols (rendering modes, variable color/draw, gradients), authoring custom symbols that interpolate across weights, and the animation preset vocabulary. Use when picking iconography, building custom symbols, animating symbol state changes, or rendering values as symbols.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # SF Symbols

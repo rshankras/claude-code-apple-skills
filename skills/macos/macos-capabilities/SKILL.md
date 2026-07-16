@@ -2,6 +2,8 @@
 name: macos-capabilities
 description: Expert guidance on macOS platform capabilities. Covers sandboxing, app extensions, menu bar apps, and background execution. Use when implementing system integration features.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # macOS Capabilities Expert

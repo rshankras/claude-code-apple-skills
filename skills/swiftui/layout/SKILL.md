@@ -2,6 +2,8 @@
 name: layout
 description: SwiftUI layout beyond stacks — the Layout protocol (when custom layout beats GeometryReader), Grid vs lazy grids, custom containers with sections and container values, and lazy-stack/ScrollView performance rules (what breaks laziness, prefetch discipline, scroll APIs). Use when building custom layouts or containers, fixing lazy-stack jank or memory growth, or wiring programmatic/snapping scrolling.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # SwiftUI Layout & Containers

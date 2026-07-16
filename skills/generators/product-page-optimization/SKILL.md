@@ -2,6 +2,8 @@
 name: product-page-optimization
 description: Generates A/B test plans and optimization checklists for your App Store product page — icon, screenshots, and app previews. Use when running Product Page Optimization tests or improving conversion rates.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion, WebSearch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Product Page Optimization Generator

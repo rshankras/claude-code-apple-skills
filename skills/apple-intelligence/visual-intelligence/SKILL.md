@@ -2,6 +2,8 @@
 name: visual-intelligence
 description: Integrate your app with iOS Visual Intelligence for camera-based search and object recognition. Use when adding visual search capabilities.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Visual Intelligence

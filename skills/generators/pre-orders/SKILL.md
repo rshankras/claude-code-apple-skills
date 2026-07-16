@@ -2,6 +2,8 @@
 name: pre-orders
 description: Generates pre-order setup guides and launch timeline templates for App Store pre-orders. Use when planning a pre-order strategy for a new app launch or major update.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion, WebSearch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Pre-Orders Generator

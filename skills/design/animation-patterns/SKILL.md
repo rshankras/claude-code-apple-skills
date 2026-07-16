@@ -2,6 +2,9 @@
 name: animation-patterns
 description: SwiftUI animation patterns including springs, transitions, PhaseAnimator, KeyframeAnimator, SF Symbol effects, scroll-driven effects, mesh gradients, text renderers, and shader effects. Use when implementing, reviewing, or fixing animation or visual-effect code on iOS/macOS.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Animation Patterns

@@ -2,6 +2,9 @@
 name: performance-profiling
 description: Guide performance profiling with Instruments, diagnose hangs, memory issues, slow launches, and energy drain. Use when reviewing app performance or investigating specific bottlenecks.
 allowed-tools: [Read, Glob, Grep, Bash]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Performance Profiling

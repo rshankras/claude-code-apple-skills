@@ -2,6 +2,8 @@
 name: web-presence
 description: The discovery surfaces outside the App Store app — your apps.apple.com product page ranking on Google, an owned landing page with a Smart App Banner, and the deal-site ecosystem that auto-amplifies price drops. Use when building a landing page, improving Google visibility for an app, planning a price-drop promotion, or auditing off-store discovery.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Web Presence

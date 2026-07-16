@@ -2,6 +2,8 @@
 name: skill-creator
 description: Guides you through creating well-structured Claude Code skills with proper modularization, templates, and best practices. Use when creating new skills or improving existing ones.
 allowed-tools: [Read, Write, Glob, Grep, Bash]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Skill Creator
@@ -57,6 +59,8 @@ The main SKILL.md should include:
 name: skill-name
 description: Brief description of what the skill does and when to use it
 allowed-tools: [Read, Write, Edit]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 ```
 
@@ -64,6 +68,13 @@ allowed-tools: [Read, Write, Edit]
 - `name`: kebab-case skill name (e.g., `code-reviewer`, `ui-audit`)
 - `description`: 1-2 sentences describing the skill and when to use it
 - `allowed-tools`: Array of tools the skill can use
+- `last_verified`: date (YYYY-MM-DD) the content was last checked against
+  reality — set to today when creating; bump on every material edit
+- `review_by`: date (YYYY-MM-DD) of the scheduled re-verification — default
+  to ~2 weeks after the next WWDC (the natural decay event). CI requires both
+  dates; a weekly workflow opens rollup issues when skills pass `review_by`
+- `os_version` (optional): the OS generation the content was verified against
+  (e.g. `iOS 27 / macOS 27`) — add only if the skill cites OS/Swift versions
 
 **Common Tool Combinations:**
 - **Read-only analysis**: `[Read, Glob, Grep]`

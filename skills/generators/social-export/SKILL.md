@@ -2,6 +2,9 @@
 name: social-export
 description: Generates infrastructure for exporting app content to social platforms (Instagram Stories, TikTok, Twitter/X) with platform-specific formatting, aspect ratios, and metadata. Use when user wants social media export, share to stories, or platform-specific sharing pipelines.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Social Export Generator

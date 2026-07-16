@@ -2,6 +2,8 @@
 name: performance
 description: Performance profiling and SwiftUI debugging skills — Instruments guidance, hangs, memory issues, slow launches, energy drain, unnecessary re-renders, and view identity problems. Use when an app is slow, janky, or resource-hungry.
 allowed-tools: [Read, Glob, Grep, Bash]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Performance Skills

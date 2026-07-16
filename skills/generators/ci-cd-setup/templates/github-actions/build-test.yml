@@ -112,13 +112,14 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             | xcbeautify --renderer github-actions
 
-  # SwiftLint (optional)
+  # SwiftLint — runs whenever the project has a .swiftlint.yml.
+  # Start from templates/swiftlint/swiftlint.yml and merge in the rule
+  # fragments shipped by skills (each skill's rules/swiftlint.yml).
   lint:
     name: SwiftLint
     runs-on: macos-15
     timeout-minutes: 5
-    # Uncomment to enable linting
-    # if: false
+    if: ${{ hashFiles('.swiftlint.yml') != '' }}
 
     steps:
       - name: Checkout

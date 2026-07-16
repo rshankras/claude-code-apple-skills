@@ -2,6 +2,8 @@
 name: visionos
 description: visionOS skills — spatial design (layout ergonomics, eyes-and-hands input, motion comfort, immersion, environments) and widget patterns (mounting styles, glass/paper textures, proximity-aware layouts). Use when designing, building, or reviewing anything for visionOS.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # visionOS Skills

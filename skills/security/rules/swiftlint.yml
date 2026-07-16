@@ -1,0 +1,11 @@
+# Graduated enforcement — security.
+# The security prose was retired in the 2026 blind-test audit (models know it
+# natively); its mechanically-checkable rule survives here as lint.
+# Merge into your project's .swiftlint.yml (see generators/ci-cd-setup).
+custom_rules:
+  hardcoded_secret_literal:
+    name: "Hardcoded secret"
+    message: "Secrets don't belong in source — use Keychain at runtime, or inject at build time (xcconfig/environment)."
+    regex: '(?i)\b(apiKey|api_key|apiToken|api_token|authToken|auth_token|clientSecret|client_secret|bearerToken|accessToken|privateKey|password)\b\s*[:=]\s*"[A-Za-z0-9+/_.\-]{12,}"'
+    severity: error
+    excluded: ".*(Tests|Mocks|Fixtures|Previews?)/.*"

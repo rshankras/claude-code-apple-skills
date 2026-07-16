@@ -2,6 +2,8 @@
 name: ratings-mechanics
 description: How App Store ratings actually behave — per-storefront isolation (your US stars show nowhere else), the never-reset rule, phased release + manual release as rating protection, and where prompting/replying fit. Use when planning ratings strategy for new markets, considering a ratings reset, setting release options, or diagnosing "why is my rating missing in country X."
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Ratings Mechanics

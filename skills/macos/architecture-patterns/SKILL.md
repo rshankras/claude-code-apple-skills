@@ -2,6 +2,9 @@
 name: architecture-patterns
 description: Deep dive into software architecture for macOS. Covers SOLID principles, design patterns, and modular code organization. Use when designing app architecture or refactoring.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Architecture Patterns Expert

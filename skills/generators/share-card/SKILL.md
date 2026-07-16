@@ -2,6 +2,9 @@
 name: share-card
 description: Generates shareable card images from app content (achievements, stats, quotes) for social media sharing. Use when user wants to create share images, social cards, shareable content cards, or export app content as images with ShareLink integration.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Share Card Generator

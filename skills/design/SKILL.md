@@ -1,7 +1,10 @@
 ---
 name: design
-description: Design skills for Apple platform UI — Liquid Glass, animations, UI prototyping, evergreen design principles, UX writing, SF Symbols, and typography. Use when implementing design language features, structuring an app's UX, writing interface copy, or choosing type and iconography.
+description: Design skills for Apple platform UI — Liquid Glass, animations, UI prototyping, UX writing, SF Symbols, and typography. Use when implementing design language features, writing interface copy, or choosing type and iconography.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Design Skills

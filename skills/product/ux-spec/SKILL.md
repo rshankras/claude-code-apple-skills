@@ -2,6 +2,9 @@
 name: ux-spec
 description: Generates UI/UX specifications with wireframes and design system. Creates UX_SPEC.md and DESIGN_SYSTEM.md from PRD and Architecture specs. Use when designing app interface and creating design system.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # UX Specification Skill

@@ -2,6 +2,9 @@
 name: push-notifications
 description: Generate push notification infrastructure with APNs registration, handling, and rich notifications. Use when adding push notifications, configuring APNs, notification categories/actions, or rich notifications with images and custom UI.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Push Notifications Generator

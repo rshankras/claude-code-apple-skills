@@ -2,6 +2,9 @@
 name: alarmkit
 description: AlarmKit integration for scheduling alarms and timers with custom UI, Live Activities, and snooze support. Use when implementing alarm or timer features in iOS 26+ apps.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # AlarmKit

@@ -2,6 +2,9 @@
 name: debug-menu
 description: Generates a developer debug menu with feature flag toggles, environment switching, network log viewer, cache clearing, crash trigger, and diagnostic info export. Only included in DEBUG builds. Use when user wants a debug panel, dev tools menu, or shake-to-debug functionality.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Debug Menu Generator

@@ -2,6 +2,8 @@
 name: characterization-test-generator
 description: Generates tests that capture current behavior of existing code before refactoring. Use when you need a safety net before AI-assisted refactoring or modifying legacy code.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Characterization Test Generator

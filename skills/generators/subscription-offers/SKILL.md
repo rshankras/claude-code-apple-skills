@@ -2,6 +2,9 @@
 name: subscription-offers
 description: Generates StoreKit 2 code for all subscription offer types — introductory, promotional, offer codes, and win-back. Includes eligibility checks, offer presentation, and the preferredSubscriptionOffer modifier. Use when adding subscription offers, free trials, or promotional pricing.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Subscription Offers Generator

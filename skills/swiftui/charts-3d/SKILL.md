@@ -2,6 +2,9 @@
 name: charts-3d
 description: 3D chart visualization with Swift Charts using Chart3D, SurfacePlot, interactive pose control, and surface styling — plus a 2D Swift Charts construction reference (marks, axes, selection, SectorMark, scrollable charts). Use when creating data visualizations with Swift Charts.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # 3D Charts with Swift Charts

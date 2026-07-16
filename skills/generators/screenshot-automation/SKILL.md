@@ -2,6 +2,9 @@
 name: screenshot-automation
 description: Generates an automated App Store screenshot pipeline with UI tests for screenshot capture, device framing, localized caption overlays, and multi-size batch export. Use when user wants automated screenshots, App Store screenshot generation, or a fastlane snapshot replacement.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Screenshot Automation Generator

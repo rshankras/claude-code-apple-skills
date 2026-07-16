@@ -2,6 +2,8 @@
 name: beta-testing
 description: Beta testing strategy for iOS/macOS apps. Covers TestFlight program setup, beta tester recruitment, feedback collection methodology, user interviews, signal-vs-noise interpretation, and go/no-go launch readiness decisions. Use when planning a beta, setting up TestFlight, collecting user feedback, or deciding if ready to launch.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Beta Testing Strategy

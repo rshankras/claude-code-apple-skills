@@ -2,6 +2,9 @@
 name: whats-new
 description: Generates a "What's New" / changelog screen shown after app updates with version tracking, feature highlights, and one-time display per version. Use when user wants release notes UI, update notifications, or feature announcements.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # What's New Generator

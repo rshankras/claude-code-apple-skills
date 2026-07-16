@@ -2,6 +2,9 @@
 name: account-deletion
 description: Generates an Apple-compliant account deletion flow with multi-step confirmation UI, optional data export, configurable grace period, Keychain cleanup, and server-side deletion request. Use when user needs account deletion, right-to-delete, or Apple App Review compliance for account removal.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Account Deletion Generator

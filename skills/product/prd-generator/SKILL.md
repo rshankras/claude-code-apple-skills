@@ -2,6 +2,9 @@
 name: prd-generator
 description: Generates comprehensive Product Requirements Document from product plan. Creates PRD.md with features, user stories, acceptance criteria, and success metrics. Use when creating product requirements.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # PRD Generator Skill

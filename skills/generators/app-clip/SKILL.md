@@ -2,6 +2,9 @@
 name: app-clip
 description: Generates App Clip targets with invocation URL handling, lightweight experiences, and full app upgrade prompts. Use when user wants NFC/QR/Safari banner invocation, instant app experiences, or App Clip Card setup.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # App Clip Generator
