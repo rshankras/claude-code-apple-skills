@@ -2,6 +2,8 @@
 name: foundation
 description: Foundation framework skills — AttributedString patterns for rich text formatting, alignment, selection, and SwiftUI integration. Use when working with styled text or AttributedString APIs.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Foundation Skills

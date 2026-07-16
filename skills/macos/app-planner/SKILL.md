@@ -2,6 +2,9 @@
 name: app-planner
 description: Plans new macOS apps or analyzes existing projects. Creates comprehensive planning documents covering architecture, features, UI/UX, and tech stack. Use when planning a new macOS app or auditing an existing one.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # App Planner for macOS

@@ -2,6 +2,9 @@
 name: offline-queue
 description: Generates an offline operation queue with persistence, automatic retry on connectivity, and conflict resolution. Use when user needs offline-first behavior, queued mutations, or pending operations that sync when back online.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Offline Queue Generator

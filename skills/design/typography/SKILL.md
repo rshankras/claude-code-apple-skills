@@ -2,6 +2,8 @@
 name: typography
 description: UI typography on Apple platforms — text styles and Dynamic Type, the San Francisco family (Pro/Rounded/Compact/Mono/New York + width axis), optical sizes, tracking vs kerning, leading adjustments, and custom-font scaling. Use when choosing fonts, building type hierarchy, fixing truncation/legibility, or making custom fonts respect Dynamic Type.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Typography

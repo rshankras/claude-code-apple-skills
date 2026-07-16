@@ -2,6 +2,8 @@
 name: iap-finalizer
 description: Take a one-time in-app purchase from MISSING_METADATA to READY_TO_SUBMIT in App Store Connect — set its price schedule and localized display name/description (and optional review screenshot) via the ASC REST API. Use at Phase 6 (Pre-Release), after the IAP is built in-app (Phase 4) and its ASC record exists. NOT for subscriptions, and NOT the same as promoted-iap (which displays IAPs in-app).
 allowed-tools: [Read, Bash, mcp__asc-metadata__list_iap, mcp__asc-metadata__get_iap, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # IAP Finalizer

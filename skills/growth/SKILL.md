@@ -2,6 +2,8 @@
 name: growth
 description: Growth skills for indie Apple developers — user acquisition, analytics interpretation, press/media outreach, community building, and indie business operations. Also covers the stage-by-stage store-growth audit and the post-launch store-signals loop. Use when user asks about growing their app, auditing growth levers, understanding metrics, getting press coverage, or running an indie dev business.
 allowed-tools: [Read, Glob, Grep, AskUserQuestion, WebSearch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Growth Skills

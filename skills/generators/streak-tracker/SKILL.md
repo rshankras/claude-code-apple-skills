@@ -2,6 +2,9 @@
 name: streak-tracker
 description: Generates a streak tracking system with timezone-aware day boundaries, streak freeze protection, and streak-at-risk push notifications. Use when user wants daily/weekly engagement streaks, consecutive day tracking, or habit tracking.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Streak Tracker Generator

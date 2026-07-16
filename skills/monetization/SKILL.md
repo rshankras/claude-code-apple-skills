@@ -2,6 +2,9 @@
 name: monetization
 description: Monetization strategy for iOS/macOS apps. Covers readiness assessment, pricing model selection, tier structuring, free trial strategy, and implementation guidance. Use when deciding what to charge, how to price, or planning monetization end-to-end.
 allowed-tools: [Read, Write, Edit, Glob, Grep, WebSearch, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Monetization Strategy

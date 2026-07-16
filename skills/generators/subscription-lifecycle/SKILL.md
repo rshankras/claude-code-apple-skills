@@ -2,6 +2,9 @@
 name: subscription-lifecycle
 description: Generates StoreKit 2 subscription lifecycle management — grace periods, billing retry, offer codes, win-back offers, upgrade/downgrade paths, and subscription status monitoring. Use when user needs post-purchase subscription state handling beyond the initial paywall.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Subscription Lifecycle Generator

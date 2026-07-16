@@ -2,6 +2,8 @@
 name: app-namer
 description: Turn an app idea into validated, App-Store-ready name candidates. Use when the user says "name my app", "what should I call it", "app name ideas", "help me name this app", "is this name available", or needs to pick a brandable, ownable name before reserving it in App Store Connect.
 allowed-tools: [Read, Write, WebSearch, WebFetch, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # App Namer Skill

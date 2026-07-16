@@ -2,6 +2,9 @@
 name: image-loading
 description: Generates an image loading pipeline with memory/disk caching, deduplication, and a CachedAsyncImage SwiftUI view. Use when user wants image caching, lazy image loading, or a replacement for AsyncImage.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Image Loading Generator

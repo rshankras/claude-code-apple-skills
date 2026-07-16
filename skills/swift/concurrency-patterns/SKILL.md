@@ -2,6 +2,9 @@
 name: concurrency-patterns
 description: Swift concurrency patterns including Swift 6.2 approachable concurrency, structured concurrency, actors, continuations, and migration. Use when reviewing or building async code, fixing data race errors, or migrating to Swift 6.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Swift Concurrency Patterns

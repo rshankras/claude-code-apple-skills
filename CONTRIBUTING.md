@@ -152,8 +152,18 @@ Every SKILL.md must have:
 name: skill-name
 description: Brief description (1-2 sentences)
 allowed-tools: [Read, Write, Edit]
+last_verified: 2026-07-16          # date the content was last checked against reality
+review_by: 2027-06-22              # scheduled re-verification (~2 weeks after next WWDC)
+os_version: iOS 27 / macOS 27      # only if the skill cites OS/Swift versions
 ---
 ```
+
+`last_verified`/`review_by` are content-freshness dates, not release versions —
+the repo still has no version numbers (every commit to `main` is a release).
+CI requires the two dates (`scripts/check-frontmatter.sh`); a weekly workflow
+opens one rollup issue per category when skills pass `review_by`
+(`.github/workflows/stale-skills.yml`). When you materially edit a skill, bump
+`last_verified` to today.
 
 Followed by:
 
@@ -163,6 +173,17 @@ Followed by:
 4. **Output Format**: How to present results
 5. **Examples**: Concrete examples (optional)
 6. **References**: External links (optional)
+
+### Optional: `rules/` — graduated enforcement
+
+A skill whose advice is mechanically checkable may ship a
+`rules/swiftlint.yml` fragment (`opt_in_rules` + `custom_rules`). Prefer
+enabling built-in SwiftLint rules over regex `custom_rules`; scope every
+regex rule with `included:`/`excluded:` so it can't cry wolf. Each fragment
+needs fixtures at `tools/lint-fixtures/<skill-path-with-dashes>/{violation,clean}/`
+— CI (`scripts/check-lint-fragments.sh`) asserts every rule fires on its
+violation fixture and stays quiet on its clean one. Consuming projects merge
+fragments via `generators/ci-cd-setup`.
 
 ### Naming Conventions
 

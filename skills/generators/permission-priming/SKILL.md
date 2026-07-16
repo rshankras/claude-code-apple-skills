@@ -2,6 +2,9 @@
 name: permission-priming
 description: Generates pre-permission priming screens that explain benefits before showing iOS system permission dialogs. Use when user wants to increase permission grant rates, add pre-permission screens, or explain why the app needs access.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Permission Priming Generator

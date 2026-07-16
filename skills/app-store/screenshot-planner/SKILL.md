@@ -2,6 +2,9 @@
 name: screenshot-planner
 description: Plan compelling App Store screenshot sequences that showcase your app's value. Use when preparing App Store assets, improving screenshot conversion, or drafting screenshot captions for a launch or major update.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Screenshot Planner

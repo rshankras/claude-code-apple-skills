@@ -2,6 +2,8 @@
 name: featuring-nomination
 description: Generates App Store featuring nomination pitches with all required fields, compelling narratives, and Apple editorial angles. Use when submitting your app for App Store editorial featuring or preparing a self-nomination.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion, WebSearch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Featuring Nomination Generator

@@ -2,6 +2,9 @@
 name: ios-development
 description: Comprehensive iOS development guidance including Swift best practices, SwiftUI patterns, UI/UX review against HIG, and app planning. Use for iOS code review, best practices, accessibility audits, or planning new iOS apps.
 allowed-tools: [Read, Glob, Grep, WebFetch]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # iOS Development Expert

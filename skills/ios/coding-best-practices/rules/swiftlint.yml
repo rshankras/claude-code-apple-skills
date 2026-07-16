@@ -1,0 +1,20 @@
+# Graduated enforcement — ios/coding-best-practices.
+# Merge into your project's .swiftlint.yml (see generators/ci-cd-setup).
+# Prefer built-in rules over regex where they exist:
+opt_in_rules:
+  - force_unwrapping
+  - force_try
+custom_rules:
+  print_in_production:
+    name: "print() in production code"
+    message: "Use os.Logger — print() ships in release builds and leaks data into Console."
+    regex: '^\s*print\('
+    severity: warning
+    excluded: ".*(Tests|UITests|Previews?|Playgrounds)/.*"
+  observable_object_legacy:
+    # Applies only to deployment targets >= iOS 17 / macOS 14.
+    # Deploying lower? Delete this rule from your merged config.
+    name: "ObservableObject (pre-@Observable)"
+    message: "Use @Observable (iOS 17+/macOS 14+) with @State instead of ObservableObject."
+    regex: 'class\s+\w+\s*:\s*(\w+\s*,\s*)*ObservableObject'
+    severity: warning

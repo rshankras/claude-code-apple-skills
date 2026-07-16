@@ -2,6 +2,8 @@
 name: run-simulator
 description: Build, install, launch, and screenshot an iOS app in the Simulator to verify a change visually. Use when the user wants to run the app, see a change live, screenshot the running app, or confirm a UI fix actually works (not just that it compiles).
 allowed-tools: [Bash, Read, Glob]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Run in Simulator

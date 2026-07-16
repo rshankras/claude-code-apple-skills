@@ -2,6 +2,9 @@
 name: app-extensions
 description: Generates app extension infrastructure for Share Extensions, Action Extensions, Keyboard Extensions, and Safari Web Extensions with data sharing via App Groups. Use when user wants to add a share extension, action extension, keyboard extension, Safari web extension, or any app extension type.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # App Extensions Generator

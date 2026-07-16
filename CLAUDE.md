@@ -29,6 +29,8 @@ Every SKILL.md must have:
 ---
 name: skill-name
 description: Brief description and when to use it
+last_verified: 2026-07-16   # date content was last checked (bump when you edit)
+review_by: 2027-06-22       # scheduled re-verification, ~2 weeks after next WWDC
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
 ---
 ```

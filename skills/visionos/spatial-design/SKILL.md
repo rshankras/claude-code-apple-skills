@@ -2,6 +2,8 @@
 name: spatial-design
 description: Designing for visionOS — spatial layout and ergonomics (60pt eye targets, field-of-view placement, dynamic scale), eyes-and-hands input with hover rules, motion and visual comfort (the 0.2 Hz rule, vection, depth-cue agreement), immersion strategy, spatial sound, and the video-format decision guide. Use when designing or reviewing any visionOS app, window, volume, or immersive experience.
 allowed-tools: [Read, Write, Edit, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Spatial Design (visionOS)

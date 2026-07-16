@@ -22,6 +22,11 @@ Skills appear as 23 category skills, namespaced by plugin — invoke as
 `/apple-skills:<category>` (e.g. `/apple-skills:generators`). Update with
 `/plugin marketplace update indie-apple-stack`.
 
+Some skills also ship a `rules/swiftlint.yml` fragment — deterministic lint
+rules graduated from their prose. They ride along with any install; merge
+them into your project's `.swiftlint.yml` (the `ci-cd-setup` generator does
+this for you).
+
 ### Option 1: Full Install
 
 ```bash

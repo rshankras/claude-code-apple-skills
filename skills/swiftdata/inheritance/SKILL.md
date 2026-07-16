@@ -2,6 +2,8 @@
 name: swiftdata-inheritance
 description: SwiftData class inheritance patterns for hierarchical models with type-based querying, polymorphic relationships, and when to choose inheritance vs enums. Use when designing SwiftData model hierarchies.
 allowed-tools: [Read, Glob, Grep]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # SwiftData Class Inheritance

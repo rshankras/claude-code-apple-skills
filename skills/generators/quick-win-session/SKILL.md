@@ -2,6 +2,9 @@
 name: quick-win-session
 description: Generates guided first-action flows that help users achieve a meaningful result within 60 seconds to boost retention. Use when user wants quick win onboarding, time-to-value optimization, or first success moments.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
+os_version: iOS 27 / macOS 27
 ---
 
 # Quick Win Session Generator

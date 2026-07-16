@@ -2,6 +2,8 @@
 name: test-contract
 description: Generate protocol/interface test suites that any implementation must pass. Define the contract once, test every implementation. Use when designing protocols or swapping implementations.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
+last_verified: 2026-07-16
+review_by: 2027-06-22
 ---
 
 # Test Contract
