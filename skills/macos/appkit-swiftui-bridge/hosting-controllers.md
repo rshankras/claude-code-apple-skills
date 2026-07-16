@@ -29,7 +29,7 @@ NSLayoutConstraint.activate([
 
 ### Sizing Behavior
 
-NSHostingView calculates its `intrinsicContentSize` from the SwiftUI view. Control this with `sizingOptions` (macOS 13+):
+NSHostingView calculates its `intrinsicContentSize` from the SwiftUI view. Control this with `sizingOptions`:
 
 ```swift
 let hostingView = NSHostingView(rootView: myView)

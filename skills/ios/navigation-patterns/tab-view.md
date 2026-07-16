@@ -198,8 +198,6 @@ TabView {
 }
 ```
 
-**Why?** Wrapping `TabView` in a `NavigationStack` means any navigation push hides the tab bar entirely. Each tab should own its own stack.
-
 ### Mixing .tabItem and Tab APIs
 
 ```swift

@@ -10,7 +10,7 @@ review_by: 2027-06-22
 
 A repeatable audit workflow that takes an app from "we think it's accessible" to evidence: automated audits in CI, an Inspector pass, manual assistive-tech passes, and an Accessibility Nutrition Label evaluation you can defend. Distilled from Apple's WWDC23 "Perform accessibility audits" (10035), WWDC19 "Accessibility Inspector" (257), WWDC25 "Evaluate your app for Accessibility Nutrition Labels" (224), and the 2026 Tech Talk "Prepare your app for Accessibility Nutrition Labels" (111433).
 
-Why it matters: about **1 in 7 people worldwide** has a disability that affects how they use devices (WWDC23 10035); the **EU Accessibility Act** has applied to consumer apps in the EU market since June 2025; and **Accessibility Nutrition Labels** on the App Store make your support (or its absence) visible before download.
+Why it matters: **Accessibility Nutrition Labels** on the App Store make your support (or its absence) visible before download.
 
 ## When This Skill Activates
 
@@ -32,7 +32,7 @@ List the primary tasks people download the app for, **plus** the fundamentals: f
 
 - Audits cover only what's on screen — write one audit per distinct screen/state.
 - `continueAfterFailure = true` before the audit to surface all issues in one run.
-- Filter *accepted* issues via the issue handler (return `true` to ignore) — never by skipping whole audit types.
+- Filter *accepted* issues via the issue handler — never by skipping whole audit types.
 
 ### 3. Inspector pass (WWDC19 257)
 
@@ -43,7 +43,7 @@ Xcode → Open Developer Tool → Accessibility Inspector, target the app:
 3. **Auto Navigate** through the screen with the speaker button — hear exactly what VoiceOver would say, in order; wrong reading order shows up here.
 4. **Point Inspection** for spot checks; **Color Contrast Calculator** (Window menu) for failing pairs.
 
-Classic findings and fixes: filename-as-label (give a real `accessibilityLabel`; move technical IDs to `accessibilityIdentifier`), text drawn via `CATextLayer` invisible to VoiceOver (`isAccessibilityElement = true` + label), contrast below threshold (Inspector flags pairs; fix with darker/lighter variants until it passes — 4.5:1 is the floor for body text).
+Classic findings and fixes: filename-as-label (give a real `accessibilityLabel`; move technical IDs to `accessibilityIdentifier`), text drawn via `CATextLayer` invisible to VoiceOver (`isAccessibilityElement = true` + label), contrast below threshold (Inspector flags pairs; fix with darker/lighter variants until it passes).
 
 ### 4. Manual assistive-tech passes (per common task)
 
@@ -59,7 +59,7 @@ Classic findings and fixes: filename-as-label (give a real `accessibilityLabel`;
 
 ### 5. Nutrition Label evaluation and declaration
 
-Map the evidence from passes 2–4 onto the nine App Store features and declare only what holds for **all** common tasks on **all** supported device families. Per-feature criteria, disqualifier examples, and the declaration flow: **nutrition-labels.md**. The model behavior (Apple's own demo): find bugs at 235%/310% text size → **fix first, claim after**. Not applicable (no video content) ≠ supported — leave it unclaimed.
+Map the evidence from passes 2–4 onto the nine App Store features and declare only what holds for **all** common tasks on **all** supported device families. Per-feature criteria, disqualifier examples, and the declaration flow: **nutrition-labels.md**. The model behavior (Apple's own demo): find bugs at 235%/310% text size → **fix first, claim after**.
 
 ## Output Format
 

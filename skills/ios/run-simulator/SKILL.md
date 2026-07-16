@@ -156,8 +156,6 @@ Report, concisely:
 
 - **Wrong device name** → "Unable to find a device matching the destination."
   Always list available sims (step 2) instead of assuming a model number.
-- **`-quiet` hides success** → it removes `** BUILD SUCCEEDED **`; grep for
-  `error:` or run the verifying build without `-quiet`.
 - **Stale install** → if behavior looks unchanged, `xcrun simctl uninstall
   "$SIM" "$BID"` then reinstall; or `xcrun simctl shutdown "$SIM" && xcrun
   simctl erase "$SIM"` for a clean slate (destroys sim data — confirm first).

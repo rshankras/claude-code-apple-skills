@@ -83,14 +83,7 @@ DetailView(item: item)
 
 ### Performance Impact of Unstable .id()
 
-When `.id()` changes every render:
-1. SwiftUI destroys the entire view subtree (including all child views)
-2. All `@State` and `@StateObject` are lost
-3. `onAppear` fires again
-4. Animations treat it as a new view (insertion transition, not update)
-5. Any in-flight async `task` is cancelled and restarted
-
-This is the single most expensive identity mistake. A view with `N` children all get destroyed and recreated.
+An `.id()` that changes every render destroys and recreates the entire subtree -- state, `onAppear`, animations, and in-flight `task`s all reset as if the view were brand new. This is the single most expensive identity mistake.
 
 ## Conditional View Branching
 

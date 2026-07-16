@@ -60,9 +60,8 @@ Ask the user via AskUserQuestion:
 
 **S-Corporation Election**
 - How: Form an LLC, then file Form 2553 to elect S-Corp tax treatment.
-- Pros: Payroll tax savings on profits above "reasonable salary." At $150K revenue, could save $10-15K/year in self-employment tax.
+- Pros: Payroll tax savings on profits above "reasonable salary."
 - Cons: Must pay yourself a "reasonable salary" with payroll, quarterly payroll tax filings, more complex bookkeeping, annual corporate tax return.
-- When to consider: Net profit consistently exceeds $80-100K/year.
 
 **When to upgrade entity (decision tree):**
 ```
@@ -112,8 +111,7 @@ Already have an LLC and net profit > $80K/year?
 
 #### Overview
 
-- Commission reduced from 30% to 15% on the first $1M in annual proceeds.
-- Applies to all app and in-app purchase revenue.
+- 15% commission (vs. 30% standard) on the first $1M in annual proceeds, applying to all app and in-app purchase revenue.
 - Auto-enrollment: Apple enrolls you when you are eligible. No application needed if under $1M.
 - Resets annually on January 1.
 
@@ -127,14 +125,13 @@ Already have an LLC and net profit > $80K/year?
 | $500,000 | $150,000 | $75,000 | $75,000 |
 | $1,000,000 | $300,000 | $150,000 | $150,000 |
 
-For year-2+ subscribers, Apple takes only 15% regardless of program enrollment. So the Small Business Program primarily benefits:
+Year-2+ subscriptions are already taxed at 15% regardless of enrollment, so the program's benefit concentrates in:
 - Paid upfront apps
 - One-time IAP revenue
 - First-year subscription revenue
 
 #### Important Details
 
-- If you exceed $1M in a calendar year, the standard 30% rate applies for the remainder of that year.
 - Revenue from all apps under your developer account is combined for the $1M threshold.
 - If you have multiple developer accounts (e.g., personal + company), each is evaluated separately.
 
@@ -250,7 +247,7 @@ Set aside 25-35% of net revenue (after Apple's cut) for taxes.
 | State income tax | 0-13% (state-dependent) |
 | **Combined effective rate** | **25-40%** |
 
-Open a separate savings account. Every time Apple pays you, transfer 30% of the payout into the savings account. Use this account only for quarterly tax payments.
+Open a separate savings account, transfer ~30% of every payout in, and use it only for quarterly tax payments.
 
 ### Step 6: When to Hire
 

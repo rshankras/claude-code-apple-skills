@@ -34,7 +34,7 @@ Ask the user via AskUserQuestion:
 
 ### Step 2: Platform Selection
 
-Choose 1-2 platforms to focus on. Spreading across 5 platforms with weak presence is worse than owning 1-2 platforms.
+Choose 1-2 platforms to focus on rather than spreading thin across many.
 
 #### Platform Comparison
 

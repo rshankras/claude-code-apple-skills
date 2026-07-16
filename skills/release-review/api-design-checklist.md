@@ -124,10 +124,6 @@ throw APIError.error("JSON parsing failed at key 'data.user.id'")
 
 ## Token Expiration
 
-### The Problem
-
-API tokens expire. If not handled, users experience silent failures or confusing errors.
-
 ### ✅ Good Pattern
 ```swift
 class APIClient {
@@ -188,35 +184,19 @@ NotificationCenter.default.post(
 
 ## Rate Limiting
 
-### Handling 429 Responses
+### Handling 429 Responses (Backoff + Retry-After)
 
 ```swift
 func makeRequestWithRetry(maxRetries: Int = 3) async throws -> Data {
-    var lastError: Error?
-
     for attempt in 0..<maxRetries {
         do {
             return try await makeRequest()
-        } catch APIError.rateLimited {
-            lastError = APIError.rateLimited("Rate limited")
-
-            // Exponential backoff
-            let delay = pow(2.0, Double(attempt)) // 1s, 2s, 4s
+        } catch APIError.rateLimited(let retryAfterHeader) {
+            let delay = retryAfterHeader.map(Double.init) ?? pow(2.0, Double(attempt))
             try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
         }
     }
-
-    throw lastError ?? APIError.unknown("Request failed after retries")
-}
-```
-
-### Respect Retry-After Header
-```swift
-if response.statusCode == 429 {
-    if let retryAfter = response.value(forHTTPHeaderField: "Retry-After"),
-       let seconds = Int(retryAfter) {
-        throw APIError.rateLimited("Please wait \(seconds) seconds before trying again.")
-    }
+    throw APIError.unknown("Request failed after retries")
 }
 ```
 

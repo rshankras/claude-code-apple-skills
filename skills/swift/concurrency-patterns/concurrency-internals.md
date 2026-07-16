@@ -11,7 +11,7 @@ The entire cooperative pool design depends on one invariant (WWDC21 10254): **th
 
 ## Cooperative Thread Pool vs GCD
 
-The pool spawns **only as many threads as there are CPU cores** — never more. Switching between task continuations costs about a **function call**, not a full thread context switch (WWDC21 10254).
+The pool spawns **only as many threads as there are CPU cores** — never more.
 
 **Thread explosion** is the GCD failure mode this replaces. Apple's numbers: on a six-core iPhone, 100 feed-update work items each blocking on a serial `databaseQueue.sync` left the phone "overcommitted with 16 times more threads than cores." Each blocked thread holds a stack and kernel data structures, may hold locks, and with hundreds of threads timesharing a few cores, "scheduling latencies outweigh useful work."
 
@@ -68,8 +68,8 @@ sem.wait()   // can deadlock the entire pool
 
 ## Actor Scheduling: Not FIFO
 
-- Serial dispatch queues are strictly FIFO — a high-priority item waits behind everything already enqueued (head-of-line blocking). Actors are not: "Actors execute the highest-priority work first… This eliminates priority inversions" (WWDC22 110351, WWDC21 10254). Do not port order-dependent DispatchQueue code onto an actor expecting FIFO.
-- **Actor hopping is cheap when uncontended**: the same pool thread hops from one actor to the next — no blocking, no new thread. Contended, the work item queues on the target actor and the caller suspends (WWDC21 10254).
+- Actors schedule by priority, not FIFO like serial dispatch queues — do not port order-dependent DispatchQueue code onto an actor expecting FIFO.
+- **Actor hopping is cheap when uncontended**: the same pool thread hops from one actor to the next — no blocking, no new thread. Contended, the work item queues on the target actor and the caller suspends.
 - **MainActor hopping is not cheap**: the main thread is disjoint from the cooperative pool, so each hop is a real context switch. Batch main-actor work:
 
 ```swift

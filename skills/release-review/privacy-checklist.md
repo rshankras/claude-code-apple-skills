@@ -67,11 +67,8 @@ If your app uses these APIs, you need a Privacy Manifest:
 ```
 
 ### APIs Requiring Declaration
-- UserDefaults
-- File timestamp APIs
-- System boot time APIs
-- Disk space APIs
-- Active keyboard APIs
+
+See `security/privacy-manifests` for the complete category list and reason codes.
 
 ### Checklist
 - [ ] Privacy Manifest created if using required APIs

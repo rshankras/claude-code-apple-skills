@@ -86,11 +86,11 @@ struct MyWidget: Widget {
 
 **Mounting styles**: `.elevated` (default) sits on surfaces like tables. `.recessed` embeds into walls like a framed picture. Omit `.supportedMountingStyles()` to use elevated only. Recessed works only on vertical surfaces — placements on horizontal surfaces are always elevated. On horizontal surfaces the system also applies a gentle tilt toward the user; design for that angle rather than fighting it.
 
-**Textures**: `.glass` (default) is transparent and blends with the environment. `.paper` is opaque and poster-like, best for rich imagery.
+**Textures**: `.glass` (default) blends with the environment; `.paper` is opaque, best for rich imagery.
 
 ## Spatial Behavior (WWDC25)
 
-Widgets are permanent room fixtures: they persist across sessions, room changes, and device power cycles, and they snap only to **physical** surfaces — never to virtual environments. Multiple instances of the same widget can coexist in a room.
+Widgets are permanent, physical-surface-only room fixtures — they persist across sessions, room changes, and power cycles, and multiple instances can coexist in a room.
 
 - **User resizing**: a corner affordance lets users scale a widget from **75% to 125%** of its template size — layouts must survive the entire range.
 - **Frames**: users pick from **five frame widths** (thin to thick), independent of template size. The recessed style fixes the frame width.
@@ -99,7 +99,7 @@ Widgets are permanent room fixtures: they persist across sessions, room changes,
 
 ## Proximity Awareness (Level of Detail)
 
-The system tracks user distance and transitions automatically, with animation, between exactly two detail levels: `.default` when the user is close and `.simplified` at a distance. In the simplified state, cut information density and enlarge the key info.
+The system transitions automatically, with animation, between `.default` (close) and `.simplified` (far) based on user distance — simplify by cutting density and enlarging key info.
 
 ```swift
 struct MyWidgetView: View {

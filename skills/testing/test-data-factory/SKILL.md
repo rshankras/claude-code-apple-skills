@@ -237,7 +237,7 @@ extension Item {
 
 ### Phase 4: Generate Date/Time Helpers
 
-Tests with dates are notoriously flaky. Provide fixed dates:
+Provide fixed reference dates:
 
 ```swift
 // Tests/Factories/Date+Factory.swift
@@ -288,13 +288,13 @@ extension APIResponse where T == [Item] {
 
 | Property Type | Default Strategy |
 |--------------|-----------------|
-| UUID | `UUID()` (unique per call) |
+| UUID | `UUID()` |
 | String | Descriptive placeholder (`"Test Item"`) |
-| Date | Fixed timestamp (not `Date()` — causes flaky tests) |
-| Bool | `false` (opt-in to special states) |
+| Date | Fixed timestamp, not `Date()` |
+| Bool | `false` |
 | Array | Empty `[]` (opt-in to populated) |
-| Optional | `nil` (opt-in to having a value) |
-| Enum | Most common/default case |
+| Optional | `nil` |
+| Enum | Most common case |
 | Nested model | That model's `.fixture()` |
 
 ### Naming Conventions

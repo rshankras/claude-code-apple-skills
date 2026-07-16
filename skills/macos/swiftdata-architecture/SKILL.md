@@ -34,7 +34,7 @@ Guide developers through SwiftData architecture decisions, from schema design to
 
 | Question | Answer |
 |----------|--------|
-| Should I use SwiftData or Core Data? | SwiftData for macOS 14+ / iOS 17+ targets |
+| Should I use SwiftData or Core Data? | SwiftData for new projects |
 | @Query or FetchDescriptor? | @Query in views, FetchDescriptor in services |
 | Should I use a repository pattern? | Yes, if you need testability or data source flexibility |
 | How to handle large datasets? | Pagination + background context + batch operations |

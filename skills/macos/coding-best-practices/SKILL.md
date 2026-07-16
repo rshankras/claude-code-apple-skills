@@ -89,7 +89,6 @@ The Mac-specific defaults to expect during review — flag hand-rolled equivalen
 **Standard surfaces**
 - `formStyle(.grouped)` + `LabeledContent` for settings panes — matches System Settings without custom grids
 - `Table` for multi-column data, with `TableColumnCustomization` (user-reorderable/hideable columns) and `DisclosureTableRow` for hierarchy
-- `inspector` modifier for trailing detail panels — don't fake it with an `HStack`
 
 **Performance**
 - SwiftUI `List` was rewritten with large-list performance roughly 6x faster at 100k+ rows (WWDC25) — before reaching for `NSTableView`, profile with the SwiftUI instrument in Instruments
@@ -97,13 +96,10 @@ The Mac-specific defaults to expect during review — flag hand-rolled equivalen
 **Focus & keyboard (where Mac reviews earn their keep)**
 - macOS Sonoma changed `focusable()` semantics: it now grants click-to-focus by default — audit adopters and add `focusable(interactions: .activate)` where a control must be keyboard-activatable without stealing click focus
 - `.activate`-only controls are reachable via Tab only when System Settings keyboard navigation is on — test both states
-- `FocusedValues` + `.focusedSceneValue` + `@FocusedBinding` to drive menu-bar commands from whatever content currently has focus
-- `onMoveCommand` for arrow-key handling — flip directions with `@Environment(\.layoutDirection)` for RTL
 - Always test with Keyboard Navigation enabled (System Settings > Keyboard)
 
 **AppKit interop**
 - Scene bridging lets an AppKit app host SwiftUI scenes (windows, menu bar extras) directly; `NSGestureRecognizerRepresentable` bridges AppKit gestures into SwiftUI; `NSHostingView` is usable straight from Interface Builder
-- Swift 6 mode: the `View` protocol is `@MainActor` — drop redundant `@MainActor` annotations on views
 
 ## Module References
 

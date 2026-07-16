@@ -28,7 +28,7 @@ struct MyAppKitView: NSViewRepresentable {
         // Remove observers, cancel timers, etc.
     }
 
-    // 5. Optional: Control sizing (macOS 13+)
+    // 5. Optional: Control sizing
     func sizeThatFits(_ proposal: ProposedViewSize, nsView: NSTextField, context: Context) -> CGSize? {
         nsView.intrinsicContentSize
     }
@@ -60,7 +60,7 @@ class Coordinator: NSObject, NSTextFieldDelegate {
 
 ### Updating the Parent Reference
 
-The coordinator's `parent` reference becomes stale when SwiftUI recreates the view struct. Update it in `updateNSView`:
+Refresh the coordinator's `parent` reference in `updateNSView`:
 
 ```swift
 func updateNSView(_ nsView: NSTextField, context: Context) {
@@ -211,7 +211,7 @@ struct DragDropView: NSViewRepresentable {
 
 ## Layout Integration
 
-### sizeThatFits (macOS 13+)
+### sizeThatFits
 
 Control how the wrapped view participates in SwiftUI layout:
 

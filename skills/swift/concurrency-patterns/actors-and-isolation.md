@@ -9,7 +9,7 @@ Apple's canonical picture: **tasks are boats, actors are islands, non-isolated c
 Three doctrine points that follow:
 - A **data race** needs shared *mutable* state: "If your data doesn't change or it isn't shared across multiple concurrent tasks, you can't have a data race on it" (WWDC21 10133). Races are nondeterministic and demand nonlocal reasoning — which is why the compiler, not review, must catch them.
 - Architecture: views and view controllers on the main actor, business logic on other actors, tasks shuttling **Sendable** data between them — "all of your concurrent code should primarily communicate in terms of Sendable types."
-- Actors are **not FIFO**: "Actors execute the highest-priority work first… a significant difference from serial Dispatch queues, which execute in a strictly First-In, First-Out order" (WWDC22 110351). Never port order-dependent serial-queue code onto an actor. For strict ordering, use a single task or an `AsyncStream`.
+- Actors are **not FIFO** — unlike serial Dispatch queues, they run highest-priority work first. Never port order-dependent serial-queue code onto an actor; for strict ordering, use a single task or an `AsyncStream`.
 
 ## Actor Basics
 
@@ -122,7 +122,7 @@ actor BankAccount {
 
 **Pattern 3: Cache the in-flight Task so concurrent callers share ONE operation**
 
-Apple's ImageDownloader fix (WWDC21 10133) — on a cache miss, store the in-flight `Task` synchronously *before* awaiting it, so a second caller awaits the same download instead of starting another:
+Store the in-flight `Task` synchronously in the cache before awaiting it (Apple's ImageDownloader fix, WWDC21 10133):
 
 ```swift
 // ✅ Deduplicates concurrent requests for the same key
@@ -306,7 +306,7 @@ The three `@Sendable` closure rules (WWDC21 10133, verbatim): they cannot captur
 
 ### Sendable Inference Is Not Public
 
-Internal structs/enums with Sendable storage get `Sendable` automatically; **public types never do** (WWDC24 10169) — conformance on a public type is an API guarantee to clients, so you must declare it explicitly.
+Internal structs/enums with Sendable storage get `Sendable` automatically; **public types never do** — conformance on a public type is an API guarantee to clients, so declare it explicitly.
 
 ### The Returned-Reference Trap
 
@@ -314,7 +314,7 @@ Returning a value type from an actor hands the caller a safe copy. Returning a *
 
 ### Region-Based Isolation (Swift 6)
 
-Swift 6 accepts sending a **non-Sendable** value across an isolation boundary when the compiler can prove it's never referenced again from the origin (WWDC24 10136): a fresh `Client` created on `@MainActor` then passed to `await ClientStore.shared.addClient(client)` compiles without `Client: Sendable`, because there is no use after the send. If you get "sending 'x' risks causing data races," check whether the origin keeps using the value after the transfer — restructuring so it doesn't is often easier than adding conformances.
+Swift 6 accepts sending a **non-Sendable** value across an isolation boundary when the compiler can prove the origin never uses it again after the send. If you get "sending 'x' risks causing data races," check whether the origin keeps using the value after the transfer — restructuring so it doesn't is often easier than adding conformances.
 
 ### Atomic and Mutex (Swift 6 Synchronization module)
 

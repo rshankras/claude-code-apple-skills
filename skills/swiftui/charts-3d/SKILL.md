@@ -198,7 +198,7 @@ SurfacePlot(x: "X", y: "Y", z: "Z", function: { x, z in sin(x) * cos(z) })
 
 ### Surface Roughness
 
-Control how shiny or matte the surface appears. A value of 0 is perfectly smooth (reflective), and 1 is fully rough (matte):
+Control surface shininess (0 = reflective, 1 = matte):
 
 ```swift
 SurfacePlot(x: "X", y: "Y", z: "Z", function: { x, z in sin(x) * cos(z) })
@@ -232,18 +232,6 @@ Specify exact azimuth (horizontal rotation) and inclination (vertical tilt):
 )
 ```
 
-### Read-Only vs Interactive
-
-```swift
-// ✅ Read-only — user cannot rotate the chart
-.chart3DPose(Chart3DPose.front)
-
-// ✅ Interactive — user can drag to rotate, pose updates automatically
-@State private var pose = Chart3DPose.default
-// ...
-.chart3DPose($pose)
-```
-
 ### Anti-Patterns
 
 ```swift
@@ -269,10 +257,6 @@ Chart3D {
 // .chart3DCameraProjection(.orthographic)  // No perspective distortion
 // .chart3DCameraProjection(.automatic)     // System decides
 ```
-
-- **Perspective**: Gives natural depth perception. Objects farther from the camera appear smaller. Good for presentations and visual appeal.
-- **Orthographic**: No size distortion with distance. Good for precise data reading and scientific visualization.
-- **Automatic**: System selects based on context.
 
 ## Multiple Surfaces
 
@@ -362,7 +346,6 @@ These apply to every chart you build — 2D or 3D. The pillars: **focused, appro
 
 - **Pick marks by goal**: bars for patterns, ranges, and individual values; points for spotting outliers; lines for rates of change.
 - **Test with real, noisy data early** — placeholder sine waves hide layout failures. Design the edge cases explicitly (e.g., gaps in a line chart where data is missing).
-- **Bar charts fix the lower bound at 0** so a bar twice as tall reads as twice the value; let the upper bound adapt to the data.
 - **~4 horizontal gridlines** is a good baseline; pick intuitive intervals — multiples of 20 for counts, multiples of 7 for day-based axes.
 - **Descriptive takeaway title** ("Total Sales: 1,234 Pancakes"), not a generic label ("Sales") — and give the chart surrounding context.
 - **Touch targets stretch to full chart height** — a tap anywhere in a bar's column selects it, not just the drawn pixels.
@@ -407,7 +390,7 @@ Chart(data) { point in
 
 ### Pin Scales for Stability
 
-Automatic scales recalculate on every data update — a filtered dataset makes the whole chart jump. Pin them:
+Pin scales so a filtered dataset doesn't make the whole chart jump:
 
 ```swift
 .chartYScale(domain: 0...maxExpectedSales)
@@ -538,9 +521,8 @@ BarMark(x: .value("Day", sale.day, unit: .day), y: .value("Sales", sale.count))
     .accessibilityValue("\(sale.count) pancakes sold")
 ```
 
-With hundreds or thousands of points, do NOT create one accessibility element per point —
-bucket the chart into reasonable intervals and expose one element per interval, each
-summarizing its bucket (WWDC21 10122). Better navigation and performance, still understandable.
+With hundreds or thousands of points, bucket into reasonable intervals and expose one
+accessibility element per interval rather than per point (WWDC21 10122).
 
 ### Audio Graphs: AXChartDescriptor (WWDC21 10122)
 

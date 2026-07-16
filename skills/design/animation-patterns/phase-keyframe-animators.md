@@ -17,8 +17,6 @@ PhaseAnimator(
 )
 ```
 
-**Critical:** The content closure receives **two** parameters — the content proxy and the current phase. Not just the phase.
-
 ### Auto-Advancing (Continuous Loop)
 
 Omit `trigger` to loop forever — the **ambient** mode (WWDC23): idle shimmer, pulse, or breathing effects that run for the view's lifetime. With `trigger:` the animator instead runs one full cycle per trigger change. Phases must be `CaseIterable` to use `allCases`.
@@ -226,7 +224,7 @@ KeyframeTrack(\.opacity) {
 
 Two behaviors that change how tracks feel (WWDC23):
 
-- `SpringKeyframe`'s `duration` **caps** the spring — the track moves to the next keyframe at `duration` even if the spring hasn't settled.
+- `SpringKeyframe.duration` **caps** the spring — advances to the next keyframe even if unsettled.
 - Consecutive `CubicKeyframe`s blend into a single Catmull-Rom spline, drawing one smooth curve through all their values rather than separate eased segments — ideal for arcs and loops.
 
 ### Multi-Property Example

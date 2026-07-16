@@ -99,9 +99,6 @@ Thank you for your feedback!
 ### Don'ts
 - Don't start with "Welcome to..."
 - Don't use ALL CAPS excessively
-- Don't mention prices (they change)
-- Don't claim "#1" or "best" without proof
-- Don't mention competitors by name
 - Don't include URLs (they're not clickable)
 
 ## Examples

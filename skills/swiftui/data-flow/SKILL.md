@@ -28,8 +28,8 @@ SwiftUI sees three things: **identity, lifetime, dependencies**. Views with the 
 are "different states of the same conceptual UI element"; distinct identities are distinct views.
 
 - **Structural identity** = type + position in the hierarchy. An `if/else` creates **two
-  identities** (`_ConditionalContent`) — flipping the branch destroys one view and creates
-  another: state resets, transitions crossfade instead of animating.
+  identities** (`_ConditionalContent`) — flipping the branch destroys/recreates the view: state
+  resets, transitions crossfade instead of animating.
 - **Explicit identity** = `id:` in ForEach or `.id(_:)` (also the target for
   `ScrollViewReader.scrollTo`). Changing an explicit id is a new identity — new lifetime,
   fresh state. (That's the `.id(item.id)` force-refresh trick — use it knowingly.)
@@ -76,9 +76,9 @@ are "different states of the same conceptual UI element"; distinct identities ar
 - **Scope dependencies tightly**: pass the subview what it renders (the `Image`, not the whole
   model). Extracting subviews is free — "breaking up one view into multiple doesn't hurt
   performance" — and shrinks invalidation scope.
-- **Observation** (`@Observable`) tracks **per property, per instance**: a view re-renders only
-  when a property it actually *read* changes. Computed properties track through to the stored
-  properties they read. Works through arrays, optionals, and nesting.
+- **Observation** (`@Observable`) tracks **per property, per instance** — a view re-renders only
+  when a property it actually *read* changes, including through computed properties, arrays,
+  optionals, and nesting.
 - Migration from `ObservableObject`: drop conformance + `@Published` → `@Observable`;
   `@ObservedObject` → delete or `@Bindable`; `@EnvironmentObject` → `@Environment`.
   Invalidation narrows from whole-object to read-properties — a free performance win.
@@ -99,22 +99,21 @@ Ask Apple's three questions: what data does the view need · how does it manipul
 | Observable model, none of the above | plain property |
 
 - ❌ Never allocate a reference-type model inline as an `@ObservedObject` default — every
-  parent body re-run reallocates it (heap churn + data loss). That's what `@StateObject` (or
-  `@State` + `@Observable`) exists for.
-- ❌ Two siblings each holding `@State` for the same value desync — lift to the container,
-  hand children Bindings. One source of truth per fact.
+  re-run reallocates it (heap churn, data loss); use `@StateObject` or `@State` + `@Observable`.
+- ❌ Two siblings each holding `@State` for the same value desync — lift state to the container
+  and hand children Bindings.
 - `@SceneStorage` (restoration state, per window) and `@AppStorage` (settings) are stores
   *next to* your model, not the model. Limit total sources of truth.
 
 ## Body discipline
 
-- Body is "a pure function, free of side effects" — no allocation, no I/O, no filtering, no
-  string-building. Move loading to `.task { await … }`; never assume when or how often body runs.
+- Body must be a pure function, free of side effects — no allocation, I/O, filtering, or
+  string-building; move loading to `.task { await … }`.
 - Debug why body ran with `Self._printChanges()` (or `expression Self._printChanges()` at an
   LLDB breakpoint): `@self` = view value changed; a named property = that dependency changed.
   Debug-only — never ship it. Deeper workflow: `performance/swiftui-debugging`.
-- ❌ `AnyView` hides structure from SwiftUI (worse diagnostics, worse performance) — use
-  `@ViewBuilder` helpers and `switch` instead; body already is a ViewBuilder.
+- ❌ `AnyView` hides structure from SwiftUI (worse diagnostics/performance) — use
+  `@ViewBuilder` helpers and `switch` instead.
 
 ## Concurrency contract (WWDC25)
 
@@ -125,11 +124,10 @@ Ask Apple's three questions: what data does the view need · how does it manipul
   `visualEffect`, `onGeometryChange` — that's why they're `Sendable`. Don't touch
   `self.someState` there; **copy the value in the capture list** (`[pulse]`) and compute from
   the proxies SwiftUI hands you.
-- Button actions are deliberately synchronous: set loading state + `withAnimation`
-  synchronously *first*, then start the async work; finish with another synchronous mutation.
-- Every `await` can resume after the frame deadline — time-sensitive state (gesture/scroll
-  reactions) must mutate synchronously in the same frame. Bridge UI↔async through a piece of
-  state; keep view `Task`s minimal ("inform the model") so async logic stays unit-testable.
+- Every `await` can resume after the frame deadline, so time-sensitive state (gesture/scroll
+  reactions, button loading indicators) must mutate synchronously *before* starting async work.
+  Bridge UI↔async through a piece of state; keep view `Task`s minimal ("inform the model") so
+  async logic stays unit-testable.
 
 ## Output Format
 

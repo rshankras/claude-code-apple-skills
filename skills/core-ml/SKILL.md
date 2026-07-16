@@ -206,7 +206,6 @@ try handler.perform([
 ## NaturalLanguage Framework
 
 ### Sentiment Analysis
-Returns a score from -1.0 (negative) to +1.0 (positive):
 ```swift
 let tagger = NLTagger(tagSchemes: [.sentimentScore])
 tagger.string = "This app is amazing!"
@@ -271,7 +270,7 @@ Reduces unique weight values using k-means clustering:
 ```python
 from coremltools.optimize.coreml import palettize_weights, OpPalettizerConfig
 
-config = OpPalettizerConfig(nbits=4)  # 16 unique values per tensor
+config = OpPalettizerConfig(nbits=4)
 model_palettized = palettize_weights(model, config)
 ```
 
@@ -280,7 +279,7 @@ Removes near-zero weights (sparse model):
 ```python
 from coremltools.optimize.torch.pruning import MagnitudePruner, MagnitudePrunerConfig
 
-config = MagnitudePrunerConfig(target_sparsity=0.75)  # Remove 75% of weights
+config = MagnitudePrunerConfig(target_sparsity=0.75)
 pruner = MagnitudePruner(model, config)
 ```
 

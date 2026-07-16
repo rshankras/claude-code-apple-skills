@@ -23,8 +23,8 @@ View identity/data-flow questions route to `swiftui/data-flow`.
 ## Custom Layout protocol (not GeometryReader)
 
 Reach for a custom `Layout` whenever you must **measure subviews and feed the measurement back
-into layout** — GeometryReader measures its *container* and can't influence the engine
-(feedback through state risks layout loops). Canonical case: equal-width buttons.
+into layout** — GeometryReader only measures its container and can't influence the engine.
+Canonical case: equal-width buttons.
 
 - `sizeThatFits`: propose `.unspecified` to read each subview's ideal size
   (`subviews.map { $0.sizeThatFits(.unspecified) }`); guard empty subviews;

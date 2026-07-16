@@ -287,8 +287,6 @@ NavigationSplitView {
 }
 ```
 
-**Why?** SwiftUI may reuse the same view instance when the selection changes. Internal `@State` properties won't reset unless the view identity changes.
-
 ## Checklist
 
 - [ ] Using `NavigationSplitView` (not deprecated `NavigationView(.columns)`)

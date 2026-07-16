@@ -363,7 +363,6 @@ struct GlassMorphCard: View {
 
 ## macOS 26 Tahoe Specific
 
-- Menu bar is fully transparent by default
 - Control Center redesigned with modular cards
 - Folder icons support custom colors and emblems
 - Liquid Glass materials are primary design element

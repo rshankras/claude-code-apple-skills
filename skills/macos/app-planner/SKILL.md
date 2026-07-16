@@ -36,8 +36,6 @@ Create comprehensive planning documents for new macOS apps or analyze existing p
 ## Approach
 
 - Ask detailed questions about requirements
-- Consider macOS 26 Tahoe features
-- Recommend SwiftData, SwiftUI where appropriate
 - Plan for SOLID/DRY principles
 - Consider accessibility and performance
 

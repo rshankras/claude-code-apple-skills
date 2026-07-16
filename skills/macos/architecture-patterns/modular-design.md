@@ -141,11 +141,9 @@ let package = Package(
 
 ### Dependency Graph Rules
 
-1. **Core** depends on nothing — shared models, protocols, utilities
-2. **Service layers** (Persistence, Networking) depend on Core only
-3. **Feature modules** depend on Core and relevant service layers
-4. **App target** depends on all feature modules and wires them together
-5. **No circular dependencies** — if two modules need each other, extract the shared part into Core
+1. **Service layers** (Persistence, Networking) depend on Core only
+2. **Feature modules** depend on Core and relevant service layers
+3. **App target** depends on all feature modules and wires them together
 
 ```
 App → DocumentFeature → Persistence → Core
@@ -191,7 +189,7 @@ package struct MigrationHelper {
 | `private` | Enclosing declaration only |
 | `fileprivate` | Same source file |
 | `internal` (default) | Same module/target |
-| `package` | Same package (Swift 5.9+) |
+| `package` | Same package |
 | `public` | Any importing module |
 | `open` | Any module (can subclass/override) |
 
@@ -278,8 +276,6 @@ struct Contact: Searchable {
 | Want to share code between app and extension | Extract into shared package |
 | Tests require the full app to compile | Extract testable code into packages |
 | Hard to find files | Reorganize by feature |
-
-**Don't modularize prematurely** — start with feature folders in the app target and extract to packages when there's a concrete benefit.
 
 ## Testing Across Modules
 

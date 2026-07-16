@@ -115,5 +115,5 @@ Load these modules as needed:
 - Always specify required entitlements for each capability
 - Note Mac App Store vs. direct distribution differences
 - Warn about common rejection reasons
-- Prefer modern APIs (ServiceManagement over deprecated SMLoginItemSetEnabled)
+- Prefer modern APIs over deprecated ones
 - Include Info.plist keys when relevant

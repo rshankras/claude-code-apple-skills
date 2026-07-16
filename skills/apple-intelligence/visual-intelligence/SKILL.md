@@ -32,10 +32,8 @@ Your app implements:
 
 ## Platform Availability (WWDC26 297)
 
-- Visual Intelligence runs on iOS, iPadOS, and macOS — the same entities, query, and OpenIntent code works unchanged on all three.
-- The input mix differs by platform: on iOS it's often **camera captures of physical objects**; on iPad and Mac the primary entry point is **screenshots of digital media**. Your search must handle both content styles.
+- Visual Intelligence runs on iOS, iPadOS, and macOS — the same entities, query, and OpenIntent code works unchanged on all three. Handle both **camera captures of physical objects** (iOS) and **screenshots of digital media** (iPad/Mac) as input.
 - On Mac, the input pixel buffer can be **much larger** than what you'd encounter on iPhone — consider whether resizing is necessary before matching.
-- Provider ordering in the Visual Intelligence sheet is **system-decided** among available Image Search providers — not something you control.
 
 ## Quick Start
 
@@ -247,8 +245,7 @@ Whether you're searching on device or hitting a server, the same principles appl
 
 Vision-framework pattern:
 
-- **Pre-compute** `GenerateImageFeaturePrintRequest` feature prints for your catalog — never at query time.
-- At query time: convert the pixel buffer via VideoToolbox (`VTCreateCGImageFromCVPixelBuffer`), generate one feature print, compare distances.
+- **Pre-compute** `GenerateImageFeaturePrintRequest` feature prints for your catalog; at query time, convert the pixel buffer via VideoToolbox (`VTCreateCGImageFromCVPixelBuffer`) and generate just one feature print to compare.
 - Filter with a **maximum distance threshold** to drop dissimilar results, **sort ascending by distance** so the best match is first, and **cap the result count**. Apple's sample signature: `search(matching:limit: Int = 10, maxDistance: Double = 1.0)`.
 - Return `[]` when nothing matches or the pixel buffer is absent — the system handles displaying an empty response. ❌ Don't pad with weak matches.
 
@@ -361,10 +358,7 @@ struct SemanticContentSearchIntent: AppIntent {
 }
 ```
 
-Rules (WWDC26 297):
-
-- **Pre-populate** the in-app search view from the captured context — never land people on a blank search screen.
-- Use the in-app surface to expose what the Visual Intelligence sheet can't: filters, categories, the full depth of your content.
+Rules (WWDC26 297): pre-populate the in-app search view from the captured context (never a blank screen), and use it to expose what the Visual Intelligence sheet can't — filters, categories, the full depth of your content.
 
 ## Complete Example
 

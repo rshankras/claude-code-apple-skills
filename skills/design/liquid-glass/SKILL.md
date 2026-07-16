@@ -26,7 +26,7 @@ Implement Apple's Liquid Glass design language across all Apple UI frameworks. C
 
 ## Design Rules (WWDC25)
 
-Liquid Glass is the material of the **navigation layer floating above content** — bars, toolbars, floating controls. Never apply it to the content layer itself (tables, lists, rows in a scroll view).
+Liquid Glass is the material of the **navigation layer** — bars, toolbars, floating controls — never the content layer (tables, lists, rows in a scroll view).
 
 | Rule | Detail |
 |------|--------|
@@ -38,7 +38,7 @@ Liquid Glass is the material of the **navigation layer floating above content** 
 
 **Scroll edge effects** keep floating elements separated from scrolling content: soft (gradual fade — the iOS default) vs hard (denser, with a dividing line — mostly macOS). One per view edge, and they're not decorative — don't add one where no floating UI elements exist.
 
-**Shape system** — three families; let containers do the math:
+**Shape system** — let containers do the math:
 
 | Shape | Radius | Use |
 |-------|--------|-----|
@@ -636,7 +636,7 @@ scrollView.rightEdgeEffect.isHidden = true
 
 ### UIScrollEdgeElementContainerInteraction
 
-Use `UIScrollEdgeElementContainerInteraction` to coordinate glass elements (such as bottom toolbars) with scroll edge behavior:
+Coordinates glass elements (such as bottom toolbars) with scroll edge behavior:
 
 ```swift
 let interaction = UIScrollEdgeElementContainerInteraction()
@@ -647,7 +647,7 @@ buttonContainer.addInteraction(interaction)
 
 ### Toolbar Integration
 
-UIKit navigation bar items integrate with Liquid Glass automatically. Use `hidesSharedBackground` to opt individual items out of the shared glass bar:
+UIKit navigation bar items integrate with Liquid Glass automatically; `hidesSharedBackground` opts an item out of the shared glass bar:
 
 ```swift
 let shareButton = UIBarButtonItem(

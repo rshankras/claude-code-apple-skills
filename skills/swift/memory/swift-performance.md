@@ -46,9 +46,9 @@ Copy costs: copying a class reference = one retain. Copying a struct = recursive
 ## Calls, Generics, and Existentials (WWDC24 10217)
 
 - Static dispatch's real win isn't the call itself — it's enabling **inlining and generic specialization**.
-- ✅/❌ that surprises people: a method declared **in the protocol body** is a requirement → dynamic dispatch through a witness table; the same-looking method declared **in a protocol extension** → static dispatch. "A really important difference, both semantically and for performance."
+- A method declared **in the protocol body** is a requirement → dynamic dispatch through a witness table; the same-looking method declared **in a protocol extension** → static dispatch.
 - Generic functions receive type metadata + witness tables as hidden parameters; when the concrete type is visible, the optimizer **specializes** — "removes any abstraction cost associated with generics."
-- An existential (`any P`) is a fixed-size box: **3-word inline value buffer + type metadata + witness table**. Values bigger than 3 words are heap-allocated into the box. `[any DataModel]` boxes every element and defeats packing/specialization; `func update<Model: DataModel>(models: [Model])` keeps elements densely packed and specializable. Use `any` when you genuinely need heterogeneity — these are costs, not prohibitions.
+- Existentials (`any P`) larger than the 3-word inline buffer are heap-allocated into the box. `[any DataModel]` boxes every element and defeats packing/specialization; `func update<Model: DataModel>(models: [Model])` keeps elements densely packed and specializable. Use `any` when you genuinely need heterogeneity — these are costs, not prohibitions.
 - Forcing the optimizer's hand (WWDC26 262): `@specialized(where T == [UInt8])` (Swift 6.3) emits a specialization for hot instantiations; `@inline(always)` (Swift 6.4) is the forced-inlining counterpart to `@inline(never)` — pair with `final` for class methods.
 
 ## Closures (WWDC24 10217)
@@ -64,7 +64,7 @@ Async functions keep suspension-crossing state on task-owned heap slabs with sta
 
 ## Noncopyable Types: Compile-Time Unique Ownership (WWDC24 10170)
 
-`Copyable` is a real protocol that Swift infers on every type, generic parameter, and protocol; `~Copyable` **suppresses** that default. Noncopyable structs may declare `deinit` (runs when the value is destroyed unconsumed) and `discard self` (in a `consuming` method: destroy *without* running deinit — the "operation succeeded, skip cleanup" tool).
+`Copyable` is a real protocol that Swift infers on every type, generic parameter, and protocol; `~Copyable` **suppresses** that default.
 
 Parameter conventions are mandatory for noncopyable parameters:
 

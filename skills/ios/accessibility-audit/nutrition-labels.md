@@ -74,8 +74,6 @@ label.numberOfLines = 0           // UIKit
 @Environment(\.accessibilityReduceTransparency) var reduceTransparency
 ```
 
-Custom fonts must scale through the metrics system: `.font(.custom("MyFont", size: 17, relativeTo: .body))` / `UIFontMetrics(forTextStyle: .body).scaledFont(for:)`.
-
 ## Process Principles
 
 - "**Nothing about us without us**" — the most effective validation is testing with people who use these features daily (WWDC25 224).

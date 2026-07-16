@@ -56,9 +56,7 @@ For each protocol method, define required behaviors:
 
 ### save(_ item:)
 - Saving a new item increases count by 1
-- Saving an existing item (same ID) updates it, count unchanged
 - Saved item is retrievable by ID
-- Throws on invalid item (empty title)
 
 ### fetch(id:)
 - Returns item when it exists
@@ -67,7 +65,6 @@ For each protocol method, define required behaviors:
 
 ### delete(id:)
 - Deleting existing item decreases count by 1
-- Deleting non-existent item does nothing (no throw)
 - Deleted item is no longer fetchable
 
 ### fetchAll()
@@ -248,40 +245,6 @@ struct SQLiteDataStoreContractTests {
 }
 ```
 
-#### Alternative: Parameterized by Implementation
-
-```swift
-@Suite("DataStore Contract")
-struct DataStoreContractSuite {
-
-    enum StoreType: String, CaseIterable {
-        case inMemory, sqlite, cloud
-    }
-
-    func makeStore(_ type: StoreType) -> any DataStore {
-        switch type {
-        case .inMemory: return InMemoryDataStore()
-        case .sqlite: return SQLiteDataStore(path: ":memory:")
-        case .cloud: return MockCloudDataStore()
-        }
-    }
-
-    @Test("save increases count", arguments: StoreType.allCases)
-    func saveIncreasesCount(type: StoreType) async throws {
-        let store = makeStore(type)
-        try await store.save(Item(id: "1", title: "Test"))
-        #expect(store.count == 1)
-    }
-
-    @Test("fetch non-existent returns nil", arguments: StoreType.allCases)
-    func fetchNonExistent(type: StoreType) async throws {
-        let store = makeStore(type)
-        let result = try await store.fetch(id: "nonexistent")
-        #expect(result == nil)
-    }
-}
-```
-
 ## Common Contract Categories
 
 ### Repository / Data Store
@@ -301,7 +264,6 @@ struct DataStoreContractSuite {
 ### Cache
 - Store and retrieve
 - Expiration/TTL
-- Eviction policy (LRU, size limit)
 - Thread safety
 - Persistence across init
 

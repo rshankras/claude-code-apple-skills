@@ -467,10 +467,7 @@ final class Article {
 
 ### When to Use Core Data Instead of SwiftData
 
-- Complex migrations from existing Core Data apps
-- Need for advanced Core Data features not yet in SwiftData
-- Fetched Results Controllers with complex predicates
-- Custom NSManagedObject subclasses with complex logic
+Complex migrations from an existing Core Data app, advanced Core Data features not yet in SwiftData, Fetched Results Controllers with complex predicates, or custom NSManagedObject subclasses.
 
 ### Core Data Best Practices
 

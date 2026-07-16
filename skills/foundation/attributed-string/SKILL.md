@@ -62,8 +62,6 @@ What do you need with AttributedString?
 | API | Minimum Version | Notes |
 |-----|----------------|-------|
 | `AttributedString` | iOS 15 / macOS 12 | Swift-native replacement for NSAttributedString |
-| `AttributedString.font` | iOS 15 / macOS 12 | Inline attribute |
-| `AttributedString.foregroundColor` | iOS 15 / macOS 12 | Inline attribute |
 | `AttributedString.paragraphStyle` | iOS 15 / macOS 12 | Uses NSMutableParagraphStyle |
 | `AttributedString.writingDirection` | iOS 26 / macOS 26 | New in 2025 |
 | `AttributedString.LineHeight` | iOS 26 / macOS 26 | `.exact(points:)`, `.multiple(factor:)`, `.loose` |
@@ -209,9 +207,7 @@ let replacement = AttributedString("horse")
 text.replaceSelection(&selection, with: replacement)
 ```
 
-Key points:
-- `selection` is passed as `inout` so the API updates the selection range after replacement.
-- Use `withCharacters:` for plain text, `with:` for styled replacements.
+Key point: use `withCharacters:` for plain text, `with:` for styled replacements.
 
 ## DiscontiguousAttributedSubstring
 
@@ -230,12 +226,6 @@ if let range1 = text.range(of: "Select"),
     let combined = AttributedString(substring)
 }
 ```
-
-| Operation | Result Type |
-|-----------|-------------|
-| `text[range]` | `AttributedSubstring` (contiguous) |
-| `text[rangeSet]` | `DiscontiguousAttributedSubstring` (non-contiguous) |
-| `AttributedString(substring)` | Flattened `AttributedString` copy |
 
 ## UTF-8 View
 
@@ -280,10 +270,7 @@ TextEditor(text: $text, selection: $selection)
     .textSelectionAffinity(.upstream)
 ```
 
-| Value | Behavior |
-|-------|----------|
-| `.upstream` | Cursor stays at end of previous line |
-| `.downstream` | Cursor moves to start of next line |
+`.upstream` keeps the cursor at the end of the previous line; `.downstream` moves it to the start of the next.
 
 ### Displaying Styled Text in SwiftUI
 

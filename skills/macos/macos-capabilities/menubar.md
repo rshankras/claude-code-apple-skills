@@ -334,11 +334,9 @@ class HotkeyManager {
 ## Best Practices
 
 1. **Use MenuBarExtra for new apps** - Simpler, declarative, less code
-2. **Use `.menuBarExtraStyle(.window)` for rich UIs** - Default menu style is limited
-3. **Always provide a Quit option** - Users expect it in menu bar apps
-4. **Dismiss the menu after actions** - Standard macOS behavior
-5. **Activate the app when opening windows** - Use `NSApp.activate(ignoringOtherApps: true)`
-6. **Set LSUIElement for background-only apps** - Hides from Dock
-7. **Keep menus lightweight** - Don't do heavy computation in the menu view
-8. **Support keyboard shortcuts** - Add `.keyboardShortcut()` to menu items
-9. **Use SF Symbols for the status item** - Automatic template rendering for dark/light menu bar
+2. **Always provide a Quit option** - Users expect it in menu bar apps
+3. **Dismiss the menu after actions** - Standard macOS behavior
+4. **Activate the app when opening windows** - Use `NSApp.activate(ignoringOtherApps: true)`
+5. **Keep menus lightweight** - Don't do heavy computation in the menu view
+6. **Support keyboard shortcuts** - Add `.keyboardShortcut()` to menu items
+7. **Use SF Symbols for the status item** - Automatic template rendering for dark/light menu bar

@@ -45,9 +45,8 @@ footnote), which manual font sizes can't replicate.
 
 ## The Dynamic Type ladder (WWDC24 10074)
 
-12 sizes: 7 default + 5 accessibility sizes (AX1–AX5). `.body` runs 17pt at the default
-size, 28pt at AX1, 53pt at AX5 — roughly 3× taller, and layouts must expect that.
-Escalate in order:
+12 sizes: 7 default + 5 accessibility (AX1–AX5). `.body` runs 17pt at default up to 53pt
+at AX5 — roughly 3× taller, and layouts must expect that. Escalate in order:
 
 1. **Text styles** — `.font(.title)` / `preferredFont(forTextStyle:)` +
    adjusts-for-content-size, line count 0 so text wraps instead of truncating.
@@ -82,7 +81,7 @@ biggest — mid-range accessibility sizes catch different wrap points.
 
 - Default Regular; every non-Regular choice is a legibility decision — check it.
 - Condensed: fit more text comfortably (long headlines wrap one line fewer).
-- Compressed: display-only density — "too tight for longer passages."
+- Compressed: display-only density, not body text.
 - Expanded: display typesetting AND small secondary labels (wide + loose tracking).
 - Width is a **fourth hierarchy lever** beside weight, size, color; all widths share identical
   vertical proportions, so mixing them never misaligns baselines. 2–3 styles are enough —

@@ -101,8 +101,6 @@ What memory optimization do you need?
 
 ### Declaration
 
-`InlineArray` uses Swift's value generics to encode the count in the type:
-
 ```swift
 @frozen struct InlineArray<let count: Int, Element> where Element: ~Copyable
 ```
@@ -241,23 +239,6 @@ func processData(_ array: [UInt8]) {
     let span = array.span
     // Use span here
     let sum = span.reduce(0, +)
-}
-```
-
-### Non-Escapable: Cannot Capture in Closures
-
-```swift
-// ❌ Wrong -- Span cannot be captured
-func makeClosure() -> () -> Int {
-    let array: [UInt8] = Array(repeating: 0, count: 128)
-    let span = array.span
-    return { span.count }  // Compiler error
-}
-
-// ✅ Right -- use Span within the local scope only
-func countElements(_ array: [UInt8]) -> Int {
-    let span = array.span
-    return span.count
 }
 ```
 

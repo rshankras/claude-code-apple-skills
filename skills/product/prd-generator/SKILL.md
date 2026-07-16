@@ -689,7 +689,6 @@ The PRD serves as the source of truth for all downstream specifications.
 ## Notes
 
 - The PRD is a living document - expect iterations
-- User stories should follow Given/When/Then format for testability
 - All features should trace back to solving user pain points from discovery
 - Keep stakeholder informed with clear decision points
 - Document version history for accountability

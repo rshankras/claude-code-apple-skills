@@ -456,20 +456,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 ```
 
-### Ignoring Scene Disconnection
-
-```swift
-// ❌ Wrong -- never cleaning up when scene disconnects
-// Resources leak as system disconnects background scenes
-
-// ✅ Right -- release heavy resources in sceneDidDisconnect
-func sceneDidDisconnect(_ scene: UIScene) {
-    // Release image caches, media players, etc.
-    // Keep user data — scene may reconnect
-    releaseHeavyResources()
-}
-```
-
 ### Fixed Layouts That Break in Split View
 
 ```swift

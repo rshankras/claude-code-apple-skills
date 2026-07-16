@@ -202,7 +202,7 @@ NavigationLink { DetailView().matchedGeometryEffect(id: "item", in: ns) }
 
 ### matchedTransitionSource + navigationTransition(.zoom)
 
-The correct way to create hero/zoom transitions with NavigationStack. **Do not use matchedGeometryEffect for this.**
+The correct way to create hero/zoom transitions with NavigationStack.
 
 ```swift
 struct GalleryView: View {
@@ -283,7 +283,7 @@ CardView(item: item)
 
 ### UIKit Zoom Transitions (iOS 18+)
 
-Set `preferredTransition` on the *pushed* view controller. The closure re-runs whenever the system needs the source view, so capture **stable model identifiers, never views** — cells get reused, and a captured cell may display different content by the time the user swipes back:
+Set `preferredTransition` on the *pushed* view controller, capturing stable model identifiers — not views — since cells get reused and the closure re-runs on demand:
 
 ```swift
 let detail = ItemDetailViewController(item: item)

@@ -91,7 +91,6 @@ What SwiftUI performance problem are you seeing?
 
 - ❌ No `if` filters and no `AnyView` inside `ForEach` -- both make views-per-element non-constant, forcing SwiftUI to run every closure just to count rows (and defeating `List`'s constant-count optimizations).
 - ✅ Filter in the data, not the view -- and **cache the filtered collection in the model**: an inline `items.filter { ... }` in `body` re-runs linearly on every single body evaluation.
-- ✅ `listRowBackground` (and row modifiers generally) go *after* the row's stack, not inside the `ForEach` content per-branch.
 - ✅ For `Table`, prefer the streamlined `ForEach(collection)` initializer (no `id:`, no per-row closure gymnastics) -- it keeps row counts statically constant.
 
 ## Common Slow-Update Causes
@@ -128,7 +127,7 @@ Also callable from LLDB without editing code -- pause in a view context and run:
 (lldb) expression Self._printChanges()
 ```
 
-It is debug-only API with real runtime cost: use it during an investigation, then delete it. Never ship it.
+Remove it before shipping -- it has real runtime cost.
 
 ### Instruments SwiftUI Template
 
@@ -166,7 +165,7 @@ The classic find (the session's demo): a computed property read in `body` create
 
 ### Cause & Effect Graph: Why Did Body Run? (WWDC25 306)
 
-Backtraces explain imperative UIKit updates but not SwiftUI -- a SwiftUI backtrace is recursive AttributeGraph frames and never says why *your* view updated. The mechanics: changing `@State` doesn't update views immediately; it creates a **transaction** that marks the state's attribute **outdated**, outdated-ness propagates down dependent attributes as a cheap flag, and at frame time SwiftUI re-evaluates only outdated attributes. So "why did body run?" really means "**what marked my body outdated?**" -- which is exactly what the instrument's **Cause & Effect Graph** answers (hover-arrow on a view name -> Show Cause & Effect Graph):
+Backtraces explain imperative UIKit updates but not SwiftUI -- a SwiftUI backtrace is recursive AttributeGraph frames and never says why *your* view updated. So "why did body run?" really means "**what marked my body outdated?**" -- which is exactly what the instrument's **Cause & Effect Graph** answers (hover-arrow on a view name -> Show Cause & Effect Graph):
 
 - Nodes are updates, one icon per kind (view body, state change, gesture, `@Observable` change, environment); **blue nodes = your code / your interactions**; the graph reads left (cause) -> right (effect)
 - Edges are labeled **"update"** (caused a re-run) or **"Creation"** (made the view first appear)

@@ -2,7 +2,7 @@
 
 Login items, launch agents, and background task management for macOS apps.
 
-## Login Items (Modern, macOS 13+)
+## Login Items (Modern)
 
 Use the ServiceManagement framework to register your app as a login item.
 
@@ -350,11 +350,9 @@ class SleepPreventer {
 
 ## Best Practices
 
-1. **Use SMAppService for login items** - Modern API, handles registration properly
-2. **Handle `requiresApproval` status** - Guide users to System Settings if needed
-3. **Use BGTaskScheduler for periodic work** - System-managed, power efficient
-4. **Use ProcessInfo activities for critical work** - Prevents suspension during exports
-5. **Always clean up watchers and timers** - Cancel in deinit or when no longer needed
-6. **Be power-conscious** - Use appropriate QoS levels, respect system power state
-7. **Test background behavior** - Use `e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.example.myapp.refresh"]` in debugger
-8. **Avoid deprecated APIs** - Don't use `SMLoginItemSetEnabled`, use `SMAppService`
+1. **Use SMAppService for login items** - Not the deprecated `SMLoginItemSetEnabled`
+2. **Use BGTaskScheduler for periodic work** - System-managed, power efficient
+3. **Use ProcessInfo activities for critical work** - Prevents suspension during exports
+4. **Always clean up watchers and timers** - Cancel in deinit or when no longer needed
+5. **Be power-conscious** - Use appropriate QoS levels, respect system power state
+6. **Test background behavior** - Simulate a BGTaskScheduler launch in the debugger rather than waiting on the real schedule

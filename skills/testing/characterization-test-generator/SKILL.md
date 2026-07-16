@@ -184,7 +184,7 @@ This is the key step. For each test:
 
 1. **Read the source code** to understand what the method actually returns
 2. **Trace the logic** for the given inputs
-3. **Write the assertion with the actual value**, even if it seems wrong
+3. **Write the assertion with the actual value**
 
 ```swift
 // ❌ Wrong — this is what you WANT it to do
@@ -205,7 +205,7 @@ This is the key step. For each test:
 
 1. **Run all characterization tests** — they must ALL pass
 2. **If any fail**, adjust assertions to match actual behavior
-3. **Tag them** so they're easy to find later:
+3. **Tag them:**
 
 ```swift
 @Suite("Characterization: ItemManager")

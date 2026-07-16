@@ -572,16 +572,6 @@ Button("Action") { doSomething() }
 
 Note: standard SwiftUI `Button` already has basic pointer behavior. Add `.hoverEffect()` to custom interactive elements built with `.onTapGesture`.
 
-### Drawing with Finger When Pencil Is Available
-
-```swift
-// ❌ Wrong -- both finger and pencil draw, user cannot scroll
-canvasView.drawingPolicy = .anyInput
-
-// ✅ Right -- pencil draws, finger scrolls
-canvasView.drawingPolicy = .pencilOnly
-```
-
 ### Not Respecting Pencil Double-Tap Preference
 
 ```swift
