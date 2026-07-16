@@ -1,0 +1,7 @@
+# Per-run working data is bulky and reproducible; only AUDIT-REPORT.md and
+# summary.json (committed) are the record.
+results/*/state/
+results/*/raw/
+results/*/tmp-cwd/
+results/*/preflight.json
+results/.preflight-tmp/

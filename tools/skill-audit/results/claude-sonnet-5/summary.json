@@ -1,0 +1,21 @@
+[
+ {
+  "skill": "security",
+  "track": "A",
+  "verdict": "DELETE-candidate",
+  "coverage": 0.8636363636363636,
+  "flags": [
+   "swiftship-referenced"
+  ]
+ },
+ {
+  "skill": "security/privacy-manifests",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7916666666666666,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unverified-suspect"
+  ]
+ }
+]
