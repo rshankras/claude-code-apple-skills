@@ -1,0 +1,24 @@
+{
+  "baseline_model": "sonnet",
+  "escalation_model": "opus",
+  "concurrency": 4,
+  "max_calls_per_run": 400,
+  "content_budget_bytes": 60000,
+  "call_timeout_seconds": 300,
+  "retries": 3,
+  "backoff_seconds": [10, 30, 90],
+  "swiftship_dir": "",
+  "track_overrides": {
+    "product/ux-spec": "B",
+    "product/implementation-guide": "B",
+    "product/release-spec": "B",
+    "product/test-spec": "B",
+    "product/architecture-spec": "B",
+    "product/implementation-spec": "B"
+  },
+  "thresholds": {
+    "delete_coverage": 0.8,
+    "trim_coverage": 0.5,
+    "review_band": 0.05
+  }
+}
