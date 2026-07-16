@@ -116,4 +116,4 @@ Type review: `Element | Current (font/size/style) | Issue (hierarchy/scaling/leg
 - https://developer.apple.com/videos/play/wwdc2022/110381/ (The expanded San Francisco family)
 - https://developer.apple.com/fonts/ (SF + New York downloads)
 - https://developer.apple.com/design/human-interface-guidelines/typography
-- Related skills: `design/design-principles` (hierarchy), `design/sf-symbols` (symbols align to text styles), `foundation/attributed-string` (rich text mechanics), `generators/accessibility-generator`
+- Related skills: `design/sf-symbols` (symbols align to text styles), `foundation/attributed-string` (rich text mechanics), `generators/accessibility-generator`

@@ -155,4 +155,4 @@ widgets to `visionos/widgets`.
 - https://developer.apple.com/videos/play/wwdc2025/303/ (Hover interactions)
 - https://developer.apple.com/videos/play/wwdc2025/304/ (Video experiences)
 - https://developer.apple.com/design/human-interface-guidelines/designing-for-visionos
-- Related: `visionos/widgets`, `design/design-principles`, `design/animation-patterns`
+- Related: `visionos/widgets`, `design/animation-patterns`

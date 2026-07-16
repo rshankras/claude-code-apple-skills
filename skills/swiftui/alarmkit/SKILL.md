@@ -1,6 +1,6 @@
 ---
 name: alarmkit
-description: AlarmKit integration for scheduling alarms and timers with custom UI, Live Activities, and snooze support. Use when implementing alarm or timer features in iOS 18+ apps.
+description: AlarmKit integration for scheduling alarms and timers with custom UI, Live Activities, and snooze support. Use when implementing alarm or timer features in iOS 26+ apps.
 allowed-tools: [Read, Glob, Grep]
 ---
 
@@ -53,15 +53,15 @@ What do you need?
 
 | API | Minimum Version | Reference |
 |-----|----------------|-----------|
-| `AlarmManager` | iOS 18 | scheduling.md |
-| `Alarm` / `Alarm.Schedule` | iOS 18 | scheduling.md |
-| `AlarmPresentation` (.alert, .countdown, .paused) | iOS 18 | presentation.md |
-| `AlarmAttributes` | iOS 18 | live-activities.md |
-| `AlarmMetadata` | iOS 18 | live-activities.md |
-| `AlarmButton` | iOS 18 | presentation.md |
-| `CountdownDuration` | iOS 18 | scheduling.md |
-| `alarmUpdates` async sequence | iOS 18 | scheduling.md |
-| `authorizationUpdates` async sequence | iOS 18 | scheduling.md |
+| `AlarmManager` | iOS 26 | scheduling.md |
+| `Alarm` / `Alarm.Schedule` | iOS 26 | scheduling.md |
+| `AlarmPresentation` (.alert, .countdown, .paused) | iOS 26 | presentation.md |
+| `AlarmAttributes` | iOS 26 | live-activities.md |
+| `AlarmMetadata` | iOS 26 | live-activities.md |
+| `AlarmButton` | iOS 26 | presentation.md |
+| `CountdownDuration` | iOS 26 | scheduling.md |
+| `alarmUpdates` async sequence | iOS 26 | scheduling.md |
+| `authorizationUpdates` async sequence | iOS 26 | scheduling.md |
 
 ## Top Mistakes -- Quick Reference
 
