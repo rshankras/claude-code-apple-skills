@@ -21,9 +21,9 @@ web becomes a free acquisition channel that compounds with everything on-store.
 
 ## Surface 1: The apps.apple.com page is a Google citizen
 
-Your store listing is crawlable, indexable web content. Its Google snippet is built from your
-**app name, subtitle, and description opening** — one more reason the first description paragraph
-must be benefit-led plain language (see `app-store/app-description-writer`).
+The store page's Google snippet draws from your **app name, subtitle, and description opening**
+— one more reason the first description paragraph must be benefit-led plain language (see
+`app-store/app-description-writer`).
 
 - ✅ Search your app's name + category terms on Google periodically; if the store page doesn't
   rank for your own brand, something is wrong (usually a generic name — see `product/app-namer`).
@@ -47,11 +47,9 @@ One page, one job: convert a web visitor into a store visitor.
 
   ✅ The banner shows **Open** for installed users — deep-linking into the app, down to specific
   in-app content via `app-argument` — and **View** for everyone else, opening the App Store in
-  one tap. ❌ Custom "download our app" interstitials — Safari users get the
-  native banner for free, and interstitials tank your Google page experience.
-- **App Store Marketing Tools** (tools.applemediaservices.com) generate short links, QR codes,
-  and localized badge assets — use them for referral campaigns and offline/print placements
-  instead of hand-rolling links.
+  one tap. ❌ Custom "download our app" interstitials — the native banner already does this for free.
+- **App Store Marketing Tools** (tools.applemediaservices.com) — use for referral links, QR
+  codes, and localized badge assets instead of hand-rolling them.
 - The landing page is also where pre-launch waitlists live (TestFlight public link — see
   `product/beta-testing`) and where press/link-in-bio traffic should land, because you can
   measure it before it enters the store funnel.
@@ -59,12 +57,11 @@ One page, one job: convert a web visitor into a store visitor.
 
 ## Surface 3: The deal-site ecosystem
 
-Aggregators and deal communities scrape App Store price drops automatically — you don't submit
-anything, you just drop the price and the ecosystem notices.
+Deal aggregators scrape App Store price drops automatically — no submission needed, just drop
+the price.
 
-The mechanic: temporary price drop → aggregators list it → download spike → **chart climb** →
-charts drive organic downloads that outlive the sale. Velocity is the product; the discounted
-revenue is the cost of the campaign.
+Price drop → aggregator listing → download spike → **chart climb** → organic downloads that
+outlive the sale. Velocity is the product; the discounted revenue is the cost of the campaign.
 
 - ✅ Drop meaningfully (50%+ or free-for-a-day reads as a deal; 10% doesn't scrape well).
 - ✅ Time drops to compound: with an in-app event, a seasonal moment, or the announced On-Sale
@@ -74,8 +71,8 @@ revenue is the cost of the campaign.
   after prices recover.
 - ❌ Permanent-discount theater (always "90% off") — scrapers and users both learn to ignore it,
   and review teams notice manipulated anchor pricing.
-- ❌ Dropping the price of a subscription app's *download* — deal sites move paid-upfront apps;
-  subscription apps should use offer codes instead (`generators/offer-codes-setup`).
+- ❌ Dropping the price of a subscription app's *download* — use offer codes instead
+  (`generators/offer-codes-setup`).
 
 ## Output Format
 

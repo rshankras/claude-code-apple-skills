@@ -41,10 +41,8 @@ Write professional, empathetic responses to App Store reviews that build trust a
 
 ### Response Timing
 
-- **Negative reviews:** Within 24-48 hours
-- **Bug reports:** ASAP (shows responsiveness)
-- **Positive reviews:** Weekly batch is fine
-- **After fixing issues:** Follow up to notify
+Negative reviews and bug reports: 24-48 hours. Positive reviews: weekly batch is fine.
+Follow up after fixing an issue to notify the reviewer.
 
 ## Response Framework
 
@@ -259,11 +257,8 @@ resolved things for you.
 
 ### Abusive Reviews
 
-**Don't respond.** Report to Apple if it:
-- Contains profanity/hate speech
-- Includes personal attacks
-- Is clearly spam
-- Violates App Store guidelines
+**Don't respond.** Report to Apple instead if it violates guidelines — profanity, hate speech,
+personal attacks, or clear spam.
 
 ### Competitor Attacks
 

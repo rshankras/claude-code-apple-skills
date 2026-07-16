@@ -6,19 +6,7 @@ Comprehensive guide for font usage, Dynamic Type, and typography best practices.
 
 ### iOS Text Style Hierarchy
 
-| Style | Use Case | Default Size |
-|-------|----------|--------------|
-| `.largeTitle` | Page titles, main headings | 34pt |
-| `.title` | Primary section headers | 28pt |
-| `.title2` | Secondary section headers | 22pt |
-| `.title3` | Tertiary section headers | 20pt |
-| `.headline` | Emphasized content, row titles | 17pt (semibold) |
-| `.body` | Primary content, body text | 17pt |
-| `.callout` | Secondary content | 16pt |
-| `.subheadline` | Secondary information | 15pt |
-| `.footnote` | Tertiary information, metadata | 13pt |
-| `.caption` | Image captions, labels | 12pt |
-| `.caption2` | Secondary captions | 11pt |
+Use the named system text styles (`.largeTitle` down through `.caption2`) rather than fixed point sizes — they carry the right weight/size for their role and scale automatically with Dynamic Type.
 
 ### Usage Examples
 

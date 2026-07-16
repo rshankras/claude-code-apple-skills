@@ -64,8 +64,6 @@ struct ReorderableList: View {
 }
 ```
 
-Note: For simple reordering within a `List`, prefer `.onMove(perform:)` which provides built-in reorder handles. Use `.draggable()` and `.dropDestination()` when you need cross-list or cross-app drag and drop.
-
 ## Transferable Protocol
 
 The `Transferable` protocol (iPadOS 16+) defines how types are serialized for drag/drop, copy/paste, and ShareSheet.
@@ -514,27 +512,6 @@ func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDr
             self.processImages(items.compactMap { $0 as? UIImage })
         }
     }
-}
-```
-
-### Wrong Drop Operation for Context
-
-```swift
-// ❌ Wrong -- always using .copy even for same-app reordering
-func dropInteraction(
-    _ interaction: UIDropInteraction,
-    sessionDidUpdate session: UIDropSession
-) -> UIDropProposal {
-    return UIDropProposal(operation: .copy)
-}
-
-// ✅ Right -- .move for same app, .copy for cross-app
-func dropInteraction(
-    _ interaction: UIDropInteraction,
-    sessionDidUpdate session: UIDropSession
-) -> UIDropProposal {
-    let operation: UIDropOperation = session.localDragSession != nil ? .move : .copy
-    return UIDropProposal(operation: operation)
 }
 ```
 

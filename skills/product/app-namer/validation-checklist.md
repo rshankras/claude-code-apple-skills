@@ -6,8 +6,6 @@ Reference for the `app-namer` skill. A clever name is worthless if it's taken, t
 
 ## 1. App Store Name Availability (the #1 blocker)
 
-App Store app names are **unique across the entire App Store** and assigned first-come.
-
 ### How it works
 - You reserve a name by **creating the app record in App Store Connect** (you can create the record and reserve the name *without* submitting a build).
 - A reserved-but-unused name still blocks everyone else. Apple may reclaim a name not used within a period, and holds names from removed apps for a while before releasing them — so "no app by that name exists today" does **not** guarantee it's free to reserve.
@@ -15,7 +13,7 @@ App Store app names are **unique across the entire App Store** and assigned firs
 
 ### How to check
 1. **Exact-name search on the App Store** (WebSearch / App Store) — is there a live app with that exact name? If yes, it's taken.
-2. **Definitive check:** the user opens App Store Connect → **Apps → (+) New App** → types the name. ASC immediately says whether it's available to reserve. This is the only authoritative check.
+2. **Definitive check:** App Store Connect → **Apps → (+) New App** → type the name; ASC reports availability immediately.
 
 ### Action
 As soon as a name passes scoring and has no obvious conflict, tell the user to **reserve it in App Store Connect now**. Names disappear; reservation is free and doesn't commit you to shipping.
@@ -49,7 +47,7 @@ You want a web home for the app (landing page, support URL, privacy policy host)
 
 ### Priority order
 1. **`brandname.com`** — ideal but for short words almost always taken
-2. **`brandname.app`** — the `.app` TLD is purpose-built for apps, HTTPS-enforced, and far more available. Excellent and increasingly expected for indie apps.
+2. **`brandname.app`** — purpose-built for apps, HTTPS-enforced, and far more available than `.com`.
 3. **Prefixed `.com`** — `getbrand.com`, `trybrand.com`, `usebrand.com`, `brandapp.com`
 4. **Other TLDs** — `.io`, `.co` as fallbacks
 

@@ -109,8 +109,6 @@ func fetchData() async throws -> Data {
 | `withCheckedContinuation` | Traps on misuse (zero or double resume) | Traps on misuse | Default choice, always start here |
 | `withUnsafeContinuation` | No checking | No checking | Performance-critical hot paths only |
 
-Always use `withCheckedContinuation` unless profiling shows the check is a bottleneck. The checked variant catches bugs that are extremely hard to debug otherwise.
-
 Diagnosing a leak in the field (WWDC22 110350): a never-resumed continuation prints a console warning when the continuation is destroyed ("the continuation leaked"), and the Swift Concurrency Instrument shows the task stuck indefinitely in the **continuation** state — see `concurrency-internals.md`.
 
 Swift 6.4 adds a noncopyable **`Continuation`** type that "checks at compile time that you only resume it once, making it even safer than a CheckedContinuation but just as efficient as an UnsafeContinuation" (WWDC26 262) — prefer it once your toolchain allows.

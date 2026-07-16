@@ -224,11 +224,7 @@ Background()
 ```
 
 ### Contrast Requirements
-- **Normal text**: 4.5:1 contrast ratio
-- **Large text** (18pt+): 3:1 contrast ratio
-- **UI components**: 3:1 contrast ratio
-
-Use Xcode's Accessibility Inspector to verify.
+Use Xcode's Accessibility Inspector to verify contrast ratios for text and UI components.
 
 ## Testing Checklist
 

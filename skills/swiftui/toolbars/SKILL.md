@@ -176,8 +176,6 @@ NavigationStack {
 }
 ```
 
-The `.largeSubtitle` placement takes precedence over the value provided to `navigationSubtitle(_:)`.
-
 ## Transition Effects
 
 ### Matched Transition from Toolbar

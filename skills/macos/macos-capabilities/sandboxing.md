@@ -23,8 +23,6 @@ The App Sandbox restricts your app to a container directory and limits access to
 
 ### Container Directory
 
-Sandboxed apps write to `~/Library/Containers/<bundle-id>/`:
-
 ```swift
 // These resolve to the container automatically
 let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -230,7 +228,6 @@ codesign -dvvv --entitlements :- /path/to/MyApp.app
 1. **Enable sandbox early** - Retrofitting is painful; start sandboxed
 2. **Request minimal entitlements** - Only what you actually need
 3. **Always use security-scoped bookmarks** - For any persistent file access
-4. **Balance start/stop calls** - Use `defer` to prevent resource leaks
-5. **Handle access failures gracefully** - `startAccessingSecurityScopedResource` can return false
-6. **Test in sandboxed mode** - Don't disable sandbox for debugging
-7. **Use NSOpenPanel for user consent** - The sandbox Powerbox handles the rest
+4. **Handle access failures gracefully** - `startAccessingSecurityScopedResource` can return false
+5. **Test in sandboxed mode** - Don't disable sandbox for debugging
+6. **Use NSOpenPanel for user consent** - The sandbox Powerbox handles the rest

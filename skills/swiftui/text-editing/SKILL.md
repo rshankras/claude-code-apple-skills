@@ -188,11 +188,6 @@ struct RichTextEditorView: View {
 // Get current attributes at the selection/cursor
 let attributes = selection.typingAttributes(in: text)
 let currentColor = attributes.foregroundColor ?? .primary
-
-// Set color on selection
-text.transformAttributes(in: &selection) {
-    $0.foregroundColor = .blue
-}
 ```
 
 ## Custom Formatting Definition (iOS 18+)

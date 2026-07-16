@@ -161,10 +161,7 @@ let documents = try modelContext.fetch(descriptor)
 ### Use Count Instead of Fetch
 
 ```swift
-// Wrong - fetches all objects just to count them
-let count = try modelContext.fetch(FetchDescriptor<Task>()).count
-
-// Right - count at the database level
+// Counts at the database level instead of materializing objects
 let count = try modelContext.fetchCount(FetchDescriptor<Task>())
 ```
 
@@ -363,16 +360,14 @@ let query = searchText.lowercased()
 | N+1 queries | Slow list rendering | Batch fetch relationships |
 | No fetch limits | Memory growth | Always set fetchLimit for bounded UI |
 | Frequent small saves | Disk I/O bottleneck | Batch saves (every N items) |
-| Context never reset | Memory growth in loops | Call modelContext.reset() after batches |
 
 ## Best Practices
 
 1. **Measure before optimizing** - Use Instruments, not intuition
 2. **Use @ModelActor for background work** - Never block the main thread
 3. **Batch saves** - Save every 100-1000 items, not every single insert
-4. **Reset context in batch loops** - Free memory from processed objects
-5. **Use fetchCount for counts** - Don't materialize objects just to count
-6. **Set fetchLimit for bounded UI** - A "top 10" list shouldn't fetch 10,000 records
-7. **Paginate large datasets** - Load on-demand as the user scrolls
-8. **Keep predicates simple** - Complex nested predicates are slower
-9. **Denormalize for search** - A single searchText field beats multi-field predicates
+4. **Use fetchCount for counts** - Don't materialize objects just to count
+5. **Set fetchLimit for bounded UI** - A "top 10" list shouldn't fetch 10,000 records
+6. **Paginate large datasets** - Load on-demand as the user scrolls
+7. **Keep predicates simple** - Complex nested predicates are slower
+8. **Denormalize for search** - A single searchText field beats multi-field predicates

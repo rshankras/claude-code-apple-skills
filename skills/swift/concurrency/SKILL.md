@@ -9,7 +9,7 @@ os_version: iOS 27 / macOS 27
 
 # Swift 6.2 Concurrency Updates
 
-Swift 6.2 introduces "Approachable Concurrency" -- a set of changes that make strict concurrency dramatically easier to adopt. The philosophy shifts from "opt in to safety" to "safe by default, opt in to concurrency." Code runs on `@MainActor` by default, async functions stay on the calling actor, and you explicitly request background execution with `@concurrent`.
+Swift 6.2 introduces "Approachable Concurrency" -- a set of changes that make strict concurrency dramatically easier to adopt. Code runs on `@MainActor` by default, async functions stay on the calling actor, and you explicitly request background execution with `@concurrent`.
 
 This skill covers only the Swift 6.2 specific changes. For general concurrency patterns (actors, TaskGroup, AsyncSequence, Sendable, cancellation), see the `swift/concurrency-patterns` skill.
 
@@ -25,10 +25,6 @@ This skill covers only the Swift 6.2 specific changes. For general concurrency p
 
 ## What Changed in Swift 6.2 vs Before
 
-### The Core Problem with Swift 6.0/6.1
-
-In Swift 6.0 and 6.1, strict concurrency was correct but painful. Developers faced walls of data-race compiler errors that were difficult to resolve. Non-actor-annotated async functions would eagerly hop to the generic concurrent executor, causing unexpected data races when passing mutable state. Conforming `@MainActor` types to non-isolated protocols was often impossible without workarounds.
-
 ### Swift 6.2 Changes at a Glance
 
 | Feature | Before (6.0/6.1) | After (6.2) |
@@ -43,63 +39,13 @@ In Swift 6.0 and 6.1, strict concurrency was correct but painful. Developers fac
 
 ## 1. Async Functions Stay on the Calling Actor
 
-In Swift 6.0/6.1, a non-actor-annotated async function called from a `@MainActor` context would hop off the main actor to the generic concurrent executor. This caused data-race errors when the caller passed non-Sendable state.
-
-In Swift 6.2, async functions without specific actor isolation stay on whatever actor they are called from. No hop, no data race.
-
-### Before (Swift 6.0/6.1)
-
-```swift
-// ❌ Swift 6.0/6.1 -- ERROR: Sending 'self.processor' risks causing data races
-@MainActor
-final class StickerModel {
-    let processor = PhotoProcessor()
-
-    func extract(_ item: PhotosPickerItem) async throws -> Sticker? {
-        let data = try await item.loadTransferable(type: Data.self)
-        // processor hops off MainActor -- data race
-        return await processor.extractSticker(data: data, with: item.itemIdentifier)
-    }
-}
-
-class PhotoProcessor {
-    func extractSticker(data: Data, with id: String?) async -> Sticker? {
-        // This runs on the concurrent executor in 6.0/6.1
-        ...
-    }
-}
-```
-
-### After (Swift 6.2)
-
-```swift
-// ✅ Swift 6.2 -- No error. extractSticker stays on the caller's actor.
-@MainActor
-final class StickerModel {
-    let processor = PhotoProcessor()
-
-    func extract(_ item: PhotosPickerItem) async throws -> Sticker? {
-        let data = try await item.loadTransferable(type: Data.self)
-        // processor stays on MainActor -- no data race
-        return await processor.extractSticker(data: data, with: item.itemIdentifier)
-    }
-}
-
-class PhotoProcessor {
-    func extractSticker(data: Data, with id: String?) async -> Sticker? {
-        // In 6.2, this runs on MainActor because the caller is @MainActor
-        ...
-    }
-}
-```
-
-**Why this matters:** Many data-race errors in Swift 6.0/6.1 were caused by this implicit hop. In 6.2, the same code compiles cleanly with no changes needed.
+In Swift 6.2, async functions without specific actor isolation stay on whatever actor called them, instead of hopping to the generic concurrent executor as in 6.0/6.1 -- eliminating a common source of data-race errors with no code changes required.
 
 ---
 
 ## 2. Default MainActor Inference Mode
 
-An opt-in build setting that makes all code implicitly `@MainActor` unless explicitly opted out with `nonisolated`. This eliminates the vast majority of data-race errors for single-threaded app code.
+An opt-in build setting that makes all code implicitly `@MainActor` unless explicitly opted out with `nonisolated`.
 
 ### Enabling It
 
@@ -116,46 +62,7 @@ An opt-in build setting that makes all code implicitly `@MainActor` unless expli
 )
 ```
 
-### What Changes
-
-With this mode enabled, you no longer need `@MainActor` annotations on app-level types:
-
-```swift
-// ❌ Before (Swift 6.0/6.1) -- manual @MainActor annotations everywhere
-@MainActor
-final class StickerLibrary {
-    static let shared: StickerLibrary = .init()
-}
-
-@MainActor
-final class StickerModel {
-    let processor: PhotoProcessor
-    var selection: [PhotosPickerItem]
-}
-
-@MainActor
-struct ContentView: View {
-    @State private var model = StickerModel()
-    var body: some View { ... }
-}
-```
-
-```swift
-// ✅ After (Swift 6.2 with default MainActor inference) -- no annotations needed
-final class StickerLibrary {
-    static let shared: StickerLibrary = .init()  // Implicitly @MainActor
-}
-
-final class StickerModel {
-    let processor: PhotoProcessor    // Implicitly @MainActor
-    var selection: [PhotosPickerItem]
-}
-
-struct ContentView: View {
-    @State private var model = StickerModel()
-    var body: some View { ... }
-}
-```
+With this enabled, app-level types no longer need explicit `@MainActor` annotations -- including global/static mutable state, which otherwise needs an explicit `@MainActor static let ...`.
 
 ### When to Use Default MainActor Inference
 
@@ -171,45 +78,19 @@ struct ContentView: View {
 When a type or function genuinely needs to run off the main actor, mark it `nonisolated`:
 
 ```swift
-// With "infer main actor" enabled, use nonisolated to opt out:
 nonisolated struct ImageProcessor {
     func processImage(_ data: Data) -> UIImage {
         // Runs on any thread, not MainActor
         ...
     }
 }
-
-nonisolated func heavyComputation() -> Result {
-    // Runs on any thread
-    ...
-}
-```
-
-### Global and Static State Protection
-
-With default MainActor inference enabled, global and static mutable state is automatically protected:
-
-```swift
-// ❌ Before -- required explicit annotation or Sendable conformance
-@MainActor static let shared: StickerLibrary = .init()
-
-// ✅ After -- default MainActor inference handles it
-static let shared: StickerLibrary = .init()  // Implicitly @MainActor
-```
-
-Without default MainActor inference, you can still protect individual declarations:
-
-```swift
-@MainActor static let shared: StickerLibrary = .init()
 ```
 
 ---
 
 ## 3. Isolated Conformances
 
-Allows `@MainActor` types to conform to protocols that do not require actor isolation. Before Swift 6.2, this was a common source of frustrating compiler errors.
-
-### The Problem (Swift 6.0/6.1)
+Isolated conformances let a `@MainActor` type conform to a protocol that does not require actor isolation, using `extension Type: @MainActor ProtocolName`. Before Swift 6.2, this produced a compiler error about the main actor-isolated conformance crossing an isolation boundary.
 
 ```swift
 protocol Exportable {
@@ -219,24 +100,10 @@ protocol Exportable {
 @MainActor
 final class StickerModel {
     let processor: PhotoProcessor
-
-    func doExport() {
-        processor.exportAsPNG()
-    }
+    func doExport() { processor.exportAsPNG() }
 }
 
-// ❌ Swift 6.0/6.1 -- ERROR: Main actor-isolated conformance crosses isolation boundary
-extension StickerModel: Exportable {
-    func export() {
-        processor.exportAsPNG()  // Needs MainActor, but protocol is non-isolated
-    }
-}
-```
-
-### The Solution (Swift 6.2)
-
-```swift
-// ✅ Swift 6.2 -- Isolated conformance
+// ✅ Swift 6.2 -- isolated conformance
 extension StickerModel: @MainActor Exportable {
     func export() {
         processor.exportAsPNG()  // Works: conformance is MainActor-isolated
@@ -244,67 +111,28 @@ extension StickerModel: @MainActor Exportable {
 }
 ```
 
-### Usage Rules for Isolated Conformances
-
-The compiler enforces that isolated conformances are only used in matching isolation contexts:
+The conformance can only be used from a context that shares the same isolation domain:
 
 ```swift
 // ✅ Used within @MainActor context -- OK
 @MainActor
-struct ImageExporter {
-    var items: [any Exportable]
-
-    mutating func add(_ item: StickerModel) {
-        items.append(item)  // OK: both are @MainActor
-    }
+func exportAll(_ items: [any Exportable]) {
+    for item in items { item.export() }
 }
 
 // ❌ Used outside @MainActor -- compile error
-nonisolated struct ImageExporter {
-    var items: [any Exportable]
-
-    mutating func add(_ item: StickerModel) {
-        items.append(item)  // Error: Main actor-isolated conformance
-                            // cannot be used in nonisolated context
+nonisolated func exportAll(_ items: [any Exportable]) {
+    for item in items {
+        item.export()  // Error: isolated conformance not available here
     }
 }
 ```
-
-The conformance is not universally available. It only works when the caller shares the same isolation domain.
 
 ---
 
 ## 4. @concurrent -- Explicit Background Execution
 
-When you need true parallelism for CPU-heavy work, use `@concurrent` to explicitly offload to the background thread pool. This replaces the pattern of using `Task.detached` for compute-intensive operations.
-
-### Basic Usage
-
-```swift
-class PhotoProcessor {
-    var cachedStickers: [String: Sticker]
-
-    func extractSticker(data: Data, with id: String) async -> Sticker {
-        if let sticker = cachedStickers[id] { return sticker }
-        let sticker = await Self.extractSubject(from: data)  // Background execution
-        cachedStickers[id] = sticker
-        return sticker
-    }
-
-    @concurrent
-    static func extractSubject(from data: Data) async -> Sticker {
-        // Heavy image processing -- runs on concurrent thread pool
-        ...
-    }
-}
-```
-
-### Steps to Offload Work
-
-1. Make the type `nonisolated` (for structs/classes; actors are already isolated)
-2. Add `@concurrent` to the function
-3. Make the function `async`
-4. Callers use `await`
+`@concurrent` explicitly offloads a function to the background thread pool, replacing the pattern of using `Task.detached` for compute-intensive operations.
 
 ```swift
 nonisolated struct ImageProcessor {
@@ -319,6 +147,13 @@ nonisolated struct ImageProcessor {
 let resized = await ImageProcessor().resize(image: data, to: targetSize)
 ```
 
+### Steps to Offload Work
+
+1. Make the containing type `nonisolated` (for structs/classes; actors are already isolated)
+2. Add `@concurrent` to the function
+3. Make the function `async`
+4. Callers use `await`
+
 ### @concurrent vs Task.detached vs actor
 
 | Mechanism | Use Case | Structured? |
@@ -328,21 +163,15 @@ let resized = await ImageProcessor().resize(image: data, to: targetSize)
 | `actor` | Shared mutable state needing serialized access | N/A (isolation, not scheduling) |
 | `Task {}` | Unstructured task inheriting current actor | No |
 
-Prefer `@concurrent` for compute-heavy functions. Prefer actors for shared state. Avoid `Task.detached` when `@concurrent` or structured concurrency works.
-
 ### When NOT to Use @concurrent
 
-Do not mark every async function as `@concurrent`. Most app code should stay on the calling actor. Only use `@concurrent` when:
-
-- The function performs CPU-intensive work (image processing, parsing, compression)
-- The function performs blocking I/O that would freeze the UI
-- You have measured that the work takes enough time to justify the thread hop
+Reserve it for CPU-intensive work, blocking I/O that would freeze the UI, or work measured to be long enough to justify the thread hop -- not trivial functions:
 
 ```swift
 // ❌ Wrong -- trivial work does not need @concurrent
 nonisolated struct UserFormatter {
     @concurrent
-    func formatName(_ user: User) async -> String {  // Unnecessary thread hop
+    func formatName(_ user: User) async -> String {
         return "\(user.firstName) \(user.lastName)"
     }
 }
@@ -367,61 +196,23 @@ Ensure your Xcode version supports Swift 6.2 and your project's Swift language v
 
 **Step 2: Enable default MainActor inference (for app targets)**
 
-Xcode: Build Settings > Swift Compiler - Concurrency > Default Actor Isolation > MainActor
-
-Swift Package Manager:
-
-```swift
-.executableTarget(
-    name: "MyApp",
-    swiftSettings: [
-        .defaultIsolation(MainActor.self)
-    ]
-)
-```
+See "Enabling It" above -- the Xcode build setting or `.defaultIsolation(MainActor.self)` in `swiftSettings`.
 
 **Step 3: Remove redundant `@MainActor` annotations**
 
-With default MainActor inference enabled, explicit `@MainActor` annotations on app-level types are redundant. Remove them to reduce noise:
-
-```swift
-// Before
-@MainActor class ViewModel { ... }
-@MainActor struct ContentView: View { ... }
-
-// After (with default MainActor inference)
-class ViewModel { ... }
-struct ContentView: View { ... }
-```
+With default MainActor inference enabled, explicit `@MainActor` annotations on app-level types are redundant and can be removed to reduce noise.
 
 **Step 4: Replace `Task.detached` with `@concurrent` where appropriate**
 
-```swift
-// Before
-func processImages(_ data: [Data]) async -> [UIImage] {
-    await withTaskGroup(of: UIImage.self) { group in
-        for item in data {
-            group.addTask { // Task.detached implied hop
-                await self.decode(item)
-            }
-        }
-        return await group.reduce(into: []) { $0.append($1) }
-    }
-}
-
-// After
-@concurrent
-func decode(_ data: Data) async -> UIImage {
-    // Explicitly runs on background
-    ...
-}
-```
+Mark the offloaded function `@concurrent` directly instead of wrapping it in a detached task inside a `TaskGroup`.
 
 **Step 5: Fix remaining conformance errors with isolated conformances**
 
+Part of migrating to Swift 6.2 involves replacing unsafe `@unchecked Sendable` workarounds with isolated conformances:
+
 ```swift
-// Before -- workaround with @unchecked Sendable or nonisolated
-extension MyModel: @unchecked Sendable {}  // Unsafe workaround
+// Before -- unsafe workaround
+extension MyModel: @unchecked Sendable {}
 
 // After -- isolated conformance
 extension MyModel: @MainActor Exportable {
@@ -431,12 +222,7 @@ extension MyModel: @MainActor Exportable {
 
 **Step 6: Add `nonisolated` to types/functions that must not be on MainActor**
 
-With default MainActor inference, anything not explicitly marked `nonisolated` runs on MainActor. Audit your code for:
-
-- Background data processing types
-- Network parsers
-- File I/O utilities
-- Computation-heavy algorithms
+With default MainActor inference, anything not explicitly marked `nonisolated` runs on MainActor. Audit background data processing types, network parsers, file I/O utilities, and computation-heavy algorithms.
 
 ```swift
 nonisolated struct JSONParser {
@@ -482,6 +268,8 @@ Progression:
 
 ### Mistake 1: Enabling default MainActor inference for a library
 
+Libraries should let consumers choose their own isolation strategy. Only app targets and executables should use default MainActor inference.
+
 ```swift
 // ❌ Wrong -- library imposes MainActor on all consumers
 // Package.swift
@@ -493,24 +281,9 @@ Progression:
 )
 ```
 
-Libraries should let consumers choose their own isolation strategy. Only app targets and executables should use default MainActor inference.
-
 ### Mistake 2: Marking trivial functions @concurrent
 
-```swift
-// ❌ Wrong -- unnecessary thread hop for trivial work
-@concurrent
-func greet(_ name: String) async -> String {
-    "Hello, \(name)"
-}
-
-// ✅ Right -- no @concurrent needed
-func greet(_ name: String) -> String {
-    "Hello, \(name)"
-}
-```
-
-Every `@concurrent` call involves a thread hop. Only use it for genuinely expensive work.
+Every `@concurrent` call involves a thread hop. Only use it for genuinely expensive work (see "When NOT to Use @concurrent" above).
 
 ### Mistake 3: Forgetting nonisolated when default MainActor is enabled
 
@@ -520,7 +293,6 @@ Every `@concurrent` call involves a thread hop. Only use it for genuinely expens
 // ❌ Wrong -- this CPU-intensive parser now runs on MainActor, blocking UI
 struct LargeFileParser {
     func parse(_ data: Data) -> [Record] {
-        // Heavy parsing blocks the main thread
         ...
     }
 }
@@ -529,7 +301,6 @@ struct LargeFileParser {
 nonisolated struct LargeFileParser {
     @concurrent
     func parse(_ data: Data) async -> [Record] {
-        // Runs on background thread pool
         ...
     }
 }
@@ -537,26 +308,7 @@ nonisolated struct LargeFileParser {
 
 ### Mistake 4: Using isolated conformances in nonisolated contexts
 
-```swift
-extension MyModel: @MainActor Exportable {
-    func export() { ... }
-}
-
-// ❌ Wrong -- trying to use the conformance from a nonisolated context
-nonisolated func exportAll(_ items: [any Exportable]) {
-    for item in items {
-        item.export()  // Compiler error: isolated conformance not available here
-    }
-}
-
-// ✅ Right -- use the conformance from a matching isolation context
-@MainActor
-func exportAll(_ items: [any Exportable]) {
-    for item in items {
-        item.export()  // OK: both are @MainActor
-    }
-}
-```
+See "Isolated Conformances" above -- the conformance is only usable from a context that matches its isolation.
 
 ### Mistake 5: Removing @MainActor annotations without enabling the build setting
 
@@ -567,16 +319,15 @@ class ViewModel {  // No longer @MainActor -- state is unprotected
     func load() async { ... }
 }
 
-// ✅ Right -- either keep annotations OR enable the build setting
-// Option A: Keep the annotation
+// ✅ Right -- either keep the annotation...
 @MainActor
 class ViewModel {
     var items: [Item] = []
     func load() async { ... }
 }
 
-// Option B: Enable "Default Actor Isolation: MainActor" in build settings
-// Then annotations are unnecessary
+// ...or enable "Default Actor Isolation: MainActor" in build settings
+// and then annotations are unnecessary
 class ViewModel {
     var items: [Item] = []
     func load() async { ... }

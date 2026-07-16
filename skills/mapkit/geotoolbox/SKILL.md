@@ -238,13 +238,8 @@ func displayDescriptor(_ descriptor: PlaceDescriptor) {
 | # | Mistake | Problem | Fix |
 |---|---------|---------|-----|
 | 1 | Importing only `MapKit` when using `PlaceDescriptor` | `PlaceDescriptor` lives in `GeoToolbox`, not `MapKit` | Add `import GeoToolbox` alongside `import MapKit` |
-| 2 | Using `CLGeocoder` instead of `MKGeocodingRequest` | `CLGeocoder` returns `CLPlacemark` which lacks MapKit integration | Use `MKGeocodingRequest` / `MKReverseGeocodingRequest` for `MKMapItem` results |
-| 3 | Assuming `PlaceDescriptor` always has a coordinate | A descriptor can be address-only with no coordinate | Check `descriptor.coordinate` for `nil` before use |
-| 4 | Assuming `PlaceDescriptor` always has an address | A descriptor can be coordinate-only with no address | Check `descriptor.address` for `nil` before use |
-| 5 | Hardcoding service identifier keys | Service identifier keys are strings; typos cause silent failures | Define constants for service keys like `"com.apple.maps"` |
-| 6 | Passing `CLLocationCoordinate2D` directly to `MKReverseGeocodingRequest` | The initializer takes a `CLLocation`, not a raw coordinate | Wrap in `CLLocation(latitude:longitude:)` first |
-| 7 | Ignoring empty geocoding results | Geocoding can return zero results for ambiguous or invalid input | Guard against empty `mapItems` arrays |
-| 8 | Not handling geocoding errors | Network or service failures throw errors | Use `do/catch` or `try await` with proper error handling |
+| 2 | Hardcoding service identifier keys | Service identifier keys are strings; typos cause silent failures | Define constants for service keys like `"com.apple.maps"` |
+| 3 | Not handling geocoding errors | Network or service failures throw errors | Use `do/catch` or `try await` with proper error handling |
 
 ## Patterns
 

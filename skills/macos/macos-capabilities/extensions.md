@@ -157,10 +157,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
 Separate privilege domains within your app. XPC services run in their own process with their own sandbox.
 
 ### When to Use XPC
-- Isolate crash-prone code (e.g., parsing untrusted data)
-- Run privileged operations separately
-- Share functionality between app and extensions
-- Long-running background tasks that shouldn't crash the main app
+Isolate crash-prone or privileged work in its own process, share functionality between app and extensions, or run long tasks that shouldn't crash the main app.
 
 ### Setting Up an XPC Service
 
@@ -271,8 +268,6 @@ let container = try ModelContainer(for: schema, configurations: config)
 ## Best Practices
 
 1. **Minimal extension footprint** - Extensions have memory limits (varies by type)
-2. **Use App Groups for shared data** - Not file coordination or IPC
-3. **Handle extension lifecycle** - Extensions can be terminated at any time
-4. **Test extensions independently** - Use separate scheme for extension targets
-5. **XPC for crash isolation** - Keep unstable code in XPC services
-6. **Declare capabilities in Info.plist** - Extensions need explicit type declarations
+2. **Handle extension lifecycle** - Extensions can be terminated at any time
+3. **Test extensions independently** - Use separate scheme for extension targets
+4. **Declare capabilities in Info.plist** - Extensions need explicit type declarations

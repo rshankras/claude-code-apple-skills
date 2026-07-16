@@ -37,9 +37,7 @@ Guide developers through architectural decisions for macOS applications, from pr
 - No need for complex abstractions
 
 ### Medium App (4-10 screens)
-- MVVM with repository pattern for data access
-- Group by feature folders
-- Protocol-based dependency injection
+- Repository pattern + protocol-based DI, organized in feature folders
 
 ### Large App (10+ screens, multiple developers)
 - Full modular architecture with SPM packages

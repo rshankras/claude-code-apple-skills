@@ -168,12 +168,10 @@ The default APIs to expect in a healthy SwiftUI codebase. During review, flag co
 
 **Structure & navigation**
 - `NavigationStack` / `NavigationSplitView` — `NavigationView` is deprecated; value-based links + `navigationDestination` (iOS 16+)
-- Type-safe `Tab` syntax + `.tabViewStyle(.sidebarAdaptable)` — replaces string/tag tab items; tab bar becomes a sidebar on iPad (iOS 18+)
 
 **State & data flow**
 - `@Observable` over `ObservableObject` — per-property invalidation means fewer re-renders, no `@Published` (iOS 17+)
 - `@State` lazily initializes `@Observable` classes (behavior backported to iOS 17) — delete double-initialization workarounds and "cheap placeholder default" hacks
-- `@Entry` for environment/container keys — one attached macro replaces the full `EnvironmentKey` boilerplate (iOS 18+)
 - `@Previewable` inside `#Preview` — use `@State` directly in a preview without a wrapper view (Xcode 16+)
 
 **Presentation & input**
@@ -190,8 +188,6 @@ The default APIs to expect in a healthy SwiftUI codebase. During review, flag co
 - `ShareLink` + `Transferable` — system share sheet from a declarative type conformance (iOS 16+)
 - `PhotosPicker` — out-of-process photo selection, no permission prompt (iOS 16+)
 - `AsyncImage` participates in HTTP caching by default (WWDC26); set `asyncImageURLSession` for custom cache/auth policies
-- `TextEditor` with an `AttributedString` binding for rich text (iOS 26+)
-- `WebView` / `WebPage` over hand-rolled `WKWebView` representables (iOS 26+)
 
 **Lists & collections**
 - `reorderable()` on `ForEach` and `swipeActions` outside `List` — drag-reorder and swipe in lazy stacks/grids too (WWDC26)
@@ -288,11 +284,6 @@ let found = expenses.first { $0.id == targetId }
 - Some patterns are valid in certain scenarios
 - Balance idealism with pragmatism
 - Consider project constraints
-
-### Prioritize Impact
-- Focus on issues that affect correctness first
-- Then performance and maintainability
-- Style issues last
 
 ### Actionable Feedback
 - Provide specific line numbers

@@ -10,9 +10,8 @@ review_by: 2027-06-22
 
 Decide, with evidence, whether an app is *distinct enough to exist* — before you build it or submit it.
 
-> At portfolio scale, shipping many similar small apps is exactly what triggers **Guideline 4.3
-> (spam / duplicate)**. One 4.3 is a warning; repeated 4.3s put the **whole account** at risk. This
-> is the go/no-go distinctness gate that keeps that from happening.
+> At portfolio scale, shipping many similar small apps risks **Guideline 4.3 (spam / duplicate)**
+> — this is the go/no-go distinctness gate that keeps that from happening.
 
 ## Where it fits (read the seams)
 
@@ -53,8 +52,8 @@ Decide, with evidence, whether an app is *distinct enough to exist* — before y
    - **Borderline** → give concrete ways to differentiate (merge sibling apps into one configurable
      app, add the unique wedge, or drop it); if approved, name the specific wedge that MUST be built
      to clear 4.3.
-   - **Duplicate** → recommend not shipping; if several thin apps already exist, recommend
-     consolidating into one strong app (better for ranking *and* review).
+   - **Duplicate** → recommend not shipping; consolidate any existing thin apps into one strong
+     app instead.
 5. **Record.** Write the verdict + reasoning to `.planning/` (VALIDATION or STATE). For a
    borderline-approved app, record the wedge as a build requirement so `plan`/`build` deliver it.
 
@@ -65,8 +64,7 @@ Decide, with evidence, whether an app is *distinct enough to exist* — before y
 
 ## Caveats
 
-- **Cosmetic theming ≠ differentiation.** Apple judges function + metadata similarity, not your
-  intent. Score honestly.
+- **Cosmetic theming ≠ differentiation** — Apple judges function + metadata similarity, not intent.
 - **Protect the account.** When in doubt between "borderline ship" and "consolidate," prefer one
   strong app over several thin ones.
 - Guideline numbers/text drift — confirm current 4.3 wording at the

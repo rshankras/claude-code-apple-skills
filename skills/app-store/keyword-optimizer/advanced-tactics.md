@@ -211,31 +211,11 @@ Add **English (UK)** localization with different keywords. These index for:
 
 ## 7. Left-to-Right Keyword Weight
 
-Apple's algorithm reads title/subtitle **left to right** and gives more weight to words that appear first.
-
-### Examples
-
-```
-Weaker:  Bills Split - Expense App
-Stronger: Expense Split - Settle Up
-          ↑ Most important word first
-```
-
-### Application
-- Put your primary keyword FIRST in title
-- Put secondary keyword FIRST in subtitle
-- Front-load your keyword field too
+Apple's algorithm reads title/subtitle **left to right**, weighting earlier words more heavily — put your primary keyword first in the title, secondary first in the subtitle, and front-load the keyword field too.
 
 ## 8. Singular vs Plural (Don't Waste Space)
 
-Apple treats these as equivalent:
-```
-bill = bills
-expense = expenses
-tracker = trackers
-```
-
-**Never include both forms** — it wastes precious characters.
+Apple treats singular and plural forms as equivalent (bill = bills) — never include both, it wastes characters.
 
 ## 9. Stop Words Are Auto-Indexed
 
@@ -269,7 +249,7 @@ Apple tracks **impressions → downloads** ratio. Higher conversion = higher ran
 
 ## 12. Developer Name Is Indexed
 
-Your developer/brand name is an **indexed search field**. A descriptive name gives permanent keyword coverage across every app you ship — for free.
+Your developer/brand name is itself an **indexed search field** — a descriptive name gives free, permanent keyword coverage across every app you ship.
 
 ```
 Weaker:   Acme LLC              (zero keyword value)

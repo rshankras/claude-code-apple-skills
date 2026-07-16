@@ -27,16 +27,15 @@ engineering rule is: **ship it now, architect it so a commission can be flipped 
 
 ## The rules of the road
 
-- **US storefront only.** Elsewhere, Guideline 3.1.1 still applies in force (separate regimes
-  exist in the EU/JP/KR — different entitlements, different terms; don't extrapolate from the US).
-- **Entitlement required**: `com.apple.developer.storekit.external-purchase-link` in the app's
-  entitlements + the matching `Info.plist` declarations. A bare `Link("Buy", …)` to your site
-  without the entitlement is still a rejection (see `app-store/rejection-handler` §3.1.1).
+- **US storefront only** — elsewhere Guideline 3.1.1 still applies (EU/JP/KR have separate
+  entitlements/terms; don't extrapolate from the US).
+- **Entitlement required**: `com.apple.developer.storekit.external-purchase-link` + matching
+  `Info.plist` declaration — a bare `Link("Buy", …)` without it is still a rejection (see
+  `app-store/rejection-handler` §3.1.1).
 - Present the link per the entitlement's UI terms (StoreKit's `ExternalPurchaseLink` /
   disclosure sheet where required). Don't dark-pattern the IAP option away if you keep both.
-- Purchases made on the web are **your** customer relationship: your payment processor, your
-  refunds, your taxes (Apple's commission was also Apple's merchant-of-record work — that work
-  is now yours).
+- Purchases made on the web are **your** customer relationship — payment processor, refunds,
+  taxes; Apple's merchant-of-record role no longer applies.
 
 ## Architecture: the commission flip
 

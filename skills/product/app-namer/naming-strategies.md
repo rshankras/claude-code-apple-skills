@@ -94,7 +94,7 @@ Under the icon on the Home Screen, iOS shows only about **11-12 characters** bef
 
 **Rule:** the standalone part of the name — everything *before* a `—` or `:` separator — should read cleanly when truncated to ~12 characters. This is why short brand words win: `Bear`, `Things`, `Drafts` need no truncation at all.
 
-**On macOS this rule relaxes.** A Mac app's name lives in the menu bar (usually an icon, no text), Launchpad, the Applications folder, the Dock tooltip, and the Mac App Store — there's no Home-Screen icon with iOS's tight ~12-character cutoff. Launchpad and Finder truncate, but far more generously. So for a Mac app, treat length as a soft preference (short still wins for memorability), not a hard limit — don't reject an otherwise strong 8-14 character name on truncation grounds alone.
+**On macOS this rule relaxes** — there's no Home-Screen icon, so no ~12-character cutoff. Treat length as a soft preference for a Mac app (short still wins for memorability), not a hard limit — don't reject an otherwise strong 8-14 character name on truncation grounds alone.
 
 ### What the Name May NOT Contain
 

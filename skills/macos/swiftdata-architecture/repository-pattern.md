@@ -127,7 +127,7 @@ actor SwiftDataTaskRepository: TaskRepository {
 
 ### @ModelActor
 
-The `@ModelActor` macro (macOS 14+) creates an actor with its own `ModelContext`, enabling safe background data operations:
+The `@ModelActor` macro creates an actor with its own `ModelContext`, enabling safe background data operations:
 
 ```swift
 @ModelActor

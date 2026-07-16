@@ -246,7 +246,7 @@ xcodebuild test -scheme YourApp \
   -destination 'platform=iOS Simulator,name=iPhone 16'
 ```
 
-**Important:** Reference images are stored in `__Snapshots__/` directories next to test files. Commit these to git.
+Reference images land in `__Snapshots__/` directories next to test files:
 
 ```
 Tests/SnapshotTests/
@@ -278,18 +278,10 @@ func lightMode() {
 }
 ```
 
-Or use environment variable:
-```bash
-SNAPSHOT_TESTING_RECORD=all xcodebuild test -scheme YourApp
-```
-
 ## What to Snapshot
 
 ### High Value (Always Snapshot)
-- Screens/pages with multiple states (empty, loaded, error)
-- Reusable components in all configurations
-- Dark mode vs. light mode
-- Dynamic type at standard and accessibility sizes
+- Screens with multiple states (empty, loaded, error), reusable components across configurations, light/dark mode, Dynamic Type at accessibility sizes
 
 ### Medium Value (Selectively Snapshot)
 - Navigation flows (each step)

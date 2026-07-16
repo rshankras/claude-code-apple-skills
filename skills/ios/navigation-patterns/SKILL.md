@@ -67,19 +67,15 @@ The container APIs above decide *how* navigation is built; these rules decide *w
 
 **Tab bars**
 - Tabs are top-level **content categories**, not arbitrary groupings — balance features across tabs so each carries real weight.
-- ❌ No catch-all "Home" tab: "Home becomes the tab where every feature is fighting for real estate." Needing one signals a discoverability problem in the other tabs.
-- ❌ Never hide the tab bar while drilling into a stack.
-- ❌ Never auto-switch tabs in response to an action taken in another tab — "jarring and disorienting". Confirm in place instead.
+- ❌ Never auto-switch tabs in response to an action taken in another tab — confirm in place instead.
 
 **Push vs modal**
 - Push (right-to-left) = traversing the app's hierarchy. Modal (slides up — covering the tab bar is *by design*) = a self-contained task apart from the hierarchy.
 - Modals come in three types: simple task, multi-step task, full-screen content.
-- Modal buttons: right = preferred action (bold, an affirmative verb naming the task — "Add", "Save"); left = Cancel. If the user entered data, show a confirmation alert on Cancel.
 - Limit modals presented over modals — each stacked layer buries the user deeper in transient state.
 
 **Wayfinding**
 - Nav bar title = the current location; the back button shows the *previous* screen's title.
-- Chevron disclosure indicator ONLY on rows that push — never on rows that present modally or perform an action.
 
 ## The Three Cookbook Recipes (WWDC22)
 
@@ -89,14 +85,11 @@ Nearly every app is one of these three shapes. Pick one per scene, then lift its
 2. **Multi-column without stacks** — `NavigationSplitView` + `List(selection:)` in each leading column. Value links auto-drive the next column's selection, so programmatic navigation is setting the selection value.
 3. **Split + stack (Photos-style)** — `NavigationSplitView` with a `NavigationStack(path:)` *inside the detail column*: sidebar selection picks the collection, the stack drills into it.
 
-**Path type rule:** pushing a single type → typed array (`@State private var path: [Recipe] = []`); heterogeneous destinations → `NavigationPath`.
-
 **Rules that make the recipes hold up:**
-- ❌ Never attach `.navigationDestination` INSIDE a lazy container (`List`, `LazyVGrid`, `LazyVStack`) — lazily-created rows may never load, so the destination may never register. Place it *outside* the lazy container, near the links it serves.
 - Build with `NavigationSplitView` even for iPhone-first apps — it auto-collapses to a single stack in compact width, and iPad/Mac layouts come free.
 - Lift navigation state: exactly one bound `path`/selection per container. That single source of truth is what makes pop-to-root, deep links, and restoration one-line operations.
 
-**State restoration, robustly:** encode ONLY identifiers, never full models — a `Codable` `NavigationModel` whose `encode` writes `path.map(\.id)` and whose decode rebuilds via `compactMap`, so items deleted between launches drop silently instead of failing the whole decode. Persist through `@SceneStorage("navigation")` plus a `.task` that restores once on appear, then streams subsequent path changes back into storage.
+**State restoration:** persist through `@SceneStorage("navigation")` plus a `.task` that restores once on appear, then streams subsequent path changes back into storage.
 
 ## Process
 

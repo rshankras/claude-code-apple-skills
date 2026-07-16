@@ -204,8 +204,7 @@ struct MyApp: App {
 .keyboardShortcut("z", modifiers: .command)           // ⌘Z
 .keyboardShortcut("z", modifiers: [.command, .shift]) // ⇧⌘Z
 
-// ⚠️ Don't override system shortcuts
-// Avoid: ⌘Q, ⌘H, ⌘M, ⌘Tab, etc.
+// ⚠️ Don't override system shortcuts (⌘Q, ⌘H, ⌘M, ⌘Tab, etc.)
 
 // ✅ GOOD: Function key shortcuts
 .keyboardShortcut(.return, modifiers: .command)       // ⌘↩
@@ -436,11 +435,7 @@ Table(items, selection: $selection) {
 
 ## Touch Bar (Legacy)
 
-```swift
-// ⚠️ Touch Bar removed on newer Macs
-// Don't rely on Touch Bar for essential functionality
-// Provide alternative toolbar/menu access to all features
-```
+Touch Bar is removed on newer Macs — don't rely on it for essential functionality; provide alternative toolbar/menu access.
 
 ## macOS Tahoe-Specific Features
 

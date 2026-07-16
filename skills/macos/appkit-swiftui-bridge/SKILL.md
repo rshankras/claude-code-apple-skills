@@ -68,7 +68,10 @@ For each issue found:
 
 ## Common Pitfalls
 
-### 1. Coordinator Lifecycle Mismanagement
+- Leaving `dismantleNSView` empty leaks KVO observations and NotificationCenter observers
+- Setting a `frame` directly in `makeNSView` is ignored by SwiftUI's layout system — use `sizeThatFits` or `intrinsicContentSize` instead
+
+### Coordinator Lifecycle Mismanagement
 ```swift
 // Wrong - creating new coordinator on every update
 func updateNSView(_ nsView: NSTextField, context: Context) {
@@ -79,35 +82,6 @@ func updateNSView(_ nsView: NSTextField, context: Context) {
 // Right - use the persistent coordinator
 func updateNSView(_ nsView: NSTextField, context: Context) {
     nsView.delegate = context.coordinator // Reuses existing
-}
-```
-
-### 2. Missing Dismantling
-```swift
-// Wrong - observer never removed
-static func dismantleNSView(_ nsView: NSView, coordinator: Coordinator) {
-    // Empty - leaks observer!
-}
-
-// Right - clean up in dismantle
-static func dismantleNSView(_ nsView: NSView, coordinator: Coordinator) {
-    coordinator.observation?.invalidate()
-    NotificationCenter.default.removeObserver(coordinator)
-}
-```
-
-### 3. Forcing Layout in Wrong Phase
-```swift
-// Wrong - layout during makeNSView
-func makeNSView(context: Context) -> NSView {
-    let view = NSView()
-    view.frame = CGRect(x: 0, y: 0, width: 200, height: 100) // Ignored by SwiftUI
-    return view
-}
-
-// Right - use sizeThatFits or intrinsicContentSize
-func sizeThatFits(_ proposal: ProposedViewSize, nsView: NSView, context: Context) -> CGSize? {
-    CGSize(width: proposal.width ?? 200, height: 100)
 }
 ```
 

@@ -16,7 +16,7 @@ Close the "hosted legal pages + ASC URLs" gap: render `.planning/legal/{privacy,
 
 - Legal drafts exist: `.planning/legal/privacy.md`, `.planning/legal/terms.md` (from `legal/privacy-policy`).
 - `_shared/asc-api/` set up (README).
-- Set `ASC="python3 <path to asc.py>"`. `asc.py` lives at `_shared/asc-api/asc.py` under the same `skills/` root as this skill — resolve it **relative to this SKILL.md file's location** (`../../_shared/asc-api/asc.py` from this skill's directory), never relative to the project cwd (skills run with cwd = the user's project). Known install locations:
+- Set `ASC="python3 <path to asc.py>"` — resolve `asc.py` **relative to this SKILL.md file's location** (`../../_shared/asc-api/asc.py`), never the project cwd. Known install locations:
   - SwiftShip symlink install: `~/.claude/swiftship-skills/_shared/asc-api/asc.py`
   - Copied install: `.claude/skills/_shared/asc-api/asc.py` (project) or `~/.claude/skills/_shared/asc-api/asc.py` (global)
   - Plugin install: resolve from this file's location — the `_shared/` tree ships with the plugin.

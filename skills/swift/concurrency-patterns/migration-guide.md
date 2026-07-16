@@ -132,9 +132,7 @@ final class AppConfig: Sendable {
 nonisolated(unsafe) static var shared = AppConfig()
 ```
 
-Apple's preference order for "global shared mutable state" diagnostics (WWDC24 10169): (1) `var` → `let` if the type is Sendable — the best fix when possible; (2) isolate to a global actor (`@MainActor`); (3) `nonisolated(unsafe)` only when an external mechanism (e.g. a dispatch queue) already guards it.
-
-Worth knowing while migrating: Swift globals are initialized **lazily on first use** (unlike C/ObjC at-startup init) and initialization is **guaranteed atomic** — two threads racing on first use cannot create two instances.
+Prefer Options 1–3 above, in order, over Option 4 — `nonisolated(unsafe)` is a last resort only when something else already guards the state.
 
 ### Non-Sendable Closures
 

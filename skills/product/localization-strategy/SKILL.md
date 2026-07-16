@@ -188,7 +188,7 @@ This approach limits risk. If Japanese Level 0 doesn't move the needle, you save
 
 #### Xcode String Catalogs
 
-Starting with Xcode 15, String Catalogs (.xcstrings) are the standard localization format.
+String Catalogs (.xcstrings) are the standard localization format.
 
 **Export workflow:**
 1. Ensure all user-facing strings use `String(localized:)` or `LocalizedStringResource`
@@ -213,7 +213,7 @@ Starting with Xcode 15, String Catalogs (.xcstrings) are the standard localizati
 | AI + human review | $0.03-0.06 | Good | 1-3 days | Level 0-1, fast iteration |
 | Community/crowdsource | Free-$0.03 | Variable | Unpredictable | Open source, community apps |
 
-**AI + human review workflow (recommended for indie devs):**
+**AI + human review workflow:**
 1. Export strings from Xcode
 2. Run through high-quality AI translation (provide app context and glossary)
 3. Native speaker reviews and corrects (1-2 hours for 500 strings)
@@ -232,7 +232,7 @@ Starting with Xcode 15, String Catalogs (.xcstrings) are the standard localizati
 
 #### Review Process
 
-Native speaker review is mandatory — never ship translations without it.
+Native speaker review is mandatory.
 
 **Review checklist per language:**
 - [ ] Grammar and spelling correct
@@ -290,9 +290,7 @@ Text(String(format: "%m/%d/%Y", date))
 
 #### Layout Direction
 
-Right-to-left (RTL) languages require layout mirroring:
-
-**RTL languages:** Arabic, Hebrew, Urdu, Persian
+**RTL languages** (require layout mirroring): Arabic, Hebrew, Urdu, Persian
 
 **What to mirror:**
 - Navigation direction (back button on right)

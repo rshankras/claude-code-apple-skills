@@ -8,7 +8,7 @@ review_by: 2027-06-22
 
 # Privacy Manifests
 
-Advisory skill for implementing Apple's privacy manifest requirements. Privacy manifests (PrivacyInfo.xcprivacy) became mandatory for App Store submissions in Spring 2024. This skill covers the manifest file format, required reason APIs, tracking declarations, third-party SDK privacy, and App Tracking Transparency.
+Advisory skill for implementing Apple's privacy manifest (PrivacyInfo.xcprivacy) requirements: manifest file format, required reason APIs, tracking declarations, third-party SDK privacy, and App Tracking Transparency.
 
 ## When This Skill Activates
 
@@ -210,7 +210,7 @@ Glob: **/Carthage/**/PrivacyInfo.xcprivacy
 Grep: "pod '|.package(url:"
 ```
 
-If a third-party SDK lacks a privacy manifest and uses required reason APIs, contact the SDK maintainer. As a temporary workaround, declare the SDK's API usage in your app's manifest, but this is not a long-term solution.
+If a third-party SDK lacks a privacy manifest and uses required reason APIs, contact the maintainer -- declaring its API usage in your own manifest is a stopgap, not a fix.
 
 ---
 
@@ -229,8 +229,6 @@ You do not need ATT for:
 - Fraud detection or security purposes
 
 ### Implementation
-
-Request permission after the app becomes active (not during app launch):
 
 ```swift
 import AppTrackingTransparency
@@ -262,7 +260,7 @@ func requestTrackingPermission() {
 
 ### SKAdNetwork for Attribution
 
-SKAdNetwork provides privacy-preserving install attribution without user-level data. It does not require ATT permission. Register ad network identifiers in Info.plist:
+Register ad network identifiers in Info.plist:
 
 ```xml
 <key>SKAdNetworkItems</key>
@@ -326,11 +324,11 @@ Generate a consolidated report via Product > Generate Privacy Report (or from th
 
 1. **Missing PrivacyInfo.xcprivacy entirely** -- Every App Store submission requires a privacy manifest. Without one, expect a warning or rejection.
 
-2. **Using UserDefaults without declaring it** -- Almost every app uses UserDefaults. Declare `NSPrivacyAccessedAPICategoryUserDefaults` with reason `CA92.1`.
+2. **Using UserDefaults without declaring it** -- declare `NSPrivacyAccessedAPICategoryUserDefaults` with reason `CA92.1`.
    - ❌ `UserDefaults.standard.set(true, forKey: "onboardingComplete")` with no manifest entry
    - ✅ Add CA92.1 declaration for data accessible only to the app
 
-3. **Wrong reason code** -- Each code has a specific allowed use. Using DDA9.1 (display to user) when you never show timestamps in the UI will cause rejection. Use C617.1 for app container access instead.
+3. **Wrong reason code** -- using DDA9.1 (display to user) when you never show timestamps in the UI causes rejection; use C617.1 for app container access instead.
 
 4. **Forgetting third-party SDK manifests** -- Your app's manifest does not cover SDKs. Each must provide its own. SDKs on Apple's list without manifests will flag your submission.
 

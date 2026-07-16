@@ -20,9 +20,6 @@ SecItemAdd(query as CFDictionary, nil)
 
 #### ❌ Anti-patterns
 ```swift
-// Never store credentials in UserDefaults
-UserDefaults.standard.set(apiKey, forKey: "apiKey")
-
 // Never hardcode secrets
 let apiKey = "sk-ant-api03-xxxxx"
 

@@ -282,24 +282,6 @@ viewModel.$data
     }
 ```
 
-### Stale Coordinator References
-
-```swift
-// Wrong - coordinator captures old parent struct
-func makeCoordinator() -> Coordinator {
-    Coordinator(text: text)  // Captures current value, never updates
-}
-
-// Right - coordinator references parent, updated in updateNSView
-func makeCoordinator() -> Coordinator {
-    Coordinator(parent: self)
-}
-
-func updateNSView(_ nsView: NSView, context: Context) {
-    context.coordinator.parent = self  // Keep reference fresh
-}
-```
-
 ## Best Practices
 
 1. **Use @Observable for macOS 14+** - Simplest approach, works automatically across both frameworks

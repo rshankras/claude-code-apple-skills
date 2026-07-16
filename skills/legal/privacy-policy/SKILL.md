@@ -238,16 +238,7 @@ Declare these data types based on your app's practices:
 
 ### When ATT (App Tracking Transparency) Is Required
 
-ATT is required when your app:
-- Accesses the IDFA (Identifier for Advertisers)
-- Links user data with third-party data for advertising
-- Shares user data with data brokers
-
-ATT is NOT required for:
-- First-party analytics that stays on your server
-- Crash reporting
-- Fraud detection
-- Attribution that does not use IDFA (e.g., SKAdNetwork)
+Required for: IDFA access, linking user data with third-party data for advertising, or sharing user data with data brokers. Not required for first-party server-side analytics, crash reporting, fraud detection, or non-IDFA attribution (e.g., SKAdNetwork).
 
 ## Hosting Guidance
 
@@ -288,9 +279,7 @@ struct PrivacyPolicyView: View {
 
 ### Apple Requirements for Privacy Policy URL
 
-- Must be publicly accessible (not behind login or in-app only)
-- Must be a working URL at all times (Apple checks during review)
-- Required in App Store Connect under "App Privacy"
+- Must resolve publicly (not behind login or in-app only) at all times -- Apple checks during review and requires it under App Store Connect's "App Privacy"
 - Must also be accessible from within the app (Settings or About screen)
 
 ## Output Format

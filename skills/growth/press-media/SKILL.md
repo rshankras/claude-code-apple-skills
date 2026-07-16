@@ -86,7 +86,7 @@ WHAT MAKES IT DIFFERENT:
 | presskit() generator | Free | Industry standard format | Template-based |
 | Dedicated presskit page | Free-$10/mo | Purpose-built for press kits | Another service to manage |
 
-**Recommendation:** A simple `/press` page on your website with downloadable ZIP of all assets. Include everything inline so journalists can copy-paste without downloading.
+**Recommendation:** A `/press` page with a downloadable ZIP, everything inline so journalists can copy-paste without downloading.
 
 ### Step 3: Finding Relevant Journalists and Outlets
 

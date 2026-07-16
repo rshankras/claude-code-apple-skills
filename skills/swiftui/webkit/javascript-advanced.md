@@ -391,20 +391,6 @@ class BundleSchemeHandler: URLSchemeHandler {
 
 ## Mistakes to Avoid
 
-### String Interpolation in JavaScript
-
-```swift
-// ❌ Injection risk and hard to debug
-let userInput = "'; document.cookie; '"
-try await page.callJavaScript("alert('\(userInput)')")
-
-// ✅ Named arguments are escaped and type-safe
-try await page.callJavaScript(
-    "alert(message)",
-    arguments: ["message": userInput]
-)
-```
-
 ### Running JavaScript Before Page Loads
 
 ```swift

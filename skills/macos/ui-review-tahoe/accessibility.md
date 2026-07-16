@@ -32,9 +32,7 @@ Measured win from the session's Format Inspector demo (WWDC25 229): a flat scrol
 22 swipe stops became 15 top-level items with an 8-item presets group — VoiceOver users
 skip the whole group in one keystroke unless they want it.
 
-If the reading order feels wrong under VoiceOver, fix it with `accessibilitySortPriority`
-— default is 0, higher reads first, and equal priorities fall back to visual position
-(WWDC25 229):
+If the reading order feels wrong under VoiceOver, fix it with `accessibilitySortPriority` (WWDC25 229):
 
 ```swift
 VStack {
@@ -183,9 +181,7 @@ SecondView()
 
 ### Hover-Revealed Controls (WWDC25 229)
 
-VoiceOver users never move the pointer — anything revealed only on hover or by a trackpad
-gesture is invisible to them. Mirror every hover affordance as an accessibility action; it
-surfaces in VoiceOver's Actions menu and also serves Switch Control and Voice Control:
+Hover-only controls are invisible to VoiceOver users. Mirror every hover affordance as an accessibility action — it also serves Switch Control and Voice Control:
 
 ```swift
 // ❌ BAD: bookmark button only appears .onHover — unreachable without a pointer
@@ -247,9 +243,7 @@ struct LoginView: View {
 
 ### Keyboard Shortcuts
 
-Keyboard shortcuts are an accessibility feature, not just a power-user nicety — for
-anyone who can't use a mouse they may be the only comfortable path through the app
-(WWDC25 229). Cover the common tasks, not only the exotic ones.
+Keyboard shortcuts are an accessibility feature, not just a power-user nicety (WWDC25 229) — cover common tasks, not only exotic ones.
 
 ```swift
 // ✅ GOOD: Keyboard shortcuts with VoiceOver announcements
@@ -342,9 +336,6 @@ var body: some View {
 // ✅ GOOD: Use semantic colors with sufficient contrast
 .foregroundStyle(.primary)     // Always has good contrast
 .foregroundStyle(.secondary)   // Good contrast for secondary text
-
-// ✅ GOOD: Check custom color contrast
-// Minimum contrast ratio: 4.5:1 for normal text, 3:1 for large text
 
 // ❌ BAD: Low contrast
 Text("Important")
