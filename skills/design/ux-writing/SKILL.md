@@ -84,7 +84,7 @@ markets, platforms).
 ## Empty states, permissions, localization
 
 - **Empty states** never dead-end: say what will appear here and how to make it appear —
-  ideally with example input (pairs with the blank-page rule in `design/design-principles`).
+  ideally with example input (the blank-page rule: never leave an empty state without a next action).
 - **Permission prompts**: explain value first, ask at the contextually right moment — never at
   first launch (mechanics in `generators/permission-priming`).
 - **Localization**: plain language survives translation; idioms and humor don't. Words grow in
@@ -107,4 +107,4 @@ ordered by frequency-of-exposure (navigation labels before deep-screen prose).
 - https://developer.apple.com/videos/play/wwdc2025/404/ (Small writing changes)
 - https://developer.apple.com/videos/play/wwdc2026/290/ (Craft clear names)
 - https://developer.apple.com/videos/play/wwdc2017/813/ (Writing Great Alerts)
-- Related skills: `design/design-principles`, `generators/permission-priming`, `generators/push-notifications` (notification copy), `app-store/app-description-writer` (store copy)
+- Related skills: `generators/permission-priming`, `generators/push-notifications` (notification copy), `app-store/app-description-writer` (store copy)

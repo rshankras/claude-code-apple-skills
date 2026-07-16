@@ -202,36 +202,36 @@ func detectThunderbolt5() -> Bool {
 // Use distributed actor frameworks for multi-Mac processing
 ```
 
-## Urgent Reminders
+## High-Priority Reminders
 
-### Creating Urgent Reminders
+### Creating High-Priority Reminders
+
+EventKit has no "urgent" flag — `EKReminder.priority` is the standard 1–9
+scale (1 = highest). Reminders surfaces priority 1 as a high-priority item;
+there is no separate urgent state on macOS 26.
 
 ```swift
 import EventKit
 
-// ✅ Create urgent reminder
-func createUrgentReminder() {
+// ✅ Create high-priority reminder
+func createHighPriorityReminder() async throws {
     let eventStore = EKEventStore()
+    guard try await eventStore.requestFullAccessToReminders() else { return }
 
-    eventStore.requestAccess(to: .reminder) { granted, error in
-        guard granted else { return }
+    let reminder = EKReminder(eventStore: eventStore)
+    reminder.title = "Important Task"
+    reminder.calendar = eventStore.defaultCalendarForNewReminders()
 
-        let reminder = EKReminder(eventStore: eventStore)
-        reminder.title = "Important Task"
-        reminder.calendar = eventStore.defaultCalendarForNewReminders()
+    // Set due date
+    let dueDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
+    reminder.dueDateComponents = Calendar.current.dateComponents(
+        [.year, .month, .day, .hour, .minute],
+        from: dueDate!
+    )
 
-        // Set due date
-        let dueDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-        reminder.dueDateComponents = Calendar.current.dateComponents(
-            [.year, .month, .day, .hour, .minute],
-            from: dueDate!
-        )
+    reminder.priority = 1  // 1–9 scale; 1 = highest
 
-        // Mark as urgent (macOS 26+)
-        reminder.priority = 1  // High priority triggers urgent flag
-
-        try? eventStore.save(reminder, commit: true)
-    }
+    try eventStore.save(reminder, commit: true)
 }
 ```
 

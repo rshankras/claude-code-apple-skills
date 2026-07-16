@@ -51,7 +51,7 @@ If found, ask user:
 **StoreKit subscription APIs (iOS 18.4+):**
 - `SubscriptionOfferView` - New SwiftUI view for merchandising subscriptions
 - `subscriptionStatusTask` modifier for tracking subscription state
-- `Transaction.currentEntitlements(for:)` - New API for entitlements
+- `Transaction.currentEntitlements(for:)` - per-product entitlement check (iOS 18.4+)
 - `RenewalInfo` enhancements for expiration reasons
 
 ## Configuration Questions

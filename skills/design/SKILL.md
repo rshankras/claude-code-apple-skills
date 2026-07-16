@@ -47,9 +47,6 @@ SwiftUI animation patterns for iOS 13–18+.
 ### ui-prototyping/
 Explore divergent UI directions for a screen as named, runnable Swift `#Preview` variants — compare, remix, and tune before committing to one design.
 
-### design-principles/
-The evergreen Apple design canon — wayfinding, feedback, mental models, progressive disclosure, fluid gesture physics, discoverability, and the idea→interface process.
-
 ### ux-writing/
 Interface copy that works — voice/tone, the PACE framework, alert anatomy, feature naming, empty states, and the small-word edits that measurably improve UX.
 

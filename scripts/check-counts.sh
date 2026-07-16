@@ -25,7 +25,7 @@ fail() {
 
 # Categories whose category-level SKILL.md is itself the (only) skill.
 # Adding a new one? Add it here AND to the README table.
-CATEGORY_LEVEL_SKILLS="core-ml monetization watchos release-review security"
+CATEGORY_LEVEL_SKILLS="core-ml monetization watchos release-review"
 
 # --- Compute ground truth ---------------------------------------------------
 SKILL_DIRS=$(find skills -mindepth 3 -maxdepth 3 -name "SKILL.md" | wc -l | tr -d ' ')

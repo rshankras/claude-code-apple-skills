@@ -13,7 +13,7 @@ Detailed guide for building watch face complications, covering the ClockKit to W
 | Deprecated | watchOS 9 | Current |
 | Removal | watchOS 11 | N/A |
 
-**Rule:** All new complications must use WidgetKit. ClockKit is deprecated and removed in watchOS 11.
+**Rule:** All new complications must use WidgetKit. ClockKit is deprecated (since watchOS 9) — build all new complications with WidgetKit.
 
 ## Migration: ClockKit to WidgetKit
 

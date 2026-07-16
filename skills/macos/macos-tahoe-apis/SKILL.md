@@ -1,6 +1,6 @@
 ---
 name: macos-tahoe-apis
-description: Guide to macOS 26 Tahoe APIs and features. Covers Apple Intelligence, Foundation Models, MLX framework, and Continuity. Use when implementing macOS 26 specific features.
+description: Guide to macOS 26 Tahoe APIs and features. Covers Apple Intelligence (FoundationModels), MLX framework, and Continuity. Use when implementing macOS 26 specific features.
 allowed-tools: [Read, Glob, Grep, WebFetch]
 ---
 
@@ -23,7 +23,7 @@ Guide developers in using macOS 26 (Tahoe) specific features and APIs effectivel
 ## Core Focus Areas
 
 1. **Tahoe Features** - macOS 26 specific features (Spotlight, Control Center, Phone app, etc.)
-2. **Apple Intelligence** - Foundation Models, on-device AI, MCP support
+2. **Apple Intelligence** - FoundationModels framework, on-device AI (canonical guidance: `skills/apple-intelligence/foundation-models/`)
 3. **MLX Framework** - Machine learning with M5 chip optimization
 4. **Continuity** - Cross-device features and integration
 5. **Xcode 16** - Modern development tools and optimizations

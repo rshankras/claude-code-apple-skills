@@ -1,87 +1,45 @@
-# Apple Intelligence Integration
+# Apple Intelligence on macOS
 
-Foundation Models, on-device AI, and MCP (Model Context Protocol) support in macOS 26.
+On-device AI on macOS 26 ships through the **FoundationModels** framework —
+there is no `AppleIntelligence` module, no `processingLocation` switch, and no
+MCP (Model Context Protocol) support in Apple's SDK. The full, current API
+guidance (availability handling, sessions, structured output, tool calling,
+Private Cloud Compute, guardrails) lives in the dedicated skill:
+**`skills/apple-intelligence/foundation-models/`** — read that, not this file,
+before implementing.
 
-## Foundation Models API
+## macOS specifics
 
 ```swift
-import AppleIntelligence  // Hypothetical framework
+import FoundationModels
 
-// ✅ Text generation
-func generateText(prompt: String) async throws -> String {
-    let model = try await AIFoundationModel.load(.textGeneration)
-    let response = try await model.generate(prompt: prompt)
-    return response.text
-}
+let model = SystemLanguageModel.default
 
-// ✅ Text summarization
-func summarize(_ text: String) async throws -> String {
-    let model = try await AIFoundationModel.load(.summarization)
-    return try await model.summarize(text)
-}
-
-// ✅ On-device processing (privacy-preserving)
-func analyzeOnDevice(_ data: String) async throws -> Analysis {
-    let model = try await AIFoundationModel.load(.analysis)
-    model.processingLocation = .onDevice  // Ensures privacy
-    return try await model.analyze(data)
+switch model.availability {
+case .available:
+    let session = LanguageModelSession()
+    let response = try await session.respond(to: prompt)
+case .unavailable(.deviceNotEligible):
+    // Apple silicon required — Intel Macs are not eligible
+    showUnsupportedUI()
+case .unavailable(.appleIntelligenceNotEnabled):
+    // User must enable Apple Intelligence in System Settings
+    showEnableIntelligenceUI()
+case .unavailable(let reason):
+    showErrorUI(reason)
 }
 ```
 
-## Model Context Protocol (MCP)
+- The system model runs **on-device by default**; privacy is inherent to the
+  framework, not a property you set. Larger workloads opt into Private Cloud
+  Compute via `PrivateCloudComputeLanguageModel` (see the foundation-models
+  skill's `models-and-agents.md`).
+- Check `availability` every launch — model eligibility and the Apple
+  Intelligence toggle are user- and hardware-dependent.
+- Tool calling uses the framework's `Tool` protocol (see the foundation-models
+  skill) — define tools there rather than inventing protocol layers.
 
-```swift
-// ✅ MCP integration for AI context
-struct MCPContext {
-    let tools: [MCPTool]
-    let resources: [MCPResource]
-}
+## References
 
-protocol MCPTool {
-    var name: String { get }
-    var description: String { get }
-    func execute(parameters: [String: Any]) async throws -> Any
-}
-
-// Example MCP tool
-struct FileSearchTool: MCPTool {
-    let name = "file_search"
-    let description = "Search for files in the system"
-
-    func execute(parameters: [String: Any]) async throws -> Any {
-        guard let query = parameters["query"] as? String else {
-            throw MCPError.invalidParameters
-        }
-        // Perform file search
-        return searchFiles(query: query)
-    }
-
-    private func searchFiles(query: String) -> [URL] {
-        // Implementation
-        return []
-    }
-}
-```
-
-## Privacy-Preserving AI
-
-```swift
-// ✅ On-device model inference
-func processPrivately(_ input: String) async throws -> Result {
-    // All processing happens on-device
-    let model = try await LocalAIModel.load()
-    return try await model.process(input)
-}
-
-// ✅ Check processing location
-func verifyPrivacy() async -> Bool {
-    let model = try? await AIFoundationModel.load(.textGeneration)
-    return model?.processingLocation == .onDevice
-}
-```
-
-## Resources
-
-- [Apple Intelligence Documentation](https://developer.apple.com/documentation/apple-intelligence)
-- [MCP Specification](https://modelcontextprotocol.io/)
-- [WWDC 2025: Apple Intelligence](https://developer.apple.com/videos/)
+- [Foundation Models documentation](https://developer.apple.com/documentation/foundationmodels)
+- `skills/apple-intelligence/foundation-models/SKILL.md` — the canonical skill
