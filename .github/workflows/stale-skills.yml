@@ -48,11 +48,13 @@ jobs:
               echo "skip (open issue exists): $cat"
               continue
             fi
-            BODY=$(awk -F'\t' -v c="$cat" '$1==c {printf "- [ ] `%s` (review_by %s)\n", $2, $3}' stale.tsv)
-            gh issue create --title "$TITLE" --label stale-skill --body "$BODY
-
-Re-verify each skill against the current OS generation (\`scripts/versions.env\`), update its content if needed, then bump \`last_verified\` and \`review_by\` (next WWDC + 2 weeks). The blind-test harness (\`tools/skill-audit/\`) can re-test a skill: \`python3 tools/skill-audit/audit.py run --skill <category>/<skill> --force\`.
-
-*Opened automatically by the stale-skills workflow.*"
+            {
+              awk -F'\t' -v c="$cat" '$1==c {printf "- [ ] `%s` (review_by %s)\n", $2, $3}' stale.tsv
+              echo ""
+              echo "Re-verify each skill against the current OS generation (\`scripts/versions.env\`), update its content if needed, then bump \`last_verified\` and \`review_by\` (next WWDC + 2 weeks). The blind-test harness can re-test a skill: \`python3 tools/skill-audit/audit.py run --skill <category>/<skill> --force\`."
+              echo ""
+              echo "_Opened automatically by the stale-skills workflow._"
+            } > /tmp/issue-body.md
+            gh issue create --title "$TITLE" --label stale-skill --body-file /tmp/issue-body.md
             echo "opened: $TITLE"
           done
