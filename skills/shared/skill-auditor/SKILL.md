@@ -75,7 +75,7 @@ Group findings by severity (🔴 → 🟢), sort within each group by file path,
 - **Fix**: Add `allowed-tools: [Read, Glob, Grep]` (adjust based on what the skill actually does).
 
 **H-02 · Broken supporting-file reference.** The SKILL.md references a `*.md` file that does not exist on disk in the same directory.
-- **Detection**: `Grep` each SKILL.md for `[a-z0-9][a-z0-9-]*\.md` matches; resolve each relative to the SKILL.md's directory; `ls` to confirm. Missing files → H-02. Ignore matches inside fenced code blocks.
+- **Detection**: `Grep` each SKILL.md for `[a-z0-9][a-z0-9-]*\.md` matches; resolve each relative to the SKILL.md's directory; `ls` to confirm. Missing files → H-02. Ignore matches inside fenced code blocks. Also resolve `rules/swiftlint.yml` references the same way (fragment fixtures themselves are CI's job — `scripts/check-lint-fragments.sh`).
 - **Fix**: Create the file or remove the reference.
 
 **H-03 · H1 title does not match `name:`.** The first `#` heading after the frontmatter, slugified (lowercase, spaces → `-`), differs from the `name:` field.

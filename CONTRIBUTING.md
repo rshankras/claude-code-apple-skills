@@ -174,6 +174,17 @@ Followed by:
 5. **Examples**: Concrete examples (optional)
 6. **References**: External links (optional)
 
+### Optional: `rules/` — graduated enforcement
+
+A skill whose advice is mechanically checkable may ship a
+`rules/swiftlint.yml` fragment (`opt_in_rules` + `custom_rules`). Prefer
+enabling built-in SwiftLint rules over regex `custom_rules`; scope every
+regex rule with `included:`/`excluded:` so it can't cry wolf. Each fragment
+needs fixtures at `tools/lint-fixtures/<skill-path-with-dashes>/{violation,clean}/`
+— CI (`scripts/check-lint-fragments.sh`) asserts every rule fires on its
+violation fixture and stays quiet on its clean one. Consuming projects merge
+fragments via `generators/ci-cd-setup`.
+
 ### Naming Conventions
 
 - **Skill names**: `kebab-case` (e.g., `code-reviewer`)

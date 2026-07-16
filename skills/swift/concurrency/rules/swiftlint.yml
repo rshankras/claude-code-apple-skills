@@ -1,0 +1,8 @@
+# Graduated enforcement — swift/concurrency.
+# Merge into your project's .swiftlint.yml (see generators/ci-cd-setup).
+custom_rules:
+  unchecked_sendable:
+    name: "@unchecked Sendable"
+    message: "@unchecked Sendable silences the compiler's data-race checking — justify it with a same-line comment, or make the type actually Sendable."
+    regex: '@unchecked Sendable(?![^\n]*//)'
+    severity: warning

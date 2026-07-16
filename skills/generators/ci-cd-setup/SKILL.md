@@ -89,6 +89,33 @@ fastlane/
 └── Matchfile             # Code signing (if using match)
 ```
 
+### SwiftLint
+```
+.swiftlint.yml            # from templates/swiftlint/swiftlint.yml
+```
+
+## Merging Skill Rule Fragments
+
+Skills in this library may ship graduated enforcement as a
+`rules/swiftlint.yml` fragment (`opt_in_rules` + `custom_rules`) — prose
+rules turned into deterministic lint. When generating `.swiftlint.yml`:
+
+1. Start from `templates/swiftlint/swiftlint.yml`.
+2. For each skill the project actually uses, check for
+   `skills/<category>/<skill>/rules/swiftlint.yml`; append its
+   `custom_rules` entries and union its `opt_in_rules`.
+3. Respect fragment scoping comments — e.g. `observable_object_legacy`
+   applies only to iOS 17+/macOS 14+ deployment targets, and
+   `xctest_in_unit_tests` must keep its UITests exclusion (XCUITest
+   legitimately requires XCTest).
+4. The generated `build-test.yml` runs the `lint` job automatically once
+   `.swiftlint.yml` exists (`if: hashFiles('.swiftlint.yml') != ''`).
+
+Current fragments: `security/` (hardcoded secrets), `ios/coding-best-practices`
+(print-in-production, legacy ObservableObject, force_unwrapping/force_try),
+`testing/tdd-feature` (XCTest scoped out of unit tests),
+`swift/concurrency` (@unchecked Sendable without justification).
+
 ## Integration Steps
 
 ### GitHub Actions Setup

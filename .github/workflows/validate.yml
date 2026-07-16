@@ -57,6 +57,19 @@ jobs:
           chmod +x scripts/check-swift-templates.sh
           ./scripts/check-swift-templates.sh
 
+  lint-fragments:
+    runs-on: ubuntu-latest
+    # Official SwiftLint image, pinned — same supply-chain rule as
+    # swift-templates (no third-party actions).
+    container: ghcr.io/realm/swiftlint:0.57.0
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Skill lint fragments fire on violations, stay quiet on clean
+        run: |
+          chmod +x scripts/check-lint-fragments.sh
+          ./scripts/check-lint-fragments.sh
+
   plugin-validate:
     runs-on: ubuntu-latest
     steps:
