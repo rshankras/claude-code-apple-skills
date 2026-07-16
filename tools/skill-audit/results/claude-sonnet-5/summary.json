@@ -1,5 +1,1249 @@
 [
  {
+  "skill": "app-store/ad-attribution",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.42857142857142855,
+  "flags": []
+ },
+ {
+  "skill": "app-store/app-description-writer",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7916666666666666,
+  "flags": [
+   "human-review:borderline"
+  ]
+ },
+ {
+  "skill": "app-store/apple-search-ads",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.46153846153846156,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "app-store/iap-finalizer",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.625,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "app-store/keyword-optimizer",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5384615384615384,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "app-store/marketing-strategy",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.42857142857142855,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "app-store/originality-check",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5833333333333334,
+  "flags": []
+ },
+ {
+  "skill": "app-store/ratings-mechanics",
+  "track": "A",
+  "verdict": "DELETE-candidate",
+  "coverage": 0.8076923076923077,
+  "flags": [
+   "human-review:borderline",
+   "swiftship-referenced"
+  ]
+ },
+ {
+  "skill": "app-store/rejection-handler",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "app-store/review-response-writer",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "app-store/screenshot-planner",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.375,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "app-store/web-presence",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6818181818181818,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "apple-intelligence/app-intents",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.42857142857142855,
+  "flags": [
+   "human-review:unverified-suspect",
+   "truncated"
+  ]
+ },
+ {
+  "skill": "apple-intelligence/foundation-models",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.23333333333333334,
+  "flags": [
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "apple-intelligence/visual-intelligence",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline"
+  ]
+ },
+ {
+  "skill": "core-ml",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7,
+  "flags": [
+   "truncated",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "design/animation-patterns",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.8333333333333334,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "truncated"
+  ]
+ },
+ {
+  "skill": "design/design-principles",
+  "track": "A",
+  "verdict": "DELETE-candidate",
+  "coverage": 0.9615384615384616,
+  "flags": [
+   "swiftship-referenced"
+  ]
+ },
+ {
+  "skill": "design/liquid-glass",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5454545454545454,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "design/sf-symbols",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.2916666666666667,
+  "flags": [
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "design/typography",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5909090909090909,
+  "flags": []
+ },
+ {
+  "skill": "design/ui-prototyping",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.4166666666666667,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "design/ux-writing",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7857142857142857,
+  "flags": [
+   "human-review:borderline"
+  ]
+ },
+ {
+  "skill": "foundation/attributed-string",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.625,
+  "flags": []
+ },
+ {
+  "skill": "generators/accessibility-generator",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.4,
+  "flags": []
+ },
+ {
+  "skill": "generators/account-deletion",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.65,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/analytics-setup",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/announcement-banner",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.7857142857142857,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/app-clip",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/app-extensions",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.6,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/app-icon-generator",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.2,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/app-store-assets",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.7,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/auth-flow",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/background-processing",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.875,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/ci-cd-setup",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.25,
+  "flags": []
+ },
+ {
+  "skill": "generators/cloudkit-sync",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.6,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/consent-flow",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.375,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/custom-product-pages",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.14285714285714285,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/data-export",
+  "track": "B",
+  "verdict": "TRIM(prose)",
+  "coverage": 0.8125,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/debug-menu",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.7222222222222222,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/deep-linking",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.375,
+  "flags": []
+ },
+ {
+  "skill": "generators/error-monitoring",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/feature-flags",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.375,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/featuring-nomination",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.2857142857142857,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/feedback-form",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/force-update",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.7,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/http-cache",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5714285714285714,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/image-loading",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.6666666666666666,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/in-app-events",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.15,
+  "flags": [
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/lapsed-user",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.125,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/live-activity-generator",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.55,
+  "flags": [
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/localization-setup",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "generators/logging-setup",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.6875,
+  "flags": [
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/milestone-celebration",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/networking-layer",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/offer-codes-setup",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.045454545454545456,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/offline-queue",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.4166666666666667,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/onboarding-generator",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.7857142857142857,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/pagination",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/paywall-generator",
+  "track": "B",
+  "verdict": "FIX",
+  "coverage": 0.2,
+  "flags": [
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/permission-priming",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.6875,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/persistence-setup",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5555555555555556,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/pre-orders",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.1111111111111111,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/preview-data-generator",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5625,
+  "flags": [
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/product-page-optimization",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.35,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/promoted-iap",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/push-notifications",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.2777777777777778,
+  "flags": []
+ },
+ {
+  "skill": "generators/quick-win-session",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.3,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/referral-system",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/review-prompt",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.625,
+  "flags": [
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/screenshot-automation",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.3,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/settings-screen",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.75,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/share-card",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.25,
+  "flags": [
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/social-export",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.625,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/spotlight-indexing",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.3888888888888889,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/state-restoration",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.6666666666666666,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/streak-tracker",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.16666666666666666,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/subscription-lifecycle",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.2,
+  "flags": [
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/subscription-offers",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.25,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/test-generator",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.2777777777777778,
+  "flags": []
+ },
+ {
+  "skill": "generators/tipkit-generator",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.22727272727272727,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/usage-insights",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.65,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/variable-rewards",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/watermark-engine",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.3125,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/whats-new",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/widget-generator",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.45,
+  "flags": [
+   "human-review:borderline",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "generators/win-back-offers",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.1,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "growth/analytics-interpretation",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.35714285714285715,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "growth/community-building",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5416666666666666,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "growth/indie-business",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.75,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "growth/press-media",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5769230769230769,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "growth/store-growth-audit",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.4666666666666667,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "growth/store-signals",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.34615384615384615,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "ios/accessibility-audit",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7307692307692307,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "ios/app-planner",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.46153846153846156,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "truncated",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "ios/assistive-access",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.38461538461538464,
+  "flags": []
+ },
+ {
+  "skill": "ios/coding-best-practices",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline"
+  ]
+ },
+ {
+  "skill": "ios/ipad-patterns",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.8928571428571429,
+  "flags": [
+   "judge-disagreement"
+  ]
+ },
+ {
+  "skill": "ios/migration-patterns",
+  "track": "A",
+  "verdict": "FIX",
+  "coverage": 0.5769230769230769,
+  "flags": [
+   "human-review:unverified-suspect",
+   "truncated"
+  ]
+ },
+ {
+  "skill": "ios/navigation-patterns",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.8333333333333334,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "ios/run-device",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.36363636363636365,
+  "flags": [
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "ios/run-simulator",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7916666666666666,
+  "flags": [
+   "human-review:borderline"
+  ]
+ },
+ {
+  "skill": "ios/ui-review",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6428571428571429,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "legal/privacy-policy",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6818181818181818,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "legal/privacy-publish",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5833333333333334,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "macos/app-planner",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "macos/appkit-swiftui-bridge",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7272727272727273,
+  "flags": []
+ },
+ {
+  "skill": "macos/architecture-patterns",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.9444444444444444,
+  "flags": [
+   "judge-disagreement"
+  ]
+ },
+ {
+  "skill": "macos/coding-best-practices",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6923076923076923,
+  "flags": [
+   "truncated"
+  ]
+ },
+ {
+  "skill": "macos/macos-capabilities",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.8846153846153846,
+  "flags": []
+ },
+ {
+  "skill": "macos/macos-tahoe-apis",
+  "track": "A",
+  "verdict": "FIX",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "macos/swiftdata-architecture",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6923076923076923,
+  "flags": []
+ },
+ {
+  "skill": "macos/ui-review-tahoe",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7307692307692307,
+  "flags": [
+   "human-review:unverified-suspect",
+   "truncated"
+  ]
+ },
+ {
+  "skill": "mapkit/geotoolbox",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.625,
+  "flags": []
+ },
+ {
+  "skill": "monetization",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.32142857142857145,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "monetization/bundles-and-licensing",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.4166666666666667,
+  "flags": []
+ },
+ {
+  "skill": "monetization/external-purchases",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.75,
+  "flags": []
+ },
+ {
+  "skill": "performance/profiling",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.3181818181818182,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect",
+   "truncated"
+  ]
+ },
+ {
+  "skill": "performance/swiftui-debugging",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6071428571428571,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "product/app-namer",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.75,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "product/architecture-spec",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.0,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "product/beta-testing",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.4230769230769231,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "product/competitive-analysis",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.15,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "product/idea-generator",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.16666666666666666,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "product/implementation-guide",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.0,
+  "flags": []
+ },
+ {
+  "skill": "product/implementation-spec",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.0,
+  "flags": [
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "product/localization-strategy",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6153846153846154,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "product/market-research",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.4230769230769231,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "product/prd-generator",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.75,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "product/product-agent",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.045454545454545456,
+  "flags": []
+ },
+ {
+  "skill": "product/release-spec",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.25,
+  "flags": [
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "product/test-spec",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.3888888888888889,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "product/ux-spec",
+  "track": "B",
+  "verdict": "KEEP",
+  "coverage": 0.25,
+  "flags": []
+ },
+ {
+  "skill": "release-review",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7307692307692307,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
   "skill": "security",
   "track": "A",
   "verdict": "DELETE-candidate",
@@ -16,6 +1260,233 @@
   "flags": [
    "human-review:borderline",
    "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "shared/skill-auditor",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.0,
+  "flags": []
+ },
+ {
+  "skill": "shared/skill-creator",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.4,
+  "flags": []
+ },
+ {
+  "skill": "swift/concurrency",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.75,
+  "flags": [
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "swift/concurrency-patterns",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7142857142857143,
+  "flags": [
+   "human-review:unverified-suspect",
+   "truncated"
+  ]
+ },
+ {
+  "skill": "swift/memory",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "swiftdata/inheritance",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.55,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "swiftui/alarmkit",
+  "track": "A",
+  "verdict": "FIX",
+  "coverage": 0.7142857142857143,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "swiftui/charts-3d",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.9166666666666666,
+  "flags": [
+   "judge-disagreement"
+  ]
+ },
+ {
+  "skill": "swiftui/data-flow",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7666666666666667,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "swiftui/layout",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6071428571428571,
+  "flags": [
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "swiftui/text-editing",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6666666666666666,
+  "flags": []
+ },
+ {
+  "skill": "swiftui/toolbars",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6666666666666666,
+  "flags": [
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "swiftui/webkit",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6785714285714286,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "testing/characterization-test-generator",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6818181818181818,
+  "flags": []
+ },
+ {
+  "skill": "testing/flow-walkthrough",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.35714285714285715,
+  "flags": []
+ },
+ {
+  "skill": "testing/integration-test-scaffold",
+  "track": "A",
+  "verdict": "DELETE-candidate",
+  "coverage": 0.8333333333333334,
+  "flags": [
+   "human-review:borderline",
+   "swiftship-referenced",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "testing/snapshot-test-setup",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.7272727272727273,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "testing/tdd-bug-fix",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.6818181818181818,
+  "flags": []
+ },
+ {
+  "skill": "testing/tdd-feature",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.4166666666666667,
+  "flags": [
+   "human-review:unclear-contradiction"
+  ]
+ },
+ {
+  "skill": "testing/tdd-refactor-guard",
+  "track": "A",
+  "verdict": "DELETE-candidate",
+  "coverage": 0.8,
+  "flags": [
+   "human-review:borderline",
+   "swiftship-referenced",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "testing/test-contract",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.75,
+  "flags": []
+ },
+ {
+  "skill": "testing/test-data-factory",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.75,
+  "flags": [
+   "human-review:unclear-contradiction",
+   "workflow-heavy"
+  ]
+ },
+ {
+  "skill": "visionos/spatial-design",
+  "track": "A",
+  "verdict": "KEEP",
+  "coverage": 0.4230769230769231,
+  "flags": [
+   "human-review:unverified-suspect"
+  ]
+ },
+ {
+  "skill": "visionos/widgets",
+  "track": "A",
+  "verdict": "TRIM",
+  "coverage": 0.5,
+  "flags": [
+   "human-review:borderline"
+  ]
+ },
+ {
+  "skill": "watchos",
+  "track": "A",
+  "verdict": "FIX",
+  "coverage": 0.5333333333333333,
+  "flags": [
+   "human-review:borderline",
+   "human-review:unclear-contradiction",
+   "human-review:unverified-suspect",
+   "truncated"
   ]
  }
 ]
