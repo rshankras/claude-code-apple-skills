@@ -47,6 +47,15 @@ The session category is a *policy decision*; make it deliberately and write it d
 #### ❌ The classic mistake
 Activating a fresh `.playback` session just to play a ding — it **stops the user's background music**. If their music should keep playing, you want `.ambient` + `.mixWithOthers`, activated once, not per sound.
 
+#### ⚠️ "Set the category once" fails when another component also sets it
+If any other part of the app sets an *exclusive* category later (a music
+engine claiming the room for its own playback is the common case), your
+once-set mixing option is gone — and the next SFX play activates the stale
+exclusive session, pausing the user's music. Field-proven fix: **re-assert
+your category+options immediately before every play** (cheap), and never
+call `setActive(false)` from the SFX layer — session activation belongs to
+whichever component owns the room's audio.
+
 #### Silent-switch policy
 `.playback` ignores the ringer switch; `.ambient` respects it. For a game whose *product* is the room hearing the buzzer, playing through the switch during an active session is the defensible choice (players opted into a loud activity) — but pair it with an in-app mute. For everything else, respect the switch. Either way: **document the choice** where reviewers will look, because it *will* be questioned.
 
