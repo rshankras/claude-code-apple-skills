@@ -192,7 +192,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | growth/ | 6 | analytics-interpretation, press-media, community-building, indie-business, store-signals, store-growth-audit |
 | swift/ | 3 | concurrency-patterns, concurrency, memory |
 | apple-intelligence/ | 3 | foundation-models, visual-intelligence, app-intents |
-| design/ | 6 | liquid-glass, animation-patterns, ui-prototyping, ux-writing, sf-symbols, typography |
+| design/ | 7 | liquid-glass, animation-patterns, game-feel, ui-prototyping, ux-writing, sf-symbols, typography |
 | legal/ | 2 | privacy-policy, privacy-publish |
 | performance/ | 2 | profiling, swiftui-debugging |
 | security/ | 1 | privacy-manifests |
@@ -205,7 +205,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
-| **Total** | **159 across 23 categories** |
+| **Total** | **160 across 23 categories** |
 
 ---
 
