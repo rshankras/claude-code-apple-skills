@@ -10,8 +10,8 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 159 skills — how to build right |
-| Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 52 /apple:* commands — spec-driven idea → App Store |
+| Knowledge | **claude-code-apple-skills** ← you are here | 160 skills — how to build right |
+| Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 53 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
 
@@ -29,7 +29,7 @@ Four repos, four layers — use one or all:
 | **Growth** | 6 | Analytics, store signals, growth audit, press/media, community, indie business |
 | **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
-| **Design** | 6 | Liquid Glass, animation patterns, UI prototyping, UX writing, SF Symbols, typography |
+| **Design** | 7 | Liquid Glass, animation patterns, game feel (haptics/sound/celebrations), UI prototyping, UX writing, SF Symbols, typography |
 | **Performance** | 2 | Instruments profiling, SwiftUI debugging |
 | **Security** | 1 | Privacy manifests, required reason APIs |
 | **Core ML** | 1 | Vision, NaturalLanguage, model integration |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 159 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 160 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 
@@ -73,7 +73,7 @@ demand, so only 23 short descriptions sit in context. Update any time with
 always track `main`.
 
 Want the full workflow too? The same marketplace carries
-[SwiftShip](https://github.com/rshankras/SwiftShip) — 52 /apple:* commands:
+[SwiftShip](https://github.com/rshankras/SwiftShip) — 53 /apple:* commands:
 
 ```
 /plugin install apple@indie-apple-stack
@@ -269,6 +269,7 @@ Generate production-ready Swift code that adapts to your project:
 |-------|----------------|
 | `design/liquid-glass` | Liquid Glass implementation + design rules (SwiftUI/AppKit/UIKit, never glass-on-glass, Regular vs Clear) |
 | `design/animation-patterns` | Springs, PhaseAnimator/KeyframeAnimator, transitions (incl. zoom + interruptibility), symbol effects |
+| `design/game-feel` | Game feel ("juice"): event×channel feedback audit, haptic vocabulary design, SFX layers over music |
 | `design/ui-prototyping` | Divergent UI directions as named #Preview variants — go wide, remix, tune |
 | `design/ux-writing` | Interface copy: PACE framework, voice/tone, alert anatomy, feature naming |
 | `design/sf-symbols` | Choosing/configuring symbols, custom-symbol authoring, animation vocabulary |
