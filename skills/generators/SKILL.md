@@ -58,11 +58,12 @@ Protocol-based analytics with swappable providers.
 - Easy provider switching
 
 ### onboarding-generator/
-Multi-step onboarding flow with persistence.
-- Paged or stepped navigation
-- @AppStorage persistence
-- Skip option configuration
-- Accessibility support
+Value-moment-first onboarding — races a new user to the first felt experience of the app's promised outcome.
+- Branches on ready-now vs. later, one decision per screen
+- Root-swap presentation, phase-first gating, resume-safe hand-offs into existing features
+- Local-notification implementation intentions for the "later" branch
+- Value-moment reach-rate instrumentation (local-only, no analytics SDK required)
+- Classic paged/stepped welcome carousel kept as an explicit fallback for explain-first apps
 
 ### review-prompt/
 Smart App Store review prompts.

@@ -1,3 +1,8 @@
+// FALLBACK ARCHITECTURE — generate this only when onboarding-generator's
+// SKILL.md Step 0 confirms the app is genuinely explain-first. The default
+// for every other app is `templates/value-moment/`. See onboarding-patterns.md
+// "Carousel Fallback" section.
+
 import SwiftUI
 
 /// Main onboarding view with paged navigation.

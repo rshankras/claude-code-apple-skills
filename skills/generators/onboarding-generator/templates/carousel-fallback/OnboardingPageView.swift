@@ -1,3 +1,5 @@
+// FALLBACK ARCHITECTURE — see OnboardingView.swift's header note.
+
 import SwiftUI
 
 /// Individual page view for onboarding.

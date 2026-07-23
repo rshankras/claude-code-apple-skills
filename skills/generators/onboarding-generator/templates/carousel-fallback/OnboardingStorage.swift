@@ -1,3 +1,5 @@
+// FALLBACK ARCHITECTURE — see OnboardingView.swift's header note.
+
 import Foundation
 
 /// Onboarding persistence and configuration.

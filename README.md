@@ -160,7 +160,7 @@ Generate production-ready Swift code that adapts to your project:
 | `paywall-generator` | StoreKit 2 subscriptions |
 | `settings-screen` | Complete preferences UI |
 | `persistence-setup` | SwiftData + optional iCloud |
-| `onboarding-generator` | Multi-step welcome flow |
+| `onboarding-generator` | Value-moment-first onboarding (carousel fallback) |
 | `review-prompt` | Smart App Store review requests |
 | `error-monitoring` | Crash reporting (Sentry/Crashlytics) |
 | `ci-cd-setup` | GitHub Actions / Xcode Cloud |
