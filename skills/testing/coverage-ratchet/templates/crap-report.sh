@@ -60,7 +60,8 @@ for target in cov.get("targets", []):
 
 rows = []
 for v in lint:
-    m = re.search(r"complexity of (\d+)", v.get("reason", ""))
+    # SwiftLint reason format: "… currently complexity is 14" (older: "equals 14")
+    m = re.search(r"complexity (?:is|equals) (\d+)", v.get("reason", ""))
     if not m:
         continue
     complexity = int(m.group(1))
