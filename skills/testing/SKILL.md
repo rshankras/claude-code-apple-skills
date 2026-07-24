@@ -1,8 +1,8 @@
 ---
 name: testing
-description: TDD and testing skills for iOS/macOS apps. Covers characterization tests, TDD workflows, test contracts, snapshot tests, and test infrastructure. Use for test-driven development, adding tests to existing code, or building test infrastructure.
+description: TDD and testing skills for iOS/macOS apps. Covers characterization tests, TDD workflows, test contracts, snapshot tests, test infrastructure, and deterministic quality gates (fitness functions, coverage ratchet, mutation testing). Use for test-driven development, adding tests to existing code, or building test infrastructure.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-07-24
 review_by: 2027-06-22
 ---
 
@@ -19,6 +19,7 @@ Use this skill when the user:
 - Needs test infrastructure (factories, mocks, contracts)
 - Asks about snapshot/visual regression testing
 - Wants to ensure AI-generated code is correct via tests
+- Wants deterministic gates around agent-written code (architecture invariants, coverage floors, mutation audits)
 
 ## Available Skills
 
@@ -54,6 +55,17 @@ Cross-module test harness with mock servers, in-memory stores, and test configur
 
 **flow-walkthrough/**
 Drive each user flow in the Simulator (XCUITest + per-step screenshots), audit the navigation graph for dead-ends, and run a human discoverability check.
+
+### Deterministic Gates
+
+**fitness-functions/**
+Architecture fitness functions — tests that enforce a project's hard rules (module import boundaries, offline guarantees, count/copy contracts) from inside its own test target. Turns prose constraints into exit codes.
+
+**coverage-ratchet/**
+Coverage floor that only rises: a committed baseline the app target's line coverage may never drop below, gated by a generated xccov script. Includes an advisory CRAP report (complexity × uncovered).
+
+**mutation-testing/**
+EXPERIMENTAL, advisory-only muter setup scoped to engine targets — surviving mutants reveal covered-but-unasserted code. Never a merge gate; includes the manual deliberate-break fallback.
 
 ## How to Use
 

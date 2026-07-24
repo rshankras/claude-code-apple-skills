@@ -34,9 +34,13 @@ for frag in skills/*/rules/swiftlint.yml skills/*/*/rules/swiftlint.yml; do
         fails=$((fails+1)); continue
     fi
 
-    # Rule ids = custom_rules keys (2-space indent) + opt_in_rules entries.
+    # Rule ids = custom_rules keys (2-space indent) + opt_in_rules entries
+    # + top-level configured built-in rules (threshold fragments like
+    # code-size configure default-enabled rules at column 0 — extend the
+    # meta-key blocklist consciously if a future fragment needs a new one).
     ids=$( { awk '/^custom_rules:/{c=1;next} c && /^  [a-z_]+:/{gsub(/[: ]/,"");print} c && /^[^ #]/{c=0}' "$frag"
-             awk '/^opt_in_rules:/{o=1;next} o && /^  - /{print $2} o && /^[^ #]/{o=0}' "$frag"; } | sort -u )
+             awk '/^opt_in_rules:/{o=1;next} o && /^  - /{print $2} o && /^[^ #]/{o=0}' "$frag"
+             awk '/^[a-z_]+:/{k=$1; sub(/:.*/,"",k); if (k !~ /^(opt_in_rules|custom_rules|disabled_rules|only_rules|analyzer_rules|included|excluded|strict|reporter|warning_threshold|allow_zero_lintable_files)$/) print k}' "$frag"; } | sort -u )
     if [ -z "$ids" ]; then
         echo "  ✗ $frag: no rule ids found (empty fragment?)"; fails=$((fails+1)); continue
     fi

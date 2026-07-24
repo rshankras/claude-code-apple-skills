@@ -124,6 +124,11 @@ Skills tracking based on Apple documentation and gap analysis.
 | SwiftUI snapshot/visual regression | `testing/snapshot-test-setup` | ✅ Complete |
 | Test data factories (builder + static) | `testing/test-data-factory` | ✅ Complete |
 | Integration test harness with mocks | `testing/integration-test-scaffold` | ✅ Complete |
+| Simulator flow walkthrough + nav-graph audit | `testing/flow-walkthrough` | ✅ Complete |
+| Architecture fitness functions (boundaries, pins) | `testing/fitness-functions` | ✅ Complete |
+| Coverage ratchet gate + CRAP report | `testing/coverage-ratchet` | ✅ Complete |
+| Mutation testing audit (experimental) | `testing/mutation-testing` | ✅ Complete |
+| Complexity/size lint thresholds | `swift/code-size` | ✅ Complete |
 
 ### Growth, Legal & Business
 | Topic | Skill | Status |
@@ -185,12 +190,12 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | generators/ | 63 | logging-setup, analytics-setup, networking-layer, auth-flow, paywall-generator, settings-screen, persistence-setup, onboarding-generator, review-prompt, error-monitoring, ci-cd-setup, localization-setup, push-notifications, deep-linking, test-generator, accessibility-generator, widget-generator, app-icon-generator, feature-flags, live-activity-generator, tipkit-generator, cloudkit-sync, http-cache, pagination, image-loading, share-card, social-export, subscription-lifecycle, referral-system, watermark-engine, streak-tracker, milestone-celebration, whats-new, lapsed-user, usage-insights, variable-rewards, consent-flow, account-deletion, permission-priming, force-update, state-restoration, debug-menu, offline-queue, feedback-form, announcement-banner, quick-win-session, spotlight-indexing, app-clip, screenshot-automation, background-processing, app-extensions, data-export, subscription-offers, win-back-offers, promoted-iap, in-app-events, custom-product-pages, product-page-optimization, featuring-nomination, offer-codes-setup, pre-orders, app-store-assets, preview-data-generator |
 | product/ | 14 | idea-generator, product-agent, app-namer, competitive-analysis, market-research, prd-generator, architecture-spec, ux-spec, implementation-guide, implementation-spec, test-spec, release-spec, beta-testing, localization-strategy |
 | macos/ | 8 | app-planner, coding-best-practices, architecture-patterns, swiftdata-architecture, ui-review-tahoe, macos-tahoe-apis, macos-capabilities, appkit-swiftui-bridge |
-| testing/ | 9 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold, flow-walkthrough |
+| testing/ | 12 | characterization-test-generator, tdd-bug-fix, tdd-feature, test-contract, tdd-refactor-guard, snapshot-test-setup, test-data-factory, integration-test-scaffold, flow-walkthrough, fitness-functions, coverage-ratchet, mutation-testing |
 | app-store/ | 12 | keyword-optimizer, app-description-writer, screenshot-planner, review-response-writer, marketing-strategy, apple-search-ads, ad-attribution, rejection-handler, originality-check, iap-finalizer, ratings-mechanics, web-presence |
 | ios/ | 10 | coding-best-practices, ui-review, app-planner, navigation-patterns, ipad-patterns, migration-patterns, assistive-access, accessibility-audit, run-simulator, run-device |
 | swiftui/ | 7 | data-flow, layout, alarmkit, webkit, text-editing, toolbars, charts-3d |
 | growth/ | 6 | analytics-interpretation, press-media, community-building, indie-business, store-signals, store-growth-audit |
-| swift/ | 3 | concurrency-patterns, concurrency, memory |
+| swift/ | 4 | concurrency-patterns, concurrency, memory, code-size |
 | apple-intelligence/ | 3 | foundation-models, visual-intelligence, app-intents |
 | design/ | 7 | liquid-glass, animation-patterns, game-feel, ui-prototyping, ux-writing, sf-symbols, typography |
 | legal/ | 2 | privacy-policy, privacy-publish |
@@ -205,7 +210,7 @@ Apple docs location: `/Users/ravishankar/Downloads/docs/`
 | watchos/ | 1 | watchos (with 4 reference files) |
 | release-review/ | 1 | release-review |
 | shared/ | 2 | skill-creator, skill-auditor |
-| **Total** | **160 across 23 categories** |
+| **Total** | **164 across 23 categories** |
 
 ---
 

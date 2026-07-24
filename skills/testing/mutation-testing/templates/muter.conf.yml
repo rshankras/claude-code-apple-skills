@@ -1,0 +1,24 @@
+# muter.conf.yml — mutation-testing scope (from skills/testing/mutation-testing)
+# ADVISORY tool: run nightly/on-demand, never as a merge gate.
+# Scope hard: engines/stores only — every excluded file cuts the runtime
+# multiplier, and UI mutants are mostly noise.
+
+# ADAPT: the xcodebuild invocation muter uses to run the suite
+testCommandExecutable: /usr/bin/xcodebuild
+testCommandArguments:
+  - -scheme
+  - YourApp
+  - -destination
+  - platform=iOS Simulator,name=iPhone 16
+  - test
+
+# ADAPT: logic-dense directories only
+mutateSourcesInDirectories:
+  - YourApp/Engines
+  - YourApp/Stores
+  - YourApp/Services
+
+excludeList:
+  - "*View.swift"
+  - "*Preview*"
+  - "*Tests*"

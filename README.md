@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 160 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 164 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 53 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -22,12 +22,12 @@ Four repos, four layers — use one or all:
 | **Generators** | 63 | Production-ready code for common features |
 | **Product** | 14 | Idea discovery to App Store workflow |
 | **iOS** | 10 | Code review, UI review, navigation, iPad, migration, accessibility + audits, simulator/device runs |
-| **Testing** | 9 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough |
+| **Testing** | 12 | TDD workflows, test infrastructure, snapshot tests, flow walkthrough, deterministic gates |
 | **macOS** | 8 | Tahoe APIs, SwiftData, AppKit bridge |
 | **App Store** | 12 | ASO, descriptions, keywords, reviews, search ads, ad attribution, rejections, originality, IAP finalize, ratings mechanics, web presence |
 | **SwiftUI** | 7 | Data flow, layout & containers, AlarmKit, WebKit, text editing, toolbars, Charts 3D |
 | **Growth** | 6 | Analytics, store signals, growth audit, press/media, community, indie business |
-| **Swift** | 3 | Concurrency patterns, Swift 6.2, InlineArray/Span |
+| **Swift** | 4 | Concurrency patterns, Swift 6.2, InlineArray/Span, code-size limits |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
 | **Design** | 7 | Liquid Glass, animation patterns, game feel (haptics/sound/celebrations), UI prototyping, UX writing, SF Symbols, typography |
 | **Performance** | 2 | Instruments profiling, SwiftUI debugging |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 160 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 164 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 
@@ -123,12 +123,12 @@ skills/
 ├── design/                 # Liquid Glass, animation patterns, UI prototyping, design principles, UX writing, SF Symbols, typography (7 skills)
 ├── performance/            # Instruments profiling, SwiftUI debugging
 ├── security/               # Keychain, biometrics, network security, privacy manifests
-├── swift/                  # Concurrency patterns, Swift 6.2, InlineArray/Span
+├── swift/                  # Concurrency patterns, Swift 6.2, InlineArray/Span, code-size limits (4 skills)
 ├── swiftdata/              # Class inheritance patterns
 ├── mapkit/                 # GeoToolbox, place descriptors
 ├── foundation/             # AttributedString updates
 ├── visionos/               # Spatial design (ergonomics, comfort, environments), widgets (2 skills)
-├── testing/                # TDD workflows, test infrastructure, snapshot tests, flow walkthrough (9 skills)
+├── testing/                # TDD workflows, test infrastructure, snapshot tests, flow walkthrough, deterministic gates (12 skills)
 ├── monetization/           # Pricing strategy, tiers, free trials, external purchases, bundles & licensing (3 skills)
 ├── app-store/              # ASO, descriptions, screenshots, reviews, search ads, ad attribution, rejections, originality, IAP finalize, ratings, web presence (12 skills)
 ├── watchos/                # Watch apps, complications, health/fitness, widgets
@@ -254,6 +254,9 @@ Generate production-ready Swift code that adapts to your project:
 | `test-data-factory` | Factory/fixture helpers for test data |
 | `integration-test-scaffold` | Cross-module test harness with mock server |
 | `flow-walkthrough` | Drive user flows (XCUITest + screenshots), audit the nav graph for dead-ends |
+| `fitness-functions` | Architecture invariants (import boundaries, count/copy contracts) as tests |
+| `coverage-ratchet` | Coverage floor that only rises — xccov gate vs a committed baseline |
+| `mutation-testing` | EXPERIMENTAL muter audit — surviving mutants reveal assertion-free coverage |
 
 ## Monetization
 

@@ -1,0 +1,26 @@
+# code-size fragment — complexity/size thresholds for agent-written Swift.
+# These are built-in, default-enabled SwiftLint rules; this fragment sets the
+# thresholds. Merge into the project's .swiftlint.yml alongside other fragments.
+# Brownfield adoption: freeze existing violations first —
+#   swiftlint lint --write-baseline .swiftlint-baseline.json
+# then gate with: swiftlint lint --strict --baseline .swiftlint-baseline.json
+
+cyclomatic_complexity:
+  warning: 10
+  error: 20
+
+function_body_length:
+  warning: 50
+  error: 100
+
+type_body_length:
+  warning: 300
+  error: 500
+
+file_length:
+  warning: 500
+  error: 1000
+
+function_parameter_count:
+  warning: 5
+  error: 8
