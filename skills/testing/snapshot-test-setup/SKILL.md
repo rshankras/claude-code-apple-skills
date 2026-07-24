@@ -2,7 +2,7 @@
 name: snapshot-test-setup
 description: Set up SwiftUI visual regression testing with swift-snapshot-testing. Generates snapshot test boilerplate and CI configuration. Use for UI regression prevention.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-07-24
 review_by: 2027-06-22
 ---
 
@@ -128,13 +128,16 @@ enum SnapshotConfig {
 @Suite("Snapshots: HomeView")
 struct HomeViewSnapshotTests {
 
+    // perceptualPrecision < 1.0 absorbs GPU/anti-aliasing noise across runs
+    // on the same pinned simulator — 0.98 catches real layout/color changes
+    // while ignoring sub-perceptual rendering jitter.
     @Test("matches reference - light mode")
     func lightMode() {
         let view = HomeView(items: Item.sampleList)
 
         assertSnapshot(
             of: UIHostingController(rootView: view),
-            as: .image(on: .iPhone13)
+            as: .image(on: .iPhone13, perceptualPrecision: 0.98)
         )
     }
 
@@ -145,7 +148,7 @@ struct HomeViewSnapshotTests {
 
         assertSnapshot(
             of: UIHostingController(rootView: view),
-            as: .image(on: .iPhone13)
+            as: .image(on: .iPhone13, perceptualPrecision: 0.98)
         )
     }
 
@@ -155,18 +158,18 @@ struct HomeViewSnapshotTests {
 
         assertSnapshot(
             of: UIHostingController(rootView: view),
-            as: .image(on: .iPhone13)
+            as: .image(on: .iPhone13, perceptualPrecision: 0.98)
         )
     }
 
-    @Test("matches reference - dynamic type XXL")
-    func dynamicTypeXXL() {
+    @Test("matches reference - accessibility Dynamic Type")
+    func dynamicTypeAccessibility() {
         let view = HomeView(items: Item.sampleList)
-            .environment(\.sizeCategory, .accessibilityExtraExtraLarge)
+            .environment(\.dynamicTypeSize, .accessibility3)
 
         assertSnapshot(
             of: UIHostingController(rootView: view),
-            as: .image(on: .iPhone13)
+            as: .image(on: .iPhone13, perceptualPrecision: 0.98)
         )
     }
 }
@@ -278,6 +281,36 @@ func lightMode() {
 }
 ```
 
+## Gate Wiring (the deterministic UI gate)
+
+Snapshot suites are the UI half of the deterministic gauntlet (code half:
+`testing/fitness-functions`, `swift/code-size`, `testing/coverage-ratchet`).
+They use the same install trick as fitness functions: **they are ordinary
+tests in the existing unit-test target**, so they ride every `test` gate that
+already exists — no new CI plumbing to *run* them. What makes them a *gate*
+rather than a capability:
+
+- **A pixel diff is a FAIL, not a discussion.** SwiftShip's `<check
+  type="snapshot">` runs the suite scoped to a task's touched screens
+  (`-only-testing`); the phase does not close on a red diff.
+- **The re-record ratchet.** `__Snapshots__/` baselines are committed;
+  re-recording is a *stated decision* — the commit message says which screens
+  changed and why. Record mode (`withSnapshotTesting(record: .all)`) is never
+  committed enabled; a committed record-mode test asserts nothing.
+- **Determinism guards.** Pin one simulator model/OS as the snapshot
+  destination and document it in the suite header (baselines from other
+  devices/OS versions will diff). Use `perceptualPrecision: 0.98`. Require a
+  **double-run green** before committing new baselines — a suite that flakes
+  between two identical runs is not a gate. OS/simulator bumps legitimately
+  require re-records: that's a stated-intent event like any other.
+- **New or changed screen ⇒ snapshot in the same task.** A view task without
+  a snapshot for its touched screens leaves the gate blind exactly where the
+  change happened.
+- **Environment assembly:** reuse the project's preview harness (the struct
+  its `#Preview`s already use to inject state/environment) rather than
+  building a parallel one — the DEBUG-only harness is visible to test builds,
+  and reuse keeps snapshots rendering exactly what previews render.
+
 ## What to Snapshot
 
 ### High Value (Always Snapshot)
@@ -360,3 +393,4 @@ swift-snapshot-testing 1.17.0 via SPM
 - [swift-snapshot-testing](https://github.com/pointfreeco/swift-snapshot-testing)
 - `generators/test-generator/` — for unit/integration test generation
 - `testing/tdd-feature/` — for TDD workflow with UI features
+- `testing/fitness-functions/` — the code half of the deterministic gauntlet (same ride-the-test-gate trick)
