@@ -10,7 +10,7 @@ Four repos, four layers — use one or all:
 
 | Layer | Repo | What it is |
 |---|---|---|
-| Knowledge | **claude-code-apple-skills** ← you are here | 164 skills — how to build right |
+| Knowledge | **claude-code-apple-skills** ← you are here | 165 skills — how to build right |
 | Workflow | [SwiftShip](https://github.com/rshankras/SwiftShip) | 53 /apple:* commands — spec-driven idea → App Store |
 | Action | [indie-app-autopilot](https://github.com/rshankras/indie-app-autopilot) | 7 agents — GitHub issue → App Store |
 | Integration | [asc-metadata-mcp](https://github.com/rshankras/asc-metadata-mcp) | 65+ MCP tools — live App Store Connect API |
@@ -29,7 +29,7 @@ Four repos, four layers — use one or all:
 | **Growth** | 6 | Analytics, store signals, growth audit, press/media, community, indie business |
 | **Swift** | 4 | Concurrency patterns, Swift 6.2, InlineArray/Span, code-size limits |
 | **Apple Intelligence** | 3 | Foundation Models, Visual Intelligence, App Intents |
-| **Design** | 7 | Liquid Glass, animation patterns, game feel (haptics/sound/celebrations), UI prototyping, UX writing, SF Symbols, typography |
+| **Design** | 8 | Liquid Glass, animation patterns, game feel (haptics/sound/celebrations), UI prototyping, UX writing, SF Symbols, typography, design system |
 | **Performance** | 2 | Instruments profiling, SwiftUI debugging |
 | **Security** | 1 | Privacy manifests, required reason APIs |
 | **Core ML** | 1 | Vision, NaturalLanguage, model integration |
@@ -43,7 +43,7 @@ Four repos, four layers — use one or all:
 | **Release Review** | 1 | Pre-release audit checklists |
 | **Shared** | 2 | Meta-skills for creating (`skill-creator`) and auditing (`skill-auditor`) skills |
 
-**Total: 164 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
+**Total: 165 skills across 23 categories** (single-skill categories count their category file; other index files aren't counted — enforced by `scripts/check-counts.sh` in CI)
 
 ## Quick Start
 
@@ -120,7 +120,7 @@ skills/
 ├── core-ml/                # Vision, NaturalLanguage, model integration
 ├── swiftui/                # Data flow, layout & containers, AlarmKit, WebKit, text editing, toolbars, Charts 3D (7 skills)
 ├── apple-intelligence/     # Foundation Models, Visual Intelligence, App Intents
-├── design/                 # Liquid Glass, animation patterns, UI prototyping, design principles, UX writing, SF Symbols, typography (7 skills)
+├── design/                 # Liquid Glass, animation patterns, UI prototyping, design principles, UX writing, SF Symbols, typography, design system (8 skills)
 ├── performance/            # Instruments profiling, SwiftUI debugging
 ├── security/               # Keychain, biometrics, network security, privacy manifests
 ├── swift/                  # Concurrency patterns, Swift 6.2, InlineArray/Span, code-size limits (4 skills)
@@ -277,6 +277,7 @@ Generate production-ready Swift code that adapts to your project:
 | `design/ux-writing` | Interface copy: PACE framework, voice/tone, alert anatomy, feature naming |
 | `design/sf-symbols` | Choosing/configuring symbols, custom-symbol authoring, animation vocabulary |
 | `design/typography` | Text styles, Dynamic Type, optical sizes, the SF family + width axis |
+| `design/design-system` | Build-time rules that keep an app cheap to restyle: role-named tokens, text styles with case, ContentStateView, small views, SwiftLint baseline |
 
 ## visionOS Skills
 

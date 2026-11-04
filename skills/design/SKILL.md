@@ -1,6 +1,6 @@
 ---
 name: design
-description: Design skills for Apple platform UI — Liquid Glass, animations, game feel (haptics, sound, celebrations), UI prototyping, UX writing, SF Symbols, and typography. Use when implementing design language features, adding juice/feedback, writing interface copy, or choosing type and iconography.
+description: Design skills for Apple platform UI — Liquid Glass, animations, game feel (haptics, sound, celebrations), UI prototyping, UX writing, SF Symbols, typography, and design-system rules that keep apps cheap to restyle. Use when implementing design language features, adding juice/feedback, writing interface copy, or choosing type and iconography.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
 last_verified: 2026-07-18
 review_by: 2027-06-22
@@ -29,6 +29,7 @@ Use this skill when the user:
 - Needs UX structure help: navigation clarity, discoverability, information architecture
 - Is writing or reviewing interface copy, alerts, or feature names
 - Asks about SF Symbols usage/authoring, fonts, Dynamic Type, or type hierarchy
+- Sets up **design tokens / text styles / shared components**, adopts a designer's system, or is preparing for a **redesign**
 
 ## Available Skills
 
@@ -63,6 +64,9 @@ SF Symbols end-to-end — choosing/configuring system symbols (rendering modes, 
 
 ### typography/
 UI typography — text styles and Dynamic Type, the San Francisco family with its width axis, optical sizes, tracking vs kerning, and custom-font scaling obligations.
+
+### design-system/
+Build-time rules that keep an app cheap to restyle — role-named tokens, text styles that carry case and tracking, shared components with a `ContentStateView`, views under ~300 lines, identifier-based UI tests — plus a SwiftLint fragment (`rules/swiftlint.yml`) with a shrinking baseline. iOS, iPadOS, macOS, watchOS.
 
 ## Key Principles
 
