@@ -1,0 +1,32 @@
+# design-system fragment — keep styling in tokens so a redesign is one edit.
+# Merge into the project's .swiftlint.yml. Token/style definition files are
+# excluded by path (DesignSystem/, Tokens/, Theme/, Styles/) — keep yours
+# under one of those, or adjust `excluded` after merging.
+# Brownfield adoption: freeze existing violations, then only shrink —
+#   swiftlint lint --write-baseline .swiftlint-baseline.json
+#   swiftlint lint --strict --baseline .swiftlint-baseline.json
+custom_rules:
+  ds_raw_font_size:
+    name: "Raw font size"
+    message: "Use a text style (.appText(.body)) — raw sizes make every restyle a call-site hunt."
+    regex: '\.font\(\s*\.system\(\s*size:'
+    severity: warning
+    excluded: ".*(DesignSystem|Tokens|Theme|Styles|Tests|UITests)/.*"
+  ds_raw_color:
+    name: "Raw colour"
+    message: "Use a role-named colour token (Color.textPrimary) instead of RGB/white values."
+    regex: '\b(Color|UIColor|NSColor)\(\s*(red|white|hue|hex):'
+    severity: warning
+    excluded: ".*(DesignSystem|Tokens|Theme|Styles|Tests|UITests)/.*"
+  ds_raw_spacing:
+    name: "Raw spacing / radius"
+    message: "Use the spacing/radius scale (Spacing.m, Radius.s); only 0 is allowed inline."
+    regex: '(\.padding\(\s*(\.\w+\s*,\s*)?|\.cornerRadius\(\s*|cornerRadius:\s*)[1-9][0-9]*(\.[0-9]+)?\s*[,)]'
+    severity: warning
+    excluded: ".*(DesignSystem|Tokens|Theme|Styles|Tests|UITests)/.*"
+  ds_call_site_case:
+    name: "Case or tracking at call site"
+    message: "Case and tracking belong in the text style (.appText(.label)); user text uses .original."
+    regex: '\.(textCase|tracking|kerning)\(|Text\([^)]*\.uppercased\(\)'
+    severity: warning
+    excluded: ".*(DesignSystem|Tokens|Theme|Styles|Tests|UITests)/.*"
