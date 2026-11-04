@@ -2,7 +2,7 @@
 name: run-simulator
 description: Build, install, launch, and screenshot an iOS app in the Simulator to verify a change visually. Use when the user wants to run the app, see a change live, screenshot the running app, or confirm a UI fix actually works (not just that it compiles).
 allowed-tools: [Bash, Read, Glob]
-last_verified: 2026-07-16
+last_verified: 2026-11-04
 review_by: 2027-06-22
 ---
 
@@ -12,6 +12,10 @@ Launches the **actual app** in the iOS Simulator and drives it far enough to see
 what a user would see. Building proves the code compiles; this skill proves it
 *runs*. The payoff is a screenshot of the live app that you read back to confirm
 the change — a blank or crashed frame is a failure, not a pass.
+
+> **The rule:** navigate with the accessibility tree; screenshots verify
+> outcomes, never locate tap targets. Text is cheap and exact; every image you
+> Read stays in context for the rest of the session.
 
 This skill is generic. Nothing about a specific app is hardcoded — the scheme,
 simulator, product path, and bundle id are all discovered at runtime.
@@ -118,29 +122,73 @@ xcrun simctl launch "$SIM" "$BID"
 error string here means the app failed to start — investigate before
 screenshotting.
 
-### 6. Screenshot and verify (and drive if needed)
+### 6. Navigate to the screen (if the change is behind navigation)
+
+`xcrun simctl` **cannot tap** — `simctl io` has no tap operation (only
+`enumerate`, `poll`, `recordVideo`, `screenshot`). Navigation needs a tool that
+reads the accessibility tree. Pick the first that works:
+
+**a. Deep link** — if the app has a URL route to the screen, it's the cheapest
+path: `xcrun simctl openurl "$SIM" "<scheme>://<path>"`.
+
+**b. AXe** (`command -v axe`; install: `brew install cameroncooke/axe/axe`).
+AXe needs the simulator's UDID:
 
 ```bash
-xcrun simctl io "$SIM" screenshot /tmp/sim-shot.png
+UDID=$(xcrun simctl list devices booted -j \
+  | jq -r --arg n "$SIM" '.devices[][] | select(.name==$n or .udid==$n) | .udid' | head -1)
+
+# Compact element list: type, label, id, centre point. ~2 KB per screen.
+# NEVER Read raw `axe describe-ui` output — it is ~280 KB (≈70k tokens) for
+# one screen, far more than a screenshot.
+UI_FILTER='[.. | objects | select(has("type") and (.AXLabel // .AXUniqueId // "") != ""
+  and .type != "Application" and .type != "Group")
+  | {t: .type, l: .AXLabel, id: .AXUniqueId, v: .AXValue,
+     xy: [(.frame.x + .frame.width/2 | floor), (.frame.y + .frame.height/2 | floor)]}
+  | with_entries(select(.value != null))]'
+axe describe-ui --udid "$UDID" | jq -c "$UI_FILTER" | jq -c '.[]'
 ```
 
-Then **Read `/tmp/sim-shot.png`** and actually look at it:
+Tap the target, most specific first:
+
+```bash
+axe tap --id "<AXUniqueId>" --udid "$UDID"                              # 1. accessibilityIdentifier
+axe tap --label "<AXLabel>" --element-type Button --wait-timeout 5 --udid "$UDID"  # 2. label (+ type)
+axe tap -x <x> -y <y> --udid "$UDID"                                    # 3. the xy from the list above
+```
+
+- AXe **refuses to tap** (exit 1, "Multiple (N) accessibility elements
+  matched") when a label or id is ambiguous — common in system and nested
+  views. Fall back to step 3 with the `xy` from the list: still exact, not
+  guessed.
+- `--wait-timeout` polls until the element appears — use it right after a
+  navigation instead of `sleep`.
+- Back buttons usually have `--id BackButton`.
+- **After each tap, confirm where you landed by re-listing (text), not by
+  screenshot** — check the `Heading` / `Button` labels of the new screen.
+- An element you need with **no label and no id** is an accessibility bug
+  (VoiceOver can't name it either) — report it, don't work around it.
+
+**c. Neither available** — screenshot the landing screen (step 7) and tell the
+user the exact taps to reach the target view.
+
+### 7. Screenshot and verify — as a thumbnail
+
+Screenshot **once**, at the destination, and Read a downscaled copy:
+
+```bash
+xcrun simctl io "$SIM" screenshot /tmp/sim-shot.png       # full size, kept on disk
+sips -Z 600 /tmp/sim-shot.png --out /tmp/sim-shot-thumb.png >/dev/null
+```
+
+Then **Read `/tmp/sim-shot-thumb.png`** (≈276×600 — a fraction of a
+full-size frame's tokens) and actually look at it:
 - Blank/white frame, a crash dialog, or the launch screen stuck → failure.
 - The expected screen → success; describe what confirms the change.
 
-If the change lives behind navigation, drive there before judging. Tap by point
-or describe to the user what to navigate to:
-
-```bash
-# Tap a point (x y in points) — useful for hitting a known tab/button
-xcrun simctl io "$SIM" tap <x> <y>          # (where supported)
-# Re-screenshot after each interaction
-xcrun simctl io "$SIM" screenshot /tmp/sim-shot-2.png
-```
-
-For deep links, `xcrun simctl openurl "$SIM" "<scheme>://<path>"`. If precise
-tapping isn't available, take the screenshot at the landing screen and tell the
-user the exact taps to reach the target view.
+The thumbnail is enough to judge blank / crashed / wrong screen / gross layout.
+Read the full-size PNG only when fine detail is the question (text clipping,
+alignment, color) — that is `/apple:visual-qa`'s job.
 
 ## Output Format
 
@@ -148,9 +196,11 @@ Report, concisely:
 1. **What ran** — scheme, simulator name/OS, bundle id.
 2. **Build result** — succeeded / failed (with the error tail if failed).
 3. **Launch result** — pid on success, or the failure reason.
-4. **What the screenshot shows** — the screen reached and whether it confirms
-   the change. Embed/Read the screenshot so the user sees it too.
-5. **Anything the user must do** — e.g. taps needed to reach a gated screen.
+4. **How you navigated** — deep link / AXe taps (by id, label, or xy) / none.
+5. **What the screenshot shows** — the screen reached and whether it confirms
+   the change. Give the full-size path so the user can open it.
+6. **Anything the user must do** — e.g. taps needed to reach a gated screen,
+   or unlabeled controls that blocked navigation.
 
 ## Reliability Notes (common failure modes)
 
@@ -165,11 +215,18 @@ Report, concisely:
   `sleep` does not and races the install.
 - **Launch screen "stuck"** → on a cold sim the app may still be initializing;
   re-screenshot after a short wait before declaring failure.
+- **`simctl io … tap` errors** → it doesn't exist; use AXe (step 6b).
+- **AXe "Multiple … matched", no tap performed** → the label/id isn't unique;
+  tap the `xy` from the filtered list.
+- **AXe "No accessibility element matched"** → you're not on the screen you
+  think; re-list before retrying. `describe-ui` takes ~1–2 s per call.
 
 ## References
 
 - `xcrun simctl help` — full simulator control surface (boot, install, launch,
   io, openurl, spawn).
+- AXe — https://github.com/cameroncooke/AXe (`axe --help`, `axe tap --help`);
+  verified against AXe 1.8.0 / Xcode 26.3.
 - `man xcodebuild` — `build`, `-list`, `-showBuildSettings`, `-destination`.
 - Apple: Running your app in Simulator —
   https://developer.apple.com/documentation/xcode/running-your-app-in-the-simulator-or-on-a-device
