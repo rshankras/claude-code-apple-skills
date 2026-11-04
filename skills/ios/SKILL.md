@@ -68,8 +68,9 @@ Build, install, launch, and screenshot the app in the Simulator to verify a
 change visually (operational — uses Bash, not just guidance).
 - Discover scheme + an available simulator (no hardcoded device names)
 - Build for the simulator and resolve the `.app` + bundle id
-- Boot, install, launch, then screenshot and read it back
-- Drive navigation / deep links to reach the changed screen
+- Boot, install, launch, then screenshot and read back a small thumbnail
+- Navigate to the changed screen via deep link or the AXe accessibility tree
+  (tap by id / label / exact point) — never by guessing from screenshots
 
 ### run-device/
 Run an app on a physical iPhone/iPad from the CLI (no Xcode GUI).
