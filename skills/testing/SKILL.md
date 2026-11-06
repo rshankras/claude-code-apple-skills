@@ -67,6 +67,40 @@ Coverage floor that only rises: a committed baseline the app target's line cover
 **mutation-testing/**
 EXPERIMENTAL, advisory-only muter setup scoped to engine targets — surviving mutants reveal covered-but-unasserted code. Never a merge gate; includes the manual deliberate-break fallback.
 
+## Keep Tests Fast
+
+Agent-written tests get slow in the same few ways, and every phase runs the
+suite more often, so slow tests cost time on every build. SwiftShip's
+`/apple:verify` times the suite each phase and warns when it gets more than
+25% slower or a single test takes over 10 s. Write tests so it never has to:
+
+1. **One test with a list of inputs, not copies.** Five near-identical
+   tests are five setups. Use `@Test(arguments:)`:
+   ```swift
+   @Test(arguments: ["", " ", "\n"])
+   func rejectsBlankTitle(_ title: String) throws {
+       #expect(throws: NoteError.blankTitle) { try Note(title: title) }
+   }
+   ```
+2. **Fakes for the network, the clock and storage.** No real `URLSession`
+   calls: inject a protocol, or a `URLProtocol` stub. No real waiting:
+   pass a clock or a date provider instead of waiting for time to pass.
+   SwiftData: an in-memory `ModelConfiguration(isStoredInMemoryOnly: true)`.
+3. **No `sleep`, no fixed waits.** `Task.sleep`, `sleep()` and long
+   `XCTWaiter` timeouts make every run pay the worst case. Await the
+   result, or wait on the specific element (`waitForExistence(timeout:)`
+   returns as soon as it appears).
+4. **UI tests launch the app once per class, not per test,** when the
+   tests don't need a fresh state: launch in `setUp` only when needed, or
+   reset state through a launch argument instead of a relaunch. Test logic
+   in unit tests, not through the UI; keep UI tests for flows.
+5. **Unit tests touch no disk, network or Simulator.** If a unit test needs
+   one of those, it's an integration test (`integration-test-scaffold/`);
+   keep it in its own target or test plan so the fast suite stays fast.
+
+A test over 10 s is a bug in the test, not a fact of life: find which of
+the five it breaks.
+
 ## How to Use
 
 1. Identify whether user is working on **new code** or **existing code**
