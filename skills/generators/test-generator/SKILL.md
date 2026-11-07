@@ -346,6 +346,8 @@ xcodebuild test -scheme YourApp -enableCodeCoverage YES
 
 ## Best Practices
 
+Keep generated tests fast: parameterized tests (`@Test(arguments:)`) over copies, fakes for network/clock/storage, no `sleep`, one app launch per UI test class. Full rules: "Keep Tests Fast" in `../../testing/SKILL.md`.
+
 1. **Test one thing per test** - Clear, focused tests
 2. **Use descriptive names** - Tests as documentation
 3. **Arrange-Act-Assert** - Clear test structure

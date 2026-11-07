@@ -312,6 +312,8 @@ All [X] tests passing.
 
 ## Common Pitfalls
 
+Keep the tests you write fast: one test with a list of inputs instead of copies, fakes for the network and clock, no `sleep`. See "Keep Tests Fast" in `../SKILL.md`.
+
 | Pitfall | Problem | Solution |
 |---------|---------|----------|
 | Writing too many tests before implementing | Overwhelming; can't see progress | Write 2-3 tests, implement, repeat |
