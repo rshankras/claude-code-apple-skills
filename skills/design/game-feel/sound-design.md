@@ -67,7 +67,7 @@ whichever component owns the room's audio.
 
 ## VoiceOver interplay
 
-Game-critical announcements (whose turn, what happened) should be **VoiceOver announcements**, not just SFX — a buzzer conveys *that* something happened, never *what*. Post `AccessibilityNotification.Announcement` alongside the sound. If effects talk over speech, add `.interruptSpokenAudioAndMixWithOthers` to the options and test with VoiceOver live.
+Game-critical announcements (whose turn, what happened) should be **VoiceOver announcements**, not just SFX — a buzzer conveys *that* something happened, never *what*. Post `AccessibilityNotification.Announcement` for the meaningful state change. If effects mask the announcement, lower, defer, or omit the app's own SFX and test the result with VoiceOver on a device. Do not add `.interruptSpokenAudioAndMixWithOthers` as a VoiceOver fix: that option pauses other sessions using the `.spokenAudio` mode; it does not lower your effects to make accessibility speech intelligible. Audio-session policy belongs to the app's audio owner, not an individual effect.
 
 ## Service shape
 
@@ -86,4 +86,5 @@ Mirror the haptics architecture (haptic-design.md): one `@Observable` service, s
 
 - [HIG — Playing audio](https://developer.apple.com/design/human-interface-guidelines/playing-audio)
 - [AVAudioSession category/options](https://developer.apple.com/documentation/avfaudio/avaudiosession)
+- [interruptSpokenAudioAndMixWithOthers — effect on other spoken-audio sessions](https://developer.apple.com/documentation/avfaudio/avaudiosession/categoryoptions-swift.struct/interruptspokenaudioandmixwithothers)
 - [AVAudioEngine](https://developer.apple.com/documentation/avfaudio/avaudioengine)
