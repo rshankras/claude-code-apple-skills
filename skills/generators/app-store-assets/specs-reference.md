@@ -94,7 +94,7 @@ Complete specifications for all App Store Connect assets, updated for 2025.
 ### DON'T:
 - Include status bar time/battery unless necessary
 - Show competitor apps or references
-- Include pricing in screenshots (changes by region)
+- Include prices or discounts in screenshots. Guideline 2.3.7 bans prices in metadata (and prices vary by region anyway); for creative assets, 2.3.14 bans specific or discounted pricing
 - Use "iPhone" or "iPad" device images (trademark)
 - Include misleading content not in the actual app
 
@@ -126,7 +126,7 @@ Complete specifications for all App Store Connect assets, updated for 2025.
 
 ### Preview Best Practices
 - **First 3 seconds**: Show the core value (most users don't watch all 30s)
-- **No live-action footage**: Must be app screen recording (can overlay text/graphics)
+- **No live-action footage**: Only video screen captures of the app itself (Guideline 2.3.4). Narration and video/text overlays are allowed
 - **Poster frame**: Choose the most compelling frame as the preview thumbnail
 - **Audio**: If included, use music or narration that adds value
 - **CTA**: End with a clear call to action or key benefit
@@ -168,6 +168,21 @@ Complete specifications for all App Store Connect assets, updated for 2025.
 - Show premium features or content
 - Keep text minimal — product name is shown separately
 - Test at thumbnail size (appears small in search results)
+
+---
+
+## Creative Assets (Guideline 2.3.14)
+
+Creative assets are marketing images and videos uploaded to the App Store Connect Asset Library. They appear in the product page header and as custom search-result visuals. Approved assets update without another review, so check each one against these rules before submitting:
+
+- ✅ Relates to your app's content and functionality, or its overarching brand
+- ✅ Follows standard metadata rules (Guideline 2.3) and is appropriate for all audiences
+- ❌ No inappropriate content
+- ❌ No references to other apps meant to mislead
+- ❌ No unverifiable product claims ("#1", "best", "most downloaded")
+- ❌ No specific or discounted pricing ("50% off", "$0.99", "free this week")
+
+Layout and workflow guidance: `app-store/screenshot-planner` (Creative Assets section).
 
 ---
 

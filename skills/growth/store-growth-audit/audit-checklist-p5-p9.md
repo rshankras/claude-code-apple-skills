@@ -21,6 +21,7 @@ Evidence keys (`EV.*`) are defined in `detection-playbook.md`. IDs are stable �
 - detect: HYBRID — Asset Library state isn't exposed via the current MCP tools, so MANUAL ("header/search creative assets submitted in the Asset Library?") with `EV.meta`/`EV.ppo` as partial signals
 - rule: ✅ header + search visuals live (pre-approved in the Asset Library, refreshed with campaigns) · 🟠 assets prepared but not submitted · 🔴 still default screenshots everywhere (surfaces render on iOS 27/iPadOS 27)
 - new-app: plan — design header/search assets alongside the screenshot set
+- note: creative assets fall under Guideline 2.3.14: no specific or discounted pricing, no unverifiable product claims, no misleading references to other apps, appropriate for all audiences. "Refreshed with campaigns" means seasonal or feature campaigns, never sale or price-drop copy.
 - fix: app-store/screenshot-planner (Creative Assets section) → /apple:screenshots
 
 #### P5.4 In-app events cadence + badge variety

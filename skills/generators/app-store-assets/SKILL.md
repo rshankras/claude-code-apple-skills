@@ -2,7 +2,7 @@
 name: app-store-assets
 description: Comprehensive App Store asset specifications and guidelines for all promotional artwork — app icons, screenshots, app previews, event cards, subscription images, and featuring artwork. Use when preparing assets for App Store Connect upload.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 ---
 
@@ -39,6 +39,7 @@ Ask user via AskUserQuestion:
    - In-App Event card images
    - Subscription promotional images
    - Custom Product Page assets
+   - Creative assets (product page header / search results visuals, Guideline 2.3.14)
    - All of the above
 
 ## Output Format

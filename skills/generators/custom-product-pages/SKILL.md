@@ -2,7 +2,7 @@
 name: custom-product-pages
 description: Generates Custom Product Page metadata templates with screenshot strategies, keyword targeting, and audience-specific messaging for up to 35 page variants. Use when creating targeted App Store pages for different audiences, ad campaigns, or traffic sources.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion, WebSearch]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -196,7 +196,7 @@ Example: Productivity app for students, freelancers, and teams
 | Page | Audience | Screenshot Focus | Promo Text Angle |
 |------|----------|-----------------|-----------------|
 | Default | General | Overview of all features | Broad appeal |
-| CPP 1 | Students | Note-taking, study tools, price | "The study companion that..." |
+| CPP 1 | Students | Note-taking, study tools, student workflows | "The study companion that..." |
 | CPP 2 | Freelancers | Time tracking, invoicing, clients | "Manage your freelance..." |
 | CPP 3 | Teams | Collaboration, sharing, admin | "Team productivity that..." |
 
