@@ -2,7 +2,7 @@
 name: referral-system
 description: Generates referral/invite infrastructure with unique codes, deep link sharing, reward tracking, and fraud prevention. Use when user wants referral codes, invite friends flow, or viral growth mechanics.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -262,8 +262,8 @@ for reward in pending {
 - **Code reuse**: Each invitee should only be able to redeem one referral code ever.
 
 ### App Store Guidelines
-- **Guideline 3.1.1**: Do not offer real-money rewards or gift cards for referrals without proper IAP integration.
-- **Guideline 3.2.2(vii)**: Referral systems must not manipulate App Store ratings or reviews.
+- **Guideline 3.1.1**: Digital content or features unlocked as referral rewards must stay consistent with IAP rules (no custom unlock mechanisms in place of IAP), and digital gift cards or vouchers can only be sold via IAP.
+- **Guideline 5.6.3 (Discovery Fraud)**: Referral rewards must not be tied to leaving or boosting App Store ratings or reviews, or otherwise manipulate charts, search, reviews, or referrals.
 - **Incentivized installs**: Apple may reject apps that reward users purely for downloading. Tie rewards to meaningful in-app actions (e.g., completing a first task, making a purchase).
 
 ### Deep Link Expiration

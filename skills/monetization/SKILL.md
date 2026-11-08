@@ -2,7 +2,7 @@
 name: monetization
 description: Monetization strategy for iOS/macOS apps. Covers readiness assessment, pricing model selection, tier structuring, free trial strategy, and implementation guidance. Use when deciding what to charge, how to price, or planning monetization end-to-end.
 allowed-tools: [Read, Write, Edit, Glob, Grep, WebSearch, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -11,7 +11,7 @@ os_version: iOS 27 / macOS 27
 
 End-to-end monetization guidance for Apple platform apps — from "should I charge?" to "here's your pricing page structure."
 
-Sub-skills in this category: `external-purchases/` (US web checkout via the External Purchase Link entitlement, commission-flip architecture) and `bundles-and-licensing/` (own-app bundles, Family Sharing, cross-developer suites, institutional volume licensing). Route there when the question is beyond the single-app price tag.
+Sub-skills in this category: `external-purchases/` (US web checkout, which needs no entitlement under 3.1.1(a); entitlement-based links in other regions; commission-flip architecture) and `bundles-and-licensing/` (own-app bundles, Family Sharing, cross-developer suites, institutional volume licensing). Route there when the question is beyond the single-app price tag.
 
 ## When This Skill Activates
 
@@ -239,7 +239,8 @@ Key rules to follow:
 - **3.1.1**: In-app purchase required for digital content/features
 - **3.1.2**: Subscriptions must provide ongoing value
 - **3.1.3**: "Reader" apps can link to web for account management
-- **3.2.2**: Unacceptable business models (bait-and-switch, etc.)
+- **3.1.2(a)**: No bait-and-switch or tricking users into subscriptions under false pretenses (can mean removal from the Developer Program)
+- **3.2.2(x)**: Don't force users to rate, review, or download other apps to access functionality
 - **5.6**: Developer Code of Conduct (no manipulative tactics)
 
 ## Output Format

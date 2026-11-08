@@ -27,7 +27,7 @@ StoreKit 2 (iOS 15+) replaces the original StoreKit API with a modern, async/awa
 | `SKPayment` + `SKPaymentQueue.add()` | `product.purchase()` | Async, returns result |
 | `SKPaymentTransaction` | `Transaction` | JWS-signed |
 | `SKPaymentTransactionObserver` | `Transaction.updates` | AsyncSequence |
-| `SKPaymentQueue.restoreCompletedTransactions()` | `Transaction.currentEntitlements` or `AppStore.sync()` | No restore button needed |
+| `SKPaymentQueue.restoreCompletedTransactions()` | `Transaction.currentEntitlements` or `AppStore.sync()` | Keep a restore control (3.1.1); implement via `AppStore.sync()` |
 | `SKReceiptRefreshRequest` | `AppStore.sync()` | Syncs with App Store |
 | `appStoreReceiptURL` (receipt file) | `Transaction.currentEntitlements` | JWS per transaction |
 | `SKStorefront` | `Storefront.current` | Async property |
@@ -296,14 +296,15 @@ func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWit
 
 ```swift
 // Transaction.currentEntitlements already provides all active purchases.
-// A restore button is typically not needed, but if required:
+// Guideline 3.1.1 still requires a restore mechanism for restorable IAPs:
+// keep a visible "Restore Purchases" control wired to this.
 func restorePurchases() async throws {
     try await AppStore.sync()
     await updateEntitlements()  // Re-check currentEntitlements
 }
 ```
 
-`AppStore.sync()` forces a sync with the App Store. In most cases, `Transaction.currentEntitlements` is sufficient and stays up to date automatically. Apple still recommends providing a restore mechanism for App Review compliance.
+`AppStore.sync()` forces a sync with the App Store. `Transaction.currentEntitlements` stays up to date automatically in most cases, but Guideline 3.1.1 requires a restore mechanism for any restorable in-app purchases. Keep a visible Restore Purchases control that calls `AppStore.sync()` and then re-reads `Transaction.currentEntitlements`.
 
 ## Server-Side Migration
 

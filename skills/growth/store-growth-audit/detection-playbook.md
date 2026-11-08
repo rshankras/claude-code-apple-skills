@@ -45,7 +45,7 @@ One pass over the app repo (skip if no codebase is at hand — affected items fa
 | `import WidgetKit` / `import ActivityKit` | `EV.code.widgets` / `EV.code.liveactivity` | P9.1 |
 | `UNUserNotificationCenter\|requestAuthorization` | `EV.code.notifications` | P9.1 |
 | onboarding flow markers (`Onboarding`, first-run flags) | `EV.code.onboarding` | P9.1 |
-| `com.apple.developer.storekit.external-purchase` in `*.entitlements` | `EV.code.extpurchase` | P8.4 |
+| `com.apple.developer.storekit.external-purchase` in `*.entitlements`, `ExternalPurchaseLink`, or a storefront-gated checkout link (`Storefront.current` near a web checkout URL). US apps need no entitlement (3.1.1(a)), so the entitlement alone misses them | `EV.code.extpurchase` | P8.4 |
 | `*.storekit` config, `SubscriptionStoreView\|StoreKit` paywall views | `EV.code.paywall` | P8.1 |
 | deletion flow (`deleteAccount`, account-deletion UI) | `EV.code.accountdeletion` | P2.4 |
 | `*.lproj` dirs / locales inside `*.xcstrings` | `EV.code.locales` | P3.4 |
@@ -73,7 +73,7 @@ always an option and always scores 🟠 *unverified*.
 | 10 | Launch-spike playbook used at last major release (Product Hunt + press + newsletter inside 48h)? | P7.4 |
 | 11 | Pre-orders ever used (incl. regionally for new storefronts)? Offer codes distributed? TestFlight public link used as a waitlist? | P7.6 P7.7 P7.8 |
 | 12 | Paywall/pricing experiments run in the last two quarters? | P8.1 |
-| 13 | US web-checkout / External Purchase Link entitlement: shipped, planned, or not considered? | P8.4 |
+| 13 | US web checkout (no entitlement needed on the US storefront) / External Purchase Link entitlement in other eligible regions: shipped, planned, or not considered? | P8.4 |
 | 14 | Any cross-developer bundle conversations? Institutional (school/business) buyers in your audience? | P8.5 P8.6 |
 | 15 | ASA search-term report folded into keywords in the last quarter? | P9.2 |
 

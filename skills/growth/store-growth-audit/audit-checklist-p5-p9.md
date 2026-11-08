@@ -141,7 +141,7 @@ Evidence keys (`EV.*`) are defined in `detection-playbook.md`. IDs are stable �
 
 #### P8.4 US web checkout / External Purchase Links — core
 - detect: HYBRID — CODE `EV.code.extpurchase` + MANUAL Q13
-- rule: ✅ shipped with commission-flip architecture + analytics from day one (currently 0% commission; litigation ongoing — re-verify) · 🟠 planned/considered · 🔴 not considered · applies-if: US storefront + digital goods revenue
+- rule: ✅ shipped with commission-flip architecture + analytics from day one (currently 0% commission; litigation ongoing — re-verify) · 🟠 planned/considered · 🔴 not considered · applies-if: US storefront + digital goods revenue (US needs no entitlement under 3.1.1(a); other regions need the entitlement + a permitted destination)
 - new-app: plan — architect the flip switch before you need it
 - fix: monetization/external-purchases
 
