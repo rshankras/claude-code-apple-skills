@@ -2,7 +2,7 @@
 name: lapsed-user
 description: Generates lapsed user detection and re-engagement screens with personalized return experiences, win-back offers, and inactivity tracking. Use when user wants to re-engage inactive users, detect lapsed users, or build return flows.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -77,7 +77,7 @@ Ask user via AskUserQuestion:
 
 3. **Trigger mechanism?**
    - Show on app return (present sheet when user opens app after inactivity)
-   - Via push notification (schedule local notification after X days inactive)
+   - Via push notification (schedule local notification after X days inactive; promotional, so requires explicit in-app opt-in under Guideline 4.5.4, see Gotchas)
    - Both — recommended
 
 4. **Include analytics events?**
@@ -275,6 +275,9 @@ let daysAway = Calendar.current.dateComponents([.day], from: lastActive, to: Dat
 
 ### Don't Annoy Deliberate Break-Takers
 Provide a "Don't show again" option on the return screen. Respect user preferences — if they dismiss the return experience, increase the threshold before showing again. Store dismissal count and back off exponentially.
+
+### Win-Back Notifications Need Marketing Consent (Guideline 4.5.4)
+Win-back notifications ("We miss you!", "50% off to come back") are promotional. Send them only after the user has explicitly opted in through consent language shown in your app's UI, and provide an in-app way to opt out. Granting notification permission is not enough. Store the opt-in separately and check it before scheduling.
 
 ### Avoid Stacking with Other Modals
 If your app has onboarding, what's-new, or review prompts, coordinate with them. Don't show a return screen AND a review prompt AND a what's-new modal on the same launch. Use a presentation queue.

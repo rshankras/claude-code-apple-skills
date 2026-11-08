@@ -75,7 +75,7 @@ Run through this before submitting to avoid the most common rejections. Each ite
 - [ ] No language or links directing users to purchase outside the app, except where allowed: the US storefront (no entitlement needed), a StoreKit External Purchase Link Entitlement in its permitted regions and destinations (3.1.1(a)), or a 3.1.3 category such as Reader apps
 - [ ] Free trial terms are clearly stated
 
-### Design Quality (Guideline 4.0)
+### Design Quality (Section 4: Design; web wrappers are 4.2)
 
 - [ ] App uses native UI components (not a web wrapper for existing website)
 - [ ] Supports current device screen sizes
@@ -94,12 +94,18 @@ Run through this before submitting to avoid the most common rejections. Each ite
 - [ ] User data deletion mechanism exists (if data is collected)
 - [ ] Privacy manifest included (required for certain APIs, iOS 17+)
 
-### Legal Requirements (Guideline 5.2)
+### Legal Requirements (Guideline 5)
 
 - [ ] App complies with local laws in all territories where distributed
 - [ ] Required age gates for restricted content
 - [ ] Health/medical disclaimers if applicable
 - [ ] Financial disclaimers if applicable
+
+### Intellectual Property (Guideline 5.2)
+
+- [ ] All content is created by you or licensed (5.2)
+- [ ] No unauthorized third-party trademarks, copyrighted works, or patented ideas (5.2.1)
+- [ ] Third-party service terms respected (APIs, streaming, data sources)
 
 ### App Review Notes (Submission)
 
@@ -201,7 +207,7 @@ further.
 
 ### Phase C: Evaluate Subjective Rejections
 
-For "minimum functionality" (4.2), "spam" (4.3), or "design" (4.0) rejections, decide:
+For "minimum functionality" (4.2), "spam" (4.3), or "design" (Section 4) rejections, decide:
 
 **When to fix (usually the better path):**
 - If you honestly agree the app could be more substantial

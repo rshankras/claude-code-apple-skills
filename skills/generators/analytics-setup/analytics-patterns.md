@@ -97,7 +97,7 @@ case subscribeButtonTappedOnPaywallAnnual // Don't do this
 
 ### TelemetryDeck (Recommended)
 
-Privacy-friendly, no user consent required in most jurisdictions:
+Privacy-friendly, but App Review Guideline 5.1.1(ii) still requires user consent for collecting usage data, even anonymous data, and an easy way to withdraw it. Wrap it in `ConsentAwareAnalytics` (see Privacy Considerations):
 
 ```swift
 final class TelemetryDeckAnalytics: AnalyticsService {
@@ -122,7 +122,7 @@ final class TelemetryDeckAnalytics: AnalyticsService {
 
 ### Firebase Analytics
 
-Full-featured but requires consent in EU:
+Full-featured. Needs user consent everywhere under Guideline 5.1.1(ii), plus GDPR obligations in the EU and App Tracking Transparency if you track across apps. Wrap it in `ConsentAwareAnalytics`:
 
 ```swift
 final class FirebaseAnalytics: AnalyticsService {
@@ -222,21 +222,49 @@ SettingsView()
 
 ## Privacy Considerations
 
-### User Consent
+### User Consent (Guideline 5.1.1(ii), required for every provider)
+
+"Apps that collect user or usage data must secure user consent for the collection, even if such data is considered to be anonymous", and must give users "an easily accessible and understandable way to withdraw consent." This applies in every region, not just the EU, and to privacy-friendly providers too. Make this wrapper the default and expose the consent toggle in Settings.
 
 ```swift
 final class ConsentAwareAnalytics: AnalyticsService {
     private let wrapped: AnalyticsService
-    private let consentProvider: () -> Bool
+    private let consentProvider: @Sendable () -> Bool
 
-    init(wrapped: AnalyticsService, consentProvider: @escaping () -> Bool) {
+    init(wrapped: AnalyticsService, consentProvider: @escaping @Sendable () -> Bool) {
         self.wrapped = wrapped
         self.consentProvider = consentProvider
+    }
+
+    // Call configure() again after the user grants consent.
+    func configure() {
+        guard consentProvider() else { return }
+        wrapped.configure()
+    }
+
+    func track(_ event: AnalyticsEvent) {
+        guard consentProvider() else { return }
+        wrapped.track(event)
     }
 
     func track(_ event: AnalyticsEvent, properties: [String: String]) {
         guard consentProvider() else { return }
         wrapped.track(event, properties: properties)
+    }
+
+    func setUserProperty(_ key: String, value: String) {
+        guard consentProvider() else { return }
+        wrapped.setUserProperty(key, value: value)
+    }
+
+    func setUserID(_ id: String?) {
+        guard consentProvider() else { return }
+        wrapped.setUserID(id)
+    }
+
+    // Always forward reset() so withdrawing consent clears stored identifiers.
+    func reset() {
+        wrapped.reset()
     }
 }
 
