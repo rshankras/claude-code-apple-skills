@@ -2,7 +2,7 @@
 name: analytics-setup
 description: Generates protocol-based analytics infrastructure with swappable providers (TelemetryDeck, Firebase, Mixpanel). Use when user wants to add analytics, track events, or set up telemetry.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 ---
 
@@ -121,8 +121,12 @@ Sources/Analytics/
 ```swift
 @main
 struct MyApp: App {
-    // Choose your provider
-    private let analytics: AnalyticsService = TelemetryDeckAnalytics(appID: "YOUR-APP-ID")
+    // Choose your provider. Always wrap it: Guideline 5.1.1(ii) requires consent
+    // even for anonymous usage data, in every region.
+    private let analytics: AnalyticsService = ConsentAwareAnalytics(
+        wrapped: TelemetryDeckAnalytics(appID: "YOUR-APP-ID"),
+        consentProvider: { UserDefaults.standard.bool(forKey: "analyticsConsent") }
+    )
 
     init() {
         analytics.configure()

@@ -104,7 +104,7 @@ Core features               Activity packs
 **Key insights:**
 - **COPPA compliance is mandatory** — no behavioral advertising for under-13
 - **Family Sharing is expected** — parents don't want to pay per device
-- **No ads in kids apps** — Apple explicitly prohibits third-party ads in kids category
+- **No third-party ads or analytics in kids apps (by default)** — Guideline 1.3: Kids Category apps should not include third-party advertising or analytics. Only limited exceptions exist: contextual ads from services with publicly documented Kids Category practices that include human review of ad creatives, and analytics that collect no IDFA or identifiable data about children
 - Parents prefer **annual subscriptions** or **one-time purchases** over monthly
 - **Show learning outcomes** to parents to justify price
 - **Gift-ability matters** — grandparents buy educational apps

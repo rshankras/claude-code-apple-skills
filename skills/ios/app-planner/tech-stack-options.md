@@ -490,7 +490,7 @@ let (data, response) = try await URLSession.shared.data(from: url)
 | **Auth0** | Auth service | Enterprise auth |
 | **Sign in with Apple** | Native auth | Recommended for all apps |
 
-**Recommendation:** Sign in with Apple (required for social auth) + Firebase/Auth0 if needed
+**Recommendation:** If you offer third-party or social login (Google, Facebook, etc.) for the primary account, Guideline 4.8 requires an equivalent login option that limits data to name and email, lets users keep their email private, and doesn't collect interactions for advertising without consent. Sign in with Apple qualifies. See 4.8 for exemptions. Add Firebase/Auth0 if needed.
 
 ### Database/Persistence
 

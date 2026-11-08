@@ -547,7 +547,7 @@ builder?.addWorkoutEvents([lapEvent]) { success, error in
 
 3. **Graceful denial** -- The app must function (with reduced features) if the user denies health data access.
 
-4. **No external sharing** -- HealthKit data must not be sold, shared with advertising, or transmitted to third parties without explicit consent.
+4. **No advertising or data mining, consent or not** -- HealthKit data must not be used for advertising, marketing, or use-based data mining, including by third parties (Guidelines 5.1.2(vi), 5.1.3(i)). User consent does not make advertising use acceptable. The only exceptions are improving health management or health research, and then only with the user's permission, or a benefit provided directly to the user by the entity that submitted the app, with no third-party sharing. Disclose the specific health data you collect.
 
 5. **Encrypted storage** -- Any health data cached locally must use Data Protection (`FileProtectionType.complete`).
 
