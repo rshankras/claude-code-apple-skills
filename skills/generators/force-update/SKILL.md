@@ -2,7 +2,7 @@
 name: force-update
 description: Generates a minimum version enforcement system with hard-block and soft-prompt update flows, App Store redirect, and remote config or App Store lookup for version checks. Use when user wants force update, mandatory update, or minimum version check.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -274,7 +274,7 @@ Skip force update checks for TestFlight and debug builds. TestFlight builds alwa
 ```
 
 ### App Review Rejection Risk
-Apple may reject apps that show an update prompt during review if the current App Store version is the one under review. Consider disabling the check when the app is running in a sandbox/review environment.
+Apple may reject an app that shows a hard update block during review. While a version is in review, the build being reviewed is newer than the live App Store version, so keep the remote `minimumVersion` at or below the version under review. Don't detect the review environment to change behavior. Code that behaves differently for App Review is the hidden-functionality pattern that Guideline 2.5.19 prohibits (see the App Review gotcha in `generators/feature-flags`).
 
 ## References
 

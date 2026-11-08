@@ -2,7 +2,7 @@
 name: review-response-writer
 description: Write professional, empathetic responses to App Store reviews that build trust and turn critics into fans. Use when responding to negative reviews, drafting templates for common review types, or improving review management strategy.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 ---
 
@@ -145,7 +145,7 @@ is important.
 A few things that might help:
 • We offer a free trial so you can test before committing
 • The subscription includes [key benefits]
-• We regularly run promotions — follow us @handle for updates
+• [A value the reviewer may have missed, e.g. Family Sharing, if your app supports it]
 
 We're always working to add more value. If there's a specific
 feature you'd find worth the price, we'd love to hear about it.
@@ -242,6 +242,7 @@ resolved things for you.
 - Use corporate jargon
 - Copy-paste identical responses
 - Promise specific timelines you can't keep
+- Include marketing, promotions, social handles, spam, or personal information. Guideline 5.6.1 requires responses to stay "targeted to the user's comments"
 
 ### Tone by Situation
 
@@ -329,5 +330,6 @@ If a review contains legal threats:
 ### Contact Options to Offer
 - support@yourapp.com
 - In-app support chat
-- @TwitterHandle
 - yourapp.com/help
+
+Offer support channels only. Social handles and promotional links count as marketing under Guideline 5.6.1.

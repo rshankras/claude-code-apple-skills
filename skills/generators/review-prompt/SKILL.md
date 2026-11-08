@@ -2,7 +2,7 @@
 name: review-prompt
 description: Generates smart App Store review prompt infrastructure with configurable conditions and platform detection. Use when user wants to add review prompts, request ratings, or implement StoreKit reviews.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 ---
 
@@ -156,6 +156,7 @@ func completeTask() {
 - Never prompt after negative experience
 - Don't prompt on first launch
 - Don't interrupt user's workflow
+- Never gate the prompt on in-app sentiment, for example a custom "rate us" screen that sends only 4–5 star users to the App Store. That is "filtered" feedback (Section 3 preamble, risking expulsion from the Developer Program), and Guideline 5.6.1 disallows custom review prompts. Trigger the prompt from engagement conditions only. See `storekit-patterns.md`.
 
 ### Testing Instructions
 

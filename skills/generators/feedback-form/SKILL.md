@@ -1,15 +1,15 @@
 ---
 name: feedback-form
-description: Generates an in-app feedback collection form with category selection, text input, optional screenshot attachment, device diagnostics, and smart routing — directing happy users to App Store reviews and unhappy users to support. Use when user wants feedback, bug reports, feature requests, or contact support forms.
+description: Generates an in-app feedback collection form with category selection, text input, optional screenshot attachment, device diagnostics, and support follow-up for low ratings. Never gates the App Store review prompt on in-app sentiment (Guideline 5.6.1). Use when user wants feedback, bug reports, feature requests, or contact support forms.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
 
 # Feedback Form Generator
 
-Generate a production in-app feedback form with category selection, sentiment-based rating, optional screenshot attachment, device diagnostics collection, and smart routing that funnels satisfied users to the App Store review prompt and dissatisfied users to a support channel.
+Generate a production in-app feedback form with category selection, sentiment-based rating, optional screenshot attachment, device diagnostics collection, and support follow-up for unhappy users. The feedback form is a support channel open to every user. It never decides who sees the App Store review prompt.
 
 ## When This Skill Activates
 
@@ -19,7 +19,7 @@ Use this skill when the user:
 - Mentions "bug report form" or "feature request" form
 - Asks about "contact support" from within the app
 - Wants "feedback collection" with categories or screenshots
-- Asks to "route users to App Store review" based on sentiment
+- Asks to "route users to App Store review" based on sentiment (generate the form, but explain why the routing is not allowed: see Gotchas)
 
 ## Pre-Generation Checks
 
@@ -72,9 +72,11 @@ Ask user via AskUserQuestion:
    - Yes — recommended (device model, OS, app version, disk, memory)
    - No
 
-5. **Sentiment routing?**
-   - Yes — recommended (rating >= 4 suggests App Store review, rating <= 2 routes to support)
-   - No (all feedback goes through the same channel)
+5. **Support follow-up for low ratings?**
+   - Yes — recommended (rating <= 2 shows a "we'll follow up" confirmation and flags the entry for support)
+   - No (all feedback gets the same confirmation)
+
+   Do **not** offer "rating >= 4 → App Store review" routing, even if asked. Showing the review prompt only to users who rated you highly in-app is review gating. See Gotchas.
 
 ## Generation Process
 
@@ -198,18 +200,18 @@ func webhookSubmitterSendsCorrectPayload() async throws {
 }
 
 @Test
-func sentimentRoutingDirectsHighRatingToReview() {
+func lowRatingFlagsSupportFollowUp() {
     let entry = FeedbackEntry(
-        category: .praise,
-        message: "Love this app!",
-        rating: 5,
+        category: .bugReport,
+        message: "Sync keeps failing",
+        rating: 1,
         screenshots: [],
         deviceInfo: DeviceDiagnostics.collect(),
         appVersion: "1.0.0",
         timestamp: Date()
     )
 
-    #expect(entry.suggestsAppStoreReview) // rating >= 4
+    #expect(entry.suggestsSupportFollowUp) // rating <= 2
 }
 ```
 
@@ -243,26 +245,23 @@ let entry = FeedbackEntry(
 try await submitter.submit(entry)
 ```
 
-### Route by sentiment after submission
+### Follow up on low ratings after submission
 ```swift
-if entry.suggestsAppStoreReview {
-    // Happy user — ask for App Store review
-    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-        SKStoreReviewController.requestReview(in: scene)
-    }
-} else if entry.suggestsSupportFollowUp {
-    // Unhappy user — show support confirmation
+if entry.suggestsSupportFollowUp {
+    // Unhappy user: confirm that support will follow up.
     showSupportConfirmation = true
 }
+// Never call requestReview() here based on the rating. Review prompts are
+// triggered independently, at neutral moments (see generators/review-prompt).
 ```
 
 ## Gotchas
 
+- **No review gating (App Review Guidelines 5.6.1 and Section 3)**: Never use the in-app rating to decide who sees the App Store review prompt (for example "4–5 stars → ask for a review, 1–2 stars → support"). Section 3 bans inflating ratings with "filtered" feedback, and Apple may respond by expelling you from the Developer Program. 5.6.1 also disallows custom review prompts. Request reviews with the system API at neutral moments, regardless of sentiment, and keep this form open to every user as a support channel.
 - **MFMailComposeViewController requires a mail account**: Check `MFMailComposeViewController.canSendMail()` before presenting. Fall back to webhook or `mailto:` URL if unavailable.
 - **Screenshot privacy**: Consider blurring or redacting sensitive data (passwords, financial info) before attaching. Use `UITextField.isSecureTextEntry` areas as a guide.
 - **Attachment size limits for email**: Email attachments are typically limited to 10-25 MB. Compress screenshots to JPEG and resize if needed. Webhook delivery is more reliable for large attachments.
 - **Offline submission queuing**: If the device is offline when feedback is submitted, queue the entry to disk and retry when connectivity is restored. Use `NWPathMonitor` to detect network changes.
-- **App Store review prompt limits**: `SKStoreReviewController.requestReview()` is rate-limited by the system (typically 3 times per 365-day period). Don't rely on it always appearing.
 - **macOS has no MFMailComposeViewController**: Use `NSSharingService(named: .composeEmail)` or prefer webhook delivery on macOS.
 
 ## References

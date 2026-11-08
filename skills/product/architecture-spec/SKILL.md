@@ -2,7 +2,7 @@
 name: architecture-spec
 description: Generates technical architecture specification from PRD. Covers architecture pattern, tech stack, data models, and app structure. Use when creating ARCHITECTURE.md or designing system architecture.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -1008,6 +1008,7 @@ jobs:
 - Use remote config (Firebase Remote Config, Launch Darkly, or custom)
 - Local override for testing
 - A/B testing capability
+- App Review: every flag-gated feature is described in Notes for Review with steps to enable it (2.3.1(a)); no dormant or undocumented features (2.5.19). Remote config may only toggle or tune reviewed behavior. See `generators/feature-flags`.
 
 ---
 

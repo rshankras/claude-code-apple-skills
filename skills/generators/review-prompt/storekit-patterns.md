@@ -199,43 +199,39 @@ let thresholds: ReviewThresholds = FeatureFlags.reviewPromptVariant == .aggressi
     : .init(sessions: 5, days: 7, actions: 5)
 ```
 
-## In-App Feedback Alternative
+## In-App Feedback (Separate From Review Prompts)
 
-For when App Store review isn't appropriate:
+An in-app feedback form is a support channel open to every user. It must never decide who sees the App Store review prompt.
 
 ```swift
 struct FeedbackView: View {
-    @State private var rating: Int = 0
     @State private var feedback: String = ""
 
     var body: some View {
-        VStack {
-            Text("How are we doing?")
-
-            // Star rating
-            HStack {
-                ForEach(1...5, id: \.self) { star in
-                    Image(systemName: star <= rating ? "star.fill" : "star")
-                        .onTapGesture { rating = star }
-                }
+        Form {
+            TextField("What's working, and what isn't?", text: $feedback, axis: .vertical)
+            Button("Send Feedback") {
+                sendFeedback(feedback)
             }
-
-            if rating > 0 {
-                if rating >= 4 {
-                    // Happy user - ask for App Store review
-                    Button("Rate on App Store") {
-                        ReviewPromptManager.shared.requestReview()
-                    }
-                } else {
-                    // Unhappy user - capture feedback internally
-                    TextField("How can we improve?", text: $feedback)
-                    Button("Send Feedback") {
-                        sendFeedback(rating: rating, feedback: feedback)
-                    }
-                }
-            }
+            .disabled(feedback.isEmpty)
         }
     }
+}
+```
+
+> ❌ **Don't gate the review prompt on in-app sentiment.** The pattern "rate us in-app first, then send 4–5 star users to the App Store and route 1–3 star users to a feedback form" is review gating. The App Review Guidelines Section 3 preamble prohibits inflating ratings with "filtered" feedback and can lead to expulsion from the Developer Program. Guideline 5.6.1 also requires the provided API and disallows custom review prompts. Call `requestReview()` from the conditions above, independent of any in-app rating.
+
+```swift
+// ❌ Review gating: prohibited
+if inAppRating >= 4 {
+    requestReview()
+} else {
+    showFeedbackForm()
+}
+
+// ✅ Review prompt and feedback stay independent
+func taskCompleted() {
+    ReviewPromptManager.shared.requestReviewIfAppropriate()  // based on engagement conditions only
 }
 ```
 

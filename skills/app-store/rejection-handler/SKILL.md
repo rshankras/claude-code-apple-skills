@@ -2,7 +2,7 @@
 name: rejection-handler
 description: Handle App Store rejections, prepare submissions to avoid common rejection reasons, write Resolution Center responses, and navigate the appeal process. Use when user's app was rejected, is preparing for submission, or needs help with App Review.
 allowed-tools: [Read, Glob, Grep, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -63,6 +63,7 @@ Run through this before submitting to avoid the most common rejections. Each ite
 - [ ] App works on the oldest supported iOS/macOS version claimed
 - [ ] No remote code execution (no downloading and running code)
 - [ ] IPv6 networking compatibility
+- [ ] No hidden, dormant, or undocumented features (2.5.19): everything in the binary is documented and reachable for review, including flag-gated features
 
 ### In-App Purchase Compliance (Guideline 3.1)
 
@@ -102,6 +103,7 @@ Run through this before submitting to avoid the most common rejections. Each ite
 
 ### App Review Notes (Submission)
 
+- [ ] Every new feature, functionality, and product change is described specifically (2.3.1(a)). Generic notes are rejected.
 - [ ] Demo account credentials provided (if login required)
 - [ ] Special hardware instructions noted (if needed)
 - [ ] Backend requirements explained (if features need server access)

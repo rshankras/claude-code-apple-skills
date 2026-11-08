@@ -2,7 +2,7 @@
 name: feature-flags
 description: Generate feature flag infrastructure with local defaults, remote configuration, SwiftUI integration, and debug menu. Use when adding feature flags or A/B testing to iOS/macOS apps.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -221,7 +221,7 @@ NavigationLink("Feature Flags") {
 ## Common Patterns
 
 ### Boolean Flags (Kill Switches)
-The most common pattern. Enable or disable a feature entirely.
+The most common pattern. Enable or disable a feature entirely. Every feature behind a flag must be documented for App Review and reachable during review. See the App Review gotcha below.
 
 ```swift
 if flags.isEnabled(.premiumPaywall) {
@@ -274,6 +274,7 @@ if flags.isEnabled(.newCheckoutFlow) {
 
 ## Gotchas
 
+- **App Review: no dormant or undocumented features (Guidelines 2.5.19 and 2.3.1(a))**: Every flag-gated feature in the binary must be described specifically in Notes for Review, with instructions for turning it on for the reviewer. Generic notes are rejected. Never ship a feature switched off during review to switch it on remotely afterwards. 2.5.19 forbids hidden, dormant, or undocumented features, and hiding them is grounds for app removal and termination of the developer account. Remote config may toggle, tune, or roll out *documented, reviewed* behavior (kill switches, copy variants, thresholds, gradual rollout). It must not add functionality App Review never saw.
 - **Stale flags:** Always provide sensible local defaults. If the remote fetch fails, the app must still function correctly with local values.
 - **Flag cleanup:** After a feature is fully rolled out, remove the flag enum case, delete related conditional code, and clean up remote configuration. Stale flags accumulate technical debt.
 - **Thread safety:** The generated `FeatureFlagManager` is `@MainActor`-isolated. Access it on the main thread or via `@Environment` in SwiftUI views. The providers use `Sendable`-conforming storage.

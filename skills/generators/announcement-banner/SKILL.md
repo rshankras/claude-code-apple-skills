@@ -2,7 +2,7 @@
 name: announcement-banner
 description: Generates an in-app announcement banner system with remote configuration, scheduling, deep link actions, and dismiss tracking. Use when user wants in-app banners, promotional notices, maintenance alerts, or contextual announcements.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -278,6 +278,7 @@ Announcement(
 5. **Date/timezone handling** — Always use UTC for start/end dates in remote config. Convert to local timezone only for display purposes.
 6. **Accessibility** — Announce banner appearance with `AccessibilityNotification.Announcement`. Ensure dismiss button has proper label.
 7. **Animation interruption** — If a user navigates away mid-animation, ensure the banner state resets properly. Use `.task` tied to view lifecycle.
+8. **App Review (Guideline 2.5.19)** — Remote banners may announce and deep-link to features that shipped in a reviewed build. They must not reveal or unlock functionality that was hidden or undocumented at review time. See the App Review gotcha in `generators/feature-flags`.
 
 ## References
 

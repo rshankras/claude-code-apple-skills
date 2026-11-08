@@ -2,7 +2,7 @@
 name: release-spec
 description: Generates App Store release documentation including submission guide, assets, privacy compliance, and marketing strategy. Creates RELEASE_SPEC.md for app launch. Use when preparing for App Store submission.
 allowed-tools: [Read, Write, Glob, Grep, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -696,6 +696,8 @@ Before archiving and submitting, verify:
 - [ ] COPPA compliance verified (if targeting children < 13)
 - [ ] GDPR compliance verified (if targeting EU users)
 - [ ] No use of private APIs
+- [ ] No hidden, dormant, or undocumented features (2.5.19); App Review notes describe every new feature specifically (2.3.1(a))
+- [ ] Backend services live and demo account working for the duration of review (2.1(a))
 - [ ] No trademark violations
 - [ ] Third-party licenses attributed (if using OSS)
 
@@ -808,9 +810,9 @@ fastlane release
    - **Phone Number**: Your phone
    - **Email**: Your email
    - **Sign-In Required**: Check if app requires login
-     - If yes, provide demo account credentials
-   - **Notes**: Any special instructions for reviewers
-     - Example: "Feature X requires creating an account. Demo account provided above."
+     - If yes, provide demo account credentials, and keep the backend services live for the whole review (2.1(a))
+   - **Notes** (required in practice, not optional): Describe every new feature, functionality, and product change specifically. Generic descriptions are rejected (2.3.1(a)). Explain non-obvious features and in-app purchases, and attach supporting documentation where appropriate. Make sure no feature is hidden, dormant, or undocumented (2.5.19), and give steps to enable any flag-gated feature.
+     - Example: "v1.2 adds Shared Lists: tap + → Share List to invite another account (second demo account below). Feature X requires creating an account. Demo account provided above."
 4. **Version Release**:
    - **Manually release this version**: You control release date
    - **Automatically release this version**: Releases immediately after approval
