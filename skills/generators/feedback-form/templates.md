@@ -108,10 +108,10 @@ struct FeedbackEntry: Codable, Sendable {
         self.timestamp = timestamp
     }
 
-    /// Whether this feedback suggests the user is happy enough to leave an App Store review.
-    var suggestsAppStoreReview: Bool {
-        rating >= 4
-    }
+    // No `suggestsAppStoreReview`: never decide whether to show the App Store
+    // review prompt from an in-app rating. That is review gating ("filtered
+    // feedback"), prohibited by App Review Guidelines 5.6.1 and the Section 3
+    // preamble. The rating here only prioritizes support follow-up.
 
     /// Whether this feedback suggests the user needs support follow-up.
     var suggestsSupportFollowUp: Bool {
@@ -152,15 +152,12 @@ struct DeviceInfo: Codable, Sendable {
 ```swift
 import SwiftUI
 import PhotosUI
-#if canImport(StoreKit)
-import StoreKit
-#endif
-
 /// In-app feedback form with sentiment rating, category selection,
 /// message input, and optional screenshot attachment.
 ///
-/// Routes happy users (rating >= 4) to App Store review and
-/// unhappy users (rating <= 2) to a support confirmation.
+/// Low ratings (<= 2) get a support follow-up confirmation. The form never
+/// triggers the App Store review prompt — request reviews separately, at
+/// neutral moments, via `generators/review-prompt` (Guideline 5.6.1).
 ///
 /// Usage:
 /// ```swift
@@ -186,7 +183,7 @@ struct FeedbackFormView: View {
     @State private var showSubmitSuccess = false
     @State private var showSubmitError = false
     @State private var submitErrorMessage = ""
-    @State private var showReviewPrompt = false
+    @State private var needsSupportFollowUp = false
 
     private let submitter: any FeedbackSubmitting
 
@@ -226,15 +223,10 @@ struct FeedbackFormView: View {
                 }
             }
             .alert("Feedback Sent", isPresented: $showSubmitSuccess) {
-                Button("OK") {
-                    dismiss()
-                    if showReviewPrompt {
-                        requestAppStoreReview()
-                    }
-                }
+                Button("OK") { dismiss() }
             } message: {
-                if showReviewPrompt {
-                    Text("Thank you for your positive feedback! Would you consider leaving a review on the App Store?")
+                if needsSupportFollowUp {
+                    Text("Thanks for letting us know. We'll look into this and follow up.")
                 } else {
                     Text("Thank you for your feedback. We'll review it shortly.")
                 }
@@ -429,23 +421,12 @@ struct FeedbackFormView: View {
         do {
             try await submitter.submit(entry)
             onSubmit?(entry)
-            showReviewPrompt = entry.suggestsAppStoreReview
+            needsSupportFollowUp = entry.suggestsSupportFollowUp
             showSubmitSuccess = true
         } catch {
             submitErrorMessage = error.localizedDescription
             showSubmitError = true
         }
-    }
-
-    private func requestAppStoreReview() {
-        #if os(iOS)
-        if let scene = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-            SKStoreReviewController.requestReview(in: scene)
-        }
-        #elseif os(macOS)
-        SKStoreReviewController.requestReview()
-        #endif
     }
 }
 

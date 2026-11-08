@@ -32,7 +32,7 @@ the fix, verified on iPhone 15 Pro / iOS 18.2.
 > Your app includes placeholder content. Specifically, the "Community" tab displays "Coming Soon" text without functional content.
 
 **How to fix:**
-- Remove or hide any unfinished features entirely
+- Remove any unfinished features from the build entirely (do not ship them hidden or dormant — Guideline 2.5.19)
 - Replace placeholder text with real content
 - Ensure all URLs (privacy policy, support, terms) resolve to live pages
 - Remove any "beta" or "test" labels
