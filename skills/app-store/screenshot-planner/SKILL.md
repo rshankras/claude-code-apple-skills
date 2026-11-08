@@ -2,7 +2,7 @@
 name: screenshot-planner
 description: Plan compelling App Store screenshot sequences that showcase your app's value. Use when preparing App Store assets, improving screenshot conversion, or drafting screenshot captions for a launch or major update.
 allowed-tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -207,7 +207,7 @@ Notes: [Close the deal]
 - 15-30 seconds optimal
 - First 3 seconds = hook
 - No audio required (most watch muted)
-- Show actual app (no external footage first 3s)
+- Only video screen captures of the app itself, for the entire length (Guideline 2.3.4). Narration and video/text overlays are allowed, but external or live-action footage is not
 - 1080p or higher
 
 ### Video Storyboard
@@ -234,6 +234,8 @@ Working rules from Apple's session:
 - ✅ A/B every new visual through PPO ("test different visuals and see exactly which ones your audience respond best to"); use the ASC Preview tool across iPhone/iPad, orientations, and languages before submitting.
 - ✅ Automate uploads/submissions via the App Store Connect API.
 - ❌ Don't treat these as decoration — assets must "clearly communicate your app's core value" (aspirational imagery for outdoor apps, destinations for travel, gameplay/characters for games).
+- ✅ **Content rules (Guideline 2.3.14)**: creative assets must relate to your app's content and functionality or overarching brand, follow standard metadata rules (2.3), and be appropriate for all audiences.
+- ❌ No inappropriate content, no references to other apps meant to mislead, no unverifiable product claims ("#1", "best", "most popular"), and no specific or discounted pricing ("50% off", "$0.99", "free this week"). Because approved assets update without another review, a mistake here goes live with no review to catch it. Check every asset against Apple's "App Store asset best practices" guidance (linked from Guideline 2.3.14) before submitting.
 
 Keep a motion-capable asset library (source-quality captures, layered project files) so every PPO/CPP learning can graduate into header and search assets.
 
