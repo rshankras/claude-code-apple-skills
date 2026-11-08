@@ -72,7 +72,7 @@ Run through this before submitting to avoid the most common rejections. Each ite
 - [ ] Subscription terms are clear before purchase
 - [ ] "Restore Purchases" button exists and works
 - [ ] Subscription management is accessible within the app
-- [ ] No language directing users to purchase outside the app
+- [ ] No language or links directing users to purchase outside the app, except where allowed: the US storefront (no entitlement needed), a StoreKit External Purchase Link Entitlement in its permitted regions and destinations (3.1.1(a)), or a 3.1.3 category such as Reader apps
 - [ ] Free trial terms are clearly stated
 
 ### Design Quality (Guideline 4.0)

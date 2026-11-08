@@ -2,7 +2,7 @@
 name: streak-tracker
 description: Generates a streak tracking system with timezone-aware day boundaries, streak freeze protection, and streak-at-risk push notifications. Use when user wants daily/weekly engagement streaks, consecutive day tracking, or habit tracking.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -332,7 +332,7 @@ SwiftData stores persist across app updates but are lost on reinstall. For criti
 
 ### App Store Guidelines
 - **Guideline 4.5.4**: Streak-reminder pushes ("don't lose your 12-day streak!") are marketing notifications — they require explicit opt-in consent in your UI plus an in-app opt-out, not just the system permission prompt.
-- **Guideline 3.1.1**: If streak freezes or repairs are sold, they are digital content and must go through IAP — never an external purchase link. The one sanctioned exception is the US storefront with the StoreKit External Purchase Link entitlement (see `monetization/external-purchases`); everywhere else the rule stands.
+- **Guideline 3.1.1 / 3.1.1(a)**: Streak freezes or repairs sold as digital content must be available through IAP. Buttons, external links, and calls to action to other purchase methods are allowed in US storefront apps without an entitlement. In specific other regions they are allowed only with a StoreKit External Purchase Link Entitlement (or, where permitted, a Music Streaming Services Entitlement) linking to a permitted destination. In all other storefronts they are prohibited. See `monetization/external-purchases`.
 - **Guideline 4.3 (Spam)**: A streak mechanic doesn't differentiate a thin app. If this is one of several similar apps on your account, run `app-store/originality-check` before submitting.
 
 ## References

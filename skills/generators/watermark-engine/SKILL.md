@@ -2,7 +2,7 @@
 name: watermark-engine
 description: Generates a watermark overlay system for images and video with configurable positioning, opacity, tiling, and paywall integration for automatic removal on subscription or purchase. Use when user wants to add branding, attribution, or free-tier watermarks to visual content.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-08
 review_by: 2027-06-22
 os_version: iOS 27 / macOS 27
 ---
@@ -316,7 +316,7 @@ let context = CIContext(options: [.workingColorSpace: CGColorSpaceCreateDeviceRG
 `WatermarkRenderer` performs CGContext operations that are not inherently thread-safe. Either use it from a single actor or create a new renderer per task. The generated code uses value types (struct) to avoid shared mutable state.
 
 ### App Store Guidelines
-- **Guideline 3.1.1**: Watermark removal is a digital feature — unlock it exclusively through IAP; linking out to a website checkout for removal is a rejection.
+- **Guideline 3.1.1 / 3.1.1(a)**: Watermark removal unlocks functionality, so sell it through IAP. Linking out to an external checkout is allowed only under 3.1.1(a): on the US storefront without an entitlement, or with a StoreKit External Purchase Link Entitlement in eligible regions linking to a permitted destination. Outside those cases, an external link or any non-IAP unlock (license keys, QR codes) is a rejection.
 - **Guideline 2.3.1**: Screenshots and previews must not present watermark-free output as the default experience if the free tier always watermarks — metadata must show what free users actually get.
 - **Guideline 4.3 (Spam)**: A watermark-plus-paywall wrapper around a template feature set is the classic 4.3 profile. Run `app-store/originality-check` before submitting, especially for portfolio apps.
 
