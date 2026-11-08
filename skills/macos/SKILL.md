@@ -1,6 +1,6 @@
 ---
 name: macos-development
-description: Comprehensive macOS development guidance including Swift 6+, SwiftUI, SwiftData, architecture patterns, AppKit bridging, and macOS 26 Tahoe APIs. Use for macOS code review, best practices, UI review, or platform-specific features.
+description: Comprehensive macOS development guidance including Swift 6+, SwiftUI, SwiftData, architecture patterns, AppKit bridging, and macOS 26 Tahoe APIs, plus MLX on-device inference, Apple Intelligence on macOS, Continuity, and Xcode tooling. Use for macOS code review, best practices, UI review, platform-specific features, or MLX/on-device model integration.
 allowed-tools: [Read, Glob, Grep, WebFetch]
 last_verified: 2026-07-16
 review_by: 2027-06-22
