@@ -2,7 +2,7 @@
 name: iap-finalizer
 description: Take a one-time in-app purchase from MISSING_METADATA to READY_TO_SUBMIT in App Store Connect — set its price schedule and localized display name/description (and optional review screenshot) via the ASC REST API. Use at Phase 6 (Pre-Release), after the IAP is built in-app (Phase 4) and its ASC record exists. NOT for subscriptions, and NOT the same as promoted-iap (which displays IAPs in-app).
 allowed-tools: [Read, Bash, mcp__asc-metadata__list_iap, mcp__asc-metadata__get_iap, AskUserQuestion]
-last_verified: 2026-07-16
+last_verified: 2026-11-09
 review_by: 2027-06-22
 ---
 
@@ -26,6 +26,7 @@ Finish a **one-time** in-app purchase on the store side: **price + localization*
   - SwiftShip symlink install: `~/.claude/swiftship-skills/_shared/asc-api/asc.py`
   - Copied install: `.claude/skills/_shared/asc-api/asc.py` (project) or `~/.claude/skills/_shared/asc-api/asc.py` (global)
   - Plugin install: resolve from this file's location — the `_shared/` tree ships with the plugin.
+  - `npx skills` install: the installer copies only this skill's folder, so `_shared/` is missing. Clone `https://github.com/rshankras/claude-code-apple-skills` and use `<clone>/skills/_shared/asc-api/asc.py`.
 - The IAP already exists in ASC. Get its id with the MCP: `list_iap` → pick the product.
 - Price decided in Phase 4. Read it from `.planning/` and confirm — don't invent it.
 

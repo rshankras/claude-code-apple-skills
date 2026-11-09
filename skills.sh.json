@@ -1,0 +1,28 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "paths": [
+    "./skills/app-store",
+    "./skills/apple-intelligence",
+    "./skills/core-ml",
+    "./skills/design",
+    "./skills/foundation",
+    "./skills/generators",
+    "./skills/growth",
+    "./skills/ios",
+    "./skills/legal",
+    "./skills/macos",
+    "./skills/mapkit",
+    "./skills/monetization",
+    "./skills/performance",
+    "./skills/product",
+    "./skills/release-review",
+    "./skills/security",
+    "./skills/shared",
+    "./skills/swift",
+    "./skills/swiftdata",
+    "./skills/swiftui",
+    "./skills/testing",
+    "./skills/visionos",
+    "./skills/watchos"
+  ]
+}
