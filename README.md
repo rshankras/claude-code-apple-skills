@@ -92,6 +92,26 @@ cp -r claude-code-apple-skills/skills your-project/.claude/skills/
 cp -r claude-code-apple-skills/skills ~/.claude/skills/
 ```
 
+### Install for Other Agents (`npx skills`)
+
+The skills are plain markdown, so they also work in Cursor, Windsurf, Codex, Copilot and
+other agents through the open [`skills`](https://github.com/vercel-labs/skills) installer:
+
+```bash
+npx skills add rshankras/claude-code-apple-skills --list        # browse
+npx skills add rshankras/claude-code-apple-skills --skill paywall-generator
+```
+
+This exposes the 23 category skills plus every individual sub-skill. Known limits:
+
+- **Cross-skill references.** Skills point to each other by path (for example
+  `generators/paywall-generator`), and those pointers only resolve if you installed that skill too.
+- **The App Store Connect helper.** `iap-finalizer` and `privacy-publish` run
+  `skills/_shared/asc-api/asc.py`, which the installer doesn't copy. Clone the repo and point
+  `ASC` at the clone's copy.
+- **Duplicate names.** `app-planner` and `coding-best-practices` exist for both iOS and macOS. The
+  installer keeps the iOS versions.
+
 ### Pinning and rollback
 
 Plugin installs track `main` with no version pinning. If you need a stable

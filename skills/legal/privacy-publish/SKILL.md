@@ -2,7 +2,7 @@
 name: privacy-publish
 description: Turn drafted legal docs (privacy policy, terms) into hosted pages and set the App Store Connect Privacy Policy / Support / Marketing URLs via the ASC REST API. Use at Phase 6 / submission, after legal drafts exist. The App Privacy "nutrition label" stays manual (Apple exposes no API) — this prints the exact answers to click.
 allowed-tools: [Read, Bash, AskUserQuestion, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__computer, mcp__claude-in-chrome__read_page]
-last_verified: 2026-07-16
+last_verified: 2026-11-09
 review_by: 2027-06-22
 ---
 
@@ -20,6 +20,7 @@ Close the "hosted legal pages + ASC URLs" gap: render `.planning/legal/{privacy,
   - SwiftShip symlink install: `~/.claude/swiftship-skills/_shared/asc-api/asc.py`
   - Copied install: `.claude/skills/_shared/asc-api/asc.py` (project) or `~/.claude/skills/_shared/asc-api/asc.py` (global)
   - Plugin install: resolve from this file's location — the `_shared/` tree ships with the plugin.
+  - `npx skills` install: the installer copies only this skill's folder, so `_shared/` is missing. Clone `https://github.com/rshankras/claude-code-apple-skills` and use `<clone>/skills/_shared/asc-api/asc.py`.
 - The app has a current editable App Store version + an en-US `appInfoLocalization` and `appStoreVersionLocalization` (get their ids first).
 
 ## Flow — dry-run → confirm → apply

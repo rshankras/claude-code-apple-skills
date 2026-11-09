@@ -29,6 +29,11 @@ jobs:
           ./scripts/check-marketplace-compat.sh --self-test
           ./scripts/check-marketplace-compat.sh
 
+      - name: skills.sh.json lists every category (npx skills discovery)
+        run: |
+          chmod +x scripts/check-skills-sh.sh
+          ./scripts/check-skills-sh.sh
+
       - name: Freshness — no recency claims against stale OS versions
         run: |
           chmod +x scripts/check-freshness.sh
